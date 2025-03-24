@@ -34,3 +34,10 @@ Route::get('/change-password', function () {
     return view('changepass');
 });
 
+Route::get('/detail', function () {
+    return view('detail');
+});
+
+Route::get('/profile', function () {
+    return view('profile');
+});
