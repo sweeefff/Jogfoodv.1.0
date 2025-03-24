@@ -48,17 +48,17 @@
                     <hr class="bg-secondary">
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href=""><i class="fas fa-mortar-pestle me-2"></i>Daftar
-                        Kuliner</a>
+                    <a class="nav-link text-white" href="data.blade.php"><i class="fas fa-mortar-pestle me-2"></i>Daftar
+                        Menu</a>
                     <hr class="bg-secondary">
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href=""><i class="fa fa-wine-glass me-2"></i>Daftar
-                        minuman</a>
+                    <a class="nav-link text-white" href="data.blade.php"><i class="fa fa-wine-glass me-2"></i>Daftar
+                        User</a>
                     <hr class="bg-secondary">
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href=""><i class="fas fa-utensils me-2"></i>Daftar
+                    <a class="nav-link text-white" href="data.blade.php"><i class="fas fa-utensils me-2"></i>Daftar
                         Restoran</a>
                     <hr class="bg-secondary">
                 </li>
