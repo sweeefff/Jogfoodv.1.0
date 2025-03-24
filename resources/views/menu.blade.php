@@ -14,11 +14,11 @@
                 @foreach ($data as $item)
                     <div class="col-md-4 mb-4">
                         <div class="card">
-                            <img src="{{ asset('pbl/dashboard/gambar/' . $item->gambar) }}" class="card-img-top" alt="{{ $item->nama }}">
+                            <img src="{{ $item->gambar ? asset('pbl/dashboard/gambar/' . $item->gambar) : asset('assets/default.jpg') }}" class="card-img-top" alt="{{ $item->nama }}">
                             <div class="card-body">
                                 <h5 class="card-title">{{ $item->nama }}</h5>
                                 <p class="card-text">{{ $item->deskripsi }}</p>
-                                <p>⭐ Rata-rata Rating: {{ number_format($item->avg_rating, 1) }}/5</p>
+                                <p>⭐ Rata-rata Rating: {{ number_format($item->avg_rating ?? 0, 1) }}/5</p>
                                 <a href="{{ route('detail', ['id' => $item->id]) }}" class="btn btn-success btn-sm">Tampilkan</a>
                             </div>
                         </div>
@@ -41,14 +41,7 @@
             const resultsContainer = document.getElementById('liveSearchResults');
 
             if (query.length > 0) {
-                fetch("{{ route('search') }}", {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({ query: query })
-                })
+                fetch("{{ route('search') }}?query=" + encodeURIComponent(query))
                 .then(response => response.text())
                 .then(data => {
                     resultsContainer.innerHTML = data;

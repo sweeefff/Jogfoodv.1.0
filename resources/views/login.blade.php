@@ -36,7 +36,7 @@
     Swal.fire({
         icon: 'error',
         title: 'Login Gagal',
-        text: '{{ session('error') }}',
+        text: {!! json_encode(session('error')) !!},
         toast: true,
         position: 'top-end',
         timer: 3000,
@@ -58,11 +58,12 @@
         timerProgressBar: true,
         showConfirmButton: false
     }).then(() => {
-        @if(session('role') == 'admin')
+        let role = {!! json_encode(session('role')) !!};
+        if (role === 'admin') {
             window.location.href = "{{ url('pbl/dashboard/dashboard') }}";
-        @else
+        } else {
             window.location.href = "{{ url('/') }}";
-        @endif
+        }
     });
 </script>
 @endif
