@@ -1,9 +1,23 @@
-<?php
-if (isset($_POST['search'])) {
-	$keyword = $_POST['query'];
-	$results = search_data($keyword);
-}
-?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Jogfood</title>
+	<!-- favicon-->
+	<link href="images/favicon.jpg" rel="icon">
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!--Bootstrap4 link -->
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+		rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+	<link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+</head>
+<body>
 <!--========= Start Header=========-->
 <header class="top-navbar">
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -71,3 +85,4 @@ if (isset($_POST['search'])) {
 		</div>
 	</nav>
 </header>
+<!--========= End Header=========-->
