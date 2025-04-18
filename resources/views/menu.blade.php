@@ -1,32 +1,193 @@
 @include('components.header')
-<div class="category-section">
-    <div class="container">
-        <div class="row mb-4">
-            <div class="col-12 mt-5">
-                <h2 class="section-title text-center" style="margin-top: 80px; font-size: 30px;">MINUMAN</h2>
+<div class="flex flex-wrap gap-6 justify-center mt-8">
+    <!-- CARD 1 -->
+    <div class="w-60 h-80 bg-gray-200 p-3 flex flex-col gap-1 rounded-2xl">
+        <div class="h-48 bg-gray-700 rounded-xl"></div>
+        <div class="flex flex-col gap-4">
+            <div class="flex flex-row justify-between">
+                <div class="flex flex-col">
+                    <span class="text-xl font-bold">Long Chair</span>
+                    <p class="text-xs text-gray-700">ID: 23432252</p>
+                </div>
+                <span class="font-bold text-red-600">$25.99</span>
             </div>
+            <button class="hover:bg-sky-700 text-gray-50 bg-sky-800 py-2 rounded-md">Add to cart</button>
         </div>
-        <div class="row">
-						<div class="col-md-4 mb-4">
-							<div class="card">
-								<img src="assets(../pbl/dashboard/gambar/)" class="card-img-top"
-									alt="">
-								<h1>Nama</h1>
-								<p>Lokasi</p>
-								<p>Batam</p>
-								<p> Rata-rata Rating: 3/5</p>
-								<a href=''><button
-										class="btn btn-success btn-sm">Tampilkan</button></a>
+    </div>
 
-							</div>
-						</div>
-					</div>
+    <!-- CARD 2 -->
+    <div class="w-60 h-80 bg-gray-200 p-3 flex flex-col gap-1 rounded-2xl">
+        <div class="h-48 bg-gray-700 rounded-xl"></div>
+        <div class="flex flex-col gap-4">
+            <div class="flex flex-row justify-between">
+                <div class="flex flex-col">
+                    <span class="text-xl font-bold">Long Chair</span>
+                    <p class="text-xs text-gray-700">ID: 23432252</p>
+                </div>
+                <span class="font-bold text-red-600">$25.99</span>
+            </div>
+            <button class="hover:bg-sky-700 text-gray-50 bg-sky-800 py-2 rounded-md">Add to cart</button>
+        </div>
+    </div>
 
-			</div>
+    <!-- CARD 3 (dan seterusnya...) -->
+	<div class="w-60 h-80 bg-gray-200 p-3 flex flex-col gap-1 rounded-2xl">
+        <div class="h-48 bg-gray-700 rounded-xl"></div>
+        <div class="flex flex-col gap-4">
+            <div class="flex flex-row justify-between">
+                <div class="flex flex-col">
+                    <span class="text-xl font-bold">Long Chair</span>
+                    <p class="text-xs text-gray-700">ID: 23432252</p>
+                </div>
+                <span class="font-bold text-red-600">$25.99</span>
+            </div>
+            <button class="hover:bg-sky-700 text-gray-50 bg-sky-800 py-2 rounded-md">Add to cart</button>
+        </div>
+    </div>
+
+	<div class="w-60 h-80 bg-gray-200 p-3 flex flex-col gap-1 rounded-2xl">
+        <div class="h-48 bg-gray-700 rounded-xl"></div>
+        <div class="flex flex-col gap-4">
+            <div class="flex flex-row justify-between">
+                <div class="flex flex-col">
+                    <span class="text-xl font-bold">Long Chair</span>
+                    <p class="text-xs text-gray-700">ID: 23432252</p>
+                </div>
+                <span class="font-bold text-red-600">$25.99</span>
+            </div>
+            <button class="hover:bg-sky-700 text-gray-50 bg-sky-800 py-2 rounded-md">Add to cart</button>
+        </div>
+    </div>
+
+</div>
+
+<div class="flex flex-wrap gap-6 justify-center mt-8">
+    <!-- CARD 1 -->
+    <div class="w-60 h-80 bg-gray-200 p-3 flex flex-col gap-1 rounded-2xl">
+        <div class="h-48 bg-gray-700 rounded-xl"></div>
+        <div class="flex flex-col gap-4">
+            <div class="flex flex-row justify-between">
+                <div class="flex flex-col">
+                    <span class="text-xl font-bold">Long Chair</span>
+                    <p class="text-xs text-gray-700">ID: 23432252</p>
+                </div>
+                <span class="font-bold text-red-600">$25.99</span>
+            </div>
+            <button class="hover:bg-sky-700 text-gray-50 bg-sky-800 py-2 rounded-md">Add to cart</button>
+        </div>
+    </div>
+
+    <!-- CARD 2 -->
+    <div class="w-60 h-80 bg-gray-200 p-3 flex flex-col gap-1 rounded-2xl">
+        <div class="h-48 bg-gray-700 rounded-xl"></div>
+        <div class="flex flex-col gap-4">
+            <div class="flex flex-row justify-between">
+                <div class="flex flex-col">
+                    <span class="text-xl font-bold">Long Chair</span>
+                    <p class="text-xs text-gray-700">ID: 23432252</p>
+                </div>
+                <span class="font-bold text-red-600">$25.99</span>
+            </div>
+            <button class="hover:bg-sky-700 text-gray-50 bg-sky-800 py-2 rounded-md">Add to cart</button>
+        </div>
+    </div>
+
+    <!-- CARD 3 (dan seterusnya...) -->
+	<div class="w-60 h-80 bg-gray-200 p-3 flex flex-col gap-1 rounded-2xl">
+        <div class="h-48 bg-gray-700 rounded-xl"></div>
+        <div class="flex flex-col gap-4">
+            <div class="flex flex-row justify-between">
+                <div class="flex flex-col">
+                    <span class="text-xl font-bold">Long Chair</span>
+                    <p class="text-xs text-gray-700">ID: 23432252</p>
+                </div>
+                <span class="font-bold text-red-600">$25.99</span>
+            </div>
+            <button class="hover:bg-sky-700 text-gray-50 bg-sky-800 py-2 rounded-md">Add to cart</button>
+        </div>
+    </div>
+
+	<div class="w-60 h-80 bg-gray-200 p-3 flex flex-col gap-1 rounded-2xl">
+        <div class="h-48 bg-gray-700 rounded-xl"></div>
+        <div class="flex flex-col gap-4">
+            <div class="flex flex-row justify-between">
+                <div class="flex flex-col">
+                    <span class="text-xl font-bold">Long Chair</span>
+                    <p class="text-xs text-gray-700">ID: 23432252</p>
+                </div>
+                <span class="font-bold text-red-600">$25.99</span>
+            </div>
+            <button class="hover:bg-sky-700 text-gray-50 bg-sky-800 py-2 rounded-md">Add to cart</button>
+        </div>
+    </div>
+
+</div>
+
+<div class="flex flex-wrap gap-6 justify-center mt-8">
+    <!-- CARD 1 -->
+    <div class="w-60 h-80 bg-gray-200 p-3 flex flex-col gap-1 rounded-2xl">
+        <div class="h-48 bg-gray-700 rounded-xl"></div>
+        <div class="flex flex-col gap-4">
+            <div class="flex flex-row justify-between">
+                <div class="flex flex-col">
+                    <span class="text-xl font-bold">Long Chair</span>
+                    <p class="text-xs text-gray-700">ID: 23432252</p>
+                </div>
+                <span class="font-bold text-red-600">$25.99</span>
+            </div>
+            <button class="hover:bg-sky-700 text-gray-50 bg-sky-800 py-2 rounded-md">Add to cart</button>
+        </div>
+    </div>
+
+    <!-- CARD 2 -->
+    <div class="w-60 h-80 bg-gray-200 p-3 flex flex-col gap-1 rounded-2xl">
+        <div class="h-48 bg-gray-700 rounded-xl"></div>
+        <div class="flex flex-col gap-4">
+            <div class="flex flex-row justify-between">
+                <div class="flex flex-col">
+                    <span class="text-xl font-bold">Long Chair</span>
+                    <p class="text-xs text-gray-700">ID: 23432252</p>
+                </div>
+                <span class="font-bold text-red-600">$25.99</span>
+            </div>
+            <button class="hover:bg-sky-700 text-gray-50 bg-sky-800 py-2 rounded-md">Add to cart</button>
+        </div>
+    </div>
+
+    <!-- CARD 3 (dan seterusnya...) -->
+	<div class="w-60 h-80 bg-gray-200 p-3 flex flex-col gap-1 rounded-2xl">
+        <div class="h-48 bg-gray-700 rounded-xl"></div>
+        <div class="flex flex-col gap-4">
+            <div class="flex flex-row justify-between">
+                <div class="flex flex-col">
+                    <span class="text-xl font-bold">Long Chair</span>
+                    <p class="text-xs text-gray-700">ID: 23432252</p>
+                </div>
+                <span class="font-bold text-red-600">$25.99</span>
+            </div>
+            <button class="hover:bg-sky-700 text-gray-50 bg-sky-800 py-2 rounded-md">Add to cart</button>
+        </div>
+    </div>
+
+	<div class="w-60 h-80 bg-gray-200 p-3 flex flex-col gap-1 rounded-2xl">
+        <div class="h-48 bg-gray-700 rounded-xl"></div>
+        <div class="flex flex-col gap-4">
+            <div class="flex flex-row justify-between">
+                <div class="flex flex-col">
+                    <span class="text-xl font-bold">Long Chair</span>
+                    <p class="text-xs text-gray-700">ID: 23432252</p>
+                </div>
+                <span class="font-bold text-red-600">$25.99</span>
+            </div>
+            <button class="hover:bg-sky-700 text-gray-50 bg-sky-800 py-2 rounded-md">Add to cart</button>
+        </div>
+    </div>
+
+</div>
+
+
+</div>
         <!-- Pagination -->
-         
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
                 
             </ul>
         </nav>
