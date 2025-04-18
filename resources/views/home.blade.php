@@ -11,11 +11,11 @@
 	<!--Bootstrap4 link -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-	<link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
-	<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+	<link href="assets/css/flowbite.min.css" rel="stylesheet" />
+	<script src="assets/css/flowbite.min.js"></script>
 	<style>
 		.hero {
-			background-image: url("{{ asset('assets/img/jogja.jpg') }}");
+			background-image: url("assets/img/jogja.jpg");
 			background-size: cover;
 			background-position: center;
 		}
@@ -105,17 +105,17 @@
 			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 				<div class="text-center">
 					<h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl">
-						<span class="block">Discover the Best</span>
-						<span class="block text-amber-400">Food in Jogja</span>
+						<span class="block">Temukan yang Terbaik</span>
+						<span class="block text-amber-400">Kuliner di Jogja</span>
 					</h1>
 					<p class="mt-3 max-w-md mx-auto text-base text-gray-200 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl text-shadow-lg">
-						Explore hundreds of local restaurants and traditional dishes in Yogyakarta
+						Jelajahi ratusan restoran lokal dan hidangan tradisional di Yogyakarta
 					</p>
 					<div class="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
 						<div class="rounded-md shadow">
 							<a href="#" class="w-full flex items-center justify-center px-8 py-3 border border-transparent 
 							text-base font-medium rounded-md text-white bg-amber-600 hover:bg-amber-700 md:py-4 md:text-lg md:px-10">
-								Explore Now
+								Jelajahi Sekarang
 							</a>
 						</div>
 					</div>
@@ -123,7 +123,7 @@
 			</div>
 		</div>
 
-		<!-- Search Section -->
+		<!-- Bagian Pencarian -->
 		<div class="bg-white shadow-sm">
 			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 -mt-8 rounded-lg relative z-10">
 				<div class="relative">
@@ -132,45 +132,45 @@
 					</div>
 					<input type="text"
 						class="block w-full pl-10 pr-3 py-4 border border-gray-300 rounded-lg bg-gray-50 focus:ring-amber-500 focus:border-amber-500"
-						placeholder="Search for food, restaurants, or cuisines...">
+						placeholder="Cari makanan, restoran, atau masakan...">
 					<button
 						class="absolute right-2.5 bottom-2.5 bg-amber-600 
 					hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-4 py-2 text-white bg-amber-600">
-						Search
+						Cari
 					</button>
 				</div>
 			</div>
 		</div>
-		<!--=========== End Banner ==========-->
-		<!--=========== Start Menu Section ==========-->
+		<!--=========== Akhir Banner ==========-->
+		<!--=========== Mulai Bagian Menu ==========-->
 		<div class="flex justify-center py-12">
 			<div class="max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="text-center mb-12">
 					<h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-						Must-Try Dishes
+						Hidangan Wajib Dicoba
 					</h2>
 					<p class="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
-						Local favorites you shouldn't miss
+						Favorit lokal yang tak boleh dilewatkan
 					</p>
 				</div>
 
 				<div class="grid grid-cols-1 gap-x-6 sm:grid-cols-3 lg:grid-cols-3">
-					<!-- Dish 1 -->
+					<!-- Hidangan 1 -->
 					<div
 						class="food-card group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
 						<div class="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-t-lg bg-gray-200">
 							<img src="{{ asset('assets/img/gudeg.jpg') }}"
-								alt=" Gudeg" class="h-60 w-full object-cover object-center food-image transition duration-300">
+								alt="Gudeg" class="h-60 w-full object-cover object-center food-image transition duration-300">
 						</div>
 						<div class="p-4">
 							<div class="flex justify-between items-start">
 								<div>
 									<h3 class="text-lg font-medium text-gray-900">Gudeg</h3>
-									<p class="mt-1 text-sm text-gray-500">Sweet jackfruit stew</p>
+									<p class="mt-1 text-sm text-gray-500">Rebung nangka manis</p>
 								</div>
 								<span
 									class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-									<i class="fas fa-fire mr-1"></i> Popular
+									<i class="fas fa-fire mr-1"></i> Populer
 								</span>
 							</div>
 							<div class="mt-4 flex justify-between items-center">
@@ -178,12 +178,12 @@
 									<i class="fas fa-utensils text-gray-400 text-sm mr-1"></i>
 									<span class="text-gray-500 text-sm">Gudeg Yu Djum</span>
 								</div>
-								<span class="text-gray-900 font-medium">Rp 25,000</span>
+								<span class="text-gray-900 font-medium">Rp 25.000</span>
 							</div>
 						</div>
 					</div>
 
-					<!-- Dish 2 -->
+					<!-- Hidangan 2 -->
 					<div
 						class="food-card group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
 						<div class="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-t-lg bg-gray-200">
@@ -195,11 +195,11 @@
 							<div class="flex justify-between items-start">
 								<div>
 									<h3 class="text-lg font-medium text-gray-900">Sate Klathak</h3>
-									<p class="mt-1 text-sm text-gray-500">Grilled goat skewers</p>
+									<p class="mt-1 text-sm text-gray-500">Sate kambing bakar</p>
 								</div>
 								<span
 									class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-									<i class="fas fa-fire mr-1"></i> Popular
+									<i class="fas fa-fire mr-1"></i> Populer
 								</span>
 							</div>
 							<div class="mt-4 flex justify-between items-center">
@@ -207,12 +207,12 @@
 									<i class="fas fa-utensils text-gray-400 text-sm mr-1"></i>
 									<span class="text-gray-500 text-sm">Sate Klathak Pak Bari</span>
 								</div>
-								<span class="text-gray-900 font-medium">Rp 35,000</span>
+								<span class="text-gray-900 font-medium">Rp 35.000</span>
 							</div>
 						</div>
 					</div>
 
-					<!-- Dish 3 -->
+					<!-- Hidangan 3 -->
 					<div
 						class="food-card group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
 						<div class="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-t-lg bg-gray-200">
@@ -224,11 +224,11 @@
 							<div class="flex justify-between items-start">
 								<div>
 									<h3 class="text-lg font-medium text-gray-900">Bakpia Pathok</h3>
-									<p class="mt-1 text-sm text-gray-500">Sweet bean pastry</p>
+									<p class="mt-1 text-sm text-gray-500">Pastry kacang manis</p>
 								</div>
 								<span
 									class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-									<i class="fas fa-fire mr-1"></i> Popular
+									<i class="fas fa-fire mr-1"></i> Populer
 								</span>
 							</div>
 							<div class="mt-4 flex justify-between items-center">
@@ -236,7 +236,7 @@
 									<i class="fas fa-utensils text-gray-400 text-sm mr-1"></i>
 									<span class="text-gray-500 text-sm">Bakpia Pathok 25</span>
 								</div>
-								<span class="text-gray-900 font-medium">Rp 40,000</span>
+								<span class="text-gray-900 font-medium">Rp 40.000</span>
 							</div>
 						</div>
 					</div>
@@ -244,7 +244,7 @@
 				<div class="mt-12 flex items-center justify-center">
 					<a href="#" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white 
 						bg-amber-600 hover:bg-amber-700">
-						View All Menu
+						Lihat Semua Menu
 						<svg class="ml-3 -mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
 							fill="currentColor" aria-hidden="true">
 							<path fill-rule="evenodd"
