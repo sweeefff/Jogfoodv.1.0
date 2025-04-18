@@ -2,87 +2,56 @@
 <html lang="en">
 
 <head>
-	<title>Jogfood</title>
-	<!-- favicon-->
-	<link href="images/favicon.jpg" rel="icon">
-
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-
-	<!--Bootstrap4 link -->
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-		rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="styles/tailwind.min.css">
+	<script src="style/tailwind.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-	<link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
 </head>
+
 <body>
-<!--========= Start Header=========-->
-<header class="top-navbar">
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<div class="container">
-			<a class="navbar-brand" href="index.php">
-				<img style="width: 70%; margin-left: 0%; margin-right: 20%;" src="images/jogfoods.png" alt="" />
+
+	<header class="bg-white border-b border-gray-300">
+		<nav class="container mx-auto px-4 py-2 flex justify-between">
+			<a href="index.php" class="flex items-center">
+				<img src="images/jogfoods.png" class="h-6 w-auto mr-2" alt="Jogfood" />
+				<span class="font-bold text-xl">Jogfood</span>
 			</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars-rs-food"
-				aris-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbars-rs-food">
-				<!-- Navigation Menu bar -->
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active">
-						<a class="nav-link" href="index.php">Home</a>
-					</li>
-					<!--Drop Menu -->
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Makanan</a>
-						<!--Drop-->
-						<div class="dropdown-menu" aria-labelledby="dropdown-a">
-							<a class="dropdown-item" href="tradisional.php">Tradisional</a>
-							<a class="dropdown-item" href="nontradisional.php">Non Tradisional</a>
+			<div class="flex items-center">
+				<button class="bg-gray-200 px-4 py-2 rounded-md focus:outline-none" id="search-button">
+					<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+						stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+							d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+					</svg>
+				</button>
+				<form class="hidden md:flex items-center w-full" id="searchForm">
+					<input class="pl-2 py-2 w-full border border-gray-300 rounded-md focus:outline-none" type="search"
+						name="query" id="liveSearchInput" placeholder="Cari..." autocomplete="off">
+				</form>
+				<div class="hidden md:block">
+					<!-- Container untuk hasil pencarian -->
+					<div id="liveSearchResults" class="absolute bg-white border border-gray-300 w-64 z-10">
+					</div>
+				</div>
+				<?php if (isset($_SESSION['username'])): ?>
+					<div class="ml-4">
+						<button class="bg-gray-200 px-4 py-2 rounded-md focus:outline-none" id="dropdown-button">
+							<i class="fas fa-user mr-2"></i>
+							<?php echo $_SESSION["username"]; ?>
+						</button>
+						<div class="hidden bg-white border border-gray-300 rounded-md absolute right-0 mt-2 py-2 w-48 z-10"
+							id="dropdown-menu">
+							<a class="block px-4 py-2 hover:bg-gray-300" href="profile.php">Profile</a>
+							<a class="block px-4 py-2 hover:bg-gray-300" href="logout.php">Logout</a>
 						</div>
-					</li>
-					<!--Drop Menu -->
-					<li class="nav-item">
-						<a class="nav-link" href="minuman.php">Minuman</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="restoran.php">Restoran</a>
-					</li>
-					<li class="nav-item">
-						<form class="form-inline my-2 my-lg-0" id="searchForm">
-							<input class="form-control mr-sm-2" type="search" name="query" id="liveSearchInput"
-								placeholder="Cari..." aria-label="Search" autocomplete="off">
-						</form>
-						<!-- Container untuk hasil pencarian -->
-						<div id="liveSearchResults"
-							style="position: absolute; background: white; border: 1px solid #ccc; width: 200px; z-index: 1000;">
-						</div>
-					</li>
-					<?php if (isset($_SESSION['username'])): ?>
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown"
-								role="button" aria-haspopup="true" aria-expanded="false">
-								<i class="fas fa-user me-2"></i>
-								<?php echo $_SESSION["username"]; ?></a>
-							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-								<a class="dropdown-item"
-									href="logout.php"><strong><?php echo "ID: " . $_SESSION["id"]; ?></strong></a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="profile.php">Profile</a>
-								<a class="dropdown-item" href="logout.php">Logout</a>
-							</div>
-						</li>
-					<?php else: ?>
-						<div class="nav-item">
-							<a class="nav-link" href="loginform.php">Login</a>
-						</div>
-					<?php endif; ?>
-				</ul>
+					</div>
+				<?php else: ?>
+					<div class="ml-4">
+						<a class="bg-gray-200 px-4 py-2 rounded-md focus:outline-none" href="loginform.php">Login</a>
+					</div>
+				<?php endif; ?>
 			</div>
-		</div>
-	</nav>
-</header>
-<!--========= End Header=========-->
+		</nav>
+	</header>
