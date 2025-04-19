@@ -2,7 +2,7 @@
 <html lang="en">
 <title>Jogfood</title>
 <!-- favicon-->
-<link href="images/favicon.jpg" rel="icon">
+<link rel="icon" href="assets/icon/favicon.png" type="image/x-icon">
 
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -35,8 +35,7 @@
 						700: "#803104",
 						800: "#562002",
 						900: "#2b1001"
-					}, {
-	},
+					},
 				}
 			}
 		}
