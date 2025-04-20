@@ -48,7 +48,7 @@
 	<nav class="bg-amber-600">
 		<div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
 			<a href="index" class="flex items-center space-x-3 rtl:space-x-reverse">
-				<img src="assets/icon/jogfood.png" class="h-8" alt="Jogfood Logo" />
+				<img src="assets/icon/jogfood.png" class="h-8" alt="Jogfood Logo">
 			</a>
 
 			<div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
