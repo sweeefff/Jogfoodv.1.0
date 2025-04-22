@@ -19,6 +19,11 @@
 		background-size: cover;
 		background-position: center;
 	}
+	.qt {
+		background-image: url("assets/img/jogja.jpg");
+		background-size: cover;
+		background-position: center;
+	}
 </style>
 <script>
 	tailwind.config = {
@@ -372,10 +377,10 @@
 
 		<!-- End Section -->
 		<!--============Start QT Section===========-->
-			<div class="bg-gray-50 py-14 ">
+			<div class=" qt bg-gray-50 py-14 ">
 				<div class="flex flex-col items-center justify-center">
 					<div class="text-center">
-						<p class="text-2xl font-semibold text-gray-800 mb-4">
+						<p class="text-2xl font-semibold text-amber-100 mb-4">
 							"Di setiap sudut Jogja membawa cerita masing-masing bagi pengunjungnya.
 							Sampai jumpa di Jogja!"</p>
 					</div>
