@@ -1,5 +1,3 @@
-<div class="grid grid-cols-1 gap-x-6 sm:grid-cols-3 lg:grid-cols-3">
-    <!-- Hidangan 1 -->
     <div
         class="food-card group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
         <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-t-lg bg-gray-200">
@@ -26,4 +24,3 @@
             </div>
         </div>
     </div>
-</div>
