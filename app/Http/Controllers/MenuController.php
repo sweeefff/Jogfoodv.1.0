@@ -7,6 +7,6 @@ use Illuminate\Http\Request;
 class MenuController extends Controller
 {
     public function menu(){
-        return view('menu');
+        return view('pages/menu');
     }
 }
