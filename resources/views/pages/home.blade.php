@@ -19,8 +19,9 @@
 		background-size: cover;
 		background-position: center;
 	}
+
 	.qt {
-		background-image: url("assets/img/jogja.jpg");
+		background-image: url("assets/img/qt-bg.jpg");
 		background-size: cover;
 		background-position: center;
 	}
@@ -57,46 +58,19 @@
 			</a>
 
 			<div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-				<svg class="w-6 h-6 text-gray-800 dark:text-white me-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-					width="24" height="24" fill="none" viewBox="0 0 24 24">
+				<svg class="w-6 h-6 text-gray-800 dark:text-white me-6" aria-hidden="true"
+					xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
 					<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
 						d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312" />
 				</svg>
 
 				<button type="button"
-					class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-					id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
-					data-dropdown-placement="bottom">
-					<span class="sr-only">Open user menu</span>
-					<img class="w-8 h-8 rounded-full" src="assets/img/kucing.jpg" alt="user photo">
-				</button>
-				<!-- Dropdown menu -->
-				<div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-sm dark:bg-gray-700 dark:divide-gray-600"
-					id="user-dropdown">
-					<div class="px-4 py-3">
-						<span class="block text-sm text-gray-900 dark:text-white">Bonnie Green</span>
-						<span class="block text-sm  text-gray-500 truncate dark:text-gray-400">name@flowbite.com</span>
-					</div>
-					<ul class="py-2" aria-labelledby="user-menu-button">
-						<li>
-							<a href="#"
-								class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
-						</li>
-						<li>
-							<a href="#"
-								class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a>
-						</li>
-						<li>
-							<a href="#"
-								class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Earnings</a>
-						</li>
-						<li>
-							<a href="#"
-								class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign
-								out</a>
-						</li>
-					</ul>
-				</div>
+					class="focus:outline-none text-white bg-amber-400 hover:bg-amber-500 focus:ring-4 focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-amber-900"><a
+						href="login">Login</button></a>
+				<button type="button"
+					class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-amber-900 focus:outline-none bg-white rounded-lg border border-amber-200 hover:bg-amber-100 hover:text-blue-700 focus:z-10 focus:ring-4 
+					focus:ring-amber-100 dark:focus:ring-amber-700 dark:bg-amber-800 dark:text-amber-400 dark:border-amber-600 dark:hover:text-white dark:hover:bg-amber-700"><a
+						href="register">Register</button></a>
 				<button data-collapse-toggle="navbar-user" type="button"
 					class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
 					aria-controls="navbar-user" aria-expanded="false">
@@ -377,15 +351,15 @@
 
 		<!-- End Section -->
 		<!--============Start QT Section===========-->
-			<div class=" qt bg-gray-50 py-14 ">
-				<div class="flex flex-col items-center justify-center">
-					<div class="text-center">
-						<p class="text-2xl font-semibold text-amber-100 mb-4">
-							"Di setiap sudut Jogja membawa cerita masing-masing bagi pengunjungnya.
-							Sampai jumpa di Jogja!"</p>
-					</div>
+		<div class=" qt bg-gray-50 py-14 ">
+			<div class="flex flex-col items-center justify-center">
+				<div class="text-center">
+					<p class="text-2xl font-semibold text-amber-100 mb-4">
+						"Di setiap sudut Jogja membawa cerita masing-masing bagi pengunjungnya.
+						Sampai jumpa di Jogja!"</p>
 				</div>
 			</div>
+		</div>
 
 		<!--copyright-->
 		@include ('components.footer')
