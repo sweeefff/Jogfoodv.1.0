@@ -26,7 +26,7 @@ Route::get('/change-password', function () {
 });
 
 Route::get('/detail', function () {
-    return view('detail');
+    return view('pages/detail');
 });
 
 Route::get('/profile', function () {
