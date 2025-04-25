@@ -1,5 +1,4 @@
+@include('components.header')
 
 
-@section('title', 'Detail Kuliner')
-
-@section('content')
+@include('components.footer')
