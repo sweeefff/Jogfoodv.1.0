@@ -1,27 +1,42 @@
-<!Doctype html>
+<!DOCTYPE html>
 <html lang="en">
+<title>Jogfood</title>
+<!-- favicon-->
+<link rel="icon" href="assets/icon/favicon.png" type="image/x-icon">
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Dashboard</title>
-  <style>
-    .nav-link:hover {
-      background-color: gold;
-      color: white !important;
+<!--Bootstrap4 link -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<link href="assets/css/flowbite.min.css" rel="stylesheet" />
+<script src="assets/css/flowbite.min.js"></script>
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    amber: {
+                        100: "#f7dccd",
+                        200: "#efb99b",
+                        300: "#e6976a",
+                        400: "#de7438",
+                        500: "#d65106",
+                        600: "#ab4105",
+                        700: "#803104",
+                        800: "#562002",
+                        900: "#2b1001"
+                    },
+                }
+            }
+        }
     }
-  </style>
-</head>
+</script>
 
 <body>
   <!-- Navbar -->
-
-
-
 
   <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
@@ -38,10 +53,10 @@
               </path>
             </svg>
           </button>
-          <a href="https://flowbite.com" class="flex ms-2 md:me-24">
-            <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 me-3" alt="FlowBite Logo" />
+          <a href="#" class="flex ms-2 md:me-24">
+            <img src="assets/icon/jogfood.png" class="h-8 me-3" alt="FlowBite Logo" />
             <span
-              class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Flowbite</span>
+              class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Selamat Datang, Admin</span>
           </a>
         </div>
         <div class="flex items-center">
@@ -240,7 +255,6 @@
 
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 </body>
 
 </html>

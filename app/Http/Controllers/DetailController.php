@@ -9,3 +9,4 @@ class DetailController extends Controller
     public function detail(){
         return view('pages.detail');
 }
+);

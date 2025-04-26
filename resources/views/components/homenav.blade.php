@@ -34,7 +34,7 @@
 				<ul
 					class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-amber-600 rounded-lg bg-amber-600 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-amber-600 dark:bg-amber-600 dark:border-amber-600 md:dark:bg-amber-600 md:dark:border-amber-600">
 					<li>
-						<a href="index"
+						<a href="\"
 							class="block py-2 px-3 text-white rounded-sm md:text-amber-500 md:p-0 md:dark:text-amber-500"
 							aria-current="page">Home</a>
 					</li>
@@ -44,15 +44,15 @@
 					</li>
 					<li>
 						<a href="#"
-							class="block py-2 px-3 text-amber-100 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-amber-700 md:p-0 dark:text-white md:dark:hover:text-amber-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Services</a>
+							class="block py-2 px-3 text-amber-100 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-amber-700 md:p-0 dark:text-white md:dark:hover:text-amber-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Minuman</a>
 					</li>
 					<li>
 						<a href="#"
-							class="block py-2 px-3 text-amber-100 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-amber-700 md:p-0 dark:text-white md:dark:hover:text-amber-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Pricing</a>
+							class="block py-2 px-3 text-amber-100 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-amber-700 md:p-0 dark:text-white md:dark:hover:text-amber-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Side Dish</a>
 					</li>
 					<li>
 						<a href="#"
-							class="block py-2 px-3 text-amber-100 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-amber-700 md:p-0 dark:text-white md:dark:hover:text-amber-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Contact</a>
+							class="block py-2 px-3 text-amber-100 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-amber-700 md:p-0 dark:text-white md:dark:hover:text-amber-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">About</a>
 					</li>
 				</ul>
 			</div>
