@@ -1,0 +1,48 @@
+.food-card {
+    width: 30%; /* Adjusted to fit 3 cards per row */
+    min-width: 350px; /* Minimum width to maintain card size */
+    margin-bottom: 1.5rem;
+}
+
+@media (max-width: 1200px) {
+    .food-card {
+        width: 45%; /* 2 cards per row on medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .food-card {
+        width: 100%; /* 1 card per row on small screens */
+    }
+}
+.sort-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.sort-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    right: 0;
+    border-radius: 0.375rem;
+}
+
+.sort-dropdown:hover .sort-dropdown-content {
+    display: block;
+}
+
+.sort-dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.sort-dropdown-content a:hover {
+    background-color: #f1f1f1;
+    border-radius: 0.375rem;
+}

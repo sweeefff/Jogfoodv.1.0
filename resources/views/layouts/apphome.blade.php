@@ -38,7 +38,7 @@
 
 <body>
     <header>
-        @include('components.header')
+        @include('components.homenav')
     </header>
     <main>
         @yield('content')

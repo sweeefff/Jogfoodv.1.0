@@ -19,7 +19,8 @@
 					</svg>
 				</a>
 				<a href="https://mail.google.com/mail/?view=cm&fs=1&to=benzoatalumina@gmail.com" target="_blank"
-					rel="noopener noreferrer" class="flex items-center text-gray-800 dark:text-white hover:text-amber-500"
+					rel="noopener noreferrer"
+					class="flex items-center text-gray-800 dark:text-white hover:text-amber-500"
 					aria-label="Contact us">
 					<svg class="w-6 h-6 text-gray-800 dark:text-white hover:text-amber-500" aria-hidden="true"
 						xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -27,8 +28,9 @@
 							d="m3.5 5.5 7.893 6.036a1 1 0 0 0 1.214 0L20.5 5.5M4 19h16a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Z" />
 					</svg>
 				</a>
-				<a href="http://wa.me/+6285763526436?text=Halo,%20saya%20ingin%20bertanya%20mengenai%20JogFood!" target="_blank"
-					rel="noopener noreferrer" class="flex items-center text-gray-800 dark:text-white hover:text-amber-500"
+				<a href="http://wa.me/+6285763526436?text=Halo,%20saya%20ingin%20bertanya%20mengenai%20JogFood!"
+					target="_blank" rel="noopener noreferrer"
+					class="flex items-center text-gray-800 dark:text-white hover:text-amber-500"
 					aria-label="Contact us">
 					<svg class="w-6 h-6 text-gray-800 dark:text-white hover:text-amber-500" aria-hidden="true"
 						xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -40,7 +42,10 @@
 					</svg>
 				</a>
 			</ul>
+			<div class="text-md text-white"> &copy; {{ date('Y') }} Jogfood All rights reserved.
+			</div>
 		</div>
-	</div>
 </footer>
-
+<a href="#" id="back-to-top" title="Back to top"
+	class="hidden fixed bottom-10 right-10 p-4 bg-gray-600 rounded-full text-white hover:bg-gray-700 transition duration-300">
+	<i class="fas fa-angle-up" aria-hidden="true"></i></a>

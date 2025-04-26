@@ -6,6 +6,9 @@ use App\Http\Controllers\DataController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\StrukController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\RiwayatController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -16,19 +19,6 @@ Route::get('/data', [DataController::class, 'data']);
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/login', [LoginController::class, 'login']);
 Route::get('/menu', [MenuController::class, 'menu']);
-
-Route::get('/register', function () {
-    return view('registrasi');
-});
-
-Route::get('/change-password', function () {
-    return view('changepass');
-});
-
-Route::get('/detail', function () {
-    return view('pages/detail');
-});
-
-Route::get('/profile', function () {
-    return view('profile');
-});
+Route::get('/struk', [StrukController::class, 'struk']);
+Route::get('/order', [OrderController::class, 'order']);
+Route::get('/riwayat', [RiwayatController::class, 'riwayat']);
