@@ -58,19 +58,24 @@
 			</a>
 
 			<div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-				<svg class="w-6 h-6 text-gray-800 dark:text-white me-6" aria-hidden="true"
+				<div class="relative w-full max-w-xs">
+					<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+						<i class="fas fa-search text-gray-400"></i>
+					</div>
+					<input type="text"
+						class="block w-full pl-10 pr-3 py-4 border border-gray-300 rounded-lg bg-gray-50 focus:ring-amber-500 focus:border-amber-500"
+						placeholder="Cari Kulinermu">
+					<button
+						class="absolute right-2.5 bottom-2.5 bg-amber-600 
+						hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-4 py-2 text-white bg-amber-600">
+						Cari
+					</button>
+				</div>
+				<svg class="w-12 h-12 text-gray-800 dark:text-white me-6 p-2" aria-hidden="true"
 					xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
 					<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
 						d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312" />
 				</svg>
-
-				<button type="button"
-					class="focus:outline-none text-white bg-amber-400 hover:bg-amber-500 focus:ring-4 focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-amber-900"><a
-						href="login">Login</button></a>
-				<button type="button"
-					class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-amber-900 focus:outline-none bg-white rounded-lg border border-amber-200 hover:bg-amber-100 hover:text-blue-700 focus:z-10 focus:ring-4 
-					focus:ring-amber-100 dark:focus:ring-amber-700 dark:bg-amber-800 dark:text-amber-400 dark:border-amber-600 dark:hover:text-white dark:hover:bg-amber-700"><a
-						href="register">Register</button></a>
 				<button data-collapse-toggle="navbar-user" type="button"
 					class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
 					aria-controls="navbar-user" aria-expanded="false">
@@ -111,4 +116,3 @@
 		</div>
 	</nav>
 
-	<!--=========== End Header ==========-->
