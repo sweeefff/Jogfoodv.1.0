@@ -16,8 +16,6 @@
 			background-position: center;
 		}
 	</style>
-
-	<body>
 		<!---========== Start Banner ========-->
 		<div class="hero bg-gray-800 bg-opacity-50 pt-24 pb-16">
 			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -33,7 +31,7 @@
 					<div class="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
 						<div class="rounded-md shadow">
 							<a href="menu" class="w-full flex items-center justify-center px-8 py-3 border border-transparent
-								text-base font-medium rounded-md text-white bg-amber-600 hover:bg-amber-700 md:py-4 md:text-lg md:px-10">
+											text-base font-medium rounded-md text-white bg-amber-600 hover:bg-amber-700 md:py-4 md:text-lg md:px-10">
 								Jelajahi Sekarang
 							</a>
 						</div>
@@ -54,7 +52,7 @@
 						placeholder="Cari makanan, restoran, atau masakan...">
 					<button
 						class="absolute right-2.5 bottom-2.5 bg-amber-600 
-						hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-4 py-2 text-white bg-amber-600">
+									hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-4 py-2 text-white bg-amber-600">
 						Cari
 					</button>
 				</div>
@@ -162,7 +160,7 @@
 				</div>
 				<div class="mt-12 flex items-center justify-center">
 					<a href="#" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white 
-							bg-amber-600 hover:bg-amber-700">
+										bg-amber-600 hover:bg-amber-700">
 						Lihat Semua Menu
 						<svg class="ml-3 -mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
 							fill="currentColor" aria-hidden="true">
@@ -245,7 +243,7 @@
 									wisatawan saat mereka berkunjung ke Yogyakarta.
 								</p>
 								<a href="#" class="inline-block px-8 py-3 bg-amber-600 text-white rounded-full font-medium 
-										transition-all duration-300 hover:bg-amber-700 btn-hover">
+													transition-all duration-300 hover:bg-amber-700 btn-hover">
 									Rincian
 								</a>
 							</div>
@@ -257,18 +255,20 @@
 
 			<!-- End Section -->
 			<!--============Start QT Section===========-->
-			<div class=" qt bg-gray-50 py-14 ">
-				<div class="flex flex-col items-center justify-center">
-					<div class="text-center">
-						<p class="text-2xl font-semibold text-amber-100 mb-4">
-							"Di setiap sudut Jogja membawa cerita masing-masing bagi pengunjungnya.
-							Sampai jumpa di Jogja!"</p>
-					</div>
+			<div class="qt relative h-72 bg-cover bg-center">
+				<div class="absolute inset-0 bg-black/40"></div> <!-- Overlay hitam transparan -->
+				<div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-4">
+					<p class="text-xl md:text-3xl font-light mb-2 leading-relaxed">
+						"Di setiap sudut Jogja membawa cerita masing-masing bagi pengunjungnya. Sama sepertiku yang punya
+						cerita denganmu disana."
+					</p>
+					<p class="text-xl md:text-3xl font-bold">
+						Someone
+					</p>
 				</div>
 			</div>
 
 			<!--============ Back to Top ============-->
 			<a href="#" id="back-to-top" title="Back to top" style="display: none;"><i class="fas fa-angle-up"
 					aria-hidden="true"></i></a>
-		</body>
 @endsection
