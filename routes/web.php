@@ -19,6 +19,7 @@ use App\Http\Controllers\RekapController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\TblmenuController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AboutController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -42,3 +43,4 @@ Route::get('/rekap', [RekapController::class, 'rekap']);
 Route::get('/rating', [RatingController::class, 'rating']);
 Route::get('/tblmenu', [TblmenuController::class, 'tblmenu']);
 Route::get('/profile', [ProfileController::class, 'profile']);
+Route::get('/about', [AboutController::class, 'about']);
