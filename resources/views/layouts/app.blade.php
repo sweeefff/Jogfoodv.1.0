@@ -13,6 +13,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <link href="assets/css/flowbite.min.css" rel="stylesheet" />
 <script src="assets/css/flowbite.min.js"></script>
+<link href="assets/css/style.css" rel="stylesheet" />
 <script>
     tailwind.config = {
         theme: {
