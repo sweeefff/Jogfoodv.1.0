@@ -42,5 +42,6 @@ Route::get('/metode', [MetodeController::class, 'metode']);
 Route::get('/rekap', [RekapController::class, 'rekap']);
 Route::get('/rating', [RatingController::class, 'rating']);
 Route::get('/tblmenu', [TblmenuController::class, 'tblmenu']);
-Route::get('/profile', [ProfileController::class, 'profile']);
+Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 Route::get('/about', [AboutController::class, 'about']);

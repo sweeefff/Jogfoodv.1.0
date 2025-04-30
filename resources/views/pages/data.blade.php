@@ -90,9 +90,35 @@
                                 <a href="#" class="btn btn-primary">Edit</a>
                                 <a href="#" class="btn btn-danger">Delete</a>
                         </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Klose</td>
+                            <td>
+                                <a href="mailto:klose1002@gmail.com">klose@gmail.com</a>
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-primary">Edit</a>
+                                <a href="#" class="btn btn-danger">Delete</a>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>Ruth</td>
+                            <td>
+                                <a href="mailto:Ruthyohana02@gmail.com">ruthyohana@gmail.com</a>
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-primary">Edit</a>
+                                <a href="#" class="btn btn-danger">Delete</a>
+                        </tr>
                     </tbody>
                 </table>
         </div>
 </body>
+<script>
+    document.getElementById('toggleSidebar').addEventListener('click', function () {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.classList.toggle('show');
+    });
+</script>
 
 </html>
