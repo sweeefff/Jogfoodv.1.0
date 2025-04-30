@@ -61,6 +61,10 @@
         </div>
         <div class="flex items-center">
           <div class="flex items-center ms-3">
+            <button type="button"
+              class="flex items-center justify-center w-10 h-10 rounded-full bg-amber-100 hover:bg-amber-200 focus:outline-none me-3">
+              <i class="fas fa-bell text-amber-600"></i>
+            </button>
             <div>
               <button type="button"
                 class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
@@ -69,79 +73,80 @@
                 <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
                   alt="user photo">
               </button>
-            </div>
-            <div
-              class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-sm shadow-sm dark:bg-gray-700 dark:divide-gray-600"
-              id="dropdown-user">
-              <div class="px-4 py-3" role="none">
-                <p class="text-sm text-gray-900 dark:text-white" role="none">
-                  Neil Sims
-                </p>
-                <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                  neil.sims@flowbite.com
-                </p>
+              <div
+                class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-sm shadow-sm dark:bg-gray-700 dark:divide-gray-600"
+                id="dropdown-user">
+                <div class="px-4 py-3" role="none">
+                  <p class="text-sm text-gray-900 dark:text-white" role="none">
+                    Neil Sims
+                  </p>
+                  <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
+                    neil.sims@flowbite.com
+                  </p>
+                </div>
+                <ul class="py-1" role="none">
+                  <li>
+                    <a href="#"
+                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                      role="menuitem">Dashboard</a>
+                  </li>
+                  <li>
+                    <a href="#"
+                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                      role="menuitem">Settings</a>
+                  </li>
+                  <li>
+                    <a href="#"
+                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                      role="menuitem">Earnings</a>
+                  </li>
+                  <li>
+                    <a href="#"
+                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                      role="menuitem">Sign out</a>
+                  </li>
+                </ul>
               </div>
-              <ul class="py-1" role="none">
-                <li>
-                  <a href="#"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                    role="menuitem">Dashboard</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                    role="menuitem">Settings</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                    role="menuitem">Earnings</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                    role="menuitem">Sign out</a>
-                </li>
-              </ul>
             </div>
           </div>
         </div>
       </div>
-    </div>
   </nav>
 
   <aside
-        class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 bg-white shadow-lg">
-        <div class="h-full px-3 py-4 overflow-y-auto bg-amber-800">
-            <ul class="space-y-2 font-medium">
-                <li>
-                    <a href="#" class="flex items-center p-2 text-white rounded-lg bg-amber-700 group">
-                        <i class="fas fa-table w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
-                        <span class="ms-3">Menu Items</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
-                        <i class="fas fa-store w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
-                        <span class="ms-3">Restaurants</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
-                        <i class="fas fa-tags w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
-                        <span class="ms-3">Categories</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
-                        <i
-                            class="fas fa-chart-line w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
-                        <span class="ms-3">Analytics</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </aside>
+    class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 bg-white shadow-lg">
+    <div class="h-full px-3 py-4 overflow-y-auto bg-amber-800">
+      <div class="flex items-center ps-2.5 mb-8 mt-2">
+        <img src="" alt="Logo" class="mr-4">
+      </div>
+      <ul class="space-y-2 font-medium">
+        <li>
+          <a href="#" class="flex items-center p-2 text-white rounded-lg bg-amber-700 group">
+            <i class="fas fa-table w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
+            <span class="ms-3">Menu Items</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
+            <i class="fas fa-store w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
+            <span class="ms-3">Restaurants</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
+            <i class="fas fa-tags w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
+            <span class="ms-3">Categories</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
+            <i class="fas fa-chart-line w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
+            <span class="ms-3">Analytics</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </aside>
 
 
 
