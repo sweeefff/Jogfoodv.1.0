@@ -7,8 +7,8 @@
     <div class="p-4">
         <div class="flex justify-between items-start">
             <div>
-                <h3 class="text-lg font-medium text-gray-900">Food Name</h3>
-                <p class="mt-1 text-sm text-gray-500">Food Description</p>
+                <h3 class="text-lg font-medium text-gray-900">{{ $name }}</h3>
+                <p class="mt-1 text-sm text-gray-500">{{ $desc }}</p>
             </div>
             <div class="flex items-center">
                 <svg class="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +47,7 @@
                 <i class="fas fa-utensils text-gray-400 text-sm mr-1"></i>
                 <span class="text-gray-500 text-sm">Merchant Name</span>
             </div>
-            <span class="text-gray-900 font-medium">Rp 30.000</span>
+            <span class="text-gray-900 font-medium">{{ $price }}</span>
         </div>
         <div class="flex items-center justify-center w-full mt-4">
             <button type="button"
