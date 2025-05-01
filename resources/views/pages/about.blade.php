@@ -1,33 +1,4 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About Us - JogFood</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            'orange': {
-              '50': '#fff7ed',
-              '100': '#ffedd5',
-              '200': '#fed7aa',
-              '300': '#fdba74',
-              '400': '#fb923c',
-              '500': '#f97316',
-              '600': '#ea580c',
-              '700': '#c2410c',
-              '800': '#9a3412',
-              '900': '#7c2d12',
-            }
-          }
-        }
-      }
-    }
-  </script>
+
   <style>
     .hero-pattern {
       background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23fb923c' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
@@ -42,14 +13,12 @@
       background-color: rgba(249, 115, 22, 0.1);
     }
   </style>
-</head>
-<body class="bg-orange-50 text-gray-800 font-sans antialiased">
-
 @extends('layouts.app')
+@section('title', 'Tentang Kita')
 
 @section('content')
-
-  <!-- Hero Section -->
+<div class="text-gray-800 font-sans antialiased">
+  
   <section class="hero-pattern bg-gradient-to-b from-orange-500 to-orange-600 text-white py-24 text-center relative overflow-hidden">
     <div class="absolute inset-0 bg-black opacity-10"></div>
     <div class="container mx-auto px-6 relative z-10">
@@ -198,8 +167,7 @@
       </div>
     </div>
   </section>
-
-  @endsection
+  </div>
 
 <script>
   // Simple animation for elements
@@ -215,5 +183,6 @@
   });
 </script>
 
-</body>
-</html>
+</div>
+
+@endsection
