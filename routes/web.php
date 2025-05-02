@@ -34,7 +34,7 @@ Route::get('/struk', [StrukController::class, 'struk']);
 Route::get('/order', [OrderController::class, 'order']);
 Route::get('/riwayat', [RiwayatController::class, 'riwayat']);
 Route::get('/detail', [DetailController::class, 'detail']);
-Route::get('/register', [RegistrasiController::class, 'register']);
+Route::get('/registrasi', [RegistrasiController::class, 'registrasi']);
 Route::get('/detailpsn', [DetailpsnController::class, 'detailpsn']);
 Route::get('/keranjang', [KeranjangController::class, 'keranjang']);
 Route::get('/komentar', [KomentarController::class, 'komentar']);
