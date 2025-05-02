@@ -30,11 +30,11 @@
 						class="block py-2 pl-3 pr-4 text-white rounded hover:bg-amber-500 md:hover:bg-transparent md:border-0 md:hover:text-amber-300 md:p-0 text-lg">Menu</a>
 				</li>
 				<li>
-					<a href="#"
+					<a href="menu"
 						class="block py-2 pl-3 pr-4 text-white rounded hover:bg-amber-500 md:hover:bg-transparent md:border-0 md:hover:text-amber-300 md:p-0 text-lg">Minuman</a>
 				</li>
 				<li>
-					<a href="#"
+					<a href="menu"
 						class="block py-2 pl-3 pr-4 text-white rounded hover:bg-amber-500 md:hover:bg-transparent md:border-0 md:hover:text-amber-300 md:p-0 text-lg">Side
 						Dish</a>
 				</li>
@@ -103,4 +103,6 @@
 		</div>
 	</div>
 </nav>
+
+
 

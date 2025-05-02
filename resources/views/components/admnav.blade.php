@@ -1,5 +1,5 @@
-<nav class="fixed top-0 z-50 w-full bg-amber-800 border-b border-amber-200 dark:bg-amber-800 dark:border-amber-800">
-    <div class="px-3 py-3 lg:px-5 lg:pl-3">
+<nav class="fixed top-0 z-50 w-full bg-amber-600 border-b border-amber-200 dark:bg-amber-800 dark:border-amber-800">
+    <div class="px-3 py-3 lg:px-5 lg:pl-3 bg-amber-600">
         <div class="flex items-center justify-between">
             <div class="flex items-center justify-start rtl:justify-end">
                 <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
@@ -71,11 +71,12 @@
                 </div>
             </div>
         </div>
+    </div>
 </nav>
 
 <aside
     class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 bg-white shadow-lg">
-    <div class="h-full px-3 py-4 overflow-y-auto bg-amber-800">
+    <div class="h-full px-3 py-4 overflow-y-auto bg-amber-600">
         <div class="flex items-center ps-2.5 mb-8 mt-2">
             <img src="" alt="Logo" class="mr-4">
         </div>
