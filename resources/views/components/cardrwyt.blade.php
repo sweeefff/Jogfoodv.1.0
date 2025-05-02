@@ -52,8 +52,10 @@
             </div>
             <div class="flex flex-wrap gap-2">
                 <a href="rating"><button class="bg-orange-500 text-white px-6 py-2 rounded">Nilai</button></a>
-                <button class="border border-gray-300 text-gray-600 px-6 py-2 rounded">Hubungi Penjual</button>
-                <button class="border border-gray-300 text-gray-600 px-6 py-2 rounded">Beli Lagi</button>
+                <a href="detail"><button class="bg-orange-500 text-white px-6 py-2 rounded">Lihat Detail Menu</button></a>
+                <a href="http://wa.me/+6285763526436?text=Halo,%20saya%20ingin%20bertanya%20mengenai%20JogFood!">
+                    <button class="border border-gray-300 text-gray-600 px-6 py-2 rounded">Hubungi Penjual</button></a>
+                <a href="detail"><button class="border border-gray-300 text-gray-600 px-6 py-2 rounded">Beli Lagi</button></a>
             </div>
         </div>
     </div>

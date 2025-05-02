@@ -84,25 +84,31 @@
             <li>
                 <a href="#" class="flex items-center p-2 text-white rounded-lg bg-amber-700 group">
                     <i class="fas fa-table w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
-                    <span class="ms-3">Menu Items</span>
+                    <span class="ms-3">Makanan</span>
                 </a>
             </li>
             <li>
                 <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
                     <i class="fas fa-store w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
-                    <span class="ms-3">Restaurants</span>
+                    <span class="ms-3">Minuman</span>
                 </a>
             </li>
             <li>
                 <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
                     <i class="fas fa-tags w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
-                    <span class="ms-3">Categories</span>
+                    <span class="ms-3">Camilan</span>
                 </a>
             </li>
             <li>
                 <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
                     <i class="fas fa-chart-line w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
-                    <span class="ms-3">Analytics</span>
+                    <span class="ms-3"></span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
+                    <i class="fas fa-chart-line w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
+                    <span class="ms-3">Rekap Penjualan</span>
                 </a>
             </li>
         </ul>

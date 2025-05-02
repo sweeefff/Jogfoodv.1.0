@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<title>Jogfood</title>
+<title>@yield ('title', 'Jogfood')</title>
 <!-- favicon-->
 <link rel="icon" href="assets/icon/favicon.png" type="image/x-icon">
 
@@ -10,8 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!--Bootstrap4 link -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="assets/css/flowbite.min.css" rel="stylesheet" />
     <script src="assets/css/flowbite.min.js"></script>
     <link href="assets/css/style.css" rel="stylesheet" />
@@ -26,7 +26,7 @@
                             200: '#fed7aa',
                             300: '#fdba74',
                             400: '#fb923c',
-                            500: '#f97316',
+                            500: '#f97316',  // This standard amber-500 matches your desired navbar color
                             600: '#ea580c',
                             700: '#c2410c',
                             800: '#9a3412',
@@ -43,7 +43,7 @@
     <header>
         @include('components.header')
     </header>
-    <main>
+    <main classs="bg-amber-50">
         @yield('content')
     </main>
     <footer>
