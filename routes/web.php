@@ -41,7 +41,7 @@ Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')
 Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 Route::get('/rating', [RatingController::class, 'rating']);
 Route::get('/rekap', [RekapController::class, 'rekap']);
-Route::get('/registrasi', [RegistrasiController::class, 'registrasi']);
+Route::get('/register', [RegistrasiController::class, 'registrasi']);
 Route::get('/riwayat', [RiwayatController::class, 'riwayat']);
 Route::get('/struk', [StrukController::class, 'struk']);
 Route::get('/tblmenu', [TblmenuController::class, 'tblmenu']);

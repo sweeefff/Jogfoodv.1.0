@@ -4,7 +4,7 @@
 
 @section('content')
     <main class="flex-1 md:flex md:flex-row md:justify-center md:mx-4 md:my-8">
-        <div class="container mx-auto border p-4 rounded-lg shadow md:w-1/2 lg:w-1/3">
+        <div class="container mx-auto border p-4 rounded-lg shadow md:w-1/2 lg:w-1/3 bg-white">
             <h1 class="text-2xl font-semibold text-center">Pemesanan</h1>
 
             <div class="mt-4 p-4">
@@ -32,7 +32,7 @@
                         <span>Rp.10.000</span>
                     </div>
                     <div class="flex justify-between">
-                        <span>PPN 11</span>
+                        <span>PPN 11%</span>
                         <span>Rp.0.00</span>
                     </div>
                     <div class="flex justify-between font-bold pt-2 border-t border-gray-200">
