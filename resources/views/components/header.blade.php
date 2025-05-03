@@ -36,11 +36,12 @@
 				<li>
 					<a href="menu"
 						class="block py-2 pl-3 pr-4 text-white rounded hover:bg-amber-500 md:hover:bg-transparent md:border-0 md:hover:text-amber-300 md:p-0 text-lg">Camilan
-						</a>
+					</a>
 				</li>
 				<li>
 					<a href="about"
-						class="block py-2 pl-3 pr-4 text-white rounded hover:bg-amber-500 md:hover:bg-transparent md:border-0 md:hover:text-amber-300 md:p-0 text-lg">Tentang Kita</a>
+						class="block py-2 pl-3 pr-4 text-white rounded hover:bg-amber-500 md:hover:bg-transparent md:border-0 md:hover:text-amber-300 md:p-0 text-lg">Tentang
+						Kita</a>
 				</li>
 			</ul>
 		</div>
@@ -62,13 +63,15 @@
 			</div>
 
 			<!-- Cart icon -->
-			<button type="button" class="mr-3 flex text-white">
-				<svg class="w-7 h-7" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-					viewBox="0 0 24 24">
-					<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-						d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312" />
-				</svg>
-			</button>
+			<a href=keranjang>
+				<button type="button" class="mr-3 flex text-white">
+					<svg class="w-7 h-7" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+						viewBox="0 0 24 24">
+						<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+							d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312" />
+					</svg>
+				</button>
+			</a>
 
 			<!-- Profile dropdown -->
 			<button type="button" class="flex text-sm rounded-full" id="user-menu-button" aria-expanded="false"
@@ -93,7 +96,8 @@
 						<a href="riwayat" class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Riwayat</a>
 					</li>
 					<li>
-						<a href="detailpsn" class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Pesanan</a>
+						<a href="detailpsn"
+							class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Pesanan</a>
 					</li>
 					<li>
 						<a href="logout" class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Sign out</a>
@@ -103,6 +107,3 @@
 		</div>
 	</div>
 </nav>
-
-
-

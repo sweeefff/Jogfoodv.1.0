@@ -23,22 +23,22 @@
             <button
                 class="flex items-center text-gray-700 bg-white border border-gray-300 rounded-lg px-4 py-2 hover:bg-gray-50">
                 <i class="fas fa-sort mr-2"></i>
-                Sort by: <span class="ml-1 font-medium">Popularity</span>
+                Sort by: <span class="ml-1 font-medium">Populer</span>
                 <i class="fas fa-chevron-down ml-2 text-xs"></i>
             </button>
             <div class="sort-dropdown-content">
                 <a href="#" class="sort-option font-semibold text-amber-600" data-sort="popularity"
                     onclick="sortFoodCards('popularity')">
-                    <i class="fas fa-star mr-2"></i>Popularity
+                    <i class="fas fa-star mr-2"></i>Populer
                 </a>
                 <a href="#" class="sort-option" data-sort="price-low" onclick="sortFoodCards('price-low')">
-                    <i class="fas fa-arrow-down mr-2"></i>Price: Low to High
+                    <i class="fas fa-arrow-down mr-2"></i>Termurah
                 </a>
                 <a href="#" class="sort-option" data-sort="price-high" onclick="sortFoodCards('price-high')">
-                    <i class="fas fa-arrow-up mr-2"></i>Price: High to Low
+                    <i class="fas fa-arrow-up mr-2"></i>Termahal
                 </a>
                 <a href="#" class="sort-option" data-sort="name" onclick="sortFoodCards('name')">
-                    <i class="fas fa-sort-alpha-down mr-2"></i>Alphabetical
+                    <i class="fas fa-sort-alpha-down mr-2"></i>Secara Alfabet
                 </a>
             </div>
         </div>
