@@ -4,7 +4,7 @@
 <head>
     <title>@yield('title', 'Jogfood')</title>
     <!-- favicon-->
-    <link rel="icon" href="{{ asset('assets/icon/favicon.png') }}" type="image/x-icon">
+    <link rel="icon" href="assets/icon/favicon.png" type="image/x-icon">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,9 +12,9 @@
     <!--CSS & JS Resources -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="{{ asset('assets/css/flowbite.min.css') }}" rel="stylesheet" />
-    <script src="{{ asset('assets/css/flowbite.min.js') }}" defer></script>
-    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" />
+    <link href="assets/css/flowbite.min.css" rel="stylesheet" />
+    <script src="assets/css/flowbite.min.js" defer></script>
+    <link href="assets/css/style.css" rel="stylesheet" />
     <script>
         tailwind.config = {
             theme: {
