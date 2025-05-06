@@ -38,15 +38,11 @@ Route::get('/menu', [MenuController::class, 'menu']);
 Route::get('/metode', [MetodeController::class, 'metode']);
 Route::get('/order', [OrderController::class, 'order']);
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-<<<<<<< HEAD
 Route::get('/about', [AboutController::class, 'about']);
 Route::get('/rekap', [RekapController::class, 'index'])->name('rekap.index');
-=======
 Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 Route::get('/rating', [RatingController::class, 'rating']);
-Route::get('/rekap', [RekapController::class, 'rekap']);
 Route::get('/register', [RegistrasiController::class, 'registrasi']);
 Route::get('/riwayat', [RiwayatController::class, 'riwayat']);
 Route::get('/struk', [StrukController::class, 'struk']);
 Route::get('/tblmenu', [TblmenuController::class, 'tblmenu']);
->>>>>>> 91397275104d425ab54373348c7d37f4455ced65
