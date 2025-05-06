@@ -1,334 +1,279 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Detail Produk - JogFood</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: {
-              50: '#fff7ed',
-              100: '#ffedd5',
-              200: '#fed7aa',
-              300: '#fdba74',
-              400: '#fb923c',
-              500: '#f97316',
-              600: '#ea580c',
-              700: '#c2410c',
-              800: '#9a3412',
-              900: '#7c2d12',
-            }
-          }
-        }
-      }
-    }
-  </script>
+@extends('layouts.app')
+
+@section('title', 'Detail')
+
+@section('content')
   <style>
     .product-image {
-      background-image: linear-gradient(to bottom, rgba(251, 146, 60, 0.1), rgba(251, 146, 60, 0.3));
+    transition: transform 0.3s ease;
     }
+
+    .product-image:hover {
+    transform: scale(1.03);
+    }
+
     .rating-star {
-      color: #f59e0b;
+    color: #fbbf24;
     }
+
     .quantity-btn {
-      transition: all 0.2s ease;
+    transition: all 0.2s ease;
     }
+
     .quantity-btn:hover {
-      background-color: #fb923c;
-      color: white;
+    background-color: #fed7aa;
     }
-    .nav-btn {
-      transition: all 0.2s ease;
-    }
-    .nav-btn:hover {
-      background-color: #fb923c;
-      color: white;
+
+    .tab-active {
+    border-bottom: 3px solid #f97316;
+    font-weight: 600;
+    color: #9a3412;
     }
   </style>
-</head>
-<body class="bg-primary-50">
+    <!-- Main Container -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-  <!-- Header -->
-  <header class="flex items-center justify-between p-4 bg-white shadow-md sticky top-0 z-10">
-    <div class="flex items-center gap-2">
-      <button class="text-2xl text-primary-600 hover:text-primary-800 transition-colors">
-        <i class="fas fa-arrow-left"></i>
-      </button>
-      <div class="flex items-center">
-        <span class="text-primary-600 font-bold text-xl">Jog</span>
-        <span class="text-orange-800 font-bold text-xl">Food</span>
-      </div>
-    </div>
-    <div class="flex items-center gap-4">
-      <a href="#" class="text-primary-600 hover:text-primary-800 transition-colors">Login</a>
-      <a href="#" class="bg-primary-500 text-white px-4 py-1 rounded-full hover:bg-primary-600 transition-colors">Daftar</a>
-      <button class="text-2xl text-primary-600 hover:text-primary-800 transition-colors relative">
-        <i class="fas fa-shopping-cart"></i>
-        <span class="absolute -top-2 -right-2 bg-primary-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
-      </button>
-    </div>
-  </header>
 
-  <!-- Main Content -->
-  <main class="max-w-6xl mx-auto p-4">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-white p-6 rounded-xl shadow-lg">
+    <!-- Product Section -->
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+      <div class="grid md:grid-cols-2 gap-8 p-6">
 
-      <!-- Product Image Carousel -->
-      <div class="flex flex-col items-center">
-        <div class="w-full aspect-square rounded-xl overflow-hidden product-image flex items-center justify-center relative">
-          <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
-               alt="Gudeg" class="w-full h-full object-cover">
-          <div class="absolute top-2 right-2 bg-white/80 rounded-full p-2 shadow">
-            <i class="fas fa-heart text-primary-500"></i>
-          </div>
-        </div>
-        <div class="flex justify-between w-full mt-4">
-          <button class="nav-btn text-2xl bg-white p-2 rounded-full shadow hover:shadow-md">
-            <i class="fas fa-chevron-left"></i>
-          </button>
-          <div class="flex gap-2">
-            <div class="w-3 h-3 rounded-full bg-primary-300"></div>
-            <div class="w-3 h-3 rounded-full bg-primary-500"></div>
-            <div class="w-3 h-3 rounded-full bg-primary-300"></div>
-          </div>
-          <button class="nav-btn text-2xl bg-white p-2 rounded-full shadow hover:shadow-md">
-            <i class="fas fa-chevron-right"></i>
-          </button>
+      <!-- Product Image -->
+      <div class="flex justify-center">
+        <div
+        class="product-image border-2 border-amber-100 rounded-xl w-full max-w-md h-96 flex items-center justify-center bg-white overflow-hidden">
+        <img
+          src="https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+          alt="Gudeg" class="w-full h-full object-cover">
         </div>
       </div>
 
       <!-- Product Info -->
-      <div class="flex flex-col gap-4">
-        <div class="flex items-center justify-between">
-          <h1 class="text-3xl font-bold text-gray-800">Gudeg Yu Djum</h1>
-          <div class="flex items-center gap-1 bg-primary-100 px-3 py-1 rounded-full">
-            <span class="rating-star"><i class="fas fa-star"></i></span>
-            <span class="font-bold text-primary-800">5.0</span>
-          </div>
+      <div class="flex flex-col">
+        <div class="flex justify-between items-start mb-2">
+        <h1 class="text-3xl font-bold text-gray-800">Gudeg Jogja Special</h1>
+        <button class="text-gray-400 hover:text-amber-500 transition-colors">
+          <i class="far fa-heart text-2xl"></i>
+        </button>
         </div>
-        <p class="text-2xl text-primary-600 font-bold">Rp30.000</p>
-        <p class="text-sm text-gray-500">Stok: 50 porsi</p>
 
-        <!-- Quantity -->
-        <div class="flex items-center gap-4 mt-2">
-          <button class="quantity-btn px-3 py-1 border border-primary-300 rounded-full hover:border-primary-500">
-            <i class="fas fa-minus"></i>
+        <div class="flex items-center mb-4">
+        <div class="flex rating-star">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star-half-alt"></i>
+        </div>
+        <span class="ml-2 text-sm text-gray-600">(25 ulasan)</span>
+        </div>
+
+        <p class="text-2xl font-semibold text-amber-600 mb-4">Rp 30.000</p>
+
+        <div class="mb-6">
+        <p class="text-gray-700 leading-relaxed">Gudeg khas Jogja dengan rasa manis legit, dimasak dengan bumbu
+          rempah pilihan dan nangka muda pilihan. Disajikan dengan areh kental dan sambal krecek yang menggugah
+          selera.</p>
+        </div>
+
+        <!-- Quantity Selector -->
+        <div class="mb-6">
+        <label class="block text-sm font-medium text-gray-700 mb-2">Jumlah</label>
+        <div class="flex items-center">
+          <button
+          class="quantity-btn w-10 h-10 rounded-l-lg border border-amber-300 flex items-center justify-center text-amber-600 hover:bg-amber-100">
+          <i class="fas fa-minus"></i>
           </button>
-          <span class="font-medium w-8 text-center">1</span>
-          <button class="quantity-btn px-3 py-1 border border-primary-300 rounded-full hover:border-primary-500">
-            <i class="fas fa-plus"></i>
+          <div class="w-16 h-10 border-t border-b border-amber-300 flex items-center justify-center">
+          <span>1</span>
+          </div>
+          <button
+          class="quantity-btn w-10 h-10 rounded-r-lg border border-amber-300 flex items-center justify-center text-amber-600 hover:bg-amber-100">
+          <i class="fas fa-plus"></i>
           </button>
+        </div>
         </div>
 
         <!-- Action Buttons -->
-        <div class="flex gap-4 mt-6">
-          <button class="flex-1 bg-primary-100 text-primary-700 py-3 rounded-xl font-medium hover:bg-primary-200 transition-colors flex items-center justify-center gap-2">
-            <i class="fas fa-cart-plus"></i> Tambah
-          </button>
-          <button class="flex-1 bg-primary-600 text-white py-3 rounded-xl font-medium hover:bg-primary-700 transition-colors flex items-center justify-center gap-2">
-            <i class="fas fa-bolt"></i> Beli
-          </button>
+        <div class="flex gap-4 mt-auto">
+        <button
+          class="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-medium py-3 px-6 rounded-lg shadow-md transition duration-300 flex items-center justify-center gap-2">
+          <i class="fas fa-shopping-cart"></i>
+          <span>Tambah ke Keranjang</span>
+        </button>
+        <button
+          class="flex-1 bg-white border-2 border-amber-500 text-amber-600 hover:bg-amber-50 font-medium py-3 px-6 rounded-lg shadow-sm transition duration-300 flex items-center justify-center gap-2">
+          <i class="fas fa-bolt"></i>
+          <span>Beli Sekarang</span>
+        </button>
         </div>
+      </div>
+      </div>
 
-        <!-- Deskripsi -->
-        <div class="mt-6">
-          <h2 class="font-bold text-lg mb-2 text-gray-800 flex items-center gap-2">
-            <i class="fas fa-info-circle text-primary-500"></i> Deskripsi
-          </h2>
-          <p class="text-gray-600">
-            Gudeg Yu Djum adalah gudeg legendaris dari Yogyakarta yang telah berdiri sejak 1940. Terbuat dari nangka muda yang dimasak dengan santan dan rempah-rempah khas selama berjam-jam, menghasilkan cita rasa manis gurih yang khas. Disajikan dengan nasi hangat, ayam kampung, telur, sambal goreng krecek, dan sambal khas.
-          </p>
-        </div>
+      <!-- Product Details Tabs -->
+      <div class="border-t border-gray-200">
+      <div class="flex overflow-x-auto">
+        <button class="px-6 py-4 font-medium text-amber-600 tab-active whitespace-nowrap">
+        Deskripsi Produk
+        </button>
+        <button class="px-6 py-4 font-medium text-gray-500 hover:text-amber-500 whitespace-nowrap">
+        Komposisi
+        </button>
+        <button class="px-6 py-4 font-medium text-gray-500 hover:text-amber-500 whitespace-nowrap">
+        Ulasan (25)
+        </button>
+      </div>
 
-        <!-- Komposisi -->
-        <div class="mt-6">
-          <h2 class="font-bold text-lg mb-2 text-gray-800 flex items-center gap-2">
-            <i class="fas fa-utensils text-primary-500"></i> Komposisi
-          </h2>
-          <ul class="list-disc list-inside text-gray-600 space-y-1">
-            <li>Nangka muda pilihan</li>
-            <li>Santan kelapa asli</li>
-            <li>Gula merah</li>
-            <li>Daun salam dan daun jati</li>
-            <li>Bumbu rempah khas</li>
-            <li>Ayam kampung</li>
-            <li>Telur rebus</li>
-          </ul>
+      <div class="p-6">
+        <h3 class="text-lg font-semibold mb-3">Deskripsi Lengkap</h3>
+        <div class="prose max-w-none text-gray-700">
+        <p>Gudeg Jogja Special adalah hidangan tradisional khas Yogyakarta yang terbuat dari nangka muda yang
+          dimasak dengan gula merah dan santan, serta diberi bumbu rempah-rempah seperti bawang putih, bawang merah,
+          kemiri, ketumbar, daun salam, dan lengkuas.</p>
+        <p class="mt-3">Proses memasak gudeg memakan waktu berjam-jam untuk mendapatkan tekstur yang lembut dan rasa
+          yang meresap sempurna. Gudeg ini disajikan dengan nasi hangat, ayam kampung, telur, sambal krecek, dan
+          areh (kuah kental dari santan).</p>
+        <ul class="mt-4 space-y-2">
+          <li class="flex items-start">
+          <i class="fas fa-check text-amber-500 mt-1 mr-2"></i>
+          <span>Dibuat dengan bahan-bahan pilihan</span>
+          </li>
+          <li class="flex items-start">
+          <i class="fas fa-check text-amber-500 mt-1 mr-2"></i>
+          <span>Tanpa pengawet dan MSG</span>
+          </li>
+          <li class="flex items-start">
+          <i class="fas fa-check text-amber-500 mt-1 mr-2"></i>
+          <span>Proses memasak tradisional selama 8 jam</span>
+          </li>
+          <li class="flex items-start">
+          <i class="fas fa-check text-amber-500 mt-1 mr-2"></i>
+          <span>Kemasan higienis dan aman untuk dikirim</span>
+          </li>
+        </ul>
         </div>
-
-        <!-- Penilaian -->
-        <div class="mt-6 p-4 border border-primary-100 rounded-xl bg-white hover:shadow-md transition-shadow cursor-pointer">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
-              <div class="flex">
-                <span class="rating-star"><i class="fas fa-star"></i></span>
-                <span class="rating-star"><i class="fas fa-star"></i></span>
-                <span class="rating-star"><i class="fas fa-star"></i></span>
-                <span class="rating-star"><i class="fas fa-star"></i></span>
-                <span class="rating-star"><i class="fas fa-star-half-alt"></i></span>
-              </div>
-              <span class="font-bold text-primary-800">4.5</span>
-              <span class="text-gray-500">(25 ulasan)</span>
-            </div>
-            <button class="text-primary-600 hover:text-primary-800">
-              <i class="fas fa-chevron-right"></i>
-            </button>
-          </div>
-        </div>
+      </div>
       </div>
     </div>
 
-    <!-- Produk Lainnya -->
-    <section class="mt-10">
-      <h2 class="text-2xl font-bold mb-4 text-gray-800 flex items-center gap-2">
-        <i class="fas fa-utensils text-primary-500"></i> Produk Lainnya
-      </h2>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div class="bg-white rounded-xl overflow-hidden shadow hover:shadow-md transition-shadow cursor-pointer">
-          <div class="h-40 bg-primary-100 flex items-center justify-center">
-            <img src="https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
-                 alt="Bakpia" class="w-full h-full object-cover">
-          </div>
-          <div class="p-3">
-            <h3 class="font-semibold text-gray-800">Bakpia Pathuk</h3>
-            <p class="text-primary-600 font-bold">Rp25.000</p>
-            <div class="flex items-center mt-1">
-              <span class="rating-star text-sm"><i class="fas fa-star"></i></span>
-              <span class="text-xs text-gray-500 ml-1">4.8 (120)</span>
-            </div>
-          </div>
+    <!-- Related Products -->
+    <div class="mt-12">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6">Produk Lainnya</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <!-- Product 1 -->
+      <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+        <div class="h-48 bg-gray-100 flex items-center justify-center">
+        <img
+          src="https://images.unsplash.com/photo-1562259925-58ed0e1dff36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+          alt="Sate" class="w-full h-full object-cover">
         </div>
-        
-        <div class="bg-white rounded-xl overflow-hidden shadow hover:shadow-md transition-shadow cursor-pointer">
-          <div class="h-40 bg-primary-100 flex items-center justify-center">
-            <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1371&q=80" 
-                 alt="Sate" class="w-full h-full object-cover">
+        <div class="p-4">
+        <h3 class="font-medium text-gray-800 mb-1">Sate Ayam</h3>
+        <p class="text-amber-600 font-semibold">Rp 25.000</p>
+        <div class="flex items-center mt-2">
+          <div class="flex rating-star text-sm">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="far fa-star"></i>
           </div>
-          <div class="p-3">
-            <h3 class="font-semibold text-gray-800">Sate Klathak</h3>
-            <p class="text-primary-600 font-bold">Rp35.000</p>
-            <div class="flex items-center mt-1">
-              <span class="rating-star text-sm"><i class="fas fa-star"></i></span>
-              <span class="text-xs text-gray-500 ml-1">4.9 (85)</span>
-            </div>
-          </div>
+          <span class="ml-1 text-xs text-gray-600">(18)</span>
         </div>
-        
-        <div class="bg-white rounded-xl overflow-hidden shadow hover:shadow-md transition-shadow cursor-pointer">
-          <div class="h-40 bg-primary-100 flex items-center justify-center">
-            <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1468&q=80" 
-                 alt="Nasi" class="w-full h-full object-cover">
-          </div>
-          <div class="p-3">
-            <h3 class="font-semibold text-gray-800">Nasi Liwet</h3>
-            <p class="text-primary-600 font-bold">Rp28.000</p>
-            <div class="flex items-center mt-1">
-              <span class="rating-star text-sm"><i class="fas fa-star"></i></span>
-              <span class="text-xs text-gray-500 ml-1">4.7 (65)</span>
-            </div>
-          </div>
-        </div>
-        
-        <div class="bg-white rounded-xl overflow-hidden shadow hover:shadow-md transition-shadow cursor-pointer">
-          <div class="h-40 bg-primary-100 flex items-center justify-center">
-            <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
-                 alt="Salad" class="w-full h-full object-cover">
-          </div>
-          <div class="p-3">
-            <h3 class="font-semibold text-gray-800">Gado-Gado</h3>
-            <p class="text-primary-600 font-bold">Rp22.000</p>
-            <div class="flex items-center mt-1">
-              <span class="rating-star text-sm"><i class="fas fa-star"></i></span>
-              <span class="text-xs text-gray-500 ml-1">4.6 (42)</span>
-            </div>
-          </div>
         </div>
       </div>
-    </section>
-  </main>
 
-  <!-- Footer -->
-  <footer class="mt-16 bg-primary-900 text-white">
-    <div class="max-w-6xl mx-auto p-8 grid grid-cols-1 md:grid-cols-4 gap-8">
-      <div>
-        <div class="flex items-center mb-4">
-          <span class="text-white font-bold text-xl">Jog</span>
-          <span class="text-orange-300 font-bold text-xl">Food</span>
+      <!-- Product 2 -->
+      <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+        <div class="h-48 bg-gray-100 flex items-center justify-center">
+        <img
+          src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80"
+          alt="Bakso" class="w-full h-full object-cover">
         </div>
-        <p class="text-primary-200">Temukan kuliner terbaik Yogyakarta dalam genggaman Anda.</p>
-        <div class="flex gap-4 mt-4">
-          <a href="#" class="text-primary-200 hover:text-white"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="text-primary-200 hover:text-white"><i class="fab fa-instagram"></i></a>
-          <a href="#" class="text-primary-200 hover:text-white"><i class="fab fa-twitter"></i></a>
+        <div class="p-4">
+        <h3 class="font-medium text-gray-800 mb-1">Bakso Malang</h3>
+        <p class="text-amber-600 font-semibold">Rp 20.000</p>
+        <div class="flex items-center mt-2">
+          <div class="flex rating-star text-sm">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star-half-alt"></i>
+          <i class="far fa-star"></i>
+          </div>
+          <span class="ml-1 text-xs text-gray-600">(32)</span>
+        </div>
         </div>
       </div>
-      <div>
-        <h3 class="font-bold text-lg mb-4">Tautan Cepat</h3>
-        <ul class="space-y-2">
-          <li><a href="#" class="text-primary-200 hover:text-white">Beranda</a></li>
-          <li><a href="#" class="text-primary-200 hover:text-white">Produk</a></li>
-          <li><a href="#" class="text-primary-200 hover:text-white">Promo</a></li>
-          <li><a href="#" class="text-primary-200 hover:text-white">Tentang Kami</a></li>
-        </ul>
+
+      <!-- Product 3 -->
+      <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+        <div class="h-48 bg-gray-100 flex items-center justify-center">
+        <img
+          src="https://images.unsplash.com/photo-1585032226651-759b368d7246?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1392&q=80"
+          alt="Rawon" class="w-full h-full object-cover">
+        </div>
+        <div class="p-4">
+        <h3 class="font-medium text-gray-800 mb-1">Rawon</h3>
+        <p class="text-amber-600 font-semibold">Rp 28.000</p>
+        <div class="flex items-center mt-2">
+          <div class="flex rating-star text-sm">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star-half-alt"></i>
+          </div>
+          <span class="ml-1 text-xs text-gray-600">(45)</span>
+        </div>
+        </div>
       </div>
-      <div>
-        <h3 class="font-bold text-lg mb-4">Bantuan</h3>
-        <ul class="space-y-2">
-          <li><a href="#" class="text-primary-200 hover:text-white">Pusat Bantuan</a></li>
-          <li><a href="#" class="text-primary-200 hover:text-white">Kontak Kami</a></li>
-          <li><a href="#" class="text-primary-200 hover:text-white">Kebijakan Privasi</a></li>
-          <li><a href="#" class="text-primary-200 hover:text-white">Syarat & Ketentuan</a></li>
-        </ul>
+
+      <!-- Product 4 -->
+      <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+        <div class="h-48 bg-gray-100 flex items-center justify-center">
+        <img
+          src="https://images.unsplash.com/photo-1559847844-5315695dadae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1398&q=80"
+          alt="Nasi Goreng" class="w-full h-full object-cover">
+        </div>
+        <div class="p-4">
+        <h3 class="font-medium text-gray-800 mb-1">Nasi Goreng</h3>
+        <p class="text-amber-600 font-semibold">Rp 22.000</p>
+        <div class="flex items-center mt-2">
+          <div class="flex rating-star text-sm">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="far fa-star"></i>
+          </div>
+          <span class="ml-1 text-xs text-gray-600">(29)</span>
+        </div>
+        </div>
       </div>
-      <div>
-        <h3 class="font-bold text-lg mb-4">Kontak</h3>
-        <ul class="space-y-2">
-          <li class="flex items-center gap-2">
-            <i class="fas fa-map-marker-alt text-primary-300"></i>
-            <span class="text-primary-200">Jl. Malioboro No.1, Yogyakarta</span>
-          </li>
-          <li class="flex items-center gap-2">
-            <i class="fas fa-phone-alt text-primary-300"></i>
-            <span class="text-primary-200">(0274) 123456</span>
-          </li>
-          <li class="flex items-center gap-2">
-            <i class="fas fa-envelope text-primary-300"></i>
-            <span class="text-primary-200">hello@jogfood.com</span>
-          </li>
-        </ul>
       </div>
     </div>
-    <div class="border-t border-primary-700 py-4 text-center text-primary-300 text-sm">
-      <p>© 2023 JogFood. All rights reserved.</p>
     </div>
-  </footer>
+  @endsection
 
   <script>
-    // Simple quantity control
-    document.addEventListener('DOMContentLoaded', function() {
-      const minusBtn = document.querySelector('.quantity-btn:first-child');
-      const plusBtn = document.querySelector('.quantity-btn:last-child');
-      const quantityDisplay = document.querySelector('.quantity-btn + span');
-      
-      let quantity = 1;
-      
-      minusBtn.addEventListener('click', function() {
-        if (quantity > 1) {
-          quantity--;
-          quantityDisplay.textContent = quantity;
-        }
-      });
-      
-      plusBtn.addEventListener('click', function() {
-        quantity++;
-        quantityDisplay.textContent = quantity;
+    // Simple tab switching functionality
+    document.addEventListener('DOMContentLoaded', function () {
+      const tabs = document.querySelectorAll('[class*="px-6 py-4"]');
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', function () {
+          // Remove active class from all tabs
+          tabs.forEach(t => t.classList.remove('tab-active', 'text-amber-600'));
+          tabs.forEach(t => t.classList.add('text-gray-500'));
+
+          // Add active class to clicked tab
+          this.classList.add('tab-active', 'text-amber-600');
+          this.classList.remove('text-gray-500');
+        });
       });
     });
   </script>
 </body>
+
 </html>

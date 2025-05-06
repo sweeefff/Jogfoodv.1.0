@@ -1,5 +1,5 @@
-<nav class="fixed top-0 z-50 w-full bg-amber-800 border-b border-amber-200 dark:bg-amber-800 dark:border-amber-800">
-    <div class="px-3 py-3 lg:px-5 lg:pl-3">
+<nav class="fixed top-0 z-50 w-full bg-amber-600 border-b border-amber-200 dark:bg-amber-800 dark:border-amber-800">
+    <div class="px-3 py-3 lg:px-5 lg:pl-3 bg-amber-600">
         <div class="flex items-center justify-between">
             <div class="flex items-center justify-start rtl:justify-end">
                 <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
@@ -71,11 +71,12 @@
                 </div>
             </div>
         </div>
+    </div>
 </nav>
 
 <aside
     class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 bg-white shadow-lg">
-    <div class="h-full px-3 py-4 overflow-y-auto bg-amber-800">
+    <div class="h-full px-3 py-4 overflow-y-auto bg-amber-600">
         <div class="flex items-center ps-2.5 mb-8 mt-2">
             <img src="" alt="Logo" class="mr-4">
         </div>
@@ -83,25 +84,37 @@
             <li>
                 <a href="#" class="flex items-center p-2 text-white rounded-lg bg-amber-700 group">
                     <i class="fas fa-table w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
-                    <span class="ms-3">Menu Items</span>
+                    <span class="ms-3">Home</span>
                 </a>
             </li>
             <li>
                 <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
-                    <i class="fas fa-store w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
-                    <span class="ms-3">Restaurants</span>
+                    <i class="fas fa-utensils w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
+                    <span class="ms-3">Makanan</span>
                 </a>
             </li>
             <li>
                 <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
-                    <i class="fas fa-tags w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
-                    <span class="ms-3">Categories</span>
+                    <i class="fas fa-wine-glass w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
+                    <span class="ms-3">Minuman</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
+                    <i class="fas fa-cookie-bite w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
+                    <span class="ms-3">Camilan</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
+                    <i class="fas fa-boxes-stacked w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
+                    <span class="ms-3">Pesanan</span>
                 </a>
             </li>
             <li>
                 <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
                     <i class="fas fa-chart-line w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
-                    <span class="ms-3">Analytics</span>
+                    <span class="ms-3">Rekap Penjualan</span>
                 </a>
             </li>
         </ul>
