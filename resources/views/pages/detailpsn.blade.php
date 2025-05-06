@@ -1,3 +1,13 @@
+<style>
+    .bg-amber-gradient {
+        background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+    }
+</style>
+@extends('layouts.app')
+
+@section('title', 'Login')
+
+@section('content')
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -8,14 +18,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100">
-
-    <!-- Navbar -->
-    <div class="bg-gray-300 px-4 py-2 flex items-center space-x-2">
-        <button class="text-xl">&larr;</button>
-        <button class="text-xl">&#8635;</button>
-        <button class="text-xl">&#8962;</button>
-        <input type="text" placeholder="Search..." class="ml-4 flex-1 px-2 py-1 rounded border">
-    </div>
 
     <!-- Container -->
     <div class="max-w-xl mx-auto mt-6 bg-white shadow-md rounded">
@@ -72,3 +74,4 @@
 
 </body>
 </html>
+@endsection
