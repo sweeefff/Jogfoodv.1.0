@@ -45,3 +45,4 @@ Route::get('/tblmenu', [TblmenuController::class, 'tblmenu']);
 Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 Route::get('/about', [AboutController::class, 'about']);
+Route::get('/rekap', [RekapController::class, 'index'])->name('rekap.index');
