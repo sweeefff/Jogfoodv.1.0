@@ -182,9 +182,9 @@
                 <div class="bg-white rounded-lg shadow p-6">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-gray-500">Total Revenue</p>
-                            <h3 class="text-2xl font-bold mt-2">$45,231</h3>
-                            <p class="text-green-500 text-sm mt-1"><i class="fas fa-arrow-up mr-1"></i> 12% from last month</p>
+                            <p class="text-gray-500">Pendapatan Total</p>
+                            <h3 class="text-2xl font-bold mt-2">Rp25.000.000</h3>
+                            <p class="text-green-500 text-sm mt-1"><i class="fas fa-arrow-up mr-1"></i> 12% dari bulan lalu </p>
                         </div>
                         <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-500">
                             <i class="fas fa-dollar-sign text-xl"></i>
@@ -195,9 +195,9 @@
                 <div class="bg-white rounded-lg shadow p-6">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-gray-500">Total Orders</p>
-                            <h3 class="text-2xl font-bold mt-2">1,234</h3>
-                            <p class="text-green-500 text-sm mt-1"><i class="fas fa-arrow-up mr-1"></i> 8% from last month</p>
+                            <p class="text-gray-500">Total Pemesanan</p>
+                            <h3 class="text-2xl font-bold mt-2">958</h3>
+                            <p class="text-green-500 text-sm mt-1"><i class="fas fa-arrow-up mr-1"></i> 8% dari bulan lalu</p>
                         </div>
                         <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-500">
                             <i class="fas fa-shopping-cart text-xl"></i>
@@ -208,9 +208,9 @@
                 <div class="bg-white rounded-lg shadow p-6">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-gray-500">Active Users</p>
+                            <p class="text-gray-500">Pengguna Aktif</p>
                             <h3 class="text-2xl font-bold mt-2">573</h3>
-                            <p class="text-red-500 text-sm mt-1"><i class="fas fa-arrow-down mr-1"></i> 3% from last month</p>
+                            <p class="text-red-500 text-sm mt-1"><i class="fas fa-arrow-down mr-1"></i> 3% dari bulan lalu </p>
                         </div>
                         <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-purple-500">
                             <i class="fas fa-users text-xl"></i>
@@ -253,57 +253,52 @@
                     <div class="space-y-4">
                         <div class="flex items-center">
                             <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-500 mr-3">
-                                <i class="fas fa-mobile-alt"></i>
-                            </div>
+                                <i class="fa-solid fa-utensils"></i>                            </div>
                             <div class="flex-1">
-                                <p class="font-medium">iPhone 13</p>
-                                <p class="text-gray-500 text-sm">Apple</p>
+                                <p class="font-medium">Gudeg</p>
+                                <p class="text-gray-500 text-sm">makanan</p>
                             </div>
-                            <span class="font-semibold">$899</span>
+                            <span class="font-semibold">Rp30.000</span>
                         </div>
                         
                         <div class="flex items-center">
                             <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center text-green-500 mr-3">
-                                <i class="fas fa-laptop"></i>
-                            </div>
+                                <i class="fa-solid fa-utensils"></i>                            </div>
                             <div class="flex-1">
-                                <p class="font-medium">MacBook Pro</p>
-                                <p class="text-gray-500 text-sm">Apple</p>
+                                <p class="font-medium">Sate klatak</p>
+                                <p class="text-gray-500 text-sm">makanan</p>
                             </div>
-                            <span class="font-semibold">$1,299</span>
+                            <span class="font-semibold">Rp40.000</span>
                         </div>
                         
                         <div class="flex items-center">
                             <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center text-purple-500 mr-3">
-                                <i class="fas fa-headphones"></i>
-                            </div>
+                                <i class="fa-solid fa-utensils"></i>                            </div>
                             <div class="flex-1">
-                                <p class="font-medium">AirPods Pro</p>
-                                <p class="text-gray-500 text-sm">Apple</p>
+                                <p class="font-medium">Nasi goreng</p>
+                                <p class="text-gray-500 text-sm">makanan</p>
                             </div>
-                            <span class="font-semibold">$249</span>
+                            <span class="font-semibold">Rp35.000</span>
                         </div>
                         
                         <div class="flex items-center">
                             <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center text-yellow-500 mr-3">
-                                <i class="fas fa-tablet-alt"></i>
-                            </div>
+                                <i class="fa-solid fa-wine-glass-empty"></i>                            </div>
                             <div class="flex-1">
-                                <p class="font-medium">iPad Air</p>
-                                <p class="text-gray-500 text-sm">Apple</p>
+                                <p class="font-medium">Kopi joss</p>
+                                <p class="text-gray-500 text-sm">minuman</p>
                             </div>
-                            <span class="font-semibold">$599</span>
+                            <span class="font-semibold">Rp50.000</span>
                         </div>
                         
                         <div class="flex items-center">
                             <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center text-red-500 mr-3">
-                                <i class="fas fa-watch"></i>
-                            </div>
+                                <i class="fa-solid fa-wine-glass-empty"></i>                            </div>
                             <div class="flex-1">
-                                <p class="font-medium">Apple Watch</p>
-                                <p class="text-gray-500 text-sm">Apple</p>
+                                <p class="font-medium">Teh tarik</p>
+                                <p class="text-gray-500 text-sm">minuman</p>
                             </div>
-                            <span class="font-semibold">$399</span>
+                            <span class="font-semibold">Rp25.000</span>
                         </div>
                     </div>
                 </div>
@@ -331,7 +326,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#ORD-0001</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">John Smith</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">12 May, 2023</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$1,299.00</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rp650.000</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Completed</span>
                                 </td>
@@ -344,7 +339,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#ORD-0002</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Sarah Johnson</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">11 May, 2023</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$899.00</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rp250.000</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Processing</span>
                                 </td>
@@ -357,7 +352,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#ORD-0003</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Michael Brown</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">10 May, 2023</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$599.00</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rp450.000</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Shipped</span>
                                 </td>
@@ -370,7 +365,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#ORD-0004</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Emily Davis</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">9 May, 2023</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$249.00</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rp55.000</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Cancelled</span>
                                 </td>
@@ -383,7 +378,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#ORD-0005</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">David Wilson</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">8 May, 2023</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$399.00</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rp200.000</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Completed</span>
                                 </td>
