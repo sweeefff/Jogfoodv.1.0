@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Rating</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .star-rating {
             display: inline-flex;
@@ -47,35 +39,10 @@
 
 @section('content')
 
-<script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        amber: {
-                            50: '#fff7ed',
-                            100: '#ffedd5',
-                            200: '#fed7aa',
-                            300: '#fdba74',
-                            400: '#fb923c',
-                            500: '#f97316',
-                            600: '#ea580c',
-                            700: '#c2410c',
-                            800: '#9a3412',
-                            900: '#7c2d12',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-
-<div class="min-h-screen bg-gradient-to-b from-orange-50 to-orange-100 flex items-center justify-center p-4">
+<div class="min-h-screen bg-amber-100 flex items-center justify-center p-4">
     <div class="max-w-md w-full bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
         <!-- Header with decorative orange bar -->
-        <div class="h-2 bg-gradient-to-r from-orange-400 to-orange-600"></div>
+        <div class="h-2 bg-amber-orange-600"></div>
         
         <div class="p-6">
             <!-- Thank you message -->
@@ -142,7 +109,7 @@
                 <button class="px-6 py-2 text-gray-600 font-medium rounded-lg border border-gray-300 hover:bg-gray-50 transition flex items-center">
                     <i class="far fa-clock mr-2"></i> Nanti Saja
                 </button>
-                <button id="submitBtn" class="px-6 py-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-medium rounded-lg hover:from-orange-600 hover:to-orange-700 transition flex items-center disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                <button id="submitBtn" class="px-6 py-2 bg-amber-600 text-white font-medium rounded-lg hover:from-orange-600 hover:to-orange-700 transition flex items-center disabled:opacity-50 disabled:cursor-not-allowed" disabled>
                     <i class="fas fa-check mr-2"></i> Kirim Penilaian
                 </button>
             </div>

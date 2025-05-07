@@ -18,7 +18,7 @@
 <body>
 <div class="bg-gray-50 min-h-screen font-sans">
     <!-- Header -->
-    <div class="bg-gradient-to-r from-orange-500 to-amber-500 py-8 text-center border-b border-orange-200 shadow-sm">
+    <div class="bg-amber-600 py-8 text-center border-b border-amber-600 shadow-sm">
         <div class="max-w-4xl mx-auto px-4">
             <h1 class="text-3xl font-bold text-white">Gudeg</h1>
             <div class="flex items-center justify-center mt-2">
