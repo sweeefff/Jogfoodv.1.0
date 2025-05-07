@@ -1,12 +1,12 @@
 <style>
-.hamburger.active svg {
-    transform: rotate(90deg);
-    transition: transform 0.3s ease;
-}
+	.hamburger.active svg {
+		transform: rotate(90deg);
+		transition: transform 0.3s ease;
+	}
 
-.hamburger svg {
-    transition: transform 0.3s ease;
-}
+	.hamburger svg {
+		transition: transform 0.3s ease;
+	}
 </style>
 <nav class="bg-amber-600 sticky top-0 z-50">
 	<div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 h-24">
@@ -29,7 +29,7 @@
 			</a>
 
 			<!-- Hamburger button -->
-			<button id="mobile-menu-button" class="hamburger text-white aria-label="Open main menu">
+			<button id="mobile-menu-button" class="hamburger text-white" aria-label="Open main menu">
 				<span class="sr-only">Open main menu</span>
 				<svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
 					viewBox="0 0 17 14">
@@ -111,17 +111,20 @@
 					</div>
 					<ul class="py-2" aria-labelledby="user-menu-button">
 						<li>
-							<a href="profile" class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Profile</a>
+							<a href="profile"
+								class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Profile</a>
 						</li>
 						<li>
-							<a href="riwayat" class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Riwayat</a>
+							<a href="riwayat"
+								class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Riwayat</a>
 						</li>
 						<li>
 							<a href="detailpsn"
 								class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Pesanan</a>
 						</li>
 						<li>
-							<a href="logout" class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Sign out</a>
+							<a href="logout" class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Sign
+								out</a>
 						</li>
 					</ul>
 				</div>
