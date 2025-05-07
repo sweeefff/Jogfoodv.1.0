@@ -84,25 +84,31 @@
             <li>
                 <a href="#" class="flex items-center p-2 text-white rounded-lg bg-amber-700 group">
                     <i class="fas fa-table w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
+                    <span class="ms-3">Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
+                    <i class="fas fa-utensils w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
                     <span class="ms-3">Makanan</span>
                 </a>
             </li>
             <li>
                 <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
-                    <i class="fas fa-store w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
+                    <i class="fas fa-wine-glass w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
                     <span class="ms-3">Minuman</span>
                 </a>
             </li>
             <li>
                 <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
-                    <i class="fas fa-tags w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
+                    <i class="fas fa-cookie-bite w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
                     <span class="ms-3">Camilan</span>
                 </a>
             </li>
             <li>
                 <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
-                    <i class="fas fa-chart-line w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
-                    <span class="ms-3"></span>
+                    <i class="fas fa-boxes-stacked w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
+                    <span class="ms-3">Pesanan</span>
                 </a>
             </li>
             <li>
