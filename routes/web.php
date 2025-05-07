@@ -20,7 +20,7 @@ use App\Http\Controllers\RegistrasiController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\StrukController;
 use App\Http\Controllers\TblmenuController;
-
+use App\Http\Controllers\ChangePassController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -46,3 +46,4 @@ Route::get('/register', [RegistrasiController::class, 'registrasi']);
 Route::get('/riwayat', [RiwayatController::class, 'riwayat']);
 Route::get('/struk', [StrukController::class, 'struk']);
 Route::get('/tblmenu', [TblmenuController::class, 'tblmenu']);
+Route::get('/changepass', [ChangePassController::class, 'changepass']);
