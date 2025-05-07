@@ -1,6 +1,15 @@
 @extends('layouts.appadm')
 @section('title', 'Rekap - Jogfood')    
 @section('content')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rekap - Jogfood</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .main-content {
             margin-left: 80px;
@@ -83,9 +92,9 @@
                     <div class="flex items-center justify-between mb-6">
                         <h2 class="text-lg font-semibold">Revenue Overview</h2>
                         <div class="flex space-x-2">
-                            <button class="px-3 py-1 text-sm bg-blue-500 text-white rounded-md">Month</button>
-                            <button class="px-3 py-1 text-sm bg-white border border-gray-300 rounded-md">Week</button>
-                            <button class="px-3 py-1 text-sm bg-white border border-gray-300 rounded-md">Day</button>
+                            <button id="monthBtn" class="px-3 py-1 text-sm bg-blue-500 text-white rounded-md">Bulan</button>
+                            <button id="weekBtn" class="px-3 py-1 text-sm bg-white border border-gray-300 rounded-md">Minggu</button>
+                            <button id="dayBtn" class="px-3 py-1 text-sm bg-white border border-gray-300 rounded-md">Hari</button>
                         </div>
                     </div>
                     <div class="h-80">
@@ -94,7 +103,7 @@
                 </div>
                 
                 <div class="bg-white rounded-lg shadow p-6">
-                    <h2 class="text-lg font-semibold mb-6">Top Products</h2>
+                    <h2 class="text-lg font-semibold mb-6">Top Produk</h2>
                     <div class="space-y-4">
                         <div class="flex items-center">
                             <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-500 mr-3">
@@ -173,7 +182,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">12 May, 2023</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rp650.000</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Completed</span>
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Selesai</span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     <button class="text-blue-500 hover:text-blue-700 mr-3"><i class="fas fa-eye"></i></button>
@@ -186,7 +195,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">11 May, 2023</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rp250.000</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Processing</span>
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Diproses</span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     <button class="text-blue-500 hover:text-blue-700 mr-3"><i class="fas fa-eye"></i></button>
@@ -199,7 +208,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">10 May, 2023</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rp450.000</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Shipped</span>
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Dikirim</span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     <button class="text-blue-500 hover:text-blue-700 mr-3"><i class="fas fa-eye"></i></button>
@@ -212,7 +221,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">9 May, 2023</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rp55.000</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Cancelled</span>
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Dibatalkan</span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     <button class="text-blue-500 hover:text-blue-700 mr-3"><i class="fas fa-eye"></i></button>
@@ -225,7 +234,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">8 May, 2023</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rp200.000</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Completed</span>
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Selesai</span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     <button class="text-blue-500 hover:text-blue-700 mr-3"><i class="fas fa-eye"></i></button>
@@ -237,14 +246,14 @@
                 </div>
                 <div class="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
                     <div class="text-sm text-gray-500">
-                        Showing <span class="font-medium">1</span> to <span class="font-medium">5</span> of <span class="font-medium">24</span> results
+                        Ditunjukan <span class="font-medium">1</span> sampai <span class="font-medium">5</span> dari <span class="font-medium">24</span> hasil
                     </div>
                     <div class="flex space-x-2">
-                        <button class="px-3 py-1 border border-gray-300 rounded-md text-sm">Previous</button>
+                        <button class="px-3 py-1 border border-gray-300 rounded-md text-sm">Sebelumnya</button>
                         <button class="px-3 py-1 bg-blue-500 text-white rounded-md text-sm">1</button>
                         <button class="px-3 py-1 border border-gray-300 rounded-md text-sm">2</button>
                         <button class="px-3 py-1 border border-gray-300 rounded-md text-sm">3</button>
-                        <button class="px-3 py-1 border border-gray-300 rounded-md text-sm">Next</button>
+                        <button class="px-3 py-1 border border-gray-300 rounded-md text-sm">Selanjutnya</button>
                     </div>
                 </div>
             </div>
@@ -252,82 +261,115 @@
     </div>
 
     <script>
-        // Toggle sidebar
-        const toggleSidebar = document.getElementById('toggleSidebar');
-        const mobileToggle = document.getElementById('mobileToggle');
-        const sidebar = document.querySelector('.sidebar');
-        
-        toggleSidebar.addEventListener('click', () => {
-            sidebar.classList.toggle('collapsed');
-        });
-        
-        mobileToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('open');
-        });
-        
-        // Dropdown functionality
-        document.querySelectorAll('.dropdown').forEach(dropdown => {
-            const button = dropdown.querySelector('a');
-            const content = dropdown.querySelector('.dropdown-content');
+        // Initialize the chart
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('revenueChart').getContext('2d');
             
-            button.addEventListener('click', (e) => {
-                e.preventDefault();
-                content.style.display = content.style.display === 'block' ? 'none' : 'block';
-            });
-        });
-        
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.dropdown')) {
-                document.querySelectorAll('.dropdown-content').forEach(content => {
-                    content.style.display = 'none';
-                });
-            }
-        });
-        
-        // Revenue Chart
-        const revenueCtx = document.getElementById('revenueChart').getContext('2d');
-        const revenueChart = new Chart(revenueCtx, {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-                datasets: [{
-                    label: 'Revenue',
-                    data: [12000, 19000, 15000, 20000, 25000, 22000, 30000],
-                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                    borderColor: 'rgba(59, 130, 246, 1)',
-                    borderWidth: 2,
-                    tension: 0.4,
-                    fill: true
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
+            // Sample data for the chart
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'];
+            const revenueData = [12000000, 15000000, 18000000, 21000000, 25000000, 23000000];
+            
+            // Create the chart
+            const revenueChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: months,
+                    datasets: [{
+                        label: 'Pendapatan (Rp)',
+                        data: revenueData,
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        borderColor: 'rgba(59, 130, 246, 1)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: 'rgba(59, 130, 246, 1)',
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
                 },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            drawBorder: false
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
                         },
-                        ticks: {
-                            callback: function(value) {
-                                return '$' + value.toLocaleString();
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return 'Rp' + context.raw.toLocaleString('id-ID');
+                                }
                             }
                         }
                     },
-                    x: {
-                        grid: {
-                            display: false
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return 'Rp' + (value / 1000000).toLocaleString('id-ID') + ' jt';
+                                }
+                            },
+                            grid: {
+                                drawBorder: false,
+                                color: 'rgba(229, 231, 235, 1)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
                         }
                     }
                 }
-            }
+            });
+
+            // Button functionality for switching between time periods
+            const monthBtn = document.getElementById('monthBtn');
+            const weekBtn = document.getElementById('weekBtn');
+            const dayBtn = document.getElementById('dayBtn');
+
+            monthBtn.addEventListener('click', function() {
+                monthBtn.classList.remove('bg-white', 'border', 'border-gray-300');
+                monthBtn.classList.add('bg-blue-500', 'text-white');
+                weekBtn.classList.remove('bg-blue-500', 'text-white');
+                weekBtn.classList.add('bg-white', 'border', 'border-gray-300');
+                dayBtn.classList.remove('bg-blue-500', 'text-white');
+                dayBtn.classList.add('bg-white', 'border', 'border-gray-300');
+                
+                // Update chart data for months
+                revenueChart.data.labels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'];
+                revenueChart.data.datasets[0].data = [12000000, 15000000, 18000000, 21000000, 25000000, 23000000];
+                revenueChart.update();
+            });
+
+            weekBtn.addEventListener('click', function() {
+                weekBtn.classList.remove('bg-white', 'border', 'border-gray-300');
+                weekBtn.classList.add('bg-blue-500', 'text-white');
+                monthBtn.classList.remove('bg-blue-500', 'text-white');
+                monthBtn.classList.add('bg-white', 'border', 'border-gray-300');
+                dayBtn.classList.remove('bg-blue-500', 'text-white');
+                dayBtn.classList.add('bg-white', 'border', 'border-gray-300');
+                
+                // Update chart data for weeks
+                revenueChart.data.labels = ['Minggu 1', 'Minggu 2', 'Minggu 3', 'Minggu 4'];
+                revenueChart.data.datasets[0].data = [5000000, 7000000, 6000000, 7000000];
+                revenueChart.update();
+            });
+
+            dayBtn.addEventListener('click', function() {
+                dayBtn.classList.remove('bg-white', 'border', 'border-gray-300');
+                dayBtn.classList.add('bg-blue-500', 'text-white');
+                monthBtn.classList.remove('bg-blue-500', 'text-white');
+                monthBtn.classList.add('bg-white', 'border', 'border-gray-300');
+                weekBtn.classList.remove('bg-blue-500', 'text-white');
+                weekBtn.classList.add('bg-white', 'border', 'border-gray-300');
+                
+                // Update chart data for days
+                revenueChart.data.labels = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
+                revenueChart.data.datasets[0].data = [800000, 1200000, 900000, 1100000, 1500000, 2000000, 1800000];
+                revenueChart.update();
+            });
         });
     </script>
 </body>
