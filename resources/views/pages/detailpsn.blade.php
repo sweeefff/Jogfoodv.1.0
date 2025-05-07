@@ -1,77 +1,61 @@
-<style>
-    .bg-amber-gradient {
-        background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
-    }
-</style>
 @extends('layouts.app')
-
-@section('title', 'Login')
+@section('title', 'Detail Pesanan - Jogfood')
 
 @section('content')
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Status Pemesanan</title>
-    <!-- CDN Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100">
-
-    <!-- Container -->
-    <div class="max-w-xl mx-auto mt-6 bg-white shadow-md rounded">
-        <!-- Header -->
-        <div class="text-center p-6 border-b">
-            <h2 class="text-xl font-bold">Status Pemesanan</h2>
-            <p class="text-gray-500">Sedang Diproses</p>
-        </div>
-
-        <!-- Item List -->
-        <div class="flex items-center p-4 border-b">
-            <div class="w-16 h-16 bg-gray-300 rounded mr-4 flex items-center justify-center">
-                <img class="rounded-t-lg" src="images/gudeh.jpeg" alt="" />
-            </div>
-            <div>
-                <h3 class="font-semibold">Gudeg</h3>
-                <p class="text-gray-600">Rp.30.000</p>
-            </div>
-        </div>
-
-        <div class="flex items-center p-4 border-b">
-            <div class="w-16 h-16 bg-gray-300 rounded mr-4 flex items-center justify-center">
-                <img class="rounded-t-lg" src="images/wedangjahe.jpeg" alt="" />
-            </div>
-            <div>
-                <h3 class="font-semibold">Wedang Jahe</h3>
-                <p class="text-gray-600">Rp.10.000</p>
-            </div>
-        </div>
-
-        <!-- Order Summary -->
-        <div class="p-4">
-            <h3 class="font-bold text-lg mb-2">Pesanan</h3>
-
-            <div class="flex justify-between mb-1">
-                <span>Gudeg</span>
-                <span>Rp.30.000</span>
-            </div>
-            <div class="flex justify-between mb-1">
-                <span>Wedang Jahe</span>
-                <span>Rp.10.000</span>
-            </div>
-            <div class="flex justify-between mb-1">
-                <span>Biaya Pengiriman</span>
-                <span>Rp.0.00</span>
-            </div>
-
-            <div class="flex justify-between font-bold border-t pt-2 mt-2">
-                <span>Total</span>
-                <span>Rp.40.000</span>
+<div class="bg-amber-100 min-h-screen">
+    <!-- Tab navigation -->
+    <div class="bg-amber-200">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex overflow-x-auto">
+                    <button
+                        class="px-4 py-4 whitespace-nowrap font-medium text-amber-500 border-b-2 border-amber-500 text-amber-600"  
+                    >Belum Dibayar
+                    </button>
+                    <button
+                    class="px-4 py-4 whitespace-nowrap font-medium text-amber-500 border-b-2 text-gray-600"  
+                >Sudah Dibayar
+                </button>
+                <button
+                class="px-4 py-4 whitespace-nowrap font-medium text-amber-500 border-b-2 text-gray-600"  
+            >Dibatalkan 
+            </button>
             </div>
         </div>
     </div>
 
-</body>
-</html>
+    <!-- Search bar -->
+    <div class="max-w-6xl mx-auto px-4 py-4">
+        <div class="relative">
+            <input
+                type="text"
+                placeholder="Kamu bisa cari berdasarkan Nama Produk, dan Nomor Pesanan."
+                class="w-full p-3 pl-10 rounded-md border border-amber-300 text-sm"
+            />
+            <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-3 top-3 text-amber-400 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- Orders list -->
+    <div class="max-w-6xl mx-auto px-4 pb-12">
+        @include('components.cardpsn', [
+            'nama' => 'Sate Klatak',
+            'variasi' => 'Pangsit',
+            'jumlah' => 'x1',
+            'harga' => 'Rp. 50.000',
+            'diskon' => 'Rp. 40.000',
+            'total' => 'Rp. 10.000',
+            'nilai' => 'Bayar Sekarang',
+            'ubah' => 'Ubah Pesanan',
+            'batal' => 'Batalkan Pesanan',
+        ])
+
+    <!-- WhatsApp floating button -->
+    <div class="fixed bottom-4 right-4">
+        <button class="bg-amber-500 text-white rounded-full p-3 shadow-lg flex items-center">
+            <span class="mr-2">W</span>
+        </button>
+    </div>
+</div>
 @endsection

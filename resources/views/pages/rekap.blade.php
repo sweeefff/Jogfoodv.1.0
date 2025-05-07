@@ -1,56 +1,15 @@
 @extends('layouts.appadm')
-@section('title', 'Menu')
+@section('title', 'Rekap - Jogfood')    
 @section('content')
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TailAdmin Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        .sidebar {
-            transition: all 0.3s ease;
-        }
-        .sidebar.collapsed {
-            width: 80px;
-        }
-        .sidebar.collapsed .nav-text {
-            display: none;
-        }
-        .sidebar.collapsed .logo-text {
-            display: none;
-        }
-        .sidebar.collapsed ~ .main-content {
+        .main-content {
             margin-left: 80px;
         }
         .main-content {
             transition: all 0.3s ease;
             margin-left: 250px;
         }
-        .active-nav {
-            background-color: rgba(59, 130, 246, 0.1);
-            border-left: 4px solid rgb(59, 130, 246);
-            color: rgb(59, 130, 246);
-        }
-        .dropdown-content {
-            display: none;
-            transition: all 0.3s ease;
-        }
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
         @media (max-width: 768px) {
-            .sidebar {
-                position: fixed;
-                z-index: 50;
-                transform: translateX(-100%);
-            }
-            .sidebar.open {
-                transform: translateX(0);
-            }
             .main-content {
                 margin-left: 0;
             }
@@ -58,127 +17,13 @@
     </style>
 </head>
 <body class="bg-gray-50">
-    <!-- Sidebar -->
-    <div class="sidebar fixed h-screen bg-white shadow-md w-64 z-40">
-        <div class="flex items-center justify-between p-4 border-b">
-            <div class="flex items-center">
-                <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center text-white font-bold">
-                    <i class="fas fa-cube"></i>
-                </div>
-                <span class="logo-text ml-3 text-xl font-semibold">TailAdmin</span>
-            </div>
-            <button id="toggleSidebar" class="text-gray-500 hover:text-gray-700">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
-        
-        <div class="p-4">
-            <div class="relative">
-                <input type="text" placeholder="Search..." class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
-            </div>
-        </div>
-        
-        <nav class="mt-4">
-            <div class="px-4 py-2">
-                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Main</p>
-            </div>
-            <a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-blue-50 active-nav">
-                <i class="fas fa-home text-blue-500"></i>
-                <span class="nav-text ml-3">Dashboard</span>
-            </a>
-            <a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-blue-50">
-                <i class="fas fa-chart-line text-blue-500"></i>
-                <span class="nav-text ml-3">Analytics</span>
-            </a>
-            <a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-blue-50">
-                <i class="fas fa-shopping-cart text-blue-500"></i>
-                <span class="nav-text ml-3">E-Commerce</span>
-            </a>
-            
-            <div class="px-4 py-2 mt-4">
-                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Applications</p>
-            </div>
-            
-            <div class="dropdown">
-                <a href="#" class="flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-blue-50">
-                    <div class="flex items-center">
-                        <i class="fas fa-envelope text-blue-500"></i>
-                        <span class="nav-text ml-3">Email</span>
-                    </div>
-                    <i class="fas fa-chevron-down text-xs text-gray-500"></i>
-                </a>
-                <div class="dropdown-content pl-12">
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-blue-50">Inbox</a>
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-blue-50">Compose</a>
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-blue-50">Templates</a>
-                </div>
-            </div>
-            
-            <a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-blue-50">
-                <i class="fas fa-calendar-alt text-blue-500"></i>
-                <span class="nav-text ml-3">Calendar</span>
-            </a>
-            
-            <div class="px-4 py-2 mt-4">
-                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Settings</p>
-            </div>
-            <a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-blue-50">
-                <i class="fas fa-cog text-blue-500"></i>
-                <span class="nav-text ml-3">Settings</span>
-            </a>
-            <a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-blue-50">
-                <i class="fas fa-user text-blue-500"></i>
-                <span class="nav-text ml-3">Profile</span>
-            </a>
-        </nav>
-    </div>
     
     <!-- Main Content -->
     <div class="main-content min-h-screen">
-        <!-- Top Navigation -->
-        <header class="bg-white shadow-sm">
-            <div class="flex items-center justify-between px-6 py-4">
-                <div class="flex items-center">
-                    <button id="mobileToggle" class="mr-4 text-gray-500 lg:hidden">
-                        <i class="fas fa-bars text-xl"></i>
-                    </button>
-                    <h1 class="text-xl font-semibold text-gray-800">Dashboard</h1>
-                </div>
-                
-                <div class="flex items-center space-x-4">
-                    <div class="relative">
-                        <button class="text-gray-500 hover:text-gray-700">
-                            <i class="fas fa-bell text-xl"></i>
-                            <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-white text-xs flex items-center justify-center">3</span>
-                        </button>
-                    </div>
-                    <div class="relative">
-                        <button class="text-gray-500 hover:text-gray-700">
-                            <i class="fas fa-envelope text-xl"></i>
-                            <span class="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 rounded-full text-white text-xs flex items-center justify-center">5</span>
-                        </button>
-                    </div>
-                    <div class="relative dropdown">
-                        <button class="flex items-center space-x-2 focus:outline-none">
-                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User" class="w-8 h-8 rounded-full">
-                            <span class="hidden md:inline">John Doe</span>
-                            <i class="fas fa-chevron-down text-xs"></i>
-                        </button>
-                        <div class="dropdown-content absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-        
         <!-- Content -->
         <main class="p-6">
             <!-- Stats Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6 mt-14">
                 <div class="bg-white rounded-lg shadow p-6">
                     <div class="flex items-center justify-between">
                         <div>
