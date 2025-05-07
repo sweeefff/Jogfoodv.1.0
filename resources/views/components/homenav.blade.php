@@ -93,37 +93,6 @@
 					</svg>
 				</button>
 			</a>
-
-			<!-- Profile dropdown -->
-			<button type="button" class="flex text-sm rounded-full" id="user-menu-button" aria-expanded="false">
-				<span class="sr-only">Open user menu</span>
-				<img class="w-9 h-9 rounded-full border-2 border-white"
-					src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
-			</button>
-
-			<!-- Dropdown menu -->
-			<div class="hidden absolute top-16 right-4 my-4 text-base list-none bg-amber-50 divide-y divide-gray-100 rounded-lg shadow"
-				id="user-dropdown">
-				<div class="px-4 py-3">
-					<span class="block text-base text-gray-900">Bonnie Green</span>
-					<span class="block text-base text-gray-500 truncate">ID : 12</span>
-				</div>
-				<ul class="py-2" aria-labelledby="user-menu-button">
-					<li>
-						<a href="profile" class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Profile</a>
-					</li>
-					<li>
-						<a href="riwayat" class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Riwayat</a>
-					</li>
-					<li>
-						<a href="detailpsn"
-							class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Pesanan</a>
-					</li>
-					<li>
-						<a href="logout" class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Sign out</a>
-					</li>
-				</ul>
-			</div>
 		</div>
 	</div>
 
