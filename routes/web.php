@@ -20,7 +20,7 @@ use App\Http\Controllers\RegistrasiController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\StrukController;
 use App\Http\Controllers\TblmenuController;
-
+use App\Http\Controllers\ChangePassController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -37,12 +37,13 @@ Route::get('/login', [LoginController::class, 'login']);
 Route::get('/menu', [MenuController::class, 'menu']);
 Route::get('/metode', [MetodeController::class, 'metode']);
 Route::get('/order', [OrderController::class, 'order']);
-Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::get('/profile', [ProfileController::class, 'edit']);
 Route::get('/about', [AboutController::class, 'about']);
-Route::get('/rekap', [RekapController::class, 'index'])->name('rekap.index');
-Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+Route::get('/rekap', [RekapController::class, 'rekap']);
+Route::put('/profile', [ProfileController::class, 'update']);
 Route::get('/rating', [RatingController::class, 'rating']);
 Route::get('/register', [RegistrasiController::class, 'registrasi']);
 Route::get('/riwayat', [RiwayatController::class, 'riwayat']);
 Route::get('/struk', [StrukController::class, 'struk']);
 Route::get('/tblmenu', [TblmenuController::class, 'tblmenu']);
+Route::get('/changepass', [ChangePassController::class, 'changepass']);
