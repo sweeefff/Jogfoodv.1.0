@@ -46,12 +46,12 @@
                             </div>
                             <ul class="py-1" role="none">
                                 <li>
-                                    <a href="#"
+                                    <a href="dashboard"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                                         role="menuitem">Dashboard</a>
                                 </li>
                                 <li>
-                                    <a href="#"
+                                    <a href=""
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                                         role="menuitem">Settings</a>
                                 </li>
@@ -82,37 +82,44 @@
         </div>
         <ul class="space-y-2 font-medium">
             <li>
-                <a href="#" class="flex items-center p-2 text-white rounded-lg bg-amber-700 group">
+                <a href="dashboard" class="flex items-center p-2 text-white rounded-lg bg-amber-700 group">
                     <i class="fas fa-table w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
                     <span class="ms-3">Home</span>
                 </a>
             </li>
             <li>
-                <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
+                <a href="data" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
+                    <i class="fas fa-user-gear w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
+                    <span class="ms-3">Profile Restoran</span>
+                </a>
+            </li>
+            <li>
+                <a href="tblmenu" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
                     <i class="fas fa-utensils w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
                     <span class="ms-3">Makanan</span>
                 </a>
             </li>
             <li>
-                <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
+                <a href="tblmenu" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
                     <i class="fas fa-wine-glass w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
                     <span class="ms-3">Minuman</span>
                 </a>
             </li>
             <li>
-                <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
+                <a href="tblmenu" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
                     <i class="fas fa-cookie-bite w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
                     <span class="ms-3">Camilan</span>
                 </a>
             </li>
             <li>
-                <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
-                    <i class="fas fa-boxes-stacked w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
+                <a href="order" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
+                    <i
+                        class="fas fa-boxes-stacked w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
                     <span class="ms-3">Pesanan</span>
                 </a>
             </li>
             <li>
-                <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
+                <a href="rekap" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
                     <i class="fas fa-chart-line w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
                     <span class="ms-3">Rekap Penjualan</span>
                 </a>
