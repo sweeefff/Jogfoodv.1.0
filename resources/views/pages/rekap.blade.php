@@ -1,15 +1,6 @@
 @extends('layouts.appadm')
 @section('title', 'Rekap - Jogfood')    
 @section('content')
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rekap - Jogfood</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .main-content {
             margin-left: 80px;
@@ -68,19 +59,6 @@
                         </div>
                         <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-purple-500">
                             <i class="fas fa-users text-xl"></i>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="bg-white rounded-lg shadow p-6">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-gray-500">Conversion Rate</p>
-                            <h3 class="text-2xl font-bold mt-2">3.2%</h3>
-                            <p class="text-green-500 text-sm mt-1"><i class="fas fa-arrow-up mr-1"></i> 0.8% from last month</p>
-                        </div>
-                        <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-500">
-                            <i class="fas fa-percentage text-xl"></i>
                         </div>
                     </div>
                 </div>
