@@ -8,6 +8,6 @@ class DataController extends Controller
 {
     public function data()
     {
-        return view('pages/data');
+        return view('pages/admin/data');
     }
 }

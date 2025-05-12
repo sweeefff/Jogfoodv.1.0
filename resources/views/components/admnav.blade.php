@@ -94,19 +94,19 @@
                 </a>
             </li>
             <li>
-                <a href="tblmenu" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
+                <a href="{{ route('pages.admin.tblmenu', ['kategori' => 'Makanan']) }}" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
                     <i class="fas fa-utensils w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
                     <span class="ms-3">Makanan</span>
                 </a>
             </li>
             <li>
-                <a href="tblmenu" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
+                <a href="{{ route('pages.admin.tblmenu', ['kategori' => 'Minuman']) }}" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
                     <i class="fas fa-wine-glass w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
                     <span class="ms-3">Minuman</span>
                 </a>
             </li>
             <li>
-                <a href="tblmenu" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
+                <a href="{{ route('pages.admin.tblmenu', ['kategori' => 'Side Dish']) }}" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
                     <i class="fas fa-cookie-bite w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
                     <span class="ms-3">Camilan</span>
                 </a>

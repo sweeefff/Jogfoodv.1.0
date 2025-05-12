@@ -5,13 +5,13 @@
 @section('content')
     <style>
         .hero {
-            background-image: url("assets/img/jogja1.jpg");
+            background-image: url("assets/icon/jogja1.jpg");
             background-size: cover;
             background-position: center;
         }
 
         .qt {
-            background-image: url("assets/img/qt-bg.jpg");
+            background-image: url("assets/icon/qt-bg.jpg");
             background-size: cover;
             background-position: center;
         }
@@ -204,7 +204,7 @@
                     </div>
                     <div class="lg:w-1/2">
                         <div class="rounded-xl overflow-hidden shadow-xl">
-                            <img src="{{ asset('assets/img/gudeg.jpg') }}" alt="Gudeg Yogyakarta"
+                            <img src="{{ asset('assets/img/menu/gudeg.jpg') }}" alt="Gudeg Yogyakarta"
                                 class="w-full h-auto object-cover">
                         </div>
                     </div>
@@ -218,7 +218,7 @@
                 <div class="flex flex-col lg:flex-row items-center gap-12">
                     <div class="lg:w-1/2">
                         <div class="rounded-xl overflow-hidden custom-shadow">
-                            <img src="{{ asset('assets/img/gudeg-transformed.png') }}" alt="Wedang Uwuh"
+                            <img src="{{ asset('assets/img/menu/gudeg-transformed.png') }}" alt="Wedang Uwuh"
                                 class="w-full h-auto object-cover">
                         </div>
                     </div>
