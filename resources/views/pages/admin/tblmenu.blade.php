@@ -36,6 +36,91 @@
         .animate-fade-in {
             animation: fadeIn 0.3s ease-out forwards;
         }
+        
+        /* Custom styling for description column */
+        .description-cell {
+            max-width: 250px !important;
+            min-width: 200px;
+            word-wrap: break-word;
+            word-break: break-all;
+            white-space: normal !important;
+            line-height: 1.4;
+            padding: 12px 24px;
+            overflow-wrap: break-word;
+            hyphens: auto;
+        }
+        
+        /* Force table layout with consistent alignment */
+        .menu-table {
+            table-layout: fixed !important;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        /* Set specific widths for columns with better proportions */
+        .col-id { 
+            width: 80px !important; 
+            text-align: center !important;
+        }
+        .col-nama { 
+            width: 180px !important; 
+            text-align: left !important;
+        }
+        .col-deskripsi { 
+            width: 300px !important; 
+            text-align: left !important;
+        }
+        .col-harga { 
+            width: 120px !important; 
+            text-align: right !important;
+            padding-right: 20px !important;
+        }
+        .col-gambar { 
+            width: 100px !important; 
+            text-align: center !important;
+        }
+        .col-aksi { 
+            width: 120px !important; 
+            text-align: center !important;
+        }
+        
+        /* Ensure header and body cells have consistent alignment */
+        .menu-table th.col-harga,
+        .menu-table td.harga-cell {
+            text-align: right !important;
+            padding-right: 20px !important;
+            vertical-align: middle;
+        }
+        
+        .menu-table th.col-id,
+        .menu-table td.id-cell {
+            text-align: center !important;
+            vertical-align: middle;
+        }
+        
+        .menu-table th.col-gambar,
+        .menu-table td.gambar-cell {
+            text-align: center !important;
+            vertical-align: middle;
+        }
+        
+        .menu-table th.col-aksi,
+        .menu-table td.aksi-cell {
+            text-align: center !important;
+            vertical-align: middle;
+        }
+        
+        /* Additional styling for better visual consistency */
+        .menu-table td {
+            vertical-align: middle;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .menu-table th {
+            vertical-align: middle;
+            font-weight: 600;
+        }
+        
     </style>
     <!-- Sidebar -->
 
@@ -66,19 +151,19 @@
             @include('components.add-modal', ['kategori' => $kategori])
             @include('components.edit-modal', ['kategori' => $kategori])
             <!-- Table Container -->
-            <div class="table-container custom-scrollbar shadow-md sm:rounded-lg">
-                <table class="w-full text-sm text-left rtl:text-right text-amber-500">
+            <div class="table-container custom-scrollbar shadow-md sm:rounded-lg overflow-x-auto">
+                <table class="menu-table text-sm text-left text-amber-500">
                     <thead class="text-xs text-amber-700 uppercase bg-amber-50">
                         <tr>
-                            <th scope="col" class="px-6 py-3 w-16">
-                                <div class="flex items-center">
+                            <th scope="col" class="col-id px-3 py-3">
+                                <div class="flex items-center justify-center">
                                     ID
                                     <button onclick="sortTable(0)">
                                         <i class="fas fa-sort ml-1"></i>
                                     </button>
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-3 w-48">
+                            <th scope="col" class="col-nama px-3 py-3">
                                 <div class="flex items-center">
                                     Nama
                                     <button onclick="sortTable(1)">
@@ -86,57 +171,62 @@
                                     </button>
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-3 min-w-[200px]">
+                            <th scope="col" class="col-deskripsi px-3 py-3">
                                 <div class="flex items-center">
                                     Deskripsi
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-3 w-24">
-                                <div class="flex items-center">
+                            <th scope="col" class="col-harga px-3 py-3">
+                                <div class="flex items-center justify-end">
                                     Harga
                                     <button onclick="sortTable(3)">
                                         <i class="fas fa-sort ml-1"></i>
                                     </button>
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-3 w-32">
-                                Gambar
+                            <th scope="col" class="col-gambar px-3 py-3">
+                                <div class="flex items-center justify-center">
+                                    Gambar
+                                </div>
                             </th>
-                            <th scope="col" class="px-6 py-3 w-32">
-                                Aksi
+                            <th scope="col" class="col-aksi px-3 py-3">
+                                <div class="flex items-center justify-center">
+                                    Aksi
+                                </div>
                             </th>
                         </tr>
                     </thead>
                     <tbody id="menuTableBody">
                         @forelse ($menu as $item)
                             <tr class="bg-white border-b hover:bg-amber-50 animate-fade-in">
-                                <td class="px-6 py-4">{{ $item->id_menu }}</td>
-                                <td class="px-6 py-4 font-medium text-amber-900 whitespace-nowrap">{{ $item->nama }}</td>
-                                <td class="px-6 py-4 font-small text-amber-900 whitespace-nowrap">{{ $item->deskripsi_menu }}
-                                </td>
-                                <td class="px-6 py-4">{{ $item->harga }}</td>
-                                <td class="px-6 py-4">
+                                <td class="id-cell px-3 py-4">{{ $item->id_menu }}</td>
+                                <td class="px-3 py-4 font-medium text-amber-900" style="word-wrap: break-word;">{{ $item->nama }}</td>
+                                <td class="description-cell font-small text-amber-900">{{ $item->deskripsi_menu }}</td>
+                                <td class="harga-cell px-3 py-4 font-medium text-amber-900">Rp {{ number_format($item->harga, 0, ',', '.') }}</td>
+                                <td class="gambar-cell px-3 py-4">
                                     <img src="{{ asset('assets/img/menu/' . $item->gambar_menu) }}"
-                                        alt="{{ $item->gambar_menu }}" class="w-10 h-10 object-cover">
+                                        alt="{{ $item->gambar_menu }}" class="w-12 h-12 object-cover mx-auto rounded-lg shadow-sm">
                                 </td>
-                                <td class="px-6 py-4">
-                                    <button class="text-amber-600 hover:text-amber-900 mr-2 edit-button" type="button"
-                                        data-id="{{ $item->id_menu }}" data-nama="{{ $item->nama }}"
-                                        data-harga="{{ $item->harga }}" data-deskripsi="{{ $item->deskripsi_menu }}"
-                                        data-image="{{ $item->gambar_menu }}" data-kategori="{{ $kategori }}"
-                                        data-action="{{ route('tblmenu.update', $item->id_menu) }}"
-                                        data-modal-target="edit-modal" data-modal-toggle="edit-modal">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <form action="{{ route('tblmenu.destroy', $item->id_menu) }}" method="POST"
-                                        class="inline-block">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-900"
-                                            onclick="return confirm('Apakah Anda yakin ingin menghapus item ini?')">
-                                            <i class="fas fa-trash"></i>
+                                <td class="aksi-cell px-3 py-4">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <button class="text-amber-600 hover:text-amber-900 p-1 rounded hover:bg-amber-100 transition-colors edit-button" type="button"
+                                            data-id="{{ $item->id_menu }}" data-nama="{{ $item->nama }}"
+                                            data-harga="{{ $item->harga }}" data-deskripsi="{{ $item->deskripsi_menu }}"
+                                            data-image="{{ $item->gambar_menu }}" data-kategori="{{ $kategori }}"
+                                            data-action="{{ route('tblmenu.update', $item->id_menu) }}"
+                                            data-modal-target="edit-modal" data-modal-toggle="edit-modal">
+                                            <i class="fas fa-edit"></i>
                                         </button>
-                                    </form>
+                                        <form action="{{ route('tblmenu.destroy', $item->id_menu) }}" method="POST"
+                                            class="inline-block">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-red-600 hover:text-red-900 p-1 rounded hover:bg-red-100 transition-colors"
+                                                onclick="return confirm('Apakah Anda yakin ingin menghapus item ini?')">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @empty
@@ -200,8 +290,14 @@
 
                 // Convert to number if sorting ID or Harga
                 if (columnIndex === 0 || columnIndex === 3) {
-                    aText = parseFloat(aText);
-                    bText = parseFloat(bText);
+                    // Remove 'Rp' and dots for price sorting
+                    if (columnIndex === 3) {
+                        aText = parseFloat(aText.replace(/[^\d]/g, ''));
+                        bText = parseFloat(bText.replace(/[^\d]/g, ''));
+                    } else {
+                        aText = parseFloat(aText);
+                        bText = parseFloat(bText);
+                    }
                 }
 
                 if (aText < bText) return currentSort.asc ? -1 : 1;

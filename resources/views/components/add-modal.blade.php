@@ -24,6 +24,7 @@
             <form class="p-4 md:p-5" method="POST" action="{{ route('tblmenu.store') }}" id="createForm"
                 enctype="multipart/form-data">
                 @csrf
+                <input type="hidden" name="id" id="id" value="">
                 <input type="hidden" name="kategori" id="kategori" value="{{ $kategori }}">
 
                 <!-- Tampilkan notifikasi error validasi jika ada -->
