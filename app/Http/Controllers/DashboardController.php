@@ -7,6 +7,6 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
     public function dashboard(){
-        return view('pages/dashboard');
+        return view('pages/admin/dashboard');
     }
 }

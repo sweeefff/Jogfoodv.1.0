@@ -45,5 +45,11 @@ Route::get('/rating', [RatingController::class, 'rating']);
 Route::get('/register', [RegistrasiController::class, 'registrasi']);
 Route::get('/riwayat', [RiwayatController::class, 'riwayat']);
 Route::get('/struk', [StrukController::class, 'struk']);
-Route::get('/tblmenu', [TblmenuController::class, 'tblmenu']);
+Route::get('/tblmenu', [TblmenuController::class, 'tblmenu'])->name('pages.admin.tblmenu');
+Route::post('/tblmenu/store', [TblMenuController::class, 'store'])->name('tblmenu.store');
+Route::put('/tblmenu/{id}', [TblmenuController::class, 'update'])->name('tblmenu.update');
+Route::delete('/tblmenu/{id}', [TblMenuController::class, 'destroy'])->name('tblmenu.destroy');
+
+
+
 Route::get('/changepass', [ChangePassController::class, 'changepass']);
