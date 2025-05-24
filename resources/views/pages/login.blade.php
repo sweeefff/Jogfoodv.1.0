@@ -23,10 +23,11 @@
 
                 <!-- Form section -->
                 <div class="px-8 py-6">
-                    <form>
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
                         <!-- Username field -->
                         <div class="mb-5">
-                            <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                            <label for="username" name = "login" class="block text-sm font-medium text-gray-700 mb-1">Username</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fas fa-user text-amber-400"></i>
@@ -39,7 +40,7 @@
 
                         <!-- Password field -->
                         <div class="mb-5">
-                            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                            <label for="password" name = "password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fas fa-lock text-amber-400"></i>
@@ -53,7 +54,7 @@
                         <!-- Remember me & Forgot password -->
                         <div class="flex items-center justify-between mb-6">
                             <div class="flex items-center">
-                                <input id="remember-me" name="remember-me" type="checkbox"
+                                <input id="remember-me" name="remember" type="checkbox"
                                     class="h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300 rounded">
                                 <label for="remember-me" class="ml-2 block text-sm text-gray-700">Ingat saya</label>
                             </div>
@@ -73,14 +74,13 @@
                             <span class="text-gray-600">Belum punya akun?</span>
                             <a href="#" class="ml-1 font-medium text-amber-600 hover:text-amber-500">Daftar sekarang</a>
                         </div>
+                        
                     </form>
                 </div>
             </div>
 
             <!-- Footer note -->
-            <div class="mt-6 text-center text-xs text-gray-500">
-                © 2023 Jogfood. All rights reserved.
-            </div>
+
         </div>
     </div>
 @endsection

@@ -22,10 +22,12 @@
 
                 <!-- Form section -->
                 <div class="px-8 py-6">
-                    <form method="POST" action="">
+                    <form method="POST" action="{{ route('register') }}">
+                        @csrf
                         <!-- Username field -->
                         <div class="mb-5">
-                            <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                            <input type="hidden" name="role" value="user">
+                            <label for="username" name="username" class="block text-sm font-medium text-gray-700 mb-1">Username</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fas fa-user text-amber-500"></i>
@@ -38,7 +40,7 @@
 
                         <!-- Email field -->
                         <div class="mb-5">
-                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                            <label for="email" name="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fas fa-envelope text-amber-500"></i>
@@ -51,7 +53,7 @@
 
                         <!-- Password field -->
                         <div class="mb-5">
-                            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                            <label for="password" name="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fas fa-lock text-amber-500"></i>
@@ -64,8 +66,7 @@
 
                         <!-- Confirm Password field -->
                         <div class="mb-6">
-                            <label for="password_confirmation"
-                                class="block text-sm font-medium text-gray-700 mb-1">Konfirmasi Password</label>
+                            <label for="password_confirmation" name="password_confirmation" class="block text-sm font-medium text-gray-700 mb-1">Konfirmasi Password</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fas fa-lock text-amber-500"></i>
