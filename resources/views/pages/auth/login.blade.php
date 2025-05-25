@@ -64,7 +64,7 @@
                         </div>
 
                         <!-- Login button -->
-                        <button type="submit"
+                        <button type="submit" value = 'login'
                             class="w-full bg-amber-500 text-white font-bold py-3 px-4 rounded-md hover:bg-amber-600 transition-all hover:shadow-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2">
                             Masuk
                         </button>
@@ -72,7 +72,7 @@
                         <!-- Register link -->
                         <div class="mt-4 text-center text-sm">
                             <span class="text-gray-600">Belum punya akun?</span>
-                            <a href="#" class="ml-1 font-medium text-amber-600 hover:text-amber-500">Daftar sekarang</a>
+                            <a href="{{ route('register') }}" class="ml-1 font-medium text-amber-600 hover:text-amber-500">Daftar sekarang</a>
                         </div>
                         
                     </form>

@@ -123,8 +123,13 @@
 								class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Pesanan</a>
 						</li>
 						<li>
-							<a href="logout" class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Sign
-								out</a>
+							<form method="POST" action="{{ route('logout') }}">
+								@csrf
+								<button type="submit"
+									class="block w-full text-left px-4 py-2 text-base text-gray-700 hover:bg-gray-100">
+									Sign out
+								</button>
+							</form>
 						</li>
 					</ul>
 				</div>

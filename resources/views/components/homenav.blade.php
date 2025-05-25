@@ -88,6 +88,13 @@
 						class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-amber-900 focus:outline-none bg-white rounded-lg border border-amber-200 hover:bg-amber-300 hover:text-blue-700 focus:z-10 focus:ring-4 
     focus:ring-amber-100 dark:focus:ring-amber-700 dark:bg-amber-800 dark:text-amber-400 dark:border-amber-600 dark:hover:text-white dark:hover:bg-amber-300"><a
 							href="register">Daftar</a></button>
+					<form method="POST" action="{{ route('logout') }}">
+						@csrf
+						<button type="submit"
+							class="block w-full text-left px-4 py-2 text-base text-gray-700 hover:bg-gray-100">
+							Sign out
+						</button>
+					</form>
 				</div>
 			</div>
 		</div>

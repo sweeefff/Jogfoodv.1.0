@@ -15,15 +15,10 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\RekapController;
-use App\Http\Controllers\Auth\RegistrasiController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\StrukController;
 use App\Http\Controllers\TblmenuController;
 use App\Http\Controllers\ChangePassController;
-use App\Http\Controllers\Auth\LoginController;
-Route::middleware('role:admin')->get('/admin/dashboard', function () {
-    return view('pages.admin.dashboard');
-});
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -50,21 +45,24 @@ Route::get('/tblmenu', [TblmenuController::class, 'tblmenu'])->name('pages.admin
 Route::post('/tblmenu/store', [TblMenuController::class, 'store'])->name('tblmenu.store');
 Route::put('/tblmenu/{id}', [TblmenuController::class, 'update'])->name('tblmenu.update');
 Route::delete('/tblmenu/{id}', [TblMenuController::class, 'destroy'])->name('tblmenu.destroy');
-Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('login', [LoginController::class, 'login']);
-Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
-// Halaman home untuk user
-Route::get('/home', function () {
-    return view('pages.home');
-})->name('pages.home');
+use App\Http\Middleware\RoleMiddleware;
 
-// Halaman dashboard untuk admin
-Route::get('/admin/dashboard', function () {
-    return view('pages.admin.dashboard');
-})->name('pages.admin.dashboard');
+use App\Http\Controllers\AuthController;
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
 
-Route::get('/register', [RegistrasiController::class, 'showRegisterForm'])->name('register');
-Route::post('/register', [RegistrasiController::class, 'registrasi']);
+Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+Route::post('/register', [AuthController::class, 'register']);
 
-Route::get('/changepass', [ChangePassController::class, 'changepass']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function () {
+    Route::view('/admin/dashboard', 'pages.admin.dashboard');
+});
+
+Route::middleware(['auth', RoleMiddleware::class . ':user'])->group(function () {
+    Route::view('/user/dashboard', 'pages.home');
+});
+
+
