@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
 {
-    protected $table = 'menu'; // jika nama tabel kamu bukan jamak dari model (default Laravel)
+    protected $table = 'menu';
 
-    protected $primaryKey = 'id_menu'; // karena kamu pakai nama primary key custom
+    protected $primaryKey = 'id_menu'; 
 
-    public $timestamps = false; // jika tabel tidak punya kolom created_at dan updated_at
+    public $timestamps = false; 
 
     protected $fillable = [
         'nama',
@@ -19,8 +19,6 @@ class Menu extends Model
         'harga',
         'gambar_menu'
     ];
-
-    // Optional: Scope untuk filter berdasarkan kategori
     public function scopeKategori($query, $kategori)
     {
         return $query->where('kategori', $kategori);
