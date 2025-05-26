@@ -6,33 +6,61 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
-    public function showlogin(Request $request)
+    public function showLogin()
     {
-        $credentials = $request->only('email', 'password');
+        // Jika user sudah login, redirect sesuai role
+        if (Auth::check()) {
+            $user = Auth::user();
+            return $user->role === 'admin'
+                ? redirect()->route('admin.dashboard')
+                : redirect()->route('home');
+        }
+
+        return view('pages.auth.login');
+    }
+
+    public function login(Request $request)
+    {
+        $request->validate([
+            'login' => 'required',
+            'password' => 'required',
+        ]);
+
+        $login_type = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+        $credentials = [
+            $login_type => $request->login,
+            'password' => $request->password,
+        ];
 
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate(); // penting!
-            $role = Auth::user()->role;
+            $request->session()->regenerate();
 
-            if ($role === 'admin') {
-                return redirect()->to('/admin/dashboard');
+            $user = Auth::user();
+            
+            // Debug: uncomment untuk melihat data user
+            // dd($user->toArray());
+            
+            // Cek apakah ada intended URL (halaman yang dituju sebelum login)
+            if ($request->session()->has('url.intended')) {
+                return redirect()->intended();
             }
-
-            return redirect()->to('/user/dashboard');
-
+            
+            // Jika tidak ada intended URL, redirect sesuai role
+            if ($user->role === 'admin') {
+                return redirect()->route('admin.dashboard')->with('success', 'Login berhasil sebagai admin!');
+            } else {
+                return redirect()->route('home')->with('success', 'Login berhasil!');
+            }
         }
 
         return back()->withErrors([
-            'email' => 'Login gagal! Email atau password salah.',
-        ]);
-    }
-
-    public function showRegister()
-    {
-        return view('pages.auth.registrasi');
+            'login' => 'Login atau password salah',
+        ])->withInput($request->only('login'));
     }
 
     public function register(Request $request)
@@ -47,20 +75,32 @@ class AuthController extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'user',
+            'role' => 'user', 
         ]);
 
-        return redirect()->route('login')->with('success', 'Registrasi berhasil.');
+        return redirect()->route('login')->with('success', 'Registrasi berhasil. Silakan login.');
+    }
+
+    public function showRegister()
+    {
+        // Jika user sudah login, redirect sesuai role
+        if (Auth::check()) {
+            $user = Auth::user();
+            return $user->role === 'admin'
+                ? redirect()->route('admin.dashboard')
+                : redirect()->route('home');
+        }
+
+        return view('pages.auth.registrasi');
     }
 
     public function logout(Request $request)
     {
-        Auth::logout(); // Hapus autentikasi
+        Auth::logout();
 
-        $request->session()->invalidate(); // Hancurkan session
-        $request->session()->regenerateToken(); // Regenerasi CSRF token
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-        return redirect('/login'); // Arahkan kembali ke login
+        return redirect('/login')->with('success', 'Logout berhasil.');
     }
-
 }

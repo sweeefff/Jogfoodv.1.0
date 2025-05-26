@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.apphome')
 
 @section('title', 'Register - Jogfood')
 
@@ -8,7 +8,7 @@
             background: linear-gradient(135deg, #f97316 0%, #f59e0b 100%);
         }
     </style>
-    <div class="flex items-center justify-center min-h-screen">
+    <div class="flex items-center justify-center min-h-screen bg-amber-50">
         <div class="w-full max-w-md">
             <div class="bg-white rounded-lg shadow-lg overflow-hidden">
                 <!-- Header with orange gradient -->
@@ -36,6 +36,9 @@
                                     class="pl-10 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                                     placeholder="Masukkan username">
                             </div>
+                            @error('username')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <!-- Email field -->
@@ -49,6 +52,9 @@
                                     class="pl-10 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                                     placeholder="Masukkan email">
                             </div>
+                            @error('email')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <!-- Password field -->
@@ -62,6 +68,9 @@
                                     class="pl-10 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                                     placeholder="Masukkan password">
                             </div>
+                            @error('password')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <!-- Confirm Password field -->
@@ -76,6 +85,9 @@
                                     class="pl-10 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                                     placeholder="Konfirmasi password">
                             </div>
+                            @error('password_confirmation')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <!-- Register button -->
@@ -83,6 +95,14 @@
                             class="w-full bg-amber-500 text-white font-bold py-3 px-4 rounded-md hover:bg-amber-600 transition-all hover:shadow-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2">
                             Daftar Sekarang
                         </button>
+
+                        @if (session('success'))
+                            <p class="text-green-600 text-sm mt-3">{{ session('success') }}</p>
+                        @endif
+
+                        @if (session('error'))
+                            <p class="text-red-500 text-sm mt-3">{{ session('error') }}</p>
+                        @endif
 
                         <!-- Login link -->
                         <div class="mt-4 text-center text-sm">
@@ -95,3 +115,4 @@
         </div>
     </div>
 @endsection
+

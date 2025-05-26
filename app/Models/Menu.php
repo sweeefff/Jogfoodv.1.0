@@ -8,9 +8,9 @@ class Menu extends Model
 {
     protected $table = 'menu';
 
-    protected $primaryKey = 'id_menu'; 
+    protected $primaryKey = 'id_menu';
 
-    public $timestamps = false; 
+    public $timestamps = false;
 
     protected $fillable = [
         'nama',

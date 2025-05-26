@@ -3,7 +3,7 @@
         background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
     }
 </style>
-@extends('layouts.app')
+@extends('layouts.apphome')
 
 @section('title', 'Login')
 
@@ -27,7 +27,8 @@
                         @csrf
                         <!-- Username field -->
                         <div class="mb-5">
-                            <label for="username" name = "login" class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                            <label for="username" name="login"
+                                class="block text-sm font-medium text-gray-700 mb-1">Username</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fas fa-user text-amber-400"></i>
@@ -40,7 +41,8 @@
 
                         <!-- Password field -->
                         <div class="mb-5">
-                            <label for="password" name = "password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                            <label for="password" name="password"
+                                class="block text-sm font-medium text-gray-700 mb-1">Password</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fas fa-lock text-amber-400"></i>
@@ -64,7 +66,7 @@
                         </div>
 
                         <!-- Login button -->
-                        <button type="submit" value = 'login'
+                        <button type="submit" value='login'
                             class="w-full bg-amber-500 text-white font-bold py-3 px-4 rounded-md hover:bg-amber-600 transition-all hover:shadow-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2">
                             Masuk
                         </button>
@@ -72,9 +74,20 @@
                         <!-- Register link -->
                         <div class="mt-4 text-center text-sm">
                             <span class="text-gray-600">Belum punya akun?</span>
-                            <a href="{{ route('register') }}" class="ml-1 font-medium text-amber-600 hover:text-amber-500">Daftar sekarang</a>
+                            <a href="{{ route('register') }}"
+                                class="ml-1 font-medium text-amber-600 hover:text-amber-500">Daftar sekarang</a>
                         </div>
-                        
+
+                        @if (session()->has('success'))
+                            <div class="bg-green-100 p-3 rounded-md mt-4">
+                                <p class="text-green-600 text-sm">{{ session('success') }}</p>
+                            </div>
+                        @elseif (session()->has('error'))
+                            <div class="bg-red-100 p-3 rounded-md mt-4">
+                                <p class="text-red-600 text-sm">{{ session('error') }}</p>
+                            </div>
+                        @endif
+
                     </form>
                 </div>
             </div>
