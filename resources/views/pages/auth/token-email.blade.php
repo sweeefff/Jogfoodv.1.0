@@ -64,7 +64,7 @@
 
             <!-- Footer note -->
             <div class="mt-6 text-center text-xs text-gray-500">
-                © 2023 Jogfood. All rights reserved.
+                <p>&copy; {{ date('Y') }} Jogfood. All rights reserved.</p>
             </div>
         </div>
     </div>

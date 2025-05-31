@@ -60,6 +60,17 @@
                                     placeholder="Masukkan Kembali Password">
                             </div>
                         </div>
+                        <div class="mb-6">
+                            {!! NoCaptcha::renderJs() !!}
+                            {!! NoCaptcha::display() !!}
+
+                            @if ($errors->has('g-recaptcha-response'))
+                                <span class="text-red-500 text-sm">
+                                    Captcha harus diisi.
+                                </span>
+                            @endif
+                        </div>
+
                         <!-- Login button -->
                         <button type="submit"
                             class="w-full bg-amber-500 text-white font-bold py-3 px-4 rounded-md hover:bg-amber-600 transition-all hover:shadow-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2">

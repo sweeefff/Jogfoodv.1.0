@@ -93,6 +93,17 @@
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
                         </div>
+                        <!-- Captcha field -->
+                        <div class="mb-6">
+                            {!! NoCaptcha::renderJs() !!}
+                            {!! NoCaptcha::display() !!}
+
+                            @if ($errors->has('g-recaptcha-response'))
+                                <span class="text-red-500 text-sm">
+                                    {{ $errors->first('g-recaptcha-response') }}
+                                </span>
+                            @endif
+                        </div>
 
                         <!-- Register button -->
                         <button type="submit"
@@ -115,6 +126,9 @@
                         </div>
                     </form>
                 </div>
+            </div>
+            <div class="mt-6 text-center text-xs text-gray-500">
+                <p>&copy; {{ date('Y') }} Jogfood. All rights reserved.</p>
             </div>
         </div>
     </div>

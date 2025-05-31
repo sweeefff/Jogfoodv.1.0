@@ -66,6 +66,7 @@ class AuthController extends Controller
             'username' => 'required|unique:users',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6|confirmed',
+            'g-recaptcha-response' => 'required|captcha',
         ]);
 
         User::create([
@@ -145,6 +146,7 @@ class AuthController extends Controller
             'email' => 'required|email',
             'token' => 'required',
             'password' => 'required|confirmed|min:6',
+            'g-recaptcha-response' => 'required|captcha',
         ]);
 
         $record = DB::table('password_resets')->where([
