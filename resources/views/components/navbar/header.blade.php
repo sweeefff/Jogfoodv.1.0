@@ -11,14 +11,14 @@
 <nav class="bg-amber-600 sticky top-0 z-50">
 	<div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 h-24">
 		<!-- Logo -->
-		<a href="index.html" class="flex items-center">
+		<a href="{{ route('home') }}" class="flex items-center">
 			<img src="assets/icon/jogfood.png" class="h-8 mr-3" alt="Jogfood Logo">
 		</a>
 
 		<!-- Mobile menu button -->
 		<div class="flex items-center space-x-3 md:hidden">
 			<!-- Cart icon -->
-			<a href="keranjang" class="flex items-center">
+			<a href="{{ route('keranjang') }}" class="flex items-center">
 				<button type="button" class="flex text-white">
 					<svg class="w-7 h-7" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
 						viewBox="0 0 24 24">
@@ -44,23 +44,23 @@
 			<ul
 				class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-amber-500 rounded-lg bg-amber-700 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-transparent">
 				<li>
-					<a href="#"
+					<a href="{{ route('home') }}"
 						class="block py-2 pl-3 pr-4 text-white rounded hover:bg-amber-500 md:hover:bg-transparent md:border-0 md:hover:text-amber-300 md:p-0 text-lg">Home</a>
 				</li>
 				<li>
-					<a href="menu"
+					<a href="{{ route('menu', ['kategori' => 'Makanan']) }}"
 						class="block py-2 pl-3 pr-4 text-white rounded hover:bg-amber-500 md:hover:bg-transparent md:border-0 md:hover:text-amber-300 md:p-0 text-lg">Menu</a>
 				</li>
 				<li>
-					<a href="menu"
+					<a href="{{ route('menu', ['kategori' => 'Minuman']) }}"
 						class="block py-2 pl-3 pr-4 text-white rounded hover:bg-amber-500 md:hover:bg-transparent md:border-0 md:hover:text-amber-300 md:p-0 text-lg">Minuman</a>
 				</li>
 				<li>
-					<a href="menu"
+					<a href="{{ route('menu', ['kategori' => 'Side Dish']) }}"
 						class="block py-2 pl-3 pr-4 text-white rounded hover:bg-amber-500 md:hover:bg-transparent md:border-0 md:hover:text-amber-300 md:p-0 text-lg">Camilan</a>
 				</li>
 				<li>
-					<a href="about"
+					<a href="{{ route('about') }}"
 						class="block py-2 pl-3 pr-4 text-white rounded hover:bg-amber-500 md:hover:bg-transparent md:border-0 md:hover:text-amber-300 md:p-0 text-lg">Tentang
 						Kita</a>
 				</li>
@@ -114,15 +114,15 @@
 					</div>
 					<ul class="py-2" aria-labelledby="user-menu-button">
 						<li>
-							<a href="profile"
+							<a href="{{ route('profile') }}"
 								class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Profile</a>
 						</li>
 						<li>
-							<a href="riwayat"
+							<a href="{{ route('riwayat') }}"
 								class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Riwayat</a>
 						</li>
 						<li>
-							<a href="detailpsn"
+							<a href="{{ route('detailpsn') }}"
 								class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Pesanan</a>
 						</li>
 						<li>

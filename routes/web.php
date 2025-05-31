@@ -31,7 +31,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Public Routes - Dapat diakses tanpa login
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/menu', [MenuController::class, 'menu'])->name('menu');
+Route::get('/menu', [MenuController::class, 'index'])->name('menu');
 Route::get('/about', [AboutController::class, 'about'])->name('about');
 Route::get('/detail', [DetailController::class, 'detail'])->name('detail');
 Route::get('/detailpsn', [DetailpsnController::class, 'detailpsn'])->name('detailpsn');

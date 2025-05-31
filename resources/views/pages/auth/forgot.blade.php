@@ -3,9 +3,9 @@
         background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
     }
 </style>
-@extends('layouts.app')
+@extends('layouts.apphome')
 
-@section('title', 'Login')
+@section('title', 'Forgot Password - Jogfood')
 
 @section('content')
 

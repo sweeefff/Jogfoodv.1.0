@@ -5,7 +5,7 @@
 </style>
 @extends('layouts.apphome')
 
-@section('title', 'Login')
+@section('title', 'Login - Jogfood')
 
 @section('content')
 

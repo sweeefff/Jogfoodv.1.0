@@ -13,7 +13,7 @@
                         </path>
                     </svg>
                 </button>
-                <a href="#" class="flex ms-2 md:me-24">
+                <a href="{{ route('admin.dashboard') }}" class="flex ms-2 md:me-24">
                     <img src="assets/icon/jogfood.png" class="h-8 me-3" alt="Jogfood" />
                     <span
                         class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Selamat
@@ -40,13 +40,15 @@
         </div>
         <ul class="space-y-2 font-medium">
             <li>
-                <a href="dashboard" class="flex items-center p-2 text-white rounded-lg bg-amber-700 group">
+                <a href="{{ route('admin.dashboard') }}"
+                    class="flex items-center p-2 text-white rounded-lg bg-amber-700 group">
                     <i class="fas fa-table w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
                     <span class="ms-3">Home</span>
                 </a>
             </li>
             <li>
-                <a href="data" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
+                <a href="{{ route('admin.data') }}"
+                    class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
                     <i class="fas fa-user-gear w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
                     <span class="ms-3">Profile Restoran</span>
                 </a>
@@ -73,14 +75,16 @@
                 </a>
             </li>
             <li>
-                <a href="order" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
+                <a href="{{ route('admin.order') }}"
+                    class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
                     <i
                         class="fas fa-boxes-stacked w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
                     <span class="ms-3">Pesanan</span>
                 </a>
             </li>
             <li>
-                <a href="rekap" class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
+                <a href="{{ route('admin.rekap') }}"
+                    class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
                     <i class="fas fa-chart-line w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
                     <span class="ms-3">Rekap Penjualan</span>
                 </a>
