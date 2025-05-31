@@ -14,7 +14,7 @@
                 <!-- Header with orange gradient -->
                 <div class="bg-orange-gradient py-6 px-8 text-center">
                     <div class="flex justify-center mb-2">
-                        <img class="h-16" src="{{ asset('assets/img/logo_jogfood.png') }}" alt="Logo Jogfood">
+                        <img class="h-16" src="{{ asset('assets/icon/jogfood.png') }}" alt="Logo Jogfood">
                     </div>
                     <h1 class="text-2xl font-bold text-white">Selamat Datang</h1>
                     <p class="text-orange-100 mt-1">Silakan Daftar Baru akun Anda</p>
@@ -27,7 +27,8 @@
                         <!-- Username field -->
                         <div class="mb-5">
                             <input type="hidden" name="role" value="user">
-                            <label for="username" name="username" class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                            <label for="username" name="username"
+                                class="block text-sm font-medium text-gray-700 mb-1">Username</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fas fa-user text-amber-500"></i>
@@ -43,7 +44,8 @@
 
                         <!-- Email field -->
                         <div class="mb-5">
-                            <label for="email" name="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                            <label for="email" name="email"
+                                class="block text-sm font-medium text-gray-700 mb-1">Email</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fas fa-envelope text-amber-500"></i>
@@ -59,7 +61,8 @@
 
                         <!-- Password field -->
                         <div class="mb-5">
-                            <label for="password" name="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                            <label for="password" name="password"
+                                class="block text-sm font-medium text-gray-700 mb-1">Password</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fas fa-lock text-amber-500"></i>
@@ -75,7 +78,8 @@
 
                         <!-- Confirm Password field -->
                         <div class="mb-6">
-                            <label for="password_confirmation" name="password_confirmation" class="block text-sm font-medium text-gray-700 mb-1">Konfirmasi Password</label>
+                            <label for="password_confirmation" name="password_confirmation"
+                                class="block text-sm font-medium text-gray-700 mb-1">Konfirmasi Password</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fas fa-lock text-amber-500"></i>
@@ -115,4 +119,3 @@
         </div>
     </div>
 @endsection
-

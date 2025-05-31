@@ -8,6 +8,6 @@ class KomentarController extends Controller
 {
     public function komentar()
     {
-        return view('pages.komentar');
+        return view('pages.user.komentar');
     }
 }

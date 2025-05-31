@@ -8,6 +8,6 @@ class RatingController extends Controller
 {
     public function rating()
     {
-        return view('pages/rating');
+        return view('pages/user/rating');
     }
 }

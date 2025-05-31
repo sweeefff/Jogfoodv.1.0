@@ -8,6 +8,6 @@ class StrukController extends Controller
 {
     public function struk()
     {
-        return view('pages.struk');
+        return view('pages.user.struk');
     }
 }

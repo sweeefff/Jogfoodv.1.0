@@ -8,6 +8,6 @@ class DetailpsnController extends Controller
 {
     public function detailpsn()
     {
-        return view('pages.detailpsn');
+        return view('pages.user.detailpsn');
     }
 }

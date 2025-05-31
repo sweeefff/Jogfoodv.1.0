@@ -2,22 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use App\Models\User;
 
 class AuthController extends Controller
 {
     public function showLogin()
     {
         // Jika user sudah login, redirect sesuai role
-        if (Auth::check()) {
-            $user = Auth::user();
-            return $user->role === 'admin'
-                ? redirect()->route('admin.dashboard')
-                : redirect()->route('home');
+        if (session('user_id')) {
+            $user = User::find(session('user_id'));
+            if ($user->user_role === 'admin') {
+                return redirect('/admin/dashboard');
+            } else {
+                return redirect('/user/dashboard');
+            }
         }
 
         return view('pages.auth.login');
@@ -29,31 +31,22 @@ class AuthController extends Controller
             'login' => 'required',
             'password' => 'required',
         ]);
+        // Cek user berdasarkan username atau email
+        $user = User::where('username', $request->login)
+            ->orWhere('email', $request->login)
+            ->first();
 
-        $login_type = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-
-        $credentials = [
-            $login_type => $request->login,
-            'password' => $request->password,
-        ];
-
-        if (Auth::attempt($credentials)) {
+        if ($user && Hash::check($request->password, $user->password)) {
+            // Manual session set
+            $request->session()->put('user_id', $user->id);
+            $request->session()->put('user_role', $user->role);
             $request->session()->regenerate();
 
-            $user = Auth::user();
-            
-            // Debug: uncomment untuk melihat data user
-            // dd($user->toArray());
-            
-            // Cek apakah ada intended URL (halaman yang dituju sebelum login)
-            if ($request->session()->has('url.intended')) {
-                return redirect()->intended();
-            }
-            
-            // Jika tidak ada intended URL, redirect sesuai role
+            // Redirect by role
             if ($user->role === 'admin') {
                 return redirect()->route('admin.dashboard')->with('success', 'Login berhasil sebagai admin!');
             } else {
+                // Redirect ke home publik
                 return redirect()->route('home')->with('success', 'Login berhasil!');
             }
         }
@@ -75,7 +68,7 @@ class AuthController extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'user', 
+            'user_role' => 'user',
         ]);
 
         return redirect()->route('login')->with('success', 'Registrasi berhasil. Silakan login.');
@@ -84,11 +77,13 @@ class AuthController extends Controller
     public function showRegister()
     {
         // Jika user sudah login, redirect sesuai role
-        if (Auth::check()) {
-            $user = Auth::user();
-            return $user->role === 'admin'
-                ? redirect()->route('admin.dashboard')
-                : redirect()->route('home');
+        if (session('user_id')) {
+            $user = User::find(session('user_id'));
+            if ($user->role === 'admin') {
+                return redirect('/admin/dashboard');
+            } else {
+                return redirect('/user/dashboard');
+            }
         }
 
         return view('pages.auth.registrasi');
@@ -96,11 +91,9 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        Auth::logout();
-
+        $request->session()->forget(['user_id', 'user_role']);
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
         return redirect('/login')->with('success', 'Logout berhasil.');
     }
 }

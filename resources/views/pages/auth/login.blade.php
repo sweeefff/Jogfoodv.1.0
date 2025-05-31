@@ -15,7 +15,7 @@
                 <!-- Header with gradient background -->
                 <div class="bg-amber-gradient py-6 px-8 text-center">
                     <div class="flex justify-center mb-2">
-                        <img class="h-16" src="{{ asset('assets/img/logo_jogfood.png') }}" alt="Logo Jogfood">
+                        <img class="h-16" src="{{ asset('assets/icon/jogfood.png') }}" alt="Logo Jogfood">
                     </div>
                     <h1 class="text-2xl font-bold text-white">Selamat Datang</h1>
                     <p class="text-amber-100 mt-1">Silakan masuk ke akun Anda</p>
@@ -33,9 +33,9 @@
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fas fa-user text-amber-400"></i>
                                 </div>
-                                <input type="text" id="username"
+                                <input type="text" id="username" name="login"
                                     class="input-focus pl-10 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none"
-                                    placeholder="Masukkan username">
+                                    placeholder="Masukkan username atau email">
                             </div>
                         </div>
 
@@ -47,7 +47,7 @@
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fas fa-lock text-amber-400"></i>
                                 </div>
-                                <input type="password" id="password"
+                                <input type="password" id="password" name="password"
                                     class="input-focus pl-10 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none"
                                     placeholder="Masukkan password">
                             </div>

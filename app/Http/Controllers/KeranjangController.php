@@ -8,6 +8,6 @@ class KeranjangController extends Controller
 {
     public function keranjang()
     {
-        return view('pages.keranjang');
+        return view('pages.user.keranjang');
     }
 }

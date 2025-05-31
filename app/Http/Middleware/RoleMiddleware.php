@@ -3,18 +3,18 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
 
 class RoleMiddleware
 {
     public function handle($request, Closure $next, ...$roles)
     {
-        if (!Auth::check()) {
-            return redirect('/login');
+        // Manual session check
+        if (!$request->session()->has('user_id') || !$request->session()->has('user_role')) {
+            return redirect('/');
         }
 
-        $user = Auth::user();
-        if (!in_array($user->role, $roles)) {
+        $userRole = $request->session()->get('user_role');
+        if (!in_array($userRole, $roles)) {
             return abort(403, 'Akses ditolak.');
         }
 

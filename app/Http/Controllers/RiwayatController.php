@@ -8,6 +8,6 @@ class RiwayatController extends Controller
 {
     public function riwayat()
     {
-        return view('pages/riwayat');
+        return view('pages/user/riwayat');
     }
 }

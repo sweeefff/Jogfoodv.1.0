@@ -8,6 +8,6 @@ class OrderController extends Controller
 {
     public function order()
     {
-        return view('pages/order');
+        return view('pages/admin/order');
     }
 }

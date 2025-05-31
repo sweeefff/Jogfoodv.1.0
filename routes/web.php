@@ -38,7 +38,7 @@ Route::get('/detailpsn', [DetailpsnController::class, 'detailpsn'])->name('detai
 Route::get('/komentar', [KomentarController::class, 'komentar'])->name('komentar');
 
 // Admin Routes - Hanya admin yang bisa akses
-Route::middleware(['auth', RoleMiddleware::class . ':admin'])->prefix('admin')->group(function () {
+Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/order', [OrderController::class, 'order'])->name('admin.order');
     Route::get('/data', [DataController::class, 'data'])->name('admin.data');
@@ -50,21 +50,21 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->prefix('admin')->
         'update',
         'destroy'
     ])->names([
-                'index' => 'admin.tblmenu.index',
-                'store' => 'admin.tblmenu.store',
-                'update' => 'admin.tblmenu.update',
-                'destroy' => 'admin.tblmenu.destroy'
+                'index' => 'pages.admin.tblmenu',
+                'store' => 'tblmenu.store',
+                'update' => 'tblmenu.update',
+                'destroy' => 'tblmenu.destroy'
             ]);
 });
 
 // Routes yang memerlukan login - User untuk akses
-Route::middleware(['auth', RoleMiddleware::class . ':user'])->prefix('user')->group(function () {
+Route::middleware([RoleMiddleware::class . ':user'])->prefix('user')->group(function () {
     Route::get('/keranjang', [KeranjangController::class, 'keranjang'])->name('keranjang');
     Route::get('/metode', [MetodeController::class, 'metode'])->name('metode');
     Route::get('/riwayat', [RiwayatController::class, 'riwayat'])->name('riwayat');
     Route::get('/struk', [StrukController::class, 'struk'])->name('struk');
     Route::get('/rating', [RatingController::class, 'rating'])->name('rating');
-    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/dashboard', [HomeController::class, 'index'])->name('user.dashboard');
     // Profile routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
