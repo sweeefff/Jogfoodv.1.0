@@ -202,17 +202,28 @@
                                 <td class="id-cell px-3 py-4">{{ $item->id_menu }}</td>
                                 <td class="px-3 py-4 font-medium text-amber-900" style="word-wrap: break-word;">{{ $item->nama }}</td>
                                 <td class="description-cell font-small text-amber-900">{{ $item->deskripsi_menu }}</td>
-                                <td class="harga-cell px-3 py-4 font-medium text-amber-900">Rp {{ number_format($item->harga, 0, ',', '.') }}</td>
+                                <td class="harga-cell px-3 py-4 font-medium text-amber-900">
+                                    Rp {{ number_format((float)$item->harga, 0, ',', '.') }}
+                                </td>
                                 <td class="gambar-cell px-3 py-4">
-                                    <img src="{{ asset('assets/img/menu/' . $item->gambar_menu) }}"
-                                        alt="{{ $item->gambar_menu }}" class="w-12 h-12 object-cover mx-auto rounded-lg shadow-sm">
+                                    @if($item->gambar_menu && file_exists(public_path('assets/img/menu/' . $item->gambar_menu)))
+                                        <img src="{{ asset('assets/img/menu/' . $item->gambar_menu) }}"
+                                            alt="{{ $item->nama }}" class="w-12 h-12 object-cover mx-auto rounded-lg shadow-sm">
+                                    @else
+                                        <div class="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center mx-auto">
+                                            <i class="fas fa-image text-gray-400"></i>
+                                        </div>
+                                    @endif
                                 </td>
                                 <td class="aksi-cell px-3 py-4">
                                     <div class="flex items-center justify-center gap-2">
                                         <button class="text-amber-600 hover:text-amber-900 p-1 rounded hover:bg-amber-100 transition-colors edit-button" type="button"
-                                            data-id="{{ $item->id_menu }}" data-nama="{{ $item->nama }}"
-                                            data-harga="{{ $item->harga }}" data-deskripsi="{{ $item->deskripsi_menu }}"
-                                            data-image="{{ $item->gambar_menu }}" data-kategori="{{ $kategori }}"
+                                            data-id="{{ $item->id_menu }}" 
+                                            data-nama="{{ $item->nama }}"
+                                            data-harga="{{ (float)$item->harga }}" 
+                                            data-deskripsi="{{ $item->deskripsi_menu }}"
+                                            data-image="{{ $item->gambar_menu }}" 
+                                            data-kategori="{{ $kategori }}"
                                             data-action="{{ route('tblmenu.update', $item->id_menu) }}"
                                             data-modal-target="edit-modal" data-modal-toggle="edit-modal">
                                             <i class="fas fa-edit"></i>
