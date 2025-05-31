@@ -83,18 +83,11 @@
 				<div class="flex items-center px-5">
 					<button type="button"
 						class="focus:outline-none text-white bg-amber-400 hover:bg-amber-300 focus:ring-4 focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-amber-900"><a
-							href="login">Masuk</a></button>
+							href="{{ route('login') }}">Masuk</a></button>
 					<button type="button"
 						class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-amber-900 focus:outline-none bg-white rounded-lg border border-amber-200 hover:bg-amber-300 hover:text-blue-700 focus:z-10 focus:ring-4 
     focus:ring-amber-100 dark:focus:ring-amber-700 dark:bg-amber-800 dark:text-amber-400 dark:border-amber-600 dark:hover:text-white dark:hover:bg-amber-300"><a
-							href="register">Daftar</a></button>
-					<form method="POST" action="{{ route('logout') }}">
-						@csrf
-						<button type="submit"
-							class="block w-full text-left px-4 py-2 text-base text-gray-700 hover:bg-gray-100">
-							Sign out
-						</button>
-					</form>
+							href="{{ route('register') }}">Daftar</a></button>
 				</div>
 			</div>
 		</div>
@@ -117,22 +110,26 @@
 					placeholder="Cari Kulinermu">
 			</div>
 
-			<a href="#" class="block px-3 py-2 text-white rounded hover:bg-amber-500">Home</a>
-			<a href="menu" class="block px-3 py-2 text-white rounded hover:bg-amber-500">Menu</a>
-			<a href="menu" class="block px-3 py-2 text-white rounded hover:bg-amber-500">Minuman</a>
-			<a href="menu" class="block px-3 py-2 text-white rounded hover:bg-amber-500">Camilan</a>
-			<a href="about" class="block px-3 py-2 text-white rounded hover:bg-amber-500">Tentang Kita</a>
+			<a href="{{ route('home') }}" class="block px-3 py-2 text-white rounded hover:bg-amber-500">Home</a>
+			<a href="{{ route('menu', ['kategori' => 'Makanan']) }}"
+				class="block px-3 py-2 text-white rounded hover:bg-amber-500">Menu</a>
+			<a href="{{ route('menu', ['kategori' => 'Minuman']) }}"
+				class="block px-3 py-2 text-white rounded hover:bg-amber-500">Minuman</a>
+			<a href="{{ route('menu', ['kategori' => 'Side Dish']) }}"
+				class="block px-3 py-2 text-white rounded hover:bg-amber-500">Camilan</a>
+			<a href="{{ route('about') }}" class="block px-3 py-2 text-white rounded hover:bg-amber-500">Tentang
+				Kita</a>
 
 			<!-- Mobile user dropdown -->
 			<div class="pt-4 pb-3 border-t border-amber-600">
 				<div class="flex items-center px-5">
 					<button type="button"
 						class="focus:outline-none text-white bg-amber-400 hover:bg-amber-300 focus:ring-4 focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-amber-900"><a
-							href="login">Masuk</a></button>
+							href="{{ route('login') }}">Masuk</a></button>
 					<button type="button"
 						class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-amber-900 focus:outline-none bg-white rounded-lg border border-amber-200 hover:bg-amber-300 hover:text-blue-700 focus:z-10 focus:ring-4 
     focus:ring-amber-100 dark:focus:ring-amber-700 dark:bg-amber-800 dark:text-amber-400 dark:border-amber-600 dark:hover:text-white dark:hover:bg-amber-300"><a
-							href="register">Daftar</a></button>
+							href="{{ route('register') }}">Daftar</a></button>
 				</div>
 			</div>
 		</div>

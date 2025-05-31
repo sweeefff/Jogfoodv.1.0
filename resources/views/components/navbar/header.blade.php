@@ -8,7 +8,7 @@
 		transition: transform 0.3s ease;
 	}
 </style>
-<nav class="bg-amber-600 sticky top-0 z-50">
+<div class="bg-amber-600 sticky top-0 z-50">
 	<div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 h-24">
 		<!-- Logo -->
 		<a href="{{ route('home') }}" class="flex items-center">
@@ -157,11 +157,15 @@
 					placeholder="Cari Kulinermu">
 			</div>
 
-			<a href="#" class="block px-3 py-2 text-white rounded hover:bg-amber-500">Home</a>
-			<a href="menu" class="block px-3 py-2 text-white rounded hover:bg-amber-500">Menu</a>
-			<a href="menu" class="block px-3 py-2 text-white rounded hover:bg-amber-500">Minuman</a>
-			<a href="menu" class="block px-3 py-2 text-white rounded hover:bg-amber-500">Camilan</a>
-			<a href="about" class="block px-3 py-2 text-white rounded hover:bg-amber-500">Tentang Kita</a>
+			<a href="{{ route('home') }}" class="block px-3 py-2 text-white rounded hover:bg-amber-500">Home</a>
+			<a href="{{ route('menu', ['kategori' => 'Makanan']) }}"
+				class="block px-3 py-2 text-white rounded hover:bg-amber-500">Menu</a>
+			<a href="{{ route('menu', ['kategori' => 'Minuman']) }}"
+				class="block px-3 py-2 text-white rounded hover:bg-amber-500">Minuman</a>
+			<a href="{{ route('menu', ['kategori' => 'Side Dish']) }}"
+				class="block px-3 py-2 text-white rounded hover:bg-amber-500">Camilan</a>
+			<a href="{{ route('about') }}" class="block px-3 py-2 text-white rounded hover:bg-amber-500">Tentang
+				Kita</a>
 
 			<!-- Mobile user dropdown -->
 			<div class="pt-4 pb-3 border-t border-amber-600">
@@ -176,14 +180,19 @@
 					</div>
 				</div>
 				<div class="mt-3 space-y-1 px-2">
-					<a href="profile"
+					<a href="{{ route('profile') }}"
 						class="block px-3 py-2 text-base font-medium text-white hover:bg-amber-500 rounded">Profile</a>
-					<a href="riwayat"
+					<a href="{{ route('riwayat') }}"
 						class="block px-3 py-2 text-base font-medium text-white hover:bg-amber-500 rounded">Riwayat</a>
-					<a href="detailpsn"
+					<a href="{{ route('detailpsn') }}"
 						class="block px-3 py-2 text-base font-medium text-white hover:bg-amber-500 rounded">Pesanan</a>
-					<a href="logout"
-						class="block px-3 py-2 text-base font-medium text-white hover:bg-amber-500 rounded">Sign out</a>
+					<form method="POST" action="{{ route('logout') }}">
+						@csrf
+						<button type="submit"
+							class="block px-3 py-2 text-base font-medium text-white hover:bg-amber-500 rounded">
+							Sign out
+						</button>
+					</form>
 				</div>
 			</div>
 		</div>
