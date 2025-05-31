@@ -197,50 +197,50 @@
 			</div>
 		</div>
 	</div>
-</nav>
+	</nav>
 
-<script>
-	// Mobile menu toggle
-	const mobileMenuButton = document.getElementById('mobile-menu-button');
-	const mobileMenu = document.getElementById('mobile-menu');
+	<script>
+		// Mobile menu toggle
+		const mobileMenuButton = document.getElementById('mobile-menu-button');
+		const mobileMenu = document.getElementById('mobile-menu');
 
-	mobileMenuButton.addEventListener('click', function () {
-		this.classList.toggle('active');
-		mobileMenu.classList.toggle('hidden');
-		mobileMenu.classList.toggle('open');
-	});
+		mobileMenuButton.addEventListener('click', function () {
+			this.classList.toggle('active');
+			mobileMenu.classList.toggle('hidden');
+			mobileMenu.classList.toggle('open');
+		});
 
-	// User dropdown toggle for desktop
-	const userMenuButton = document.getElementById('user-menu-button');
-	const userDropdown = document.getElementById('user-dropdown');
+		// User dropdown toggle for desktop
+		const userMenuButton = document.getElementById('user-menu-button');
+		const userDropdown = document.getElementById('user-dropdown');
 
-	userMenuButton.addEventListener('click', function () {
-		userDropdown.classList.toggle('hidden');
-	});
+		userMenuButton.addEventListener('click', function () {
+			userDropdown.classList.toggle('hidden');
+		});
 
-	// Close dropdown when clicking outside
-	document.addEventListener('click', function (event) {
-		if (!userMenuButton.contains(event.target) && !userDropdown.contains(event.target)) {
-			userDropdown.classList.add('hidden');
-		}
-	});
-
-	// Mobile user menu toggle
-	const userMenuButtonMobile = document.getElementById('user-menu-button-mobile');
-	if (userMenuButtonMobile) {
-		userMenuButtonMobile.addEventListener('click', function () {
-			// Find the mobile dropdown section and toggle it
-			const mobileUserSection = document.querySelector('.mobile-menu .pt-4.pb-3');
-			if (mobileUserSection) {
-				if (getComputedStyle(mobileMenu).display === 'none') {
-					mobileMenu.classList.remove('hidden');
-					mobileMenu.classList.add('open');
-					mobileMenuButton.classList.add('active');
-				}
+		// Close dropdown when clicking outside
+		document.addEventListener('click', function (event) {
+			if (!userMenuButton.contains(event.target) && !userDropdown.contains(event.target)) {
+				userDropdown.classList.add('hidden');
 			}
 		});
-	}
 
-	// Back to top button
+		// Mobile user menu toggle
+		const userMenuButtonMobile = document.getElementById('user-menu-button-mobile');
+		if (userMenuButtonMobile) {
+			userMenuButtonMobile.addEventListener('click', function () {
+				// Find the mobile dropdown section and toggle it
+				const mobileUserSection = document.querySelector('.mobile-menu .pt-4.pb-3');
+				if (mobileUserSection) {
+					if (getComputedStyle(mobileMenu).display === 'none') {
+						mobileMenu.classList.remove('hidden');
+						mobileMenu.classList.add('open');
+						mobileMenuButton.classList.add('active');
+					}
+				}
+			});
+		}
 
-</script>
+		// Back to top button
+
+	</script>

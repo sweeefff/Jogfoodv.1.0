@@ -6,10 +6,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ResetPasswordMail;
 
 class AuthController extends Controller
 {
+    //Login
     public function showLogin()
     {
         // Jika user sudah login, redirect sesuai role
@@ -55,7 +59,7 @@ class AuthController extends Controller
             'login' => 'Login atau password salah',
         ])->withInput($request->only('login'));
     }
-
+    //Register
     public function register(Request $request)
     {
         $request->validate([
@@ -89,6 +93,7 @@ class AuthController extends Controller
         return view('pages.auth.registrasi');
     }
 
+    //logout
     public function logout(Request $request)
     {
         $request->session()->forget(['user_id', 'user_role']);
@@ -96,4 +101,69 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
         return redirect('/login')->with('success', 'Logout berhasil.');
     }
+
+    //Forgot Password
+    public function showForgotForm()
+    {
+        return view('pages.auth.token-email');
+    }
+
+    public function sendResetLink(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return back()->withErrors(['email' => 'Email tidak ditemukan.']);
+        }
+
+        $token = Str::random(60);
+        DB::table('password_resets')->updateOrInsert(
+            ['email' => $user->email],
+            ['token' => $token, 'created_at' => now()]
+        );
+
+        $resetLink = url('/reset-password/' . $token . '?email=' . urlencode($user->email));
+
+        Mail::to($user->email)->send(new ResetPasswordMail($resetLink));
+
+        return back()->with('status', 'Link reset password telah dikirim ke email Anda.');
+    }
+
+    //Reset Password
+    public function showResetForm(Request $request, $token)
+    {
+        return view('pages.auth.forgot', ['token' => $token, 'email' => $request->email]);
+
+    }
+
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'token' => 'required',
+            'password' => 'required|confirmed|min:6',
+        ]);
+
+        $record = DB::table('password_resets')->where([
+            ['email', '=', $request->email],
+            ['token', '=', $request->token],
+        ])->first();
+
+        if (!$record) {
+            return back()->withErrors(['email' => 'Token tidak valid atau sudah kedaluwarsa.']);
+        }
+
+        $user = User::where('email', $request->email)->first();
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        DB::table('password_resets')->where('email', $request->email)->delete();
+
+        return redirect('/login')->with('status', 'Password berhasil diubah.');
+    }
+
+
 }

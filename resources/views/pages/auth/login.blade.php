@@ -61,7 +61,8 @@
                                 <label for="remember-me" class="ml-2 block text-sm text-gray-700">Ingat saya</label>
                             </div>
                             <div class="text-sm">
-                                <a href="#" class="font-medium text-amber-600 hover:text-amber-500">Lupa password?</a>
+                                <a href="{{ route('password.email') }}"
+                                    class="font-medium text-amber-600 hover:text-amber-500">Lupa password?</a>
                             </div>
                         </div>
 
