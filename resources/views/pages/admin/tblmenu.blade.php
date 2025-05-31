@@ -36,7 +36,7 @@
         .animate-fade-in {
             animation: fadeIn 0.3s ease-out forwards;
         }
-        
+
         /* Custom styling for description column */
         .description-cell {
             max-width: 250px !important;
@@ -49,41 +49,46 @@
             overflow-wrap: break-word;
             hyphens: auto;
         }
-        
+
         /* Force table layout with consistent alignment */
         .menu-table {
             table-layout: fixed !important;
             width: 100%;
             border-collapse: collapse;
         }
-        
+
         /* Set specific widths for columns with better proportions */
-        .col-id { 
-            width: 80px !important; 
+        .col-id {
+            width: 80px !important;
             text-align: center !important;
         }
-        .col-nama { 
-            width: 180px !important; 
+
+        .col-nama {
+            width: 180px !important;
             text-align: left !important;
         }
-        .col-deskripsi { 
-            width: 300px !important; 
+
+        .col-deskripsi {
+            width: 300px !important;
             text-align: left !important;
         }
-        .col-harga { 
-            width: 120px !important; 
+
+        .col-harga {
+            width: 120px !important;
             text-align: right !important;
             padding-right: 20px !important;
         }
-        .col-gambar { 
-            width: 100px !important; 
+
+        .col-gambar {
+            width: 100px !important;
             text-align: center !important;
         }
-        .col-aksi { 
-            width: 120px !important; 
+
+        .col-aksi {
+            width: 120px !important;
             text-align: center !important;
         }
-        
+
         /* Ensure header and body cells have consistent alignment */
         .menu-table th.col-harga,
         .menu-table td.harga-cell {
@@ -91,38 +96,36 @@
             padding-right: 20px !important;
             vertical-align: middle;
         }
-        
+
         .menu-table th.col-id,
         .menu-table td.id-cell {
             text-align: center !important;
             vertical-align: middle;
         }
-        
+
         .menu-table th.col-gambar,
         .menu-table td.gambar-cell {
             text-align: center !important;
             vertical-align: middle;
         }
-        
+
         .menu-table th.col-aksi,
         .menu-table td.aksi-cell {
             text-align: center !important;
             vertical-align: middle;
         }
-        
+
         /* Additional styling for better visual consistency */
         .menu-table td {
             vertical-align: middle;
             border-bottom: 1px solid #e5e7eb;
         }
-        
+
         .menu-table th {
             vertical-align: middle;
             font-weight: 600;
         }
-        
     </style>
-    <!-- Sidebar -->
 
     <!-- Content -->
     <div class="p-6 mt-16 ml-64">
@@ -148,8 +151,10 @@
                     </button>
                 </div>
             </div>
+            
             @include('components.add-modal', ['kategori' => $kategori])
             @include('components.edit-modal', ['kategori' => $kategori])
+            
             <!-- Table Container -->
             <div class="table-container custom-scrollbar shadow-md sm:rounded-lg overflow-x-auto">
                 <table class="menu-table text-sm text-left text-amber-500">
@@ -200,7 +205,9 @@
                         @forelse ($menu as $item)
                             <tr class="bg-white border-b hover:bg-amber-50 animate-fade-in">
                                 <td class="id-cell px-3 py-4">{{ $item->id_menu }}</td>
-                                <td class="px-3 py-4 font-medium text-amber-900" style="word-wrap: break-word;">{{ $item->nama }}</td>
+                                <td class="px-3 py-4 font-medium text-amber-900" style="word-wrap: break-word;">
+                                    {{ $item->nama }}
+                                </td>
                                 <td class="description-cell font-small text-amber-900">{{ $item->deskripsi_menu }}</td>
                                 <td class="harga-cell px-3 py-4 font-medium text-amber-900">
                                     Rp {{ number_format((float)$item->harga, 0, ',', '.') }}
@@ -217,7 +224,8 @@
                                 </td>
                                 <td class="aksi-cell px-3 py-4">
                                     <div class="flex items-center justify-center gap-2">
-                                        <button class="text-amber-600 hover:text-amber-900 p-1 rounded hover:bg-amber-100 transition-colors edit-button" type="button"
+                                        <button class="text-amber-600 hover:text-amber-900 p-1 rounded hover:bg-amber-100 transition-colors edit-button" 
+                                            type="button"
                                             data-id="{{ $item->id_menu }}" 
                                             data-nama="{{ $item->nama }}"
                                             data-harga="{{ (float)$item->harga }}" 
@@ -232,7 +240,8 @@
                                             class="inline-block">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="text-red-600 hover:text-red-900 p-1 rounded hover:bg-red-100 transition-colors"
+                                            <button type="submit"
+                                                class="text-red-600 hover:text-red-900 p-1 rounded hover:bg-red-100 transition-colors"
                                                 onclick="return confirm('Apakah Anda yakin ingin menghapus item ini?')">
                                                 <i class="fas fa-trash"></i>
                                             </button>
@@ -287,6 +296,7 @@
             </nav>
         </div>
     </div>
+
     <script>
         let currentSort = { column: null, asc: true };
 

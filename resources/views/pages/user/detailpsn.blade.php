@@ -39,7 +39,7 @@
 
     <!-- Orders list -->
     <div class="max-w-6xl mx-auto px-4 pb-12">
-        @include('components.cardpsn', [
+        @include('components.card.cardpsn', [
             'nama' => 'Sate Klatak',
             'variasi' => 'Pangsit',
             'jumlah' => 'x1',

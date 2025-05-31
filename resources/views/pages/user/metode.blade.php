@@ -17,8 +17,8 @@
                 </button>
             </div>
 
-            @include('components.item', ['desc' => 'Ubah Pesanan'])
-            @include('components.item', ['desc' => 'Ubah Pesanan'])
+            @include('components.card.item', ['desc' => 'Ubah Pesanan'])
+            @include('components.card.item', ['desc' => 'Ubah Pesanan'])
 
             <div class="mt-4">
                 <h2 class="text-lg font-medium">Pesanan</h2>

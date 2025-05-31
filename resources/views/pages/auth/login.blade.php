@@ -3,9 +3,9 @@
         background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
     }
 </style>
-@extends('layouts.app')
+@extends('layouts.apphome')
 
-@section('title', 'Login')
+@section('title', 'Login - Jogfood')
 
 @section('content')
 
@@ -15,7 +15,7 @@
                 <!-- Header with gradient background -->
                 <div class="bg-amber-gradient py-6 px-8 text-center">
                     <div class="flex justify-center mb-2">
-                        <img class="h-16" src="{{ asset('assets/img/logo_jogfood.png') }}" alt="Logo Jogfood">
+                        <img class="h-16" src="{{ asset('assets/icon/jogfood.png') }}" alt="Logo Jogfood">
                     </div>
                     <h1 class="text-2xl font-bold text-white">Selamat Datang</h1>
                     <p class="text-amber-100 mt-1">Silakan masuk ke akun Anda</p>
@@ -23,28 +23,31 @@
 
                 <!-- Form section -->
                 <div class="px-8 py-6">
-                    <form>
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
                         <!-- Username field -->
                         <div class="mb-5">
-                            <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                            <label for="username" name="login"
+                                class="block text-sm font-medium text-gray-700 mb-1">Username</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fas fa-user text-amber-400"></i>
                                 </div>
-                                <input type="text" id="username"
+                                <input type="text" id="username" name="login"
                                     class="input-focus pl-10 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none"
-                                    placeholder="Masukkan username">
+                                    placeholder="Masukkan username atau email">
                             </div>
                         </div>
 
                         <!-- Password field -->
                         <div class="mb-5">
-                            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                            <label for="password" name="password"
+                                class="block text-sm font-medium text-gray-700 mb-1">Password</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fas fa-lock text-amber-400"></i>
                                 </div>
-                                <input type="password" id="password"
+                                <input type="password" id="password" name="password"
                                     class="input-focus pl-10 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none"
                                     placeholder="Masukkan password">
                             </div>
@@ -53,7 +56,7 @@
                         <!-- Remember me & Forgot password -->
                         <div class="flex items-center justify-between mb-6">
                             <div class="flex items-center">
-                                <input id="remember-me" name="remember-me" type="checkbox"
+                                <input id="remember-me" name="remember" type="checkbox"
                                     class="h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300 rounded">
                                 <label for="remember-me" class="ml-2 block text-sm text-gray-700">Ingat saya</label>
                             </div>
@@ -63,7 +66,7 @@
                         </div>
 
                         <!-- Login button -->
-                        <button type="submit"
+                        <button type="submit" value='login'
                             class="w-full bg-amber-500 text-white font-bold py-3 px-4 rounded-md hover:bg-amber-600 transition-all hover:shadow-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2">
                             Masuk
                         </button>
@@ -71,16 +74,26 @@
                         <!-- Register link -->
                         <div class="mt-4 text-center text-sm">
                             <span class="text-gray-600">Belum punya akun?</span>
-                            <a href="#" class="ml-1 font-medium text-amber-600 hover:text-amber-500">Daftar sekarang</a>
+                            <a href="{{ route('register') }}"
+                                class="ml-1 font-medium text-amber-600 hover:text-amber-500">Daftar sekarang</a>
                         </div>
+
+                        @if (session()->has('success'))
+                            <div class="bg-green-100 p-3 rounded-md mt-4">
+                                <p class="text-green-600 text-sm">{{ session('success') }}</p>
+                            </div>
+                        @elseif (session()->has('error'))
+                            <div class="bg-red-100 p-3 rounded-md mt-4">
+                                <p class="text-red-600 text-sm">{{ session('error') }}</p>
+                            </div>
+                        @endif
+
                     </form>
                 </div>
             </div>
 
             <!-- Footer note -->
-            <div class="mt-6 text-center text-xs text-gray-500">
-                © 2023 Jogfood. All rights reserved.
-            </div>
+
         </div>
     </div>
 @endsection

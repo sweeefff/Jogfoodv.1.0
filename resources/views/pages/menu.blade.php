@@ -8,10 +8,10 @@
         <div class="max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-                    MENU MAKANAN
+                    Menu {{ $kategori }}
                 </h2>
                 <p class="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
-                    Temukan berbagai kuliner khas Jogja yang lezat
+                    Temukan berbagai {{ $kategori }} khas Jogja yang lezat
                 </p>
             </div>
         </div>

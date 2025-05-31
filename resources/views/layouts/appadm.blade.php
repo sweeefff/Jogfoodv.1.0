@@ -44,7 +44,7 @@
 
 <body class="bg-amber-50 min-h-screen">
     <header>
-        @include('components.admnav')
+        @include('components.navbar.admnav')
     </header>
     <main>
         @yield('content')

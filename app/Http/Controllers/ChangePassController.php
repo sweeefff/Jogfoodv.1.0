@@ -8,6 +8,6 @@ class ChangePassController extends Controller
 {
     public function changepass()
     {
-        return view('pages/changepass');
+        return view('pages/auth/changepass');
     }
 }

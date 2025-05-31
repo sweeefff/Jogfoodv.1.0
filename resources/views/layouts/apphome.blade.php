@@ -41,12 +41,12 @@
 
 <body>
     <header>
-        @include('components.homenav')
+        @include('components.navbar.homenav')
     </header>
     <main>
         @yield('content')
     </main>
     <footer>
-        @include('components.footer')
+        @include('components.navbar.footer')
     </footer>
 </body>

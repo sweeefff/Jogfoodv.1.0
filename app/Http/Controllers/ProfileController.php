@@ -10,6 +10,6 @@ class ProfileController extends Controller
     public function edit()
     {
         $user = Auth::user(); // Ambil data user yang login
-        return view('pages.profile', compact('user'));
+        return view('pages.user.profile', compact('user'));
     }
 }

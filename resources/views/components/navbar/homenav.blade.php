@@ -44,23 +44,23 @@
 			<ul
 				class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-amber-500 rounded-lg bg-amber-700 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-transparent">
 				<li>
-					<a href="#"
+					<a href="{{ route('home') }}"
 						class="block py-2 pl-3 pr-4 text-white rounded hover:bg-amber-500 md:hover:bg-transparent md:border-0 md:hover:text-amber-300 md:p-0 text-lg">Home</a>
 				</li>
 				<li>
-					<a href="menu"
+					<a href="{{ route('menu', ['kategori' => 'Makanan']) }}"
 						class="block py-2 pl-3 pr-4 text-white rounded hover:bg-amber-500 md:hover:bg-transparent md:border-0 md:hover:text-amber-300 md:p-0 text-lg">Menu</a>
 				</li>
 				<li>
-					<a href="menu"
+					<a href="{{ route('menu', ['kategori' => 'Minuman']) }}"
 						class="block py-2 pl-3 pr-4 text-white rounded hover:bg-amber-500 md:hover:bg-transparent md:border-0 md:hover:text-amber-300 md:p-0 text-lg">Minuman</a>
 				</li>
 				<li>
-					<a href="menu"
+					<a href="{{ route('menu', ['kategori' => 'Side Dish']) }}"
 						class="block py-2 pl-3 pr-4 text-white rounded hover:bg-amber-500 md:hover:bg-transparent md:border-0 md:hover:text-amber-300 md:p-0 text-lg">Camilan</a>
 				</li>
 				<li>
-					<a href="about"
+					<a href="{{ route('about') }}"
 						class="block py-2 pl-3 pr-4 text-white rounded hover:bg-amber-500 md:hover:bg-transparent md:border-0 md:hover:text-amber-300 md:p-0 text-lg">Tentang
 						Kita</a>
 				</li>
@@ -69,22 +69,8 @@
 
 		<!-- Desktop User Actions Container -->
 		<div class="hidden md:flex items-center space-x-3">
-			<!-- Search input -->
-			<div class="relative">
-				<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-					<svg class="w-5 h-5 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-						viewBox="0 0 20 20">
-						<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-							d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-					</svg>
-				</div>
-				<input type="text" id="search-navbar"
-					class="block w-full p-2 pl-10 text-base text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-amber-500 focus:border-amber-500"
-					placeholder="Cari Kulinermu">
-			</div>
-
 			<!-- Cart icon -->
-			<a href="keranjang" class="flex items-center">
+			<a href="{{ route('keranjang') }}" class="flex items-center">
 				<button type="button" class="flex text-white">
 					<svg class="w-7 h-7" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
 						viewBox="0 0 24 24">
@@ -93,40 +79,15 @@
 					</svg>
 				</button>
 			</a>
-
-			<!-- Profile dropdown -->
-			<div class="relative">
-				<button type="button" class="flex text-sm rounded-full" id="user-menu-button" aria-expanded="false">
-					<span class="sr-only">Open user menu</span>
-					<img class="w-9 h-9 rounded-full border-2 border-white"
-						src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
-				</button>
-
-				<!-- Dropdown menu -->
-				<div class="hidden absolute top-10 right-0 my-4 text-base list-none bg-amber-50 divide-y divide-gray-100 rounded-lg shadow w-56"
-					id="user-dropdown">
-					<div class="px-4 py-3">
-						<span class="block text-base text-gray-900">Bonnie Green</span>
-						<span class="block text-base text-gray-500 truncate">ID : 12</span>
-					</div>
-					<ul class="py-2" aria-labelledby="user-menu-button">
-						<li>
-							<a href="profile"
-								class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Profile</a>
-						</li>
-						<li>
-							<a href="riwayat"
-								class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Riwayat</a>
-						</li>
-						<li>
-							<a href="detailpsn"
-								class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Pesanan</a>
-						</li>
-						<li>
-							<a href="logout" class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Sign
-								out</a>
-						</li>
-					</ul>
+			<div class="pt-4 pb-3 border-t border-amber-600">
+				<div class="flex items-center px-5">
+					<button type="button"
+						class="focus:outline-none text-white bg-amber-400 hover:bg-amber-300 focus:ring-4 focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-amber-900"><a
+							href="{{ route('login') }}">Masuk</a></button>
+					<button type="button"
+						class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-amber-900 focus:outline-none bg-white rounded-lg border border-amber-200 hover:bg-amber-300 hover:text-blue-700 focus:z-10 focus:ring-4 
+    focus:ring-amber-100 dark:focus:ring-amber-700 dark:bg-amber-800 dark:text-amber-400 dark:border-amber-600 dark:hover:text-white dark:hover:bg-amber-300"><a
+							href="{{ route('register') }}">Daftar</a></button>
 				</div>
 			</div>
 		</div>
@@ -149,33 +110,26 @@
 					placeholder="Cari Kulinermu">
 			</div>
 
-			<a href="#" class="block px-3 py-2 text-white rounded hover:bg-amber-500">Home</a>
-			<a href="menu" class="block px-3 py-2 text-white rounded hover:bg-amber-500">Menu</a>
-			<a href="menu" class="block px-3 py-2 text-white rounded hover:bg-amber-500">Minuman</a>
-			<a href="menu" class="block px-3 py-2 text-white rounded hover:bg-amber-500">Camilan</a>
-			<a href="about" class="block px-3 py-2 text-white rounded hover:bg-amber-500">Tentang Kita</a>
+			<a href="{{ route('home') }}" class="block px-3 py-2 text-white rounded hover:bg-amber-500">Home</a>
+			<a href="{{ route('menu', ['kategori' => 'Makanan']) }}"
+				class="block px-3 py-2 text-white rounded hover:bg-amber-500">Menu</a>
+			<a href="{{ route('menu', ['kategori' => 'Minuman']) }}"
+				class="block px-3 py-2 text-white rounded hover:bg-amber-500">Minuman</a>
+			<a href="{{ route('menu', ['kategori' => 'Side Dish']) }}"
+				class="block px-3 py-2 text-white rounded hover:bg-amber-500">Camilan</a>
+			<a href="{{ route('about') }}" class="block px-3 py-2 text-white rounded hover:bg-amber-500">Tentang
+				Kita</a>
 
 			<!-- Mobile user dropdown -->
 			<div class="pt-4 pb-3 border-t border-amber-600">
 				<div class="flex items-center px-5">
-					<div class="flex-shrink-0">
-						<img class="h-10 w-10 rounded-full"
-							src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="User profile">
-					</div>
-					<div class="ml-3">
-						<div class="text-base font-medium text-white">Bonnie Green</div>
-						<div class="text-sm font-medium text-amber-200">ID: 12</div>
-					</div>
-				</div>
-				<div class="mt-3 space-y-1 px-2">
-					<a href="profile"
-						class="block px-3 py-2 text-base font-medium text-white hover:bg-amber-500 rounded">Profile</a>
-					<a href="riwayat"
-						class="block px-3 py-2 text-base font-medium text-white hover:bg-amber-500 rounded">Riwayat</a>
-					<a href="detailpsn"
-						class="block px-3 py-2 text-base font-medium text-white hover:bg-amber-500 rounded">Pesanan</a>
-					<a href="logout"
-						class="block px-3 py-2 text-base font-medium text-white hover:bg-amber-500 rounded">Sign out</a>
+					<button type="button"
+						class="focus:outline-none text-white bg-amber-400 hover:bg-amber-300 focus:ring-4 focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-amber-900"><a
+							href="{{ route('login') }}">Masuk</a></button>
+					<button type="button"
+						class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-amber-900 focus:outline-none bg-white rounded-lg border border-amber-200 hover:bg-amber-300 hover:text-blue-700 focus:z-10 focus:ring-4 
+    focus:ring-amber-100 dark:focus:ring-amber-700 dark:bg-amber-800 dark:text-amber-400 dark:border-amber-600 dark:hover:text-white dark:hover:bg-amber-300"><a
+							href="{{ route('register') }}">Daftar</a></button>
 				</div>
 			</div>
 		</div>

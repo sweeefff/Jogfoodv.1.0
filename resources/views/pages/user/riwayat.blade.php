@@ -13,7 +13,7 @@
         <!-- Order Items in a flex-grow container -->
         <div class="container mx-auto flex-grow px-4">
             <!-- Order Item 1 -->
-            @include('components.cardrwyt', [
+            @include('components.card.cardrwyt', [
                 'nama' => 'Sate Klatak',
                 'variasi' => 'Pangsit',
                 'jumlah' => 'x1',
@@ -21,7 +21,7 @@
                 'diskon' => 'Rp. 40.000',
                 'total' => 'Rp. 10.000',
             ])  
-            @include('components.cardrwyt', [
+            @include('components.card.cardrwyt', [
                 'nama' => 'Sate Klatak',
                 'variasi' => 'Pangsit',
                 'jumlah' => 'x2',

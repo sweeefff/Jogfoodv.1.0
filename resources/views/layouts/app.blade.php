@@ -41,7 +41,7 @@
 
 <body class="flex flex-col min-h-screen">
     <header>
-        @include('components.header')
+        @include('components.navbar.header')
     </header>
 
     <main class="flex-grow bg-amber-50">
@@ -49,7 +49,7 @@
     </main>
 
     <footer>
-        @include('components.footer')
+        @include('components.navbar.footer')
     </footer>
 </body>
 <script>
