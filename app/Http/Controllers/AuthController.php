@@ -54,19 +54,51 @@ class AuthController extends Controller
                 return redirect()->route('home')->with('success', 'Login berhasil!');
             }
         }
-
+        // // ✅ UX redirect: kalau belum isi nama, arahkan ke form profil
+        // if (is_null($user->name)) {
+        //     return redirect()->route('profile.edit')
+        //         ->with('alert', 'Silakan lengkapi nama kamu terlebih dahulu.');
+        // }
         return back()->withErrors([
-            'login' => 'Login atau password salah',
+            'login' => 'Username atau password salah',
         ])->withInput($request->only('login'));
     }
     //Register
     public function register(Request $request)
     {
         $request->validate([
-            'username' => 'required|unique:users',
+            'username' => [
+                'required',
+                'min:5',
+                'max:20',
+                'alpha_dash',
+                'unique:users'
+            ],
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:6|confirmed',
+            'password' => [
+                'required',
+                'min:8',
+                'confirmed',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d\W]).+$/'
+            ],
             'g-recaptcha-response' => 'required|captcha',
+        ], [
+            // Custom error messages
+            'username.required' => 'Username wajib diisi.',
+            'username.min' => 'Username minimal harus 5 karakter.',
+            'username.unique' => 'Username sudah digunakan.',
+
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'email.unique' => 'Email sudah terdaftar.',
+
+            'password.required' => 'Password wajib diisi.',
+            'password.min' => 'Password minimal harus 8 karakter.',
+            'password.confirmed' => 'Konfirmasi password tidak sama dengan password.',
+            'password.regex' => 'Password harus mengandung huruf kapital, dan angka/simbol.',
+
+            'g-recaptcha-response.required' => 'Captcha wajib diverifikasi.',
+            'g-recaptcha-response.captcha' => 'Captcha tidak valid.',
         ]);
 
         User::create([
@@ -74,6 +106,7 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'user_role' => 'user',
+            'name' => null
         ]);
 
         return redirect()->route('login')->with('success', 'Registrasi berhasil. Silakan login.');
@@ -81,7 +114,6 @@ class AuthController extends Controller
 
     public function showRegister()
     {
-        // Jika user sudah login, redirect sesuai role
         if (session('user_id')) {
             $user = User::find(session('user_id'));
             if ($user->role === 'admin') {

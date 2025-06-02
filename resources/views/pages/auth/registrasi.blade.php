@@ -67,7 +67,7 @@
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fas fa-lock text-amber-500"></i>
                                 </div>
-                                <input type="password" id="password" name="password" required minlength="6"
+                                <input type="password" id="password" name="password" required minlength="8"
                                     class="pl-10 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                                     placeholder="Masukkan password">
                             </div>

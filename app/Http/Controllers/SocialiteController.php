@@ -26,11 +26,19 @@ class SocialiteController extends Controller
                     'username' => $googleUser->getName(),
                     'google_id' => $googleUser->getId(),
                     'password' => bcrypt(Str::random(24)),
-                    'role' => 'user', 
+                    'role' => 'user',
+                    'name' => null
+
                 ]
             );
 
             Auth::login($user);
+
+            // // ✅ UX redirect: kalau belum isi nama, arahkan ke form profil
+            // if (is_null($user->name)) {
+            //     return redirect()->route('profile.edit')
+            //         ->with('alert', 'Silakan lengkapi nama kamu terlebih dahulu.');
+            // }
 
             return redirect()->intended(route('user.dashboard'));
 
