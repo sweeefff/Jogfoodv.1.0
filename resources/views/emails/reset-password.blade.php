@@ -151,7 +151,8 @@
                                                         style="margin: 0; padding-left: 0; list-style: none; color: #c2410c;">
                                                         <li style="margin-bottom: 8px; font-size: 14px;">• Link reset
                                                             password ini berlaku selama
-                                                            <strong>{{ $expiration ?? '60' }} menit</strong></li>
+                                                            <strong>{{ $expiration ?? '60' }} menit</strong>
+                                                        </li>
                                                         <li style="margin-bottom: 8px; font-size: 14px;">• Link hanya
                                                             dapat digunakan satu kali</li>
                                                         <li style="margin-bottom: 8px; font-size: 14px;">• Jangan

@@ -106,7 +106,7 @@
 				<div class="hidden absolute top-10 right-0 my-4 text-base list-none bg-amber-50 divide-y divide-gray-100 rounded-lg shadow w-56"
 					id="user-dropdown">
 					@php
-						$user = \App\Models\User::find(session('user_id'));
+						$user = Auth::user();
 					@endphp
 					<div class="px-4 py-3">
 						<span class="block text-base text-gray-900">{{ $user ? $user->username : '-' }}</span>

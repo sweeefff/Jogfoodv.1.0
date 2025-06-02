@@ -21,6 +21,7 @@ use App\Http\Controllers\TblmenuController;
 use App\Http\Controllers\ChangePassController;
 use App\Http\Middleware\RoleMiddleware;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SocialiteController;
 
 // Auth Routes - Tidak perlu middleware
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -32,6 +33,9 @@ Route::get('/forgot-password', [AuthController::class, 'showForgotForm'])->name(
 Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('password.email');
 Route::get('/reset-password/{token}', [AuthController::class, 'showResetForm'])->name('password.reset');
 Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
+
+Route::get('/auth/google', [SocialiteController::class, 'redirectToGoogle'])->name('google.login');
+Route::get('/auth/google/callback', [SocialiteController::class, 'handleGoogleCallback'])->name('google.callback');
 
 // Public Routes - Dapat diakses tanpa login
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -47,7 +51,7 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
     Route::get('/order', [OrderController::class, 'order'])->name('admin.order');
     Route::get('/data', [DataController::class, 'data'])->name('admin.data');
     Route::get('/rekap', [RekapController::class, 'rekap'])->name('admin.rekap');
-
+    // CRUD menu
     Route::resource('/tblmenu', TblmenuController::class)->only([
         'index',
         'store',
@@ -61,7 +65,7 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
             ]);
 });
 
-// Routes yang memerlukan login - User untuk akses
+// User Routes - Hanya user yang bisa akses
 Route::middleware([RoleMiddleware::class . ':user'])->prefix('user')->group(function () {
     Route::get('/keranjang', [KeranjangController::class, 'keranjang'])->name('keranjang');
     Route::get('/metode', [MetodeController::class, 'metode'])->name('metode');

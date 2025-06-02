@@ -71,6 +71,28 @@
                             class="w-full bg-amber-500 text-white font-bold py-3 px-4 rounded-md hover:bg-amber-600 transition-all hover:shadow-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2">
                             Masuk
                         </button>
+                        <div class="my-6 flex items-center justify-between">
+                            <div class="border-t border-gray-300 flex-grow mr-3"></div>
+                            <span class="text-gray-500 font-medium">or</span>
+                            <div class="border-t border-gray-300 flex-grow ml-3"></div>
+                        </div>
+
+                        <!--- Google Button -->
+                        <div class="mt-3 space-y-3">
+                            <a href="{{ route('google.login') }}"
+                                class="relative inline-flex w-full items-center justify-center rounded-md border border-gray-400 bg-white px-3.5 py-2.5 font-semibold text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:text-black focus:bg-gray-100 focus:text-black focus:outline-none"
+                                type="button">
+                                <span class="mr-2 inline-block">
+                                    <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                                        class="h-6 w-6 text-amber-500">
+                                        <path
+                                            d="M20.283 10.356h-8.327v3.451h4.792c-.446 2.193-2.313 3.453-4.792 3.453a5.27 5.27 0 0 1-5.279-5.28 5.27 5.27 0 0 1 5.279-5.279c1.259 0 2.397.447 3.29 1.178l2.6-2.599c-1.584-1.381-3.615-2.233-5.89-2.233a8.908 8.908 0 0 0-8.934 8.934 8.907 8.907 0 0 0 8.934 8.934c4.467 0 8.529-3.249 8.529-8.934 0-.528-.081-1.097-.202-1.625z">
+                                        </path>
+                                    </svg>
+                                </span>
+                                Sign in with Google
+                            </a>
+                        </div>
 
                         <!-- Register link -->
                         <div class="mt-4 text-center text-sm">

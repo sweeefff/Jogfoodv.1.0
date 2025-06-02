@@ -6,9 +6,9 @@
     <div class="min-h-screen flex items-center justify-center px-4 mx-auto sm:px-6 lg:px-8">
         <div class="receipt-container bg-white rounded-xl overflow-hidden sm:w-1/2 lg:w-1/3 xl:w-1/4">
             <!-- Header -->
-            <div class="bg-amber-50 p-6 text-center">
+            <div class="bg-amber-100 border-b border-amber-200 p-6 text-center">
                 <h1 class="text-amber-600 mt-1">Bukti Pembayaran</h1>
-                <img src="assets/icon/jogfood-shadow.png" alt="Jogfood Logo" class="h-16 mx-auto mb-2">
+                <img src="{{ asset('assets/icon/jogfood-shadow.png') }}" alt="Jogfood Logo" class="h-16 mx-auto mb-2">
             </div>
 
             <!-- Order Summary -->

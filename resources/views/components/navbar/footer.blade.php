@@ -18,7 +18,7 @@
 							clip-rule="evenodd" />
 					</svg>
 				</a>
-				<a href="https://mail.google.com/mail/?view=cm&fs=1&to=benzoatalumina@gmail.com" target="_blank"
+				<a href="https://mail.google.com/mail/?view=cm&fs=1&to=jogfood25@gmail.com" target="_blank"
 					rel="noopener noreferrer"
 					class="flex items-center text-gray-800 dark:text-white hover:text-amber-500"
 					aria-label="Contact us">
