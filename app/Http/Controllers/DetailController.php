@@ -7,6 +7,6 @@ use Illuminate\Http\Request;
 class DetailController extends Controller
 {
     public function detail(){
-        return view('pages/user/detail');
+        return view('pages/detail');
 }
 }

@@ -1,7 +1,7 @@
 <a href="{{ route('detail') }}"
     class="food-card block group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
     <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-t-lg bg-gray-200">
-        <img src="assets/img/gudeg.jpg" alt="Food Name"
+        <img src="{{ asset('assets/img/menu/' . $gambar_menu) }}" alt="Food Name"
             class="h-60 w-full object-cover object-center food-image transition duration-300">
     </div>
     <div class="p-4">
@@ -48,10 +48,10 @@
             <span class="text-gray-900 font-medium">{{ $harga }}</span>
         </div>
         <div class="flex items-center justify-center w-full mt-4">
-            <button type="button"
+            <a href="{{ route('keranjang') }}"
                 class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 
                 focus:ring-green-300 font-medium rounded-lg text-sm px-16 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Add
-                to Cart</button>
+                to Cart</a>
         </div>
     </div>
 </a>
