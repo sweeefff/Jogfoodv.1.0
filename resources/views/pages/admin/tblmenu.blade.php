@@ -152,8 +152,8 @@
                 </div>
             </div>
             
-            @include('components.add-modal', ['kategori' => $kategori])
-            @include('components.edit-modal', ['kategori' => $kategori])
+            @include('components.card.add-modal', ['kategori' => $kategori])
+            @include('components.card.edit-modal', ['kategori' => $kategori])
             
             <!-- Table Container -->
             <div class="table-container custom-scrollbar shadow-md sm:rounded-lg overflow-x-auto">
