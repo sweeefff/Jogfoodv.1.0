@@ -1,4 +1,4 @@
-@extends('layouts.apphome')
+@extends(session()->has('user_id') ? 'layouts.user' : 'layouts.guest')
 
 @section('title', 'Change Password - Jogfood')
 

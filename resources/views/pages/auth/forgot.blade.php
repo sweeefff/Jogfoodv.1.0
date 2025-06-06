@@ -3,7 +3,7 @@
         background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
     }
 </style>
-@extends('layouts.apphome')
+@extends(session()->has('user_id') ? 'layouts.user' : 'layouts.guest')
 
 @section('title', 'Forgot Password - Jogfood')
 

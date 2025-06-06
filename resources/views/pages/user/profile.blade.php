@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.user')
 
-@section('title', 'Register - Jogfood')
+@section('title', 'Profil - Jogfood')
 
 @section('content')
     <!-- Content -->

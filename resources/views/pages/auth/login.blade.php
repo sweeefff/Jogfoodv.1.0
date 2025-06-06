@@ -3,7 +3,7 @@
         background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
     }
 </style>
-@extends('layouts.apphome')
+@extends('layouts.guest')
 
 @section('title', 'Login - Jogfood')
 
@@ -57,7 +57,7 @@
                         <div class="flex items-center justify-between mb-6">
                             <div class="flex items-center">
                                 <input id="remember-me" name="remember" type="checkbox"
-                                    class="h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300 rounded">
+                                    class="h-4 w-4 text-amber-600 bg-amber-100 focus:ring-amber-500 border-gray-300 rounded">
                                 <label for="remember-me" class="ml-2 block text-sm text-gray-700">Ingat saya</label>
                             </div>
                             <div class="text-sm">

@@ -125,8 +125,7 @@
 						<li>
 							<form method="POST" action="{{ route('logout') }}">
 								@csrf
-								<button type="submit"
-									class="block w-full text-left px-4 py-2 text-base text-gray-700 hover:bg-gray-100">
+								<button type="submit" class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">
 									Sign out
 								</button>
 							</form>
@@ -165,18 +164,18 @@
 				Kita</a>
 
 			<!-- Mobile user dropdown -->
-			<div class="pt-4 pb-3 border-t border-amber-600">
+			<div class="pt-4 pb-3 border-t border-amber-600 relative z-50">
 				<div class="flex items-center px-5">
 					<div class="flex-shrink-0">
 						<img class="h-10 w-10 rounded-full"
 							src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="User profile">
 					</div>
 					<div class="ml-3">
-						<div class="text-base font-medium text-white">Bonnie Green</div>
-						<div class="text-sm font-medium text-amber-200">ID: 12</div>
+						<div class="text-base font-medium text-white">{{ session('username', '-') }}</div>
+						<div class="text-sm font-medium text-amber-200">ID : {{ session('user_id', '-') }}</div>
 					</div>
 				</div>
-				<div class="mt-3 space-y-1 px-2">
+				<div class="mt-3 space-y-1 px-2 pb-4">
 					<a href="{{ route('profile') }}"
 						class="block px-3 py-2 text-base font-medium text-white hover:bg-amber-500 rounded">Profile</a>
 					<a href="{{ route('riwayat') }}"
@@ -194,7 +193,6 @@
 			</div>
 		</div>
 	</div>
-	</nav>
 
 	<script>
 		// Mobile menu toggle
@@ -237,7 +235,4 @@
 				}
 			});
 		}
-
-		// Back to top button
-
 	</script>

@@ -33,7 +33,7 @@
     </style>
 </head>
 <body>
-@extends('layouts.app')
+@extends('layouts.user')
 
 @section('title', 'Detail')
 

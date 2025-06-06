@@ -1,4 +1,4 @@
-@extends('layouts.apphome')
+@extends('layouts.guest')
 
 @section('title', 'Register - Jogfood')
 

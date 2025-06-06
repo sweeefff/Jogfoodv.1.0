@@ -13,7 +13,7 @@
       background-color: rgba(249, 115, 22, 0.1);
     }
   </style>
-@extends('layouts.app')
+@extends(session()->has('user_id') ? 'layouts.user' : 'layouts.guest')
 @section('title', 'Tentang Kita')
 
 @section('content')

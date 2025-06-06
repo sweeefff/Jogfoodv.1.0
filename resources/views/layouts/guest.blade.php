@@ -43,7 +43,7 @@
 
 <body>
     <header>
-        @include('components.navbar.homenav')
+        @include('components.navbar.guest-nav')
     </header>
     <main>
         @yield('content')

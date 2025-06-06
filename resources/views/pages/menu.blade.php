@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends(session()->has('user_id') ? 'layouts.user' : 'layouts.guest')
 
 @section('title', 'Menu Makanan')
 
