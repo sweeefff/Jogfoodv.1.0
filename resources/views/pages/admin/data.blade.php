@@ -29,6 +29,7 @@
         <!-- Main Content Area -->
         <div class="flex-1 overflow-auto p-6 bg-gray-50">
             <div class="max-w-6xl mx-auto">
+                <div class="flex flex-wrap items-center justify-between mb-6">
                 <div class="flex items-center justify-between mb-6">
                     <h1 class="text-2xl font-bold text-gray-800">Profile Restoran</h1>
                     <button

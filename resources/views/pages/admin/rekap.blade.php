@@ -227,11 +227,11 @@
                         Ditampilkan <span class="font-medium">1</span> sampai <span class="font-medium">5</span> dari <span class="font-medium">24</span> hasil
                     </div>
                     <div class="flex space-x-2">
-                        <button class="px-3 py-1 border border-gray-300 rounded-md text-sm">Sebelumnya</button>
+                        <button class="px-3 py-1 border border-gray-300 rounded-md text-sm"><</button>
                         <button class="px-3 py-1 bg-blue-500 text-white rounded-md text-sm">1</button>
                         <button class="px-3 py-1 border border-gray-300 rounded-md text-sm">2</button>
                         <button class="px-3 py-1 border border-gray-300 rounded-md text-sm">3</button>
-                        <button class="px-3 py-1 border border-gray-300 rounded-md text-sm">Selanjutnya</button>
+                        <button class="px-3 py-1 border border-gray-300 rounded-md text-sm">></button>
                     </div>
                 </div>
             </div>

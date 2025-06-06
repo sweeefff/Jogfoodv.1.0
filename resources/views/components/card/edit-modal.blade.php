@@ -1,7 +1,8 @@
 <!-- Edit modal -->
 <div id="edit-modal" tabindex="-1" aria-hidden="true"
-    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div class="relative p-4 w-full max-w-md max-h-full bg-white">
+    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full md:h-auto md:max-h-[calc(100vh-2rem)]">
+    <div
+        class="relative p-4 w-full max-w-md md:max-w-[550px] md:min-w-[400px] md:h-auto max-h-full bg-white m-4 md:m-8">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow-sm">
             <!-- Modal header -->
@@ -63,7 +64,8 @@
                             class="block mb-2 text-sm font-medium text-amber-600">Gambar</label>
                         <div class="mb-3" id="current_image_container">
                             <p class="text-xs mb-1 text-amber-600">Gambar saat ini:</p>
-                            <img id="current_image" src="" alt="Current Image" class="w-32 h-auto rounded mb-2">
+                            <img id="current_image" src=""
+                                alt="Current Image" class="w-32 h-auto rounded mb-2">
                         </div>
                         <input
                             class="flex h-10 w-full rounded-md border border-input bg-amber-50 px-3 py-2 text-sm text-amber-600 file:border-0 file:bg-transparent file:text-gray-600 file:text-sm file:font-medium"

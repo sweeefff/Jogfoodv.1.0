@@ -2,7 +2,7 @@
 @section('title', 'Menu Makanan - Jogfood')
 @section('content')
     <!-- Content -->
-    <div class="p-6 mt-16 ml-64">
+    <div class="p-6 mt-16 ml-auto lg:ml-64">
         <div class="bg-white rounded-lg shadow-md p-6">
             <!-- Header with search and add button -->
             <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
@@ -31,7 +31,7 @@
             
             <!-- Table Container -->
             <div class="table-container custom-scrollbar shadow-md sm:rounded-lg overflow-x-auto">
-                <table class="menu-table text-sm text-left text-amber-500">
+                <table class="menu-table text-sm text-left text-amber-500 w-full">
                     <thead class="text-xs text-amber-700 uppercase bg-amber-50">
                         <tr>
                             <th scope="col" class="col-id px-3 py-3">
@@ -133,7 +133,7 @@
             </div>
 
             <!-- Pagination -->
-            <nav class="flex items-center justify-between pt-4" aria-label="Table navigation">
+            <nav class="flex flex-col md:flex-row items-center justify-between pt-4" aria-label="Table navigation">
                 <span class="text-sm font-normal text-amber-500">Showing <span
                         class="font-semibold text-amber-900">1-10</span> of <span
                         class="font-semibold text-amber-900">100</span></span>
