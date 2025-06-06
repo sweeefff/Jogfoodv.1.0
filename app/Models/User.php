@@ -17,6 +17,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'username',
+        'name',
         'email',
         'password',
         'role',
@@ -45,4 +46,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function keranjang()
+    {
+        return $this->hasMany(Keranjang::class, 'id_user');
+    }
+
 }

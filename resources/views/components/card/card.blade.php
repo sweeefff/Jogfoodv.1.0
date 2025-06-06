@@ -48,10 +48,13 @@
             <span class="text-gray-900 font-medium">{{ $harga }}</span>
         </div>
         <div class="flex items-center justify-center w-full mt-4">
-            <a href="{{ route('keranjang') }}"
-                class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 
-                focus:ring-green-300 font-medium rounded-lg text-sm px-16 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Add
-                to Cart</a>
+            <form action="{{ route('keranjang.store', ['id' => $menu->id_menu]) }}" method="POST">
+                @csrf
+                <button type="submit" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4
+                focus:ring-green-300 font-medium rounded-lg text-sm px-16 py-2.5 me-2 mb-2 dark:bg-green-600
+                dark:hover:bg-green-700 dark:focus:ring-green-800">Add
+                    to Cart</button>
+            </form>
         </div>
     </div>
 </a>

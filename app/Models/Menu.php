@@ -23,4 +23,10 @@ class Menu extends Model
     {
         return $query->where('kategori', $kategori);
     }
+
+    public function keranjang()
+    {
+        return $this->hasMany(Keranjang::class, 'id_menu');
+    }
+
 }

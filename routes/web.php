@@ -67,7 +67,6 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
 
 // User Routes - Hanya user yang bisa akses
 Route::middleware([RoleMiddleware::class . ':user'])->prefix('user')->group(function () {
-    Route::get('/keranjang', [KeranjangController::class, 'keranjang'])->name('keranjang');
     Route::get('/metode', [MetodeController::class, 'metode'])->name('metode');
     Route::get('/riwayat', [RiwayatController::class, 'riwayat'])->name('riwayat');
     Route::get('/struk', [StrukController::class, 'struk'])->name('struk');
@@ -76,4 +75,9 @@ Route::middleware([RoleMiddleware::class . ':user'])->prefix('user')->group(func
     // Profile routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    //Keranjang
+    Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang.index');
+    Route::post('/keranjang/tambah/{id}', [KeranjangController::class, 'store'])->name('keranjang.store');
+    Route::delete('/keranjang/hapus/{id}', [KeranjangController::class, 'remove'])->name('keranjang.destroy');
+
 });

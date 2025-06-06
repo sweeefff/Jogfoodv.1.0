@@ -44,6 +44,7 @@ class AuthController extends Controller
             // Manual session set
             $request->session()->put('user_id', $user->id);
             $request->session()->put('user_role', $user->role);
+            $request->session()->put('username', $user->username);
             $request->session()->regenerate();
 
             // Redirect by role

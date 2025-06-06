@@ -16,6 +16,12 @@
             </div>
         </div>
     </div>
+    @if (session('success'))
+        <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4 rounded-lg mx-auto" role="alert" style="max-width: 650px;">
+            <p class="font-bold">Berhasil</p>
+            <p>{{ session('success') }}</p>
+        </div>
+    @endif
 
     <!-- Sort by dropdown -->
     <div class="max-w-7xl mx-auto px-4 flex justify-end mb-4">

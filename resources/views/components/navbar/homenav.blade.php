@@ -18,7 +18,7 @@
 		<!-- Mobile menu button -->
 		<div class="flex items-center space-x-3 md:hidden">
 			<!-- Cart icon -->
-			<a href="keranjang" class="flex items-center">
+			<a href="{{ route('keranjang.index') }}" class="flex items-center">
 				<button type="button" class="flex text-white">
 					<svg class="w-7 h-7" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
 						viewBox="0 0 24 24">
@@ -70,7 +70,7 @@
 		<!-- Desktop User Actions Container -->
 		<div class="hidden md:flex items-center space-x-3">
 			<!-- Cart icon -->
-			<a href="{{ route('keranjang') }}" class="flex items-center">
+			<a href="{{ route('keranjang.index') }}" class="flex items-center">
 				<button type="button" class="flex text-white">
 					<svg class="w-7 h-7" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
 						viewBox="0 0 24 24">

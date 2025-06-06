@@ -18,7 +18,7 @@
 		<!-- Mobile menu button -->
 		<div class="flex items-center space-x-3 md:hidden">
 			<!-- Cart icon -->
-			<a href="{{ route('keranjang') }}" class="flex items-center">
+			<a href="{{ route('keranjang.index') }}" class="flex items-center">
 				<button type="button" class="flex text-white">
 					<svg class="w-7 h-7" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
 						viewBox="0 0 24 24">
@@ -84,7 +84,7 @@
 			</div>
 
 			<!-- Cart icon -->
-			<a href="keranjang" class="flex items-center">
+			<a href="{{ route('keranjang.index') }}" class="flex items-center">
 				<button type="button" class="flex text-white">
 					<svg class="w-7 h-7" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
 						viewBox="0 0 24 24">
@@ -105,12 +105,9 @@
 				<!-- Dropdown menu -->
 				<div class="hidden absolute top-10 right-0 my-4 text-base list-none bg-amber-50 divide-y divide-gray-100 rounded-lg shadow w-56"
 					id="user-dropdown">
-					@php
-						$user = Auth::user();
-					@endphp
 					<div class="px-4 py-3">
-						<span class="block text-base text-gray-900">{{ $user ? $user->username : '-' }}</span>
-						<span class="block text-base text-gray-500 truncate">ID : {{ $user ? $user->id : '-' }}</span>
+						<span class="block text-base text-gray-900">{{ session('username', '-') }}</span>
+						<span class="block text-base text-gray-500 truncate">ID : {{ session('user_id', '-') }}</span>
 					</div>
 					<ul class="py-2" aria-labelledby="user-menu-button">
 						<li>
