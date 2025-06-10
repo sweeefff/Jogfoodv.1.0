@@ -17,27 +17,41 @@
                 </button>
             </div>
 
-            @include('components.card.item', ['desc' => 'Ubah Pesanan'])
-            @include('components.card.item', ['desc' => 'Ubah Pesanan'])
+            <!-- Tampilkan item yang dipilih -->
+            @if(isset($items) && $items->count() > 0)
+                @foreach ($items as $item)
+                    @include('components.card.item', [
+                        'nama' => $item->menu->nama,
+                        'gambar_menu' => $item->menu->gambar_menu,
+                        'harga' => $item->menu->harga,
+                        'jumlah' => $item->jumlah,
+                        'opsi' => $item->opsi ?? null
+                    ])
+                @endforeach
+            @endif
 
             <div class="mt-4">
-                <h2 class="text-lg font-medium">Pesanan</h2>
+                <h2 class="text-lg font-medium">Ringkasan Pesanan</h2>
                 <div class="space-y-2 mt-2">
+                    @if(isset($items))
+                        @foreach($items as $item)
+                            <input type="hidden" name="selected_items[]" value="{{ $item->id }}">
+                            <div class="flex justify-between">
+                                <span>{{ $item->menu->nama }} ({{ $item->jumlah }}x)</span>
+                                <span>Rp.{{ number_format($item->menu->harga * $item->jumlah, 0, ',', '.') }}</span>
+                            </div>
+                        @endforeach
+                        <input type="hidden" name="total_harga" value="{{ $total }}">
+                    @endif
+                    
                     <div class="flex justify-between">
-                        <span>Gudeg</span>
-                        <span>Rp.30.000</span>
+                        <span>Biaya Pengiriman</span>
+                        <span>Rp.{{ number_format($deliveryFee ?? 10000, 0, ',', '.') }}</span>
                     </div>
-                    <div class="flex justify-between">
-                        <span>Wedang Jahe</span>
-                        <span>Rp.10.000</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span>PPN 11%</span>
-                        <span>Rp.0.00</span>
-                    </div>
+                    
                     <div class="flex justify-between font-bold pt-2 border-t border-gray-200">
                         <span>Total</span>
-                        <span>Rp.40.000</span>
+                        <span>Rp.{{ number_format($total ?? 0, 0, ',', '.') }}</span>
                     </div>
                 </div>
             </div>
@@ -45,59 +59,121 @@
             <div class="mt-4">
                 <h2 class="text-lg font-medium">Metode Pembayaran</h2>
 
-                <div class="space-y-4 mt-2">
-                    <div class="flex items-start">
-                        <input id="bank-transfer" type="radio" name="payment-method"
-                            class="w-4 h-4 mt-1 text-amber-600 border-gray-300 focus:ring-amber-500">
-                        <label for="bank-transfer" class="ml-2 w-full">
-                            <span class="font-medium">Bank Transfer</span>
-                            <div class="flex items-center mt-2 space-x-4">
-                                <div class="bg-white p-1 border border-gray-200 rounded-lg">
-                                    <div
-                                        class="h-6 w-16 bg-yellow-400 rounded-lg flex items-center justify-center text-xs font-bold">
-                                        mandiri</div>
-                                </div>
-                                <div class="bg-white p-1 border border-gray-200 rounded-lg">
-                                    <div
-                                        class="h-6 w-12 bg-blue-600 rounded-lg flex items-center justify-center text-xs font-bold text-white">
-                                        BCA</div>
-                                </div>
-                                <div class="bg-white p-1 border border-gray-200 rounded-lg">
-                                    <div
-                                        class="h-6 w-12 bg-green-600 rounded-lg flex items-center justify-center text-xs font-bold text-white">
-                                        BNI</div>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div class="flex items-center">
-                        <input id="e-wallet" type="radio" name="payment-method"
-                            class="w-4 h-4 text-amber-600 border-gray-300 focus:ring-amber-500">
-                        <label for="e-wallet" class="ml-2 font-medium">
-                            E-Wallet
-                        </label>
-                    </div>
-                    <div class="flex items-center">
-                        <input id="cod" type="radio" name="payment-method"
-                            class="w-4 h-4 text-amber-600 border-gray-300 focus:ring-amber-500">
-                        <label for="cod" class="ml-2 font-medium">
-                            COD
-                        </label>
-                    </div>
-                </div>
-            </div>
+                <form id="payment-form" action="{{ route('metode.process') }}" method="POST">
+                    @csrf
+                    <input type="hidden" id="total_harga" value="{{ $total }}">
 
-            <div class="flex gap-4 mt-4">
-                <button
-                    class="flex-1 py-2 px-4 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition duration-150">
-                    Batalkan Pesanan
-                </button>
-                <button
-                    class="flex-1 py-2 px-4 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition duration-150">
-                    Konfirmasi Pesanan
-                </button>
+                    <div class="space-y-4 mt-2">
+                        <div class="flex items-start">
+                            <input id="bank-transfer" type="radio" name="payment-method" value="bank-transfer"
+                                class="w-4 h-4 mt-1 text-amber-600 border-gray-300 focus:ring-amber-500">
+                            <label for="bank-transfer" class="ml-2 w-full">
+                                <span class="font-medium">Bank Transfer</span>
+                                <div class="flex items-center mt-2 space-x-4">
+                                    <div class="bg-white p-1 border border-gray-200 rounded-lg">
+                                        <div class="h-6 w-16 bg-yellow-400 rounded-lg flex items-center justify-center text-xs font-bold">
+                                            mandiri</div>
+                                    </div>
+                                    <div class="bg-white p-1 border border-gray-200 rounded-lg">
+                                        <div class="h-6 w-12 bg-blue-600 rounded-lg flex items-center justify-center text-xs font-bold text-white">
+                                            BCA</div>
+                                    </div>
+                                    <div class="bg-white p-1 border border-gray-200 rounded-lg">
+                                        <div class="h-6 w-12 bg-green-600 rounded-lg flex items-center justify-center text-xs font-bold text-white">
+                                            BNI</div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="flex items-center">
+                            <input id="e-wallet" type="radio" name="payment-method" value="e-wallet"
+                                class="w-4 h-4 text-amber-600 border-gray-300 focus:ring-amber-500">
+                            <label for="e-wallet" class="ml-2 font-medium">
+                                E-Wallet
+                            </label>
+                        </div>
+                        <div class="flex items-center">
+                            <input id="cod" type="radio" name="payment-method" value="cod"
+                                class="w-4 h-4 text-amber-600 border-gray-300 focus:ring-amber-500">
+                            <label for="cod" class="ml-2 font-medium">
+                                COD
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4 mt-4">
+                        <button type="button" onclick="history.back()"
+                            class="flex-1 py-2 px-4 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition duration-150">
+                            Kembali
+                        </button>
+                        <button id="btn-confirm" type="button" onclick="payNow()"
+                            class="flex-1 py-2 px-4 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition duration-150">
+                            Bayar Sekarang
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </main>
+
+<script src="https://app.sandbox.midtrans.com/snap/snap.js"
+        data-client-key="{{ config('midtrans.client_key') }}"></script>
+
+<script>
+function payNow() {
+    const totalHarga = parseInt(
+        document.getElementById("total_harga").value.replace(/\D/g, "")
+    );
+
+    const paymentMethod = document.querySelector('input[name="payment-method"]:checked');
+    if (!paymentMethod) {
+        alert("Silakan pilih metode pembayaran terlebih dahulu.");
+        return;
+    }
+
+    fetch("{{ route('metode.process') }}", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+        },
+        body: JSON.stringify({ amount: totalHarga })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.error) {
+            alert("Gagal mendapatkan Snap Token: " + data.error);
+            return;
+        }
+
+        if (data.snap_token) {
+            snap.pay(data.snap_token, {
+                onSuccess: function(result) {
+                    window.location.href = "{{ route('metode.success') }}";
+                },
+                onPending: function(result) {
+                    alert("Menunggu pembayaran...");
+                },
+                onError: function(result) {
+                    alert("Pembayaran gagal.");
+                },
+                onClose: function() {
+                    alert("Anda membatalkan pembayaran.");
+                }
+            });
+        } else {
+            alert("Snap token tidak ditemukan.");
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        alert("Terjadi kesalahan saat memproses pembayaran.");
+    });
+}
+</script>
+
+
+
 @endsection
+
 

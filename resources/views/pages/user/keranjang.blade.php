@@ -56,7 +56,7 @@
                             'nama' => $item->menu->nama,
                             'gambar_menu' => $item->menu->gambar_menu,
                             'harga' => $item->menu->harga,
-                            'opsi' => 'Pedas, Kecap, Lontong',
+                            'opsi' => $item->opsi ?? 'Pedas, Kecap, Lontong',
                             'jumlah' => $item->jumlah,
                             'item' => $item
                         ])
@@ -86,11 +86,18 @@
 
                 <!-- Checkout Button -->
                 <div id="checkout-btn-container" class="mt-6 hidden">
-                    <button onclick="checkout()"
-                        class="w-full bg-amber-600 hover:bg-amber-700 text-white py-3 rounded-lg font-bold transition flex items-center justify-center gap-2">
-                        <i class="fas fa-shopping-bag"></i>
-                        Bayar Sekarang
-                    </button>
+                    <form id="checkout-form" action="{{ route('metode.bayar') }}" method="POST">
+                        @csrf
+                        <!-- Hidden inputs untuk data checkout -->
+                        <input type="hidden" id="checkout-items" name="selected_items" value="">
+                        <input type="hidden" id="checkout-total" name="total_harga" value="">
+                        
+                        <button type="button" onclick="checkout()"
+                                class="w-full bg-amber-600 hover:bg-amber-700 text-white py-3 rounded-lg font-bold transition flex items-center justify-center gap-2">
+                                <i class="fas fa-shopping-bag"></i>
+                                Bayar Sekarang
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>

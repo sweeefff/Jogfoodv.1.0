@@ -1,6 +1,11 @@
-<div class="cart-item flex items-center border border-amber-100 rounded-lg p-4 gap-4 bg-white">
-    <input type="checkbox" class="item-checkbox w-5 h-5 text-amber-500 rounded border-amber-400 bg-amber-100 focus:ring-amber-500" onchange="toggleButton()">
-    
+<!-- Card Item Keranjang - card-cart.blade.php -->
+<div class="cart-item flex items-center border border-amber-100 rounded-lg p-4 gap-4 bg-white"
+    data-id="{{ $item->id_keranjang ?? $item->id }}">
+
+    <input type="checkbox"
+        class="item-checkbox w-5 h-5 text-amber-500 rounded border-amber-400 bg-amber-100 focus:ring-amber-500"
+        onchange="toggleButton()">
+
     <div class="flex items-center gap-4 flex-1">
         <div class="w-16 h-16 bg-amber-100 rounded-lg flex items-center justify-center overflow-hidden">
             <img src="{{ asset('assets/img/menu/' . $gambar_menu) }}" alt="{{ $nama }}"
@@ -8,31 +13,35 @@
         </div>
 
         <div class="flex-1">
-            <p class="font-semibold text-gray-800">{{ $nama }}</p>
+            <p class="font-semibold text-gray-800 item-nama">{{ $nama }}</p>
 
-            {{-- Simpan harga asli dalam data attribute --}}
             <span class="text-sm text-gray-500" data-harga-satuan="{{ $harga }}">
                 Harga Satuan: Rp{{ number_format($harga, 0, ',', '.') }}
             </span>
 
-            {{-- Total Harga per item (dihitung di JS) --}}
             <p class="total-harga-item text-amber-600 font-bold">
                 Rp{{ number_format($harga * $jumlah, 0, ',', '.') }}
             </p>
 
-            <p class="text-xs text-gray-500 mt-1">{{ $opsi }}</p>
+            <p class="text-xs text-gray-500 mt-1">{{ $opsi ?? '-' }}</p>
+
+            <!-- Hidden data untuk JavaScript -->
+            <input type="hidden" class="item-menu-id" value="{{ $item->menu_id ?? $item->menu->id }}">
+            <input type="hidden" class="item-menu-nama" value="{{ $nama }}">
+            <input type="hidden" class="item-opsi" value="{{ $opsi ?? '' }}">
         </div>
     </div>
 
     <div class="flex items-center gap-2">
-        <button onclick="decreaseQuantity(this)"
-            class="quantity-btn bg-amber-100 text-amber-800 rounded-full w-6 h-6 text-center flex items-center justify-center">−</button>
+        <button type="button" onclick="decreaseQuantity(this)"
+            class="quantity-btn bg-amber-100 text-amber-800 rounded-full w-6 h-6 text-center flex items-center justify-center hover:bg-amber-200">−</button>
         <span class="quantity text-sm w-6 text-center">{{ $jumlah }}</span>
-        <button onclick="increaseQuantity(this)"
-            class="quantity-btn bg-amber-100 text-amber-800 rounded-full w-6 h-6 text-center flex items-center justify-center">+</button>
+        <button type="button" onclick="increaseQuantity(this)"
+            class="quantity-btn bg-amber-100 text-amber-800 rounded-full w-6 h-6 text-center flex items-center justify-center hover:bg-amber-200">+</button>
     </div>
 
-    <form action="{{ route('keranjang.destroy', ['id' => $item->id_keranjang]) }}" method="POST" class="inline-block">
+    <form action="{{ route('keranjang.destroy', ['id' => $item->id_keranjang ?? $item->id]) }}" method="POST"
+        class="inline-block">
         @csrf
         @method('DELETE')
         <button type="submit"

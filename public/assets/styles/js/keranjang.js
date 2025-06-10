@@ -45,7 +45,7 @@ function calculateTotal() {
     const items = document.querySelectorAll(".cart-item");
     items.forEach((item) => {
         const checkbox = item.querySelector(".item-checkbox");
-        if (checkbox.checked) {
+        if (checkbox && checkbox.checked) {
             const hargaSatuan = parseInt(
                 item
                     .querySelector("[data-harga-satuan]")
@@ -57,17 +57,61 @@ function calculateTotal() {
             subtotal += hargaSatuan * quantity;
         }
     });
+
     const deliveryFee = subtotal > 0 ? 10000 : 0;
     const total = subtotal + deliveryFee;
+
     document.getElementById("subtotal").textContent = formatRupiah(subtotal);
     document.getElementById("delivery-fee").textContent =
         formatRupiah(deliveryFee);
     document.getElementById("total").textContent = formatRupiah(total);
+
+    // Update hidden input untuk total
+    const totalInput = document.getElementById("checkout-total");
+    if (totalInput) {
+        totalInput.value = total;
+    }
 }
 
 // Inisialisasi saat halaman dimuat
 document.addEventListener("DOMContentLoaded", function () {
     calculateTotal();
-    // Pastikan tombol checkout hidden jika tidak ada item tercentang
     toggleButton();
 });
+
+function getSelectedItems() {
+    const selected = [];
+    const items = document.querySelectorAll(".cart-item");
+    items.forEach((item) => {
+        const checkbox = item.querySelector(".item-checkbox");
+        if (checkbox && checkbox.checked) {
+            selected.push({
+                id: item.getAttribute("data-id"),
+                quantity: parseInt(item.querySelector(".quantity").textContent),
+            });
+        }
+    });
+    return selected;
+}
+
+function checkout() {
+    const form = document.getElementById("checkout-form");
+
+    // Ambil total dan item dari JS (bisa pakai JS lainnya sebelumnya menghitung ini)
+    const total = document
+        .getElementById("total")
+        .textContent.replace(/[^\d]/g, "");
+    const selectedItems = JSON.stringify(getSelectedItems()); // fungsi ini tergantung implementasi kamu
+
+    if (!selectedItems || selectedItems.length <= 2) {
+        alert("Keranjang kosong!");
+        return;
+    }
+
+    // Set value input hidden
+    document.getElementById("checkout-items").value = selectedItems;
+    document.getElementById("checkout-total").value = total;
+
+    // Submit form
+    form.submit();
+}

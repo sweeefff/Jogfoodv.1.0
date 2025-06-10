@@ -3,7 +3,7 @@
 @section('title', 'Menu Makanan')
 
 @section('content')
-    <link rel=stylesheet href="assets/css/menu.css">
+    <link rel=stylesheet href="assets/style/css/menu.css">
     <div class="bg-white flex justify-center py-12">
         <div class="max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">

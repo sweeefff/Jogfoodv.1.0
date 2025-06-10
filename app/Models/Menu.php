@@ -29,4 +29,13 @@ class Menu extends Model
         return $this->hasMany(Keranjang::class, 'id_menu');
     }
 
+    public function menu()
+    {
+        return $this->hasMany(Transaksi::class, 'id_menu');
+    }
+    public function detail_menu()
+    {
+        return $this->hasMany(Menu::class, 'id_menu');
+    }
+
 }

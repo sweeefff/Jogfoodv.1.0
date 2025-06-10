@@ -67,7 +67,13 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
 
 // User Routes - Hanya user yang bisa akses
 Route::middleware([RoleMiddleware::class . ':user'])->prefix('user')->group(function () {
-    Route::get('/metode', [MetodeController::class, 'metode'])->name('metode');
+    // Metode pembayaran
+    Route::post('/metode-bayar', [MetodeController::class, 'bayar'])->name('metode.bayar');
+    Route::post('/payment/process', [MetodeController::class, 'process'])->name('metode.process');
+    Route::get('/payment/snap', [MetodeController::class, 'snap'])->name('metode.snap');
+    Route::get('/payment/success', [MetodeController::class, 'success'])->name('metode.success');
+
+
     Route::get('/riwayat', [RiwayatController::class, 'riwayat'])->name('riwayat');
     Route::get('/struk', [StrukController::class, 'struk'])->name('struk');
     Route::get('/rating', [RatingController::class, 'rating'])->name('rating');
