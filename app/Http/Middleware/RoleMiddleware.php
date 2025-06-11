@@ -2,13 +2,14 @@
 
 namespace App\Http\Middleware;
 
+use Illuminate\Support\Facades\Auth;
 use Closure;
 
 class RoleMiddleware
 {
     public function handle($request, Closure $next, ...$roles)
     {
-        // Manual session check
+        $user = Auth::user();
         if (!$request->session()->has('user_id') || !$request->session()->has('user_role')) {
             return redirect('/');
         }
@@ -20,4 +21,5 @@ class RoleMiddleware
 
         return $next($request);
     }
+
 }
