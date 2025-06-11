@@ -24,12 +24,6 @@
         </div>
     @endif
 
-    <!-- 🔍 Input Live Search -->
-    <div class="max-w-7xl mx-auto px-4 mb-6">
-        <input type="text" id="search-input" placeholder="Cari makanan atau minuman..."
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
-    </div>
-
     <!-- Sort by dropdown -->
     <div class="max-w-7xl mx-auto px-4 flex justify-end mb-4">
         <!-- (sort menu tetap seperti sebelumnya) -->
@@ -58,43 +52,4 @@
             <a href="#" class="px-3 py-2 rounded-r-md border border-gray-300 bg-white text-gray-500 hover:bg-gray-50">Next</a>
         </nav>
     </div>
-
-    <!-- 🧠 Script Live Search -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $('#search-input').on('keyup', function () {
-            let query = $(this).val();
-
-            if (query.length > 0) {
-                $.ajax({
-                    url: "{{ route('produk.search') }}",
-                    type: "GET",
-                    data: { query: query },
-                    success: function (data) {
-                        $('#menu-list').empty();
-                        $('#pagination').hide();
-
-                        if (data.length === 0) {
-                            $('#menu-list').append('<p class="col-span-3 text-center text-gray-500">Tidak ada menu ditemukan</p>');
-                        } else {
-                            $.each(data, function (i, item) {
-                                $('#menu-list').append(`
-                                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
-                                        <img src="/gambar/${item.gambar_menu}" alt="${item.nama}" class="w-full h-48 object-cover">
-                                        <div class="p-4">
-                                            <h3 class="text-lg font-bold text-gray-900">${item.nama}</h3>
-                                            <p class="text-sm text-gray-600">${item.deskripsi_menu}</p>
-                                            <p class="text-amber-600 font-semibold mt-2">Rp. ${parseInt(item.harga).toLocaleString('id-ID')}</p>
-                                        </div>
-                                    </div>
-                                `);
-                            });
-                        }
-                    }
-                });
-            } else {
-                location.reload(); // reset ke awal kalau input dikosongkan
-            }
-        });
-    </script>
 @endsection

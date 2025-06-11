@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="assets/styles/flowbite.min.css" rel="stylesheet" />
     <script src="assets/styles/flowbite.min.js"></script>
     <link href="assets/styles/css/style.css" rel="stylesheet" />
@@ -52,3 +53,65 @@
         @include('components.navbar.footer')
     </footer>
 </body>
+<script>
+    window.onscroll = function () {
+        scrollFunction();
+    };
+
+    function scrollFunction() {
+        const backToTopBtn = document.getElementById("back-to-top");
+        if (backToTopBtn) {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                backToTopBtn.style.display = "block";
+            } else {
+                backToTopBtn.style.display = "none";
+            }
+        }
+    }
+
+    const backToTopBtn = document.getElementById('back-to-top');
+    if (backToTopBtn) {
+        backToTopBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+</script>
+    <!-- 🧠 Script Live Search -->
+    <script>
+        $('#search-input').on('keyup', function () {
+            let query = $(this).val();
+
+            if (query.length > 0) {
+                $.ajax({
+                    url: "{{ route('produk.search') }}",
+                    type: "GET",
+                    data: { query: query },
+                    success: function (data) {
+                        $('#menu-list').empty();
+                        $('#pagination').hide();
+
+                        if (data.length === 0) {
+                            $('#menu-list').append('<p class="col-span-3 text-center text-gray-500">Tidak ada menu ditemukan</p>');
+                        } else {
+                            $.each(data, function (i, item) {
+                                $('#menu-list').append(`
+                                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                                        <img src="/gambar/${item.gambar_menu}" alt="${item.nama}" class="w-full h-48 object-cover">
+                                        <div class="p-4">
+                                            <h3 class="text-lg font-bold text-gray-900">${item.nama}</h3>
+                                            <p class="text-sm text-gray-600">${item.deskripsi_menu}</p>
+                                            <p class="text-amber-600 font-semibold mt-2">Rp. ${parseInt(item.harga).toLocaleString('id-ID')}</p>
+                                        </div>
+                                    </div>
+                                `);
+                            });
+                        }
+                    }
+                });
+            } else {
+                location.reload(); // reset ke awal kalau input dikosongkan
+            }
+        });
+    </script>
+</html>
