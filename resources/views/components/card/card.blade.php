@@ -1,4 +1,4 @@
-<a href="{{ route('detail') }}"
+<a href="{{ route('detail', ['id' => $id]) }}"
     class="food-card block group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
     <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-t-lg bg-gray-200">
         <img src="{{ asset('assets/img/menu/' . $gambar_menu) }}" alt="Food Name"
@@ -10,7 +10,8 @@
                 <h3 class="text-lg font-medium text-gray-900">{{ $nama }}</h3>
                 <p class="mt-1 text-sm text-gray-500">{{ $desc }}</p>
             </div>
-            <div class="flex items-center">
+        </div>
+        <div class="flex items-center">
                 <svg class="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor" viewBox="0 0 22 20">
                     <path
@@ -38,8 +39,6 @@
                 </svg>
                 <p class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">{{ $rating }}</p>
             </div>
-
-        </div>
         <div class="mt-4 flex justify-between items-center">
             <div class="flex items-center">
                 <i class="fas fa-utensils text-gray-400 text-sm mr-1"></i>

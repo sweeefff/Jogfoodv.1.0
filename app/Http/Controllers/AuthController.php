@@ -46,6 +46,10 @@ class AuthController extends Controller
             $request->session()->put('user_role', $user->role);
             $request->session()->put('username', $user->username);
             $request->session()->put('email', $user->email);
+            $request->session()->put('name', $user->name);
+            $request->session()->put('no_hp', $user->no_hp);
+            $request->session()->put('alamat', $user->alamat);
+            $request->session()->put('foto', $user->foto);
             $request->session()->regenerate();
 
             // Redirect by role
