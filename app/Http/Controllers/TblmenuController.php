@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Menu;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB; // Tambahkan ini untuk menggunakan DB facade
 
 class TblmenuController extends Controller
 {
@@ -90,5 +91,17 @@ class TblmenuController extends Controller
 
         return redirect()->back()->with('success', 'Menu berhasil dihapus.');
     }
+
+    public function search(Request $request)
+{
+    $query = $request->get('query');
+
+    $menus = DB::table('tblmenu')
+        ->where('namamenu', 'like', '%' . $query . '%')
+        ->orWhere('kategori', 'like', '%' . $query . '%')
+        ->get();
+
+    return response()->json($menus);
+}
 
 }

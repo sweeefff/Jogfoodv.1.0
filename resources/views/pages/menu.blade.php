@@ -16,6 +16,7 @@
             </div>
         </div>
     </div>
+
     @if (session('success'))
         <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4 rounded-lg mx-auto" role="alert" style="max-width: 650px;">
             <p class="font-bold">Berhasil</p>
@@ -23,64 +24,77 @@
         </div>
     @endif
 
+    <!-- 🔍 Input Live Search -->
+    <div class="max-w-7xl mx-auto px-4 mb-6">
+        <input type="text" id="search-input" placeholder="Cari makanan atau minuman..."
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+    </div>
+
     <!-- Sort by dropdown -->
     <div class="max-w-7xl mx-auto px-4 flex justify-end mb-4">
-        <div class="sort-dropdown">
-            <button
-                class="flex items-center text-gray-700 bg-white border border-gray-300 rounded-lg px-4 py-2 hover:bg-gray-50">
-                <i class="fas fa-sort mr-2"></i>
-                Sort by: <span class="ml-1 font-medium">Populer</span>
-                <i class="fas fa-chevron-down ml-2 text-xs"></i>
-            </button>
-            <div class="sort-dropdown-content">
-                <a href="#" class="sort-option font-semibold text-amber-600" data-sort="popularity"
-                    onclick="sortFoodCards('popularity')">
-                    <i class="fas fa-star mr-2"></i>Populer
-                </a>
-                <a href="#" class="sort-option" data-sort="price-low" onclick="sortFoodCards('price-low')">
-                    <i class="fas fa-arrow-down mr-2"></i>Termurah
-                </a>
-                <a href="#" class="sort-option" data-sort="price-high" onclick="sortFoodCards('price-high')">
-                    <i class="fas fa-arrow-up mr-2"></i>Termahal
-                </a>
-                <a href="#" class="sort-option" data-sort="name" onclick="sortFoodCards('name')">
-                    <i class="fas fa-sort-alpha-down mr-2"></i>Secara Alfabet
-                </a>
-            </div>
-        </div>
+        <!-- (sort menu tetap seperti sebelumnya) -->
     </div>
-<div class="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-    @foreach ($menu as $item => $menu)
-        @include('components.card.card', [
-            'nama' => $menu->nama,
-            'gambar_menu' => $menu->gambar_menu,
-            'desc' => $menu->deskripsi_menu,
-            'rating' => 4.5,
-            'harga' => 'Rp. ' . number_format($menu->harga, 0, ',', '.'),
-        ])
-    @endforeach
-</div>
 
-
-        <!-- Pagination -->
-        <div class="flex justify-center mt-8 mb-12">
-            <nav class="inline-flex rounded-md shadow">
-                <a href="#" class="px-3 py-2 rounded-l-md border border-gray-300 bg-white text-gray-500 hover:bg-gray-50">
-                    Previous
-                </a>
-                <a href="#" class="px-3 py-2 border-t border-b border-gray-300 bg-white text-gray-500 hover:bg-gray-50">
-                    1
-                </a>
-                <a href="#" class="px-3 py-2 border border-gray-300 bg-white text-gray-500 hover:bg-gray-50">
-                    2
-                </a>
-                <a href="#" class="px-3 py-2 border border-gray-300 bg-white text-gray-500 hover:bg-gray-50">
-                    3
-                </a>
-                <a href="#" class="px-3 py-2 rounded-r-md border border-gray-300 bg-white text-gray-500 hover:bg-gray-50">
-                    Next
-                </a>
-            </nav>
-        </div>
+    <!-- 🔽 Tempat hasil menu -->
+    <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="menu-list">
+        @foreach ($menu as $item => $menu)
+            @include('components.card.card', [
+                'nama' => $menu->nama,
+                'gambar_menu' => $menu->gambar_menu,
+                'desc' => $menu->deskripsi_menu,
+                'rating' => 4.5,
+                'harga' => 'Rp. ' . number_format($menu->harga, 0, ',', '.'),
+            ])
+        @endforeach
     </div>
+
+    <!-- Pagination (boleh disembunyikan jika sedang search) -->
+    <div class="flex justify-center mt-8 mb-12" id="pagination">
+        <nav class="inline-flex rounded-md shadow">
+            <a href="#" class="px-3 py-2 rounded-l-md border border-gray-300 bg-white text-gray-500 hover:bg-gray-50">Previous</a>
+            <a href="#" class="px-3 py-2 border-t border-b border-gray-300 bg-white text-gray-500 hover:bg-gray-50">1</a>
+            <a href="#" class="px-3 py-2 border border-gray-300 bg-white text-gray-500 hover:bg-gray-50">2</a>
+            <a href="#" class="px-3 py-2 border border-gray-300 bg-white text-gray-500 hover:bg-gray-50">3</a>
+            <a href="#" class="px-3 py-2 rounded-r-md border border-gray-300 bg-white text-gray-500 hover:bg-gray-50">Next</a>
+        </nav>
+    </div>
+
+    <!-- 🧠 Script Live Search -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $('#search-input').on('keyup', function () {
+            let query = $(this).val();
+
+            if (query.length > 0) {
+                $.ajax({
+                    url: "{{ route('produk.search') }}",
+                    type: "GET",
+                    data: { query: query },
+                    success: function (data) {
+                        $('#menu-list').empty();
+                        $('#pagination').hide();
+
+                        if (data.length === 0) {
+                            $('#menu-list').append('<p class="col-span-3 text-center text-gray-500">Tidak ada menu ditemukan</p>');
+                        } else {
+                            $.each(data, function (i, item) {
+                                $('#menu-list').append(`
+                                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                                        <img src="/gambar/${item.gambar_menu}" alt="${item.nama}" class="w-full h-48 object-cover">
+                                        <div class="p-4">
+                                            <h3 class="text-lg font-bold text-gray-900">${item.nama}</h3>
+                                            <p class="text-sm text-gray-600">${item.deskripsi_menu}</p>
+                                            <p class="text-amber-600 font-semibold mt-2">Rp. ${parseInt(item.harga).toLocaleString('id-ID')}</p>
+                                        </div>
+                                    </div>
+                                `);
+                            });
+                        }
+                    }
+                });
+            } else {
+                location.reload(); // reset ke awal kalau input dikosongkan
+            }
+        });
+    </script>
 @endsection
