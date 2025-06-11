@@ -61,11 +61,11 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
         'update',
         'destroy'
     ])->names([
-        'index' => 'pages.admin.tblmenu',
-        'store' => 'tblmenu.store',
-        'update' => 'tblmenu.update',
-        'destroy' => 'tblmenu.destroy'
-    ]);
+                'index' => 'pages.admin.tblmenu',
+                'store' => 'tblmenu.store',
+                'update' => 'tblmenu.update',
+                'destroy' => 'tblmenu.destroy'
+            ]);
 
     // ✅ Route Live Search untuk halaman admin
     Route::get('/tblmenu/search', [TblmenuController::class, 'search'])->name('tblmenu.search');
@@ -73,51 +73,27 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
 
 // User Routes - Hanya user yang bisa akses
 Route::middleware([RoleMiddleware::class . ':user'])->prefix('user')->group(function () {
+    Route::get('/dashboard', [HomeController::class, 'index'])->name('user.dashboard');
     // Metode pembayaran
     Route::post('/metode-bayar', [MetodeController::class, 'bayar'])->name('metode.bayar');
     Route::post('/payment/process', [MetodeController::class, 'process'])->name('metode.process');
     Route::get('/payment/snap', [MetodeController::class, 'snap'])->name('metode.snap');
     Route::get('/payment/success', [MetodeController::class, 'success'])->name('metode.success');
 
-<<<<<<< HEAD
     Route::get('/struk/{id_struk}', [StrukController::class, 'show'])->name('struk.show');
     Route::get('/struk/generate/{id_transaksi}', [StrukController::class, 'generate'])->name('struk.generate');
     Route::get('/struk/download/{id_struk}', [StrukController::class, 'download'])->name('struk.download');
-=======
-<<<<<<< HEAD
+
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
->>>>>>> cf8f767e449554de9eb9365a6a3a9122e5b417d2
 
-
-=======
-    // Halaman user
->>>>>>> 31bfcd5c2650abb1f1fc63a096bf5bc816225b83
-    Route::get('/riwayat', [RiwayatController::class, 'riwayat'])->name('riwayat');
-
-
-    Route::get('/rating', [RatingController::class, 'rating'])->name('rating');
-    Route::get('/dashboard', [HomeController::class, 'index'])->name('user.dashboard');
-<<<<<<< HEAD
     //Keranjang
     Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang.index');
     Route::post('/keranjang/tambah/{id}', [KeranjangController::class, 'store'])->name('keranjang.store');
     Route::delete('/keranjang/hapus/{id}', [KeranjangController::class, 'remove'])->name('keranjang.destroy');
 
-Route::middleware(['auth', RoleMiddleware::class . ':user'])->prefix('user')->group(function () {
+    Route::get('/riwayat', [RiwayatController::class, 'riwayat'])->name('riwayat');
+    Route::get('/rating', [RatingController::class, 'rating'])->name('rating');
 
-});
-
-=======
-
-    // Profile routes
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
-    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
-
-    // Keranjang
-    Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang.index');
-    Route::post('/keranjang/tambah/{id}', [KeranjangController::class, 'store'])->name('keranjang.store');
-    Route::delete('/keranjang/hapus/{id}', [KeranjangController::class, 'remove'])->name('keranjang.destroy');
->>>>>>> 31bfcd5c2650abb1f1fc63a096bf5bc816225b83
 });
