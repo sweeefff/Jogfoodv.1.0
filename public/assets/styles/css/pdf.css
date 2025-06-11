@@ -1,0 +1,314 @@
+@page {
+    margin: 20mm;
+    size: A4;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    line-height: 1.4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Header */
+.header {
+    text-align: center;
+    padding: 20px 0;
+    border-bottom: 3px solid #f59e0b;
+    margin-bottom: 30px;
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 15px;
+    background: #f59e0b;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    color: white;
+    font-weight: bold;
+}
+
+.header h1 {
+    color: #d97706;
+    font-size: 28px;
+    margin: 0 0 10px 0;
+    font-weight: bold;
+}
+
+.header .subtitle {
+    color: #6b7280;
+    font-size: 14px;
+    margin: 0;
+}
+
+/* Order Info */
+.order-info {
+    display: table;
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+.order-left,
+.order-right {
+    display: table-cell;
+    vertical-align: top;
+    width: 50%;
+}
+
+.order-left h2 {
+    font-size: 18px;
+    color: #1f2937;
+    margin: 0 0 5px 0;
+}
+
+.order-id {
+    color: #6b7280;
+    font-size: 14px;
+    margin: 0 0 15px 0;
+}
+
+.status-badge {
+    background: #d1fae5;
+    color: #065f46;
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 11px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+/* Details Table */
+.details-table {
+    width: 100%;
+    margin-bottom: 25px;
+    border-collapse: collapse;
+}
+
+.details-table th,
+.details-table td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.details-table th {
+    background: #f9fafb;
+    font-weight: bold;
+    color: #374151;
+}
+
+.details-table .label {
+    color: #6b7280;
+    width: 40%;
+}
+
+.details-table .value {
+    font-weight: 500;
+}
+
+/* Items Section */
+.items-section {
+    margin-bottom: 25px;
+}
+
+.items-section h3 {
+    color: #374151;
+    font-size: 16px;
+    margin: 0 0 15px 0;
+    border-bottom: 2px solid #f59e0b;
+    padding-bottom: 8px;
+}
+
+.items-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.items-table th {
+    background: #f9fafb;
+    color: #374151;
+    font-weight: bold;
+    padding: 12px 8px;
+    text-align: left;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.items-table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.items-table .item-name {
+    font-weight: 500;
+}
+
+.items-table .text-center {
+    text-align: center;
+}
+
+.items-table .text-right {
+    text-align: right;
+}
+
+/* Cost Breakdown */
+.cost-section {
+    margin: 25px 0;
+}
+
+.cost-table {
+    width: 100%;
+    margin: 20px 0;
+}
+
+.cost-table td {
+    padding: 6px 0;
+}
+
+.cost-table .cost-label {
+    color: #6b7280;
+    width: 70%;
+}
+
+.cost-table .cost-value {
+    text-align: right;
+    font-weight: 500;
+}
+
+/* Total Box */
+.total-box {
+    background: #fef3c7;
+    border: 2px solid #f59e0b;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 20px 0;
+}
+
+.total-row {
+    display: table;
+    width: 100%;
+}
+
+.total-label,
+.total-amount {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.total-label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #92400e;
+}
+
+.total-amount {
+    text-align: right;
+    font-size: 20px;
+    font-weight: bold;
+    color: #92400e;
+}
+
+/* Payment Info */
+.payment-section {
+    margin: 25px 0;
+}
+
+.payment-section h3 {
+    color: #374151;
+    font-size: 16px;
+    margin: 0 0 15px 0;
+    border-bottom: 2px solid #f59e0b;
+    padding-bottom: 8px;
+}
+
+.payment-box {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 15px;
+}
+
+/* Thank You Section */
+.thank-you {
+    text-align: center;
+    margin: 30px 0;
+    padding: 20px;
+    background: #f0fdf4;
+    border-radius: 8px;
+    border: 1px solid #bbf7d0;
+}
+
+.success-checkmark {
+    width: 50px;
+    height: 50px;
+    background: #10b981;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.success-checkmark::after {
+    content: "✓";
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.thank-you h2 {
+    color: #1f2937;
+    font-size: 20px;
+    margin: 0 0 8px 0;
+}
+
+.thank-you p {
+    color: #6b7280;
+    margin: 0;
+}
+
+/* Footer */
+.footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #e5e7eb;
+    text-align: center;
+    color: #6b7280;
+    font-size: 11px;
+}
+
+.divider {
+    border-top: 2px solid #e5e7eb;
+    margin: 25px 0;
+}
+
+/* Print Styles */
+@media print {
+    body {
+        font-size: 11px;
+    }
+
+    .container {
+        width: 100%;
+        margin: 0;
+    }
+
+    .no-print {
+        display: none;
+    }
+}

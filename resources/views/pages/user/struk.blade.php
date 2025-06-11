@@ -4,130 +4,117 @@
 
 @section('content')
     <div class="min-h-screen flex items-center justify-center px-4 mx-auto sm:px-6 lg:px-8">
-        <div class="receipt-container bg-white rounded-xl overflow-hidden sm:w-1/2 lg:w-1/3 xl:w-1/4">
-            <!-- Header -->
+        <div class="bg-white rounded-xl overflow-hidden w-full max-w-md shadow-lg">
+
+            {{-- Header --}}
             <div class="bg-amber-100 border-b border-amber-200 p-6 text-center">
-                <h1 class="text-amber-600 mt-1">Bukti Pembayaran</h1>
-                <img src="{{ asset('assets/icon/jogfood-shadow.png') }}" alt="Jogfood Logo" class="h-16 mx-auto mb-2">
+                <h1 class="text-amber-600 font-semibold text-lg">Bukti Pembayaran</h1>
+                <img src="{{ asset('assets/icon/jogfood-shadow.png') }}" alt="Jogfood Logo" class="h-16 mx-auto mt-2">
             </div>
 
-            <!-- Order Summary -->
+            {{-- Ringkasan Order --}}
             <div class="p-6">
                 <div class="flex justify-between items-center mb-4">
                     <div>
                         <h2 class="text-lg font-semibold text-gray-800">Ringkasan Order</h2>
-                        <p class="text-sm text-gray-500">#31B4234</p>
+                        <p class="text-sm text-gray-500">#{{ $transaksi->id_transaksi }}</p>
                     </div>
                     <div class="bg-green-100 text-green-800 text-xs font-medium px-3 py-1 rounded-full">
                         Selesai
                     </div>
                 </div>
 
-                <!-- Order Details -->
+                {{-- Detail Order --}}
                 <div class="space-y-3 mb-6">
                     <div class="grid grid-cols-2 gap-2">
                         <div class="text-gray-500">Tanggal Order</div>
-                        <div class="text-right font-medium">20 Maret 2025</div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-2">
-                        <div class="text-gray-500">Restoran</div>
-                        <div class="text-right font-medium">Gudeg Yu Djum</div>
+                        <div class="text-right font-medium">{{ $transaksi->created_at->format('d M Y') }}</div>
                     </div>
                     <div class="grid grid-cols-2 gap-2">
                         <div class="text-gray-500">Alamat</div>
-                        <div class="text-right font-medium">Jl. Hang Kesturi I No.8, Batam</div>
+                        <div class="text-right font-medium">Jl. Hang Kesturi</div>
                     </div>
                 </div>
 
-                <!-- Items -->
+                {{-- Item Dipesan --}}
                 <h3 class="font-medium text-gray-700 mb-3">Item yang Dipesan</h3>
                 <div class="space-y-4">
-                    <!-- Item 1 -->
-                    <div class="flex justify-between">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-500" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-.464 5.535a1 1 0 10-1.415-1.414 3 3 0 01-4.242 0 1 1 0 00-1.415 1.414 5 5 0 007.072 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
+                    @foreach($transaksi->detail_transaksi as $detail)
+                        <div class="flex justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-500" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-.464 5.535a1 1 0 10-1.415-1.414 3 3 0 01-4.242 0 1 1 0 00-1.415 1.414 5 5 0 007.072 0z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="font-medium">{{ $detail->menu->nama }}</p>
+                                    <p class="text-sm text-gray-500">{{ $detail->jumlah }} x
+                                        Rp{{ number_format($detail->menu->harga, 0, ',', '.') }}</p>
+                                </div>
                             </div>
-                            <div>
-                                <p class="font-medium">Gudeg</p>
-                                <p class="text-sm text-gray-500">1 x Rp30.000</p>
-                            </div>
+                            <div class="font-medium">Rp{{ number_format($detail->subtotal, 0, ',', '.') }}</div>
                         </div>
-                        <div class="font-medium">Rp30.000</div>
-                    </div>
-
-                    <!-- Item 2 -->
-                    <div class="flex justify-between">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="font-medium">Wedang Jahe</p>
-                                <p class="text-sm text-gray-500">1 x Rp10.000</p>
-                            </div>
-                        </div>
-                        <div class="font-medium">Rp10.000</div>
-                    </div>
+                    @endforeach
                 </div>
 
-                <!-- Divider -->
-                <div class="divider my-5"></div>
+                <div class="my-5 border-t"></div>
 
-                <!-- Cost Breakdown -->
+                {{-- Perhitungan Total --}}
+                @php
+                    $subtotal = $transaksi->detail_transaksi->sum('subtotal');
+                    $diskon = $transaksi->diskon ?? 0;
+                    $biayaPengiriman = $transaksi->biaya_pengiriman ?? 0;
+                    $pajak = $transaksi->pajak ?? 0;
+                    $total = ($subtotal - $diskon) + $pajak + $biayaPengiriman;
+                @endphp
+
                 <div class="space-y-2">
                     <div class="flex justify-between">
-                        <div class="text-gray-500">Subtotal</div>
-                        <div>Rp40.000</div>
+                        <span class="text-gray-500">Subtotal</span>
+                        <span>Rp{{ number_format($subtotal, 0, ',', '.') }}</span>
                     </div>
                     <div class="flex justify-between">
-                        <div class="text-gray-500">Diskon</div>
-                        <div>-Rp4.000</div>
+                        <span class="text-gray-500">Diskon</span>
+                        <span>-Rp{{ number_format($diskon, 0, ',', '.') }}</span>
                     </div>
                     <div class="flex justify-between">
-                        <div class="text-gray-500">Biaya Pengiriman</div>
-                        <div>Rp0</div>
+                        <span class="text-gray-500">Biaya Pengiriman</span>
+                        <span>Rp{{ number_format($biayaPengiriman, 0, ',', '.') }}</span>
                     </div>
                     <div class="flex justify-between">
-                        <div class="text-gray-500">Pajak (10%)</div>
-                        <div>Rp4.000</div>
+                        <span class="text-gray-500">Pajak ({{ $transaksi->pajak_percentage ?? 0 }}%)</span>
+                        <span>Rp{{ number_format($pajak, 0, ',', '.') }}</span>
                     </div>
                 </div>
 
-                <!-- Total -->
-                <div class="total-box rounded-lg p-4 mt-5">
+                {{-- Total --}}
+                <div class="bg-amber-50 rounded-lg p-4 mt-5">
                     <div class="flex justify-between items-center">
-                        <div class="font-bold text-lg">Total</div>
-                        <div class="font-bold text-xl">Rp44.000</div>
+                        <span class="font-bold text-lg">Total</span>
+                        <span class="font-bold text-xl text-amber-600">Rp{{ number_format($total, 0, ',', '.') }}</span>
                     </div>
                 </div>
 
-                <!-- Payment Info -->
+                {{-- Informasi Pembayaran --}}
                 <div class="mt-6">
                     <h3 class="font-medium text-gray-700 mb-3">Informasi Pembayaran</h3>
                     <div class="bg-gray-50 rounded-lg p-4">
                         <div class="flex justify-between mb-2">
-                            <div class="text-gray-500">Metode</div>
-                            <div class="font-medium">Transfer Bank</div>
+                            <span class="text-gray-500">Metode</span>
+                            <span class="font-medium">Transfer Bank</span>
                         </div>
                         <div class="flex justify-between">
-                            <div class="text-gray-500">Tanggal Pembayaran</div>
-                            <div class="font-medium">20 Maret 2025 - 23:50</div>
+                            <span class="text-gray-500">Tanggal Pembayaran</span>
+                            <span class="font-medium">{{ $transaksi->updated_at->format('d M Y') }}</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Thank You -->
+                {{-- Terima Kasih --}}
                 <div class="text-center mt-8">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-green-500 mb-3" fill="none"
                         viewBox="0 0 24 24" stroke="currentColor">
@@ -137,8 +124,8 @@
                     <h2 class="text-xl font-bold text-gray-800 mb-1">Terima Kasih!</h2>
                     <p class="text-gray-500">Order Anda telah diterima</p>
 
-                    <button
-                        class="print-btn mt-6 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg inline-flex items-center">
+                    <button onclick="window.print()"
+                        class="print-btn mt-6 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg inline-flex">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
                             fill="currentColor">
                             <path fill-rule="evenodd"
@@ -147,10 +134,31 @@
                         </svg>
                         Cetak Resi
                     </button>
+                    <a href="{{ route('struk.download', $struk->id_struk) }}"
+                        class="mt-6 bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-6 rounded-lg inline-flex">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H6zm1 1v10.55a1.5 1.5 0 001.5 1.5h7.795a2.5 2.5 0 002.5-2.5V3a2.5 2.5 0 00-2.5-2.5H7.5A2.5 2.5 0 005 3.55V2a2 2 0 00-2 2z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Unduh Resi
+                    </a>
 
-                    <p class="text-sm text-gray-400 mt-4">Butuh bantuan? Hubungi support@jogfood.com</p>
+
+
+                    <p class="text-sm text-gray-400 mt-4">Butuh bantuan? Hubungi
+                        <a href="mailto:zjogfood25@gmailcom" class="text-blue-500 font-medium">jogfood25@gmail.com</a>
+                        <a href="wa.me/6282172394367" class="text-blue-500 font-medium"> | 082172394367</a>
+                    </p>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        document.querySelector('.print-btn').addEventListener('click', function () {
+            window.print();
+        });
+    </script>
+
 @endsection

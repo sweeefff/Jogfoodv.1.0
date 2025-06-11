@@ -73,9 +73,13 @@ Route::middleware([RoleMiddleware::class . ':user'])->prefix('user')->group(func
     Route::get('/payment/snap', [MetodeController::class, 'snap'])->name('metode.snap');
     Route::get('/payment/success', [MetodeController::class, 'success'])->name('metode.success');
 
+    Route::get('/struk/{id_struk}', [StrukController::class, 'show'])->name('struk.show');
+    Route::get('/struk/generate/{id_transaksi}', [StrukController::class, 'generate'])->name('struk.generate');
+    Route::get('/struk/download/{id_struk}', [StrukController::class, 'download'])->name('struk.download');
 
     Route::get('/riwayat', [RiwayatController::class, 'riwayat'])->name('riwayat');
-    Route::get('/struk', [StrukController::class, 'struk'])->name('struk');
+
+
     Route::get('/rating', [RatingController::class, 'rating'])->name('rating');
     Route::get('/dashboard', [HomeController::class, 'index'])->name('user.dashboard');
     // Profile routes

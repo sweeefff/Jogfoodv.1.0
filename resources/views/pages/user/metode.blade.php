@@ -43,15 +43,21 @@
                         @endforeach
                         <input type="hidden" name="total_harga" value="{{ $total }}">
                     @endif
-                    
+
                     <div class="flex justify-between">
                         <span>Biaya Pengiriman</span>
-                        <span>Rp.{{ number_format($deliveryFee ?? 10000, 0, ',', '.') }}</span>
+                        <span>Rp.{{ number_format($deliveryFee ?? 0, 0, ',', '.') }}</span>
                     </div>
-                    
+
+                    <div class="flex justify-between">
+                        <span>Pajak ({{ isset($tax) ? ($tax * 100) : 0 }}%)</span>
+                        <span>Rp.{{ number_format(($total ?? 0) * ($tax ?? 0), 0, ',', '.') }}</span>
+                    </div>
                     <div class="flex justify-between font-bold pt-2 border-t border-gray-200">
                         <span>Total</span>
-                        <span>Rp.{{ number_format($total ?? 0, 0, ',', '.') }}</span>
+                        <span>
+                            Rp.{{ number_format(($total ?? 0) * (1 + ($tax ?? 0)) + ($deliveryFee ?? 0), 0, ',', '.') }}
+                        </span>
                     </div>
                 </div>
             </div>

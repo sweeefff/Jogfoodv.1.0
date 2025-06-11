@@ -28,13 +28,18 @@ class Transaksi extends Model
     // Relasi ke user
     public function user()
     {
-        return $this->belongsTo(User::class, 'id_user', 'id_user');
+        return $this->belongsTo(User::class, 'id_user', 'id');
     }
 
     // Relasi ke detail transaksi (1 transaksi memiliki banyak detail)
     public function detail_transaksi()
     {
         return $this->hasMany(DetailTransaksi::class, 'id_transaksi', 'id_transaksi');
+    }
+
+    public function struk()
+    {
+        return $this->hasOne(Struk::class, 'id_transaksi', 'id_transaksi');
     }
 
     // Akses format rupiah

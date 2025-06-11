@@ -46,11 +46,13 @@ class Pembayaran extends Model
     /**
      * Get the transaction that owns the payment.
      */
-    public function transaction()
+    public function transaksi()
     {
         return $this->belongsTo(Transaksi::class, 'id_transaksi', 'id_transaksi');
     }
-
+    /**
+     * Get the formatted payment status.
+     */
     /**
      * Scope for filtering by payment status.
      */

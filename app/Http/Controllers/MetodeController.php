@@ -12,9 +12,9 @@ use Carbon\Carbon;
 use App\Models\DetailTransaksi;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
+use App\Services\StrukService;
 
 class MetodeController extends Controller
 {
@@ -50,23 +50,22 @@ class MetodeController extends Controller
                 return $item->menu->harga * $item->jumlah;
             });
 
+            // Tidak perlu validasi total_harga dari request, cukup simpan subtotal
+            $subtotal = $calculatedTotal;
             $deliveryFee = 10000;
-            $calculatedTotal += $deliveryFee;
-
-            if (abs($calculatedTotal - $request->total_harga) > 1) {
-                return redirect()->back()->with('error', 'Total harga tidak sesuai');
-            }
+            $tax = 0.1;
+            // Total final akan dihitung di halaman metode
 
             session([
                 'checkout_items' => $items,
-                'checkout_total' => $request->total_harga,
-                'delivery_fee' => $deliveryFee
+                'checkout_total' => $subtotal,
             ]);
 
             return view('pages.user.metode', [
                 'items' => $items,
-                'total' => $request->total_harga,
-                'deliveryFee' => $deliveryFee
+                'total' => $subtotal,
+                'deliveryFee' => $deliveryFee,
+                'tax' => $tax,
             ]);
 
         } catch (\Exception $e) {
@@ -149,14 +148,6 @@ class MetodeController extends Controller
             ];
         }
 
-        if (session('delivery_fee', 0) > 0) {
-            $itemDetails[] = [
-                'id' => 'delivery',
-                'price' => session('delivery_fee'),
-                'quantity' => 1,
-                'name' => 'Biaya Pengiriman'
-            ];
-        }
 
         $params = array(
             'transaction_details' => array(
@@ -165,8 +156,8 @@ class MetodeController extends Controller
             ),
             'item_details' => $itemDetails,
             'customer_details' => array(
-                'email' => session('email') ?? auth()->user()->email,
-                'name' => session('username') ?? auth()->user()->name,
+                'email' => session('email'),
+                'name' => session('username'),
                 'phone' => session('phone') ?? 'N/A'
             ),
         );
@@ -185,9 +176,6 @@ class MetodeController extends Controller
 
     public function callback(Request $request)
     {
-        Log::info('Request Notification Masuk');
-        Log::info($request->all());
-
         try {
             // Konfigurasi Midtrans
             \Midtrans\Config::$serverKey = config('services.midtrans.server_key');
@@ -235,12 +223,11 @@ class MetodeController extends Controller
             return response()->json(['message' => 'Notification handled'], 200);
 
         } catch (\Exception $e) {
-            Log::error("Midtrans callback error: " . $e->getMessage());
             return response()->json(['message' => 'Internal Server Error'], 500);
         }
     }
 
-    public function success()
+    public function success(Request $request, StrukService $strukService)
     {
         $transaksi = Transaksi::where('id_user', session('user_id', Auth::id()))
             ->where('status_transaksi', 'lunas')
@@ -251,7 +238,13 @@ class MetodeController extends Controller
             return redirect()->route('home')->with('error', 'Transaksi belum berhasil.');
         }
 
-        return view('pages.user.struk', compact('transaksi'));
+        // Generate dan kirim struk otomatis
+        $struk = $strukService->generateStruk($transaksi->id_transaksi);
+        $strukService->sendStrukEmail($struk);
+
+        // Redirect ke halaman struk user (bisa download PDF)
+        return redirect()->route('struk.show', ['id_struk' => $struk->id_struk])
+            ->with('success', 'Transaksi berhasil! Struk telah dikirim ke email Anda.');
     }
 
 }

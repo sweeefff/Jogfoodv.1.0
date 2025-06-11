@@ -18,33 +18,38 @@ class SocialiteController extends Controller
     public function handleGoogleCallback()
     {
         try {
-            $googleUser = Socialite::driver('google')->stateless()->user();
+            $googleUser = \Laravel\Socialite\Facades\Socialite::driver('google')->user();
 
             $user = User::updateOrCreate(
                 ['email' => $googleUser->getEmail()],
                 [
                     'username' => $googleUser->getName(),
                     'google_id' => $googleUser->getId(),
-                    'password' => bcrypt(Str::random(24)),
-                    'role' => 'user',
+                    'password' => bcrypt(\Illuminate\Support\Str::random(24)),
+                    'role' => 'user', // Konsisten dengan 'role' seperti di AuthController
                     'name' => null
-
                 ]
             );
 
-            Auth::login($user);
+            // ✅ Set session manual, konsisten dengan AuthController
+            session()->put('user_id', $user->id);
+            session()->put('user_role', $user->role);
+            session()->put('username', $user->username);
+            session()->put('email', $user->email);
+            session()->regenerate();
 
-            // // ✅ UX redirect: kalau belum isi nama, arahkan ke form profil
-            // if (is_null($user->name)) {
-            //     return redirect()->route('profile.edit')
-            //         ->with('alert', 'Silakan lengkapi nama kamu terlebih dahulu.');
-            // }
-
-            return redirect()->intended(route('user.dashboard'));
+            // ✅ Redirect sesuai role
+            if ($user->role === 'admin') {
+                return redirect()->route('admin.dashboard')->with('success', 'Login berhasil sebagai admin!');
+            } else {
+                return redirect()->route('home')->with('success', 'Login berhasil!');
+            }
 
         } catch (\Exception $e) {
             return redirect('/login')->with('error', 'Gagal login dengan Google.');
         }
     }
+
+
 }
 

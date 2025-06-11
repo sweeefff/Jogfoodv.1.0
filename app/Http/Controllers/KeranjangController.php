@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Keranjang;
 use App\Models\Menu;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class KeranjangController extends Controller
 {
@@ -15,7 +16,6 @@ class KeranjangController extends Controller
         $items = Keranjang::with('menu')
             ->where('id_user', $userId)
             ->get();
-
         return view('pages.user.keranjang', compact('items'));
     }
 

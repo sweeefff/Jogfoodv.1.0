@@ -57,13 +57,10 @@ function calculateTotal() {
             subtotal += hargaSatuan * quantity;
         }
     });
+    const total = subtotal;
 
-    const deliveryFee = subtotal > 0 ? 10000 : 0;
-    const total = subtotal + deliveryFee;
-
+    // Update tampilan subtotal dan total
     document.getElementById("subtotal").textContent = formatRupiah(subtotal);
-    document.getElementById("delivery-fee").textContent =
-        formatRupiah(deliveryFee);
     document.getElementById("total").textContent = formatRupiah(total);
 
     // Update hidden input untuk total

@@ -74,10 +74,6 @@
                         <span class="text-gray-600">Subtotal</span>
                         <span id="subtotal" class="font-medium">Rp0</span>
                     </div>
-                    <div class="flex justify-between mb-2">
-                        <span class="text-gray-600">Biaya Pengiriman</span>
-                        <span id="delivery-fee" class="font-medium">Rp0</span>
-                    </div>
                     <div class="flex justify-between text-lg font-bold mt-4 pt-2 border-t border-amber-100">
                         <span>Total</span>
                         <span id="total" class="text-amber-600">Rp0</span>
