@@ -34,7 +34,7 @@
     <div class="max-w-7xl mx-auto px-4 flex justify-end mb-4">
         <!-- (sort menu tetap seperti sebelumnya) -->
     </div>
-<<<<<<< HEAD
+
 <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
     @foreach ($menu as $item => $menu)
     @include('components.card.card', [
@@ -47,21 +47,6 @@
     ])
     @endforeach
 </div>
-=======
->>>>>>> 31bfcd5c2650abb1f1fc63a096bf5bc816225b83
-
-    <!-- 🔽 Tempat hasil menu -->
-    <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="menu-list">
-        @foreach ($menu as $item => $menu)
-            @include('components.card.card', [
-                'nama' => $menu->nama,
-                'gambar_menu' => $menu->gambar_menu,
-                'desc' => $menu->deskripsi_menu,
-                'rating' => 4.5,
-                'harga' => 'Rp. ' . number_format($menu->harga, 0, ',', '.'),
-            ])
-        @endforeach
-    </div>
 
     <!-- Pagination (boleh disembunyikan jika sedang search) -->
     <div class="flex justify-center mt-8 mb-12" id="pagination">
