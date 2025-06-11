@@ -29,6 +29,29 @@
             @include('components.card.add-modal', ['kategori' => $kategori])
             @include('components.card.edit-modal', ['kategori' => $kategori])
             
+            <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("search");
+        const tableBody = document.getElementById("menuTableBody");
+
+        searchInput.addEventListener("keyup", function () {
+            const filter = searchInput.value.toLowerCase();
+            const rows = tableBody.getElementsByTagName("tr");
+
+            Array.from(rows).forEach(row => {
+                const nama = row.cells[1]?.textContent.toLowerCase() || '';
+                const deskripsi = row.cells[2]?.textContent.toLowerCase() || '';
+
+                if (nama.includes(filter) || deskripsi.includes(filter)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        });
+    });
+</script>
+
             <!-- Table Container -->
             <div class="table-container custom-scrollbar shadow-md sm:rounded-lg overflow-x-auto">
                 <table class="menu-table text-sm text-left text-amber-500 w-full">
