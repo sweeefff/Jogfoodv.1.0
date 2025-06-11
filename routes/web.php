@@ -23,6 +23,7 @@ use App\Http\Middleware\RoleMiddleware;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SocialiteController;
 
+
 // Auth Routes - Tidak perlu middleware
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -73,17 +74,22 @@ Route::middleware([RoleMiddleware::class . ':user'])->prefix('user')->group(func
     Route::get('/payment/snap', [MetodeController::class, 'snap'])->name('metode.snap');
     Route::get('/payment/success', [MetodeController::class, 'success'])->name('metode.success');
 
+    Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+
 
     Route::get('/riwayat', [RiwayatController::class, 'riwayat'])->name('riwayat');
     Route::get('/struk', [StrukController::class, 'struk'])->name('struk');
     Route::get('/rating', [RatingController::class, 'rating'])->name('rating');
     Route::get('/dashboard', [HomeController::class, 'index'])->name('user.dashboard');
-    // Profile routes
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
-    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     //Keranjang
     Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang.index');
     Route::post('/keranjang/tambah/{id}', [KeranjangController::class, 'store'])->name('keranjang.store');
     Route::delete('/keranjang/hapus/{id}', [KeranjangController::class, 'remove'])->name('keranjang.destroy');
+
+Route::middleware(['auth', RoleMiddleware::class . ':user'])->prefix('user')->group(function () {
+
+});
 
 });
