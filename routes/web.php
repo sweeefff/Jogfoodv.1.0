@@ -41,7 +41,7 @@ Route::get('/auth/google/callback', [SocialiteController::class, 'handleGoogleCa
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/menu', [MenuController::class, 'index'])->name('menu');
 Route::get('/about', [AboutController::class, 'about'])->name('about');
-Route::get('/detail', [DetailController::class, 'detail'])->name('detail');
+Route::get('/detail/{id}', [DetailController::class, 'detail'])->name('detail');
 Route::get('/detailpsn', [DetailpsnController::class, 'detailpsn'])->name('detailpsn');
 Route::get('/komentar', [KomentarController::class, 'komentar'])->name('komentar');
 

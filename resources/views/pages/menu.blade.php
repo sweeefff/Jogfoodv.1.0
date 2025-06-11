@@ -51,13 +51,14 @@
     </div>
 <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
     @foreach ($menu as $item => $menu)
-        @include('components.card.card', [
-            'nama' => $menu->nama,
-            'gambar_menu' => $menu->gambar_menu,
-            'desc' => $menu->deskripsi_menu,
-            'rating' => 4.5,
-            'harga' => 'Rp. ' . number_format($menu->harga, 0, ',', '.'),
-        ])
+    @include('components.card.card', [
+        'id' => $menu->id_menu,
+        'nama' => $menu->nama,
+        'gambar_menu' => $menu->gambar_menu,
+        'desc' => $menu->deskripsi_menu,
+        'rating' => 4.5,
+        'harga' => 'Rp. ' . number_format($menu->harga, 0, ',', '.'),
+    ])
     @endforeach
 </div>
 
