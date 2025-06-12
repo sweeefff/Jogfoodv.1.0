@@ -111,9 +111,12 @@ class AuthController extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'user_role' => 'user',
-            'name' => null
-        ]);
+            'role' => 'user',
+            'name' => null,
+            'no_hp' => null,
+            'alamat' => null,
+            'foto' => null,
+        ])->save();
 
         return redirect()->route('login')->with('success', 'Registrasi berhasil. Silakan login.');
     }

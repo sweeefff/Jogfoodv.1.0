@@ -81,13 +81,13 @@
     }
 </script>
     <!-- 🧠 Script Live Search -->
-    <script>
+    <!-- <script>
         $('#search-input').on('keyup', function () {
             let query = $(this).val();
 
             if (query.length > 0) {
                 $.ajax({
-                    url: "{{ route('produk.search') }}",
+                    url:"",
                     type: "GET",
                     data: { query: query },
                     success: function (data) {
@@ -116,6 +116,6 @@
                 location.reload(); // reset ke awal kalau input dikosongkan
             }
         });
-    </script>
+    </script> -->
 
 </html>

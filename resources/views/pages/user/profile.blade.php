@@ -11,11 +11,9 @@
             <!-- Profile Picture -->
             <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-amber-300 flex items-center justify-center overflow-hidden">
                 @if($user->foto)
-                    <img src="{{ asset('assets/img/profile/' . $user->foto) }}" alt="{{ $user->foto }}" class="w-24 h-24 rounded-full object-cover mb-2">
+                    <img src="{{ asset('assets/img/profile/' . $user->foto) }}" alt="Foto Profil" class="w-24 h-24 rounded-full object-cover mb-2">
                 @else
-                    <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/>
-                    </svg>
+                    <img src="{{ asset('assets/img/profile/default.avif') }}" alt="Default Foto" class="w-24 h-24 rounded-full object-cover mb-2">
                 @endif
             </div>
 

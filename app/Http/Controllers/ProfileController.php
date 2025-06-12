@@ -52,13 +52,20 @@ class ProfileController extends Controller
             }
             $file = $request->file('foto');
             $filename = uniqid() . '.' . $file->getClientOriginalExtension();
-            // Simpan ke public/assets/img/profile
             $file->move(public_path('assets/img/profile'), $filename);
             $data['foto'] = $filename;
         }
 
         $user->update($data);
 
+        // Update session data (termasuk foto)
+        $request->session()->put('name', $user->name);
+        $request->session()->put('email', $user->email);
+        $request->session()->put('no_hp', $user->no_hp);
+        $request->session()->put('alamat', $user->alamat);
+        $request->session()->put('foto', $user->foto);
+
+        // Redirect ke profile dengan pesan sukses
         return redirect()->route('profile')->with('success', 'Profil berhasil diperbarui.');
     }
 

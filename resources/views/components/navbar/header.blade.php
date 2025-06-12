@@ -98,8 +98,10 @@
 			<div class="relative">
 				<button type="button" class="flex text-sm rounded-full" id="user-menu-button" aria-expanded="false">
 					<span class="sr-only">Open user menu</span>
-					<img class="w-9 h-9 rounded-full border-2 border-white"
-						src="{{ asset('assets/img/profile/' . session('foto', 'default.jpg')) }}" alt="{{ session('foto', 'User Profile') }}">
+					
+<img class="w-9 h-9 rounded-full border-2 border-white"
+    src="{{ asset('assets/img/profile/' . (session('foto') ? session('foto') : 'default.avif')) }}"
+    alt="User Profile">
 				</button>
 
 				<!-- Dropdown menu -->
