@@ -13,7 +13,7 @@ class StrukService
 {
     public function generateStruk($id_transaksi)
     {
-        $transaksi = Transaksi::with(['detail_transaksi.menu'])->findOrFail($id_transaksi);
+        $transaksi = Transaksi::with(['detail_transaksi.menu', 'pembayaran'])->findOrFail($id_transaksi);
         $pdf = Pdf::loadView('pages.pdf.struk-pdf', compact('transaksi'));
 
         $filename = "struk-{$transaksi->id_transaksi}-" . time() . ".pdf";

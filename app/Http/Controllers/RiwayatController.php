@@ -13,7 +13,7 @@ class RiwayatController extends Controller
         $userId = session('user_id', Auth::id());
 
         // Ambil semua transaksi user beserta detail_transaksi dan menu
-        $riwayat = Transaksi::with(['detail_transaksi.menu'])
+        $riwayat = Transaksi::with(['detail_transaksi.menu', 'status_pengiriman', 'pembayaran'])
             ->where('id_user', $userId)
             ->orderByDesc('created_at')
             ->get();

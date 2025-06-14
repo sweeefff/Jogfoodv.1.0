@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 use App\Services\StrukService;
+use App\Models\Pembayaran;
+use App\Models\StatusPengiriman;
 
 class MetodeController extends Controller
 {
@@ -105,14 +107,11 @@ class MetodeController extends Controller
         try {
             DB::beginTransaction();
 
-            // Simpan transaksi beserta detail perhitungan
+            // Simpan transaksi hanya dengan total_harga
             $transaksi = Transaksi::create([
                 'id_transaksi' => $orderId,
                 'id_user' => session('user_id', Auth::id()),
-                'subtotal' => $subtotal,
-                'pajak' => $pajak,
-                'biaya_pengiriman' => $biayaPengiriman,
-                'total_harga' => $total, // <-- total hasil penjumlahan
+                'total_harga' => $total, // hanya total_harga yang disimpan
                 'status_transaksi' => 'pending',
             ]);
 
@@ -130,13 +129,13 @@ class MetodeController extends Controller
             }
 
             // Simpan ke tabel pembayaran
-            \App\Models\Pembayaran::create([
+            Pembayaran::create([
                 'id_transaksi' => $orderId,
                 'metode_pembayaran' => $paymentMethod,
             ]);
 
             // Simpan ke tabel status pengiriman
-            \App\Models\StatusPengiriman::create([
+            StatusPengiriman::create([
                 'id_user' => session('user_id', Auth::id()),
                 'id_transaksi' => $orderId,
                 'status_pembayaran' => $paymentMethod === 'cod' ? 'belum dibayar' : 'dibayar',
@@ -147,12 +146,14 @@ class MetodeController extends Controller
 
             DB::commit();
 
-            // Hapus keranjang setelah checkout
-            $menuIds = $checkoutItems->pluck('menu.id_menu')->filter()->all();
-            Keranjang::where('id_user', session('user_id', Auth::id()))
-                ->whereIn('id_menu', $menuIds)
-                ->delete();
-            session()->forget('checkout_items');
+            if ($paymentMethod === 'cod') {
+                $menuIds = $checkoutItems->pluck('menu.id_menu')->filter()->all();
+                Keranjang::where('id_user', session('user_id', Auth::id()))
+                    ->whereIn('id_menu', $menuIds)
+                    ->delete();
+                session()->forget('checkout_items');
+            }
+
 
             session(['last_order_id' => $orderId]);
 
@@ -188,11 +189,27 @@ class MetodeController extends Controller
                 'name' => $item->menu->nama,
             ];
         }
+        if ($biayaPengiriman > 0) {
+            $itemDetails[] = [
+                'id' => 'DELIVERY',
+                'price' => $biayaPengiriman,
+                'quantity' => 1,
+                'name' => 'Biaya Pengiriman',
+            ];
+        }
+        if ($pajak > 0) {
+            $itemDetails[] = [
+                'id' => 'TAX',
+                'price' => $pajak,
+                'quantity' => 1,
+                'name' => 'Pajak',
+            ];
+        }
 
         $params = [
             'transaction_details' => [
                 'order_id' => $orderId,
-                'gross_amount' => (int) $total,
+                'gross_amount' => (int) $total, // total harga akhir
             ],
             'item_details' => $itemDetails,
             'customer_details' => [
@@ -248,8 +265,16 @@ class MetodeController extends Controller
             } elseif ($transactionStatus == 'settlement' || ($transactionStatus == 'capture' && $fraudStatus != 'challenge')) {
                 $transaksi->status_transaksi = 'lunas';
 
+                // Hapus item dari keranjang
+                $detailTransaksis = $transaksi->detail_transaksi;
+                $menuIds = $detailTransaksis->pluck('id_menu');
+
+                Keranjang::where('id_user', $transaksi->id_user)
+                    ->whereIn('id_menu', $menuIds)
+                    ->delete();
+
                 // Update status pengiriman
-                $statusPengiriman = \App\Models\StatusPengiriman::where('id_transaksi', $orderId)->first();
+                $statusPengiriman = StatusPengiriman::where('id_transaksi', $orderId)->first();
                 if ($statusPengiriman) {
                     $statusPengiriman->status_pembayaran = 'sudah dibayar';
                     $statusPengiriman->save();
@@ -282,6 +307,12 @@ class MetodeController extends Controller
             return redirect()->route('home')->with('error', 'Transaksi belum berhasil.');
         }
 
+        // Update status menjadi lunas jika belum lunas
+        if ($transaksi->status_transaksi !== 'lunas') {
+            $transaksi->status_transaksi = 'lunas';
+            $transaksi->save();
+        }
+
         // Generate dan kirim struk otomatis
         $struk = $strukService->generateStruk($transaksi->id_transaksi);
         $strukService->sendStrukEmail($struk);
@@ -291,5 +322,26 @@ class MetodeController extends Controller
             ->with('success', 'Transaksi berhasil! Struk telah dikirim ke email Anda.');
     }
 
+    public function batal($id)
+    {
+        $transaksi = Transaksi::where('id_transaksi', $id)
+            ->where('id_user', session('user_id', Auth::id()))
+            ->where('status_transaksi', 'pending')
+            ->first();
+
+        if (!$transaksi) {
+            return redirect()->back()->with('error', 'Transaksi tidak ditemukan atau tidak bisa dibatalkan.');
+        }
+
+        $transaksi->status_transaksi = 'dibatalkan' ; $transaksi->updated_at = now();
+        $statusPengiriman = StatusPengiriman::where('id_transaksi', $id)->first();
+        if ($statusPengiriman) {
+            $statusPengiriman->status_pengiriman = 'dibatalkan';
+            $statusPengiriman->save();
+        }
+        $transaksi->save();
+
+        return redirect()->back()->with('success', 'Transaksi berhasil dibatalkan.');
+    }
 }
 

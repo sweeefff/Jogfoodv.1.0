@@ -70,7 +70,7 @@
 
                 <form id="payment-form" action="{{ route('metode.process') }}" method="POST">
                     @csrf
-                    <input type="hidden" id="total_harga" value="{{ $total }}">
+                    <input type="hidden" id="subtotal" value="{{ $total }}">
 
                     <div class="space-y-4 mt-2">
                         <div class="flex items-start">
@@ -132,14 +132,10 @@
 function payNow() {
     // Ambil nilai dari input hidden
     const subtotal = parseInt(document.getElementById("subtotal").value) || 0;
-    const tax = parseFloat(document.getElementById("tax").value) || 0;
-    const deliveryFee = parseInt(document.getElementById("deliveryFee").value) || 0;
-
-    // Hitung pajak nominal
-    const pajakNominal = Math.round(subtotal * tax);
-
-    // Total akhir sesuai tampilan
-    const totalHarga = subtotal + pajakNominal + deliveryFee;
+const tax = parseFloat(document.getElementById("tax").value) || 0;
+const deliveryFee = parseInt(document.getElementById("deliveryFee").value) || 0;
+const pajakNominal = Math.round(subtotal * tax);
+const totalHarga = subtotal + pajakNominal + deliveryFee;
 
     const paymentMethod = document.querySelector('input[name="payment-method"]:checked');
     if (!paymentMethod) {
@@ -156,7 +152,7 @@ function payNow() {
         body: JSON.stringify({
             amount: totalHarga,
             payment_method: paymentMethod.value,
-            pajak: tax,
+            pajak: pajakNominal,
             subtotal: subtotal,
             biaya_pengiriman: deliveryFee
         })
@@ -196,8 +192,6 @@ function payNow() {
     });
 }
 </script>
-
-
 
 @endsection
 
