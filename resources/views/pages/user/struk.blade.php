@@ -19,9 +19,15 @@
                         <h2 class="text-lg font-semibold text-gray-800">Ringkasan Order</h2>
                         <p class="text-sm text-gray-500">#{{ $transaksi->id_transaksi }}</p>
                     </div>
-                    <div class="bg-green-100 text-green-800 text-xs font-medium px-3 py-1 rounded-full">
-                        Selesai
-                    </div>
+                    @if ($pembayaran->metode_pembayaran == 'cod')
+                        <div class="bg-yellow-100 text-yellow-800 text-xs font-medium px-3 py-1 rounded-full">
+                            Pending
+                        </div>
+                    @elseif ($pembayaran->metode_pembayaran == 'bank-transfer' || $pembayaran->metode_pembayaran == 'e-wallet')
+                        <div class="bg-green-100 text-green-800 text-xs font-medium px-3 py-1 rounded-full">
+                            Selesai
+                        </div>
+                    @endif
                 </div>
 
                 {{-- Detail Order --}}
@@ -64,38 +70,30 @@
                 <div class="my-5 border-t"></div>
 
                 {{-- Perhitungan Total --}}
-                @php
-                    $subtotal = $transaksi->detail_transaksi->sum('subtotal');
-                    $diskon = $transaksi->diskon ?? 0;
-                    $biayaPengiriman = $transaksi->biaya_pengiriman ?? 0;
-                    $pajak = $transaksi->pajak ?? 0;
-                    $total = ($subtotal - $diskon) + $pajak + $biayaPengiriman;
-                @endphp
-
                 <div class="space-y-2">
                     <div class="flex justify-between">
                         <span class="text-gray-500">Subtotal</span>
-                        <span>Rp{{ number_format($subtotal, 0, ',', '.') }}</span>
+                        <span>Rp{{ number_format($transaksi->subtotal ?? 0, 0, ',', '.') }}</span>
                     </div>
                     <div class="flex justify-between">
                         <span class="text-gray-500">Diskon</span>
-                        <span>-Rp{{ number_format($diskon, 0, ',', '.') }}</span>
+                        <span>-Rp{{ number_format($transaksi->diskon ?? 0, 0, ',', '.') }}</span>
                     </div>
                     <div class="flex justify-between">
                         <span class="text-gray-500">Biaya Pengiriman</span>
-                        <span>Rp{{ number_format($biayaPengiriman, 0, ',', '.') }}</span>
+                        <span>Rp{{ number_format($transaksi->biaya_pengiriman ?? 0, 0, ',', '.') }}</span>
                     </div>
                     <div class="flex justify-between">
-                        <span class="text-gray-500">Pajak ({{ $transaksi->pajak_percentage ?? 0 }}%)</span>
-                        <span>Rp{{ number_format($pajak, 0, ',', '.') }}</span>
+                        <span class="text-gray-500">Pajak</span>
+                        <span>Rp{{ number_format($transaksi->pajak ?? 0, 0, ',', '.') }}</span>
                     </div>
                 </div>
-
-                {{-- Total --}}
                 <div class="bg-amber-50 rounded-lg p-4 mt-5">
                     <div class="flex justify-between items-center">
                         <span class="font-bold text-lg">Total</span>
-                        <span class="font-bold text-xl text-amber-600">Rp{{ number_format($total, 0, ',', '.') }}</span>
+                        <span class="font-bold text-xl text-amber-600">
+                            Rp{{ number_format($transaksi->total_harga ?? 0, 0, ',', '.') }}
+                        </span>
                     </div>
                 </div>
 
@@ -105,22 +103,30 @@
                     <div class="bg-gray-50 rounded-lg p-4">
                         <div class="flex justify-between mb-2">
                             <span class="text-gray-500">Metode</span>
-                            <span class="font-medium">Transfer Bank</span>
+                            <span class="font-medium">{{ $pembayaran->metode_pembayaran }}</span>
                         </div>
                         <div class="flex justify-between">
                             <span class="text-gray-500">Tanggal Pembayaran</span>
-                            <span class="font-medium">{{ $transaksi->updated_at->format('d M Y') }}</span>
+                            <span class="font-medium">{{ $pembayaran->updated_at->format('d M Y') }}</span>
                         </div>
                     </div>
                 </div>
 
                 {{-- Terima Kasih --}}
                 <div class="text-center mt-8">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-green-500 mb-3" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
+                    @if ($pembayaran->metode_pembayaran == 'bank-transfer' || $pembayaran->metode_pembayaran == 'e-wallet')
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-green-500 mb-3" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    @elseif ($pembayaran->metode_pembayaran == 'cod')
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-yellow-500 mb-3" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    @endif
                     <h2 class="text-xl font-bold text-gray-800 mb-1">Terima Kasih!</h2>
                     <p class="text-gray-500">Order Anda telah diterima</p>
 

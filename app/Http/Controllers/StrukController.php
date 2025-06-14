@@ -18,10 +18,11 @@ class StrukController extends Controller
     }
     public function show($id_struk)
     {
-        $struk = Struk::with(['transaksi.user', 'transaksi.detail_transaksi.menu'])->findOrFail($id_struk);
+        $struk = Struk::with(['transaksi.user', 'transaksi.detail_transaksi.menu', 'transaksi.pembayaran'])->findOrFail($id_struk);
         $transaksi = $struk->transaksi;
+        $pembayaran = $transaksi->pembayaran; // Ambil relasi pembayaran
 
-        return view('pages.user.struk', compact('struk', 'transaksi'));
+        return view('pages.user.struk', compact('struk', 'transaksi', 'pembayaran'));
     }
 
 

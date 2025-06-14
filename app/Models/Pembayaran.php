@@ -37,13 +37,6 @@ class Pembayaran extends Model
     ];
 
     /**
-     * Default values for attributes.
-     */
-    protected $attributes = [
-        'status_pembayaran' => 'pending',
-    ];
-
-    /**
      * Get the transaction that owns the payment.
      */
     public function transaksi()

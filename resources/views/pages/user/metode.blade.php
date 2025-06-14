@@ -59,6 +59,9 @@
                             Rp.{{ number_format(($total ?? 0) * (1 + ($tax ?? 0)) + ($deliveryFee ?? 0), 0, ',', '.') }}
                         </span>
                     </div>
+                    <input type="hidden" id="subtotal" value="{{ $total }}">
+<input type="hidden" id="tax" value="{{ $tax }}">
+<input type="hidden" id="deliveryFee" value="{{ $deliveryFee }}">
                 </div>
             </div>
 
@@ -127,9 +130,16 @@
 
 <script>
 function payNow() {
-    const totalHarga = parseInt(
-        document.getElementById("total_harga").value.replace(/\D/g, "")
-    );
+    // Ambil nilai dari input hidden
+    const subtotal = parseInt(document.getElementById("subtotal").value) || 0;
+    const tax = parseFloat(document.getElementById("tax").value) || 0;
+    const deliveryFee = parseInt(document.getElementById("deliveryFee").value) || 0;
+
+    // Hitung pajak nominal
+    const pajakNominal = Math.round(subtotal * tax);
+
+    // Total akhir sesuai tampilan
+    const totalHarga = subtotal + pajakNominal + deliveryFee;
 
     const paymentMethod = document.querySelector('input[name="payment-method"]:checked');
     if (!paymentMethod) {
@@ -143,15 +153,24 @@ function payNow() {
             "Content-Type": "application/json",
             "X-CSRF-TOKEN": "{{ csrf_token() }}"
         },
-        body: JSON.stringify({ amount: totalHarga })
+        body: JSON.stringify({
+            amount: totalHarga,
+            payment_method: paymentMethod.value,
+            pajak: tax,
+            subtotal: subtotal,
+            biaya_pengiriman: deliveryFee
+        })
     })
     .then(res => res.json())
     .then(data => {
+        if (data.redirect) {
+            window.location.href = data.redirect;
+            return;
+        }
         if (data.error) {
             alert("Gagal mendapatkan Snap Token: " + data.error);
             return;
         }
-
         if (data.snap_token) {
             snap.pay(data.snap_token, {
                 onSuccess: function(result) {

@@ -1,11 +1,10 @@
+<?php
 <!DOCTYPE html>
 <html lang="id">
 
 <head>
     <meta charset="utf-8">
     <title>Bukti Pembayaran - {{ $transaksi->id_transaksi }}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ asset('assets/styles/css/pdf.css') }}">
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -244,7 +243,11 @@
                     <h2>Ringkasan Order</h2>
                     <p class="order-id">#{{ $transaksi->id_transaksi }}</p>
                 </div>
+                @if ($pembayaran->metode_pembayaran == 'cod')
+                <div class="status" style="background:#fef08a;color:#a16207;">Pending</div>
+                @else
                 <div class="status">Selesai</div>
+                @endif
             </div>
             <div class="order-details" style="display:flex;">
                 <div class="label">Tanggal Order</div>
@@ -257,59 +260,52 @@
             <div class="items-section">
                 <h3>Item yang Dipesan</h3>
                 @foreach($transaksi->detail_transaksi as $detail)
-                    <div class="item-row">
-                        <div class="item-info">
-                            <div class="item-icon">🍽️</div>
-                            <div>
-                                <div class="item-name">{{ $detail->menu->nama }}</div>
-                                <div class="item-meta">{{ $detail->jumlah }} x
-                                    Rp{{ number_format($detail->menu->harga, 0, ',', '.') }}</div>
-                            </div>
+                <div class="item-row">
+                    <div class="item-info">
+                        <div class="item-icon">🍽️</div>
+                        <div>
+                            <div class="item-name">{{ $detail->menu->nama }}</div>
+                            <div class="item-meta">{{ $detail->jumlah }} x
+                                Rp{{ number_format($detail->menu->harga, 0, ',', '.') }}</div>
                         </div>
-                        <div class="item-subtotal">Rp{{ number_format($detail->subtotal, 0, ',', '.') }}</div>
                     </div>
+                    <div class="item-subtotal">Rp{{ number_format($detail->subtotal, 0, ',', '.') }}</div>
+                </div>
                 @endforeach
             </div>
             <div class="divider"></div>
-            @php
-                $subtotal = $transaksi->detail_transaksi->sum('subtotal');
-                $diskon = $transaksi->diskon ?? 0;
-                $biayaPengiriman = $transaksi->biaya_pengiriman ?? 0;
-                $pajak = 0.1 * ($subtotal - $diskon);
-                $total = ($subtotal - $diskon) + $pajak + $biayaPengiriman;
-            @endphp
             <table class="cost-table">
                 <tr>
                     <td>Subtotal</td>
-                    <td align="right">Rp{{ number_format($subtotal, 0, ',', '.') }}</td>
+                    <td align="right">Rp{{ number_format($transaksi->subtotal ?? 0, 0, ',', '.') }}</td>
                 </tr>
                 <tr>
                     <td>Diskon</td>
-                    <td align="right">-Rp{{ number_format($diskon, 0, ',', '.') }}</td>
+                    <td align="right">-Rp{{ number_format($transaksi->diskon ?? 0, 0, ',', '.') }}</td>
                 </tr>
                 <tr>
                     <td>Biaya Pengiriman</td>
-                    <td align="right">Rp{{ number_format($biayaPengiriman, 0, ',', '.') }}</td>
+                    <td align="right">Rp{{ number_format($transaksi->biaya_pengiriman ?? 0, 0, ',', '.') }}</td>
                 </tr>
                 <tr>
-                    <td>Pajak (10%)</td>
-                    <td align="right">Rp{{ number_format($pajak, 0, ',', '.') }}</td>
+                    <td>Pajak</td>
+                    <td align="right">Rp{{ number_format($transaksi->pajak ?? 0, 0, ',', '.') }}</td>
                 </tr>
             </table>
             <div class="total-box">
                 <span class="total-label">Total</span>
-                <span class="total-amount">Rp{{ number_format($total, 0, ',', '.') }}</span>
+                <span class="total-amount">Rp{{ number_format($transaksi->total_harga ?? 0, 0, ',', '.') }}</span>
             </div>
             <div class="payment-section">
                 <h3>Informasi Pembayaran</h3>
                 <table class="payment-table">
                     <tr>
                         <td>Metode</td>
-                        <td align="right">Transfer Bank</td>
+                        <td align="right">{{ $pembayaran->metode_pembayaran ?? '-' }}</td>
                     </tr>
                     <tr>
                         <td>Tanggal Pembayaran</td>
-                        <td align="right">{{ $transaksi->updated_at->format('d M Y') }}</td>
+                        <td align="right">{{ $pembayaran->updated_at ? $pembayaran->updated_at->format('d M Y') : '-' }}</td>
                     </tr>
                 </table>
             </div>

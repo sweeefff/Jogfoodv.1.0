@@ -41,6 +41,10 @@ class Transaksi extends Model
     {
         return $this->hasOne(Struk::class, 'id_transaksi', 'id_transaksi');
     }
+        public function pembayaran()
+    {
+        return $this->hasOne(Pembayaran::class, 'id_transaksi', 'id_transaksi');
+    }
 
     // Akses format rupiah
     public function getTotalHargaFormattedAttribute()

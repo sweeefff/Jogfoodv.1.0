@@ -1,3 +1,4 @@
+<?php
 <!DOCTYPE html>
 <html lang="id">
 
@@ -25,17 +26,21 @@
                     <!-- Ringkasan Order -->
                     <tr>
                         <td style="padding:32px 24px;">
-                            <div
-                                style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
                                 <div>
-                                    <h2 style="font-size:18px;font-weight:600;color:#1f2937;margin:0;">Ringkasan Order
-                                    </h2>
+                                    <h2 style="font-size:18px;font-weight:600;color:#1f2937;margin:0;">Ringkasan Order</h2>
                                     <p style="font-size:14px;color:#6b7280;margin:4px 0 0;">
                                         #{{ $transaksi->id_transaksi }}</p>
                                 </div>
-                                <div
-                                    style="background:#dcfce7;color:#166534;font-size:12px;font-weight:600;padding:6px 18px;border-radius:999px;">
-                                    Selesai</div>
+                                @if (isset($pembayaran) && $pembayaran->metode_pembayaran == 'cod')
+                                    <div style="background:#fef08a;color:#a16207;font-size:12px;font-weight:600;padding:6px 18px;border-radius:999px;">
+                                        Pending
+                                    </div>
+                                @else
+                                    <div style="background:#dcfce7;color:#166534;font-size:12px;font-weight:600;padding:6px 18px;border-radius:999px;">
+                                        Selesai
+                                    </div>
+                                @endif
                             </div>
                             <!-- Detail Order -->
                             <table width="100%" style="font-size:14px;color:#6b7280;margin-bottom:18px;">
@@ -59,8 +64,8 @@
                                 </tbody>
                             </table>
                             <!-- Item Dipesan -->
-                            <h3 style="font-size:15px;font-weight:600;color:#374151;margin:18px 0 10px;">Item yang
-                                Dipesan</h3>
+                            <h3 style="font-size:15px;font-weight:600;color:#374151;margin:18px 0 10px;">Item yang Dipesan
+                            </h3>
                             <table width="100%" style="font-size:14px;color:#6b7280;margin-bottom:18px;">
                                 <thead>
                                     <tr>
@@ -84,13 +89,6 @@
                             </table>
                             <div style="height:1px;background:#f3f4f6;margin:18px 0;"></div>
                             <!-- Perhitungan Total -->
-                            @php
-                                $subtotal = $transaksi->detail_transaksi->sum('subtotal');
-                                $diskon = $transaksi->diskon ?? 0;
-                                $biayaPengiriman = $transaksi->biaya_pengiriman ?? 0;
-                                $pajak = 0.1 * ($subtotal - $diskon);
-                                $total = ($subtotal - $diskon) + $pajak + $biayaPengiriman;
-                            @endphp
                             <table width="100%" style="font-size:14px;color:#6b7280;">
                                 <thead>
                                     <tr>
@@ -101,32 +99,33 @@
                                 <tbody>
                                     <tr>
                                         <td>Subtotal</td>
-                                        <td align="right">Rp{{ number_format($subtotal, 0, ',', '.') }}</td>
+                                        <td align="right">Rp{{ number_format($transaksi->subtotal ?? 0, 0, ',', '.') }}</td>
                                     </tr>
                                     <tr>
                                         <td>Diskon</td>
-                                        <td align="right">-Rp{{ number_format($diskon, 0, ',', '.') }}</td>
+                                        <td align="right">-Rp{{ number_format($transaksi->diskon ?? 0, 0, ',', '.') }}</td>
                                     </tr>
                                     <tr>
                                         <td>Biaya Pengiriman</td>
-                                        <td align="right">Rp{{ number_format($biayaPengiriman, 0, ',', '.') }}</td>
+                                        <td align="right">Rp{{ number_format($transaksi->biaya_pengiriman ?? 0, 0, ',', '.') }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Pajak (10%)</td>
-                                        <td align="right">Rp{{ number_format($pajak, 0, ',', '.') }}</td>
+                                        <td>Pajak</td>
+                                        <td align="right">Rp{{ number_format($transaksi->pajak ?? 0, 0, ',', '.') }}</td>
                                     </tr>
                                 </tbody>
                             </table>
                             <div
                                 style="background:#ffedd5;border-radius:10px;padding:16px 18px;margin:18px 0 0;display:flex;justify-content:space-between;align-items:center;">
-                                <span style="font-weight:700;font-size:16px;color:#1f2937;">Total   </span>
-                                <span
-                                    style="font-weight:700;font-size:18px;color:#ea580c;">Rp{{ number_format($total, 0, ',', '.') }}</span>
+                                <span style="font-weight:700;font-size:16px;color:#1f2937;">Total</span>
+                                <span style="font-weight:700;font-size:18px;color:#ea580c;">
+                                    Rp{{ number_format($transaksi->total_harga ?? 0, 0, ',', '.') }}
+                                </span>
                             </div>
                             <!-- Informasi Pembayaran -->
                             <div style="margin-top:24px;">
-                                <h3 style="font-size:15px;font-weight:600;color:#374151;margin-bottom:10px;">Informasi
-                                    Pembayaran</h3>
+                                <h3 style="font-size:15px;font-weight:600;color:#374151;margin-bottom:10px;">Informasi Pembayaran
+                                </h3>
                                 <table width="100%"
                                     style="font-size:14px;color:#6b7280;background:#f9fafb;border-radius:8px;padding:12px 0;">
                                     <thead>
@@ -138,12 +137,15 @@
                                     <tbody>
                                         <tr>
                                             <td>Metode</td>
-                                            <td align="right" style="font-weight:500;color:#374151;">Transfer Bank</td>
+                                            <td align="right" style="font-weight:500;color:#374151;">
+                                                {{ $pembayaran->metode_pembayaran ?? '-' }}
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Tanggal Pembayaran</td>
                                             <td align="right" style="font-weight:500;color:#374151;">
-                                                {{ $transaksi->updated_at->format('d M Y') }}</td>
+                                                {{ $pembayaran->updated_at ? $pembayaran->updated_at->format('d M Y') : '-' }}
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
