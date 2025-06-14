@@ -85,7 +85,7 @@ class AuthController extends Controller
                 'required',
                 'min:8',
                 'confirmed',
-                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d\W]).+$/'
+                'regex:/^(?=.[a-z])(?=.[A-Z])(?=.*[\d\W]).+$/'
             ],
             'g-recaptcha-response' => 'required|captcha',
         ], [
@@ -111,9 +111,12 @@ class AuthController extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'user_role' => 'user',
-            'name' => null
-        ]);
+            'role' => 'user',
+            'name' => null,
+            'no_hp' => null,
+            'alamat' => null,
+            'foto' => null,
+        ])->save();
 
         return redirect()->route('login')->with('success', 'Registrasi berhasil. Silakan login.');
     }
@@ -203,7 +206,7 @@ class AuthController extends Controller
         DB::table('password_resets')->where('email', $request->email)->delete();
 
         return redirect('/login')->with('status', 'Password berhasil diubah.');
-    }
+   }
 
 
 }
