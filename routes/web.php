@@ -40,8 +40,13 @@ Route::get('/auth/google/callback', [SocialiteController::class, 'handleGoogleCa
 
 // Public Routes - Dapat diakses tanpa login
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/menu', [MenuController::class, 'index'])->name('menu');
-Route::get('/menu/search', [MenuController::class, 'search'])->name('menu.live_search'); // ✅ Live search route
+
+// Search biasa (form submit)
+Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
+
+// Live search (AJAX)
+Route::get('/menu/search', [MenuController::class, 'search'])->name('menu.search');
+
 Route::get('/about', [AboutController::class, 'about'])->name('about');
 Route::get('/detail/{id}', [DetailController::class, 'detail'])->name('detail');
 Route::get('/detailpsn', [DetailpsnController::class, 'detailpsn'])->name('detailpsn');
@@ -67,7 +72,7 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
                 'destroy' => 'tblmenu.destroy'
             ]);
 
-    // ✅ Route Live Search untuk halaman admin
+    // Route Live Search untuk halaman admin
     Route::get('/tblmenu/search', [TblmenuController::class, 'search'])->name('tblmenu.search');
 });
 

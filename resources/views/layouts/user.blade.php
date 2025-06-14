@@ -87,7 +87,7 @@
 
             if (query.length > 0) {
                 $.ajax({
-                    url: "{{ route('produk.search') }}",
+                    url: "{{ route('menu.search') }}",
                     type: "GET",
                     data: { query: query },
                     success: function (data) {
