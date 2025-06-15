@@ -22,7 +22,7 @@ class Transaksi extends Model
 
     protected $casts = [
         'total_harga' => 'integer',
-        
+
     ];
 
     // Relasi ke user
@@ -40,6 +40,16 @@ class Transaksi extends Model
     public function struk()
     {
         return $this->hasOne(Struk::class, 'id_transaksi', 'id_transaksi');
+    }
+    public function pembayaran()
+    {
+        return $this->hasOne(Pembayaran::class, 'id_transaksi', 'id_transaksi');
+    }
+    // Relasi ke status pengiriman
+
+    public function status_pengiriman()
+    {
+        return $this->hasOne(StatusPengiriman::class, 'id_transaksi', 'id_transaksi');
     }
 
     // Akses format rupiah

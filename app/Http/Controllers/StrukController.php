@@ -18,10 +18,11 @@ class StrukController extends Controller
     }
     public function show($id_struk)
     {
-        $struk = Struk::with(['transaksi.user', 'transaksi.detail_transaksi.menu'])->findOrFail($id_struk);
+        $struk = Struk::with(['transaksi.user', 'transaksi.detail_transaksi.menu', 'transaksi.pembayaran'])->findOrFail($id_struk);
         $transaksi = $struk->transaksi;
+        $pembayaran = $transaksi->pembayaran; // Ambil relasi pembayaran
 
-        return view('pages.user.struk', compact('struk', 'transaksi'));
+        return view('pages.user.struk', compact('struk', 'transaksi', 'pembayaran'));
     }
 
 
@@ -45,8 +46,9 @@ class StrukController extends Controller
 
     public function exportPDF($id)
     {
-        $transaksi = Transaksi::with(['user', 'detail_transaksi.menu'])->findOrFail($id);
-        $pdf = Pdf::loadView('pages.pdf.struk-pdf', compact('transaksi'))->setPaper('a4', 'portrait');
+        $transaksi = Transaksi::with(['user', 'detail_transaksi.menu', 'pembayaran'])->findOrFail($id);
+        $pembayaran = $transaksi->pembayaran;
+        $pdf = Pdf::loadView('pages.pdf.struk-pdf', compact('transaksi', 'pembayaran'))->setPaper('a4', 'portrait');
         return $pdf->download('Bukti-Pembayaran-' . $transaksi->id_transaksi . '.pdf');
     }
 

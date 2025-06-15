@@ -1,332 +1,466 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="utf-8">
-    <title>Bukti Pembayaran - {{ $transaksi->id_transaksi }}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ asset('assets/styles/css/pdf.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bukti Pembayaran - {{ $transaksi->id_transaksi ?? 'N/A' }}</title>
     <style>
+        /* PDF Optimized Styles - Compatible with DomPDF */
+        @page {
+            margin: 15mm;
+            size: A4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f3f4f6;
-            color: #374151;
+            font-family: 'DejaVu Sans', sans-serif;
+            font-size: 12px;
+            line-height: 1.4;
+            color: #333333;
+            background: #ffffff;
         }
 
-        .container {
-            max-width: 480px;
-            margin: 32px auto;
-            background: #fff;
-            border-radius: 18px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
-            overflow: hidden;
+        /* Container */
+        .receipt-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
         }
 
+        /* Header */
         .header {
-            background: #ffedd5;
+            background: #f97316;
+            color: #ffffff;
+            padding: 20px;
             text-align: center;
-            padding: 32px 24px 16px;
+            margin-bottom: 20px;
         }
 
         .header h1 {
-            color: #ea580c;
-            font-size: 22px;
-            margin: 0 0 8px;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
         }
 
-        .header img {
-            height: 48px;
-            margin: 8px auto 0;
-            display: block;
-        }
-
-        .order-summary {
-            padding: 32px 24px;
-        }
-
-        .order-summary h2 {
-            font-size: 18px;
-            font-weight: 600;
-            color: #1f2937;
-            margin: 0;
-        }
-
-        .order-summary .order-id {
-            font-size: 14px;
-            color: #6b7280;
-            margin: 4px 0 0;
-        }
-
-        .order-summary .status {
-            background: #dcfce7;
-            color: #166534;
+        .company-info {
             font-size: 12px;
-            font-weight: 600;
-            padding: 6px 18px;
-            border-radius: 999px;
+            line-height: 1.3;
+        }
+
+        /* Invoice Header - Using Flexbox Alternative */
+        .invoice-header {
+            width: 100%;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .invoice-left {
+            float: left;
+            width: 60%;
+        }
+
+        .invoice-right {
+            float: right;
+            width: 35%;
+            text-align: right;
+        }
+
+        .invoice-number {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333333;
+            margin-bottom: 5px;
+        }
+
+        .invoice-id {
+            background: #f7fafc;
+            padding: 5px 10px;
+            border: 1px solid #e2e8f0;
+            display: inline-block;
+            font-size: 12px;
+            font-family: monospace;
+        }
+
+        .status-badge {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
             display: inline-block;
         }
 
-        .order-details {
-            margin: 18px 0;
-            font-size: 14px;
-            color: #6b7280;
+        .status-completed {
+            background: #c6f6d5;
+            color: #22543d;
+            border: 1px solid #68d391;
         }
 
-        .order-details .label {
-            width: 50%;
+        .status-pending {
+            background: #fefcbf;
+            color: #744210;
+            border: 1px solid #f6e05e;
         }
 
-        .order-details .value {
-            width: 50%;
-            text-align: right;
-            font-weight: 500;
-            color: #374151;
+        /* Clear floats */
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
         }
 
-        .items-section h3 {
-            font-size: 15px;
-            font-weight: 600;
-            color: #374151;
-            margin: 18px 0 10px;
+        /* Info Grid - Using Float Instead of Table */
+        .info-grid {
+            width: 100%;
+            margin-bottom: 20px;
+            overflow: hidden;
         }
 
-        .item-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .info-section {
+            float: left;
+            width: 48%;
+            margin-right: 2%;
+            padding: 15px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
             margin-bottom: 10px;
         }
 
-        .item-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .info-section:last-child {
+            margin-right: 0;
         }
 
-        .item-icon {
-            width: 36px;
-            height: 36px;
-            background: #ffedd5;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .info-section h3 {
+            font-size: 13px;
+            font-weight: bold;
+            color: #333333;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            border-bottom: 1px solid #cbd5e0;
+            padding-bottom: 5px;
+        }
+
+        .info-row {
+            margin-bottom: 8px;
+            overflow: hidden;
+        }
+
+        .info-label {
+            float: left;
+            width: 45%;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .info-value {
+            float: right;
+            width: 50%;
+            text-align: right;
+            color: #333333;
+        }
+
+        /* Items Section */
+        .items-section {
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333333;
+            margin-bottom: 15px;
+            padding: 10px 0;
+            border-bottom: 2px solid #f97316;
+        }
+
+        /* Simple Table for PDF Compatibility */
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .items-table th {
+            background: #2d3748;
+            color: #ffffff;
+            padding: 12px 8px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: 1px solid #2d3748;
+        }
+
+        .items-table td {
+            padding: 10px 8px;
+            border: 1px solid #e2e8f0;
+            vertical-align: top;
+        }
+
+        .items-table tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-right {
+            text-align: right;
         }
 
         .item-name {
             font-weight: 600;
-            color: #1f2937;
+            color: #333333;
         }
 
-        .item-meta {
-            font-size: 13px;
-            color: #6b7280;
-        }
-
-        .item-subtotal {
+        .item-price {
             font-weight: 600;
-            color: #ea580c;
+            color: #f97316;
         }
 
-        .divider {
-            height: 1px;
-            background: #f3f4f6;
-            margin: 18px 0;
+        /* Summary Section */
+        .summary-section {
+            margin-top: 20px;
+            border-top: 2px solid #e2e8f0;
+            padding-top: 20px;
         }
 
-        .cost-table {
+        .summary-row {
             width: 100%;
-            font-size: 14px;
-            color: #6b7280;
-            margin-bottom: 0;
+            margin-bottom: 8px;
+            overflow: hidden;
         }
 
-        .cost-table td {
-            padding: 2px 0;
+        .summary-label {
+            float: left;
+            width: 70%;
+            color: #4a5568;
+            font-size: 12px;
         }
 
-        .total-box {
-            background: #ffedd5;
-            border-radius: 10px;
-            padding: 16px 18px;
-            margin: 18px 0 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .summary-value {
+            float: right;
+            width: 25%;
+            text-align: right;
+            color: #333333;
+            font-size: 12px;
+        }
+
+        /* Total Row */
+        .total-row {
+            background: #fed7aa;
+            border: 2px solid #f97316;
+            padding: 15px;
+            margin: 15px 0;
+            overflow: hidden;
         }
 
         .total-label {
-            font-weight: 700;
+            float: left;
             font-size: 16px;
-            color: #1f2937;
+            font-weight: bold;
+            color: #333333;
         }
 
         .total-amount {
-            font-weight: 700;
+            float: right;
             font-size: 18px;
-            color: #ea580c;
+            font-weight: bold;
+            color: #f97316;
         }
 
-        .payment-section {
-            margin-top: 24px;
-        }
-
-        .payment-section h3 {
-            font-size: 15px;
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 10px;
-        }
-
-        .payment-table {
-            width: 100%;
-            font-size: 14px;
-            color: #6b7280;
-            background: #f9fafb;
-            border-radius: 8px;
-        }
-
-        .payment-table td {
-            padding: 2px 0;
-        }
-
+        /* Thank You Section */
         .thank-you {
             text-align: center;
-            margin: 32px 0 0;
-        }
-
-        .thank-you .icon {
-            font-size: 32px;
+            margin: 25px 0;
+            padding: 20px;
+            background: #f0fff4;
+            border: 2px solid #68d391;
         }
 
         .thank-you h2 {
             font-size: 18px;
-            font-weight: 700;
-            color: #1f2937;
-            margin: 8px 0 4px;
+            color: #22543d;
+            margin-bottom: 10px;
         }
 
         .thank-you p {
-            color: #6b7280;
-            font-size: 14px;
+            color: #2f855a;
+            font-size: 12px;
+            margin-bottom: 5px;
         }
 
+        /* Footer */
         .footer {
-            background: #ea580c;
-            padding: 18px 0;
+            margin-top: 30px;
+            padding: 20px;
+            background: #2d3748;
+            color: #ffffff;
             text-align: center;
         }
 
-        .footer p {
-            color: #ffedd5;
+        .footer h3 {
             font-size: 14px;
-            margin: 0;
+            margin-bottom: 10px;
         }
 
-        .footer .contact {
-            color: #fdba74;
-            font-size: 13px;
-            margin: 4px 0 0;
+        .footer p {
+            font-size: 11px;
+            margin: 5px 0;
+        }
+
+        .footer-divider {
+            height: 1px;
+            background: #4a5568;
+            margin: 10px 0;
+        }
+
+        /* PDF Specific */
+        .page-break {
+            page-break-after: always;
+        }
+
+        .no-break {
+            page-break-inside: avoid;
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
+    <div class="receipt-container">
+        <!-- Header -->
         <div class="header">
             <h1>Bukti Pembayaran</h1>
-            <img src="{{ asset('assets/icon/jogfood-shadow.png') }}" alt="Jogfood Logo">
+            <div class="company-info">
+                <strong>JogFood</strong><br>
+                Jl. Malioboro No. 123, Yogyakarta<br>
+                Email: jogfood25@gmail.com | Tel: 0821-7239-4367
+            </div>
         </div>
-        <div class="order-summary">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-                <div>
-                    <h2>Ringkasan Order</h2>
-                    <p class="order-id">#{{ $transaksi->id_transaksi }}</p>
+
+        <!-- Invoice Header -->
+        <div class="invoice-header clearfix">
+            <div class="invoice-left">
+                <div class="invoice-number">Ringkasan Order</div>
+                <div class="invoice-id">#{{ $transaksi->id_transaksi ?? 'N/A' }}</div>
+            </div>
+            <div class="invoice-right">
+                @if (isset($pembayaran) && $pembayaran->metode_pembayaran == 'cod')
+                    <div class="status-badge status-pending">Pending</div>
+                @else
+                    <div class="status-badge status-completed">Selesai</div>
+                @endif
+            </div>
+        </div>
+
+        <!-- Information Grid -->
+        <div class="info-grid clearfix">
+            <div class="info-section">
+                <h3>Informasi Order</h3>
+                <div class="info-row clearfix">
+                    <span class="info-label">Tanggal Order:</span>
+                    <span class="info-value">{{ isset($transaksi->created_at) ? $transaksi->created_at->format('d M Y, H:i') : 'N/A' }}</span>
                 </div>
-                <div class="status">Selesai</div>
+                <div class="info-row clearfix">
+                    <span class="info-label">Alamat Pengiriman:</span>
+                    <span class="info-value">{{ $transaksi->alamat ?? 'Tidak ada alamat' }}</span>
+                </div>
             </div>
-            <div class="order-details" style="display:flex;">
-                <div class="label">Tanggal Order</div>
-                <div class="value">{{ $transaksi->created_at->format('d M Y') }}</div>
-            </div>
-            <div class="order-details" style="display:flex;">
-                <div class="label">Alamat</div>
-                <div class="value">{{ $transaksi->alamat ?? '-' }}</div>
-            </div>
-            <div class="items-section">
-                <h3>Item yang Dipesan</h3>
-                @foreach($transaksi->detail_transaksi as $detail)
-                    <div class="item-row">
-                        <div class="item-info">
-                            <div class="item-icon">🍽️</div>
-                            <div>
-                                <div class="item-name">{{ $detail->menu->nama }}</div>
-                                <div class="item-meta">{{ $detail->jumlah }} x
-                                    Rp{{ number_format($detail->menu->harga, 0, ',', '.') }}</div>
-                            </div>
-                        </div>
-                        <div class="item-subtotal">Rp{{ number_format($detail->subtotal, 0, ',', '.') }}</div>
-                    </div>
-                @endforeach
-            </div>
-            <div class="divider"></div>
-            @php
-                $subtotal = $transaksi->detail_transaksi->sum('subtotal');
-                $diskon = $transaksi->diskon ?? 0;
-                $biayaPengiriman = $transaksi->biaya_pengiriman ?? 0;
-                $pajak = 0.1 * ($subtotal - $diskon);
-                $total = ($subtotal - $diskon) + $pajak + $biayaPengiriman;
-            @endphp
-            <table class="cost-table">
-                <tr>
-                    <td>Subtotal</td>
-                    <td align="right">Rp{{ number_format($subtotal, 0, ',', '.') }}</td>
-                </tr>
-                <tr>
-                    <td>Diskon</td>
-                    <td align="right">-Rp{{ number_format($diskon, 0, ',', '.') }}</td>
-                </tr>
-                <tr>
-                    <td>Biaya Pengiriman</td>
-                    <td align="right">Rp{{ number_format($biayaPengiriman, 0, ',', '.') }}</td>
-                </tr>
-                <tr>
-                    <td>Pajak (10%)</td>
-                    <td align="right">Rp{{ number_format($pajak, 0, ',', '.') }}</td>
-                </tr>
-            </table>
-            <div class="total-box">
-                <span class="total-label">Total</span>
-                <span class="total-amount">Rp{{ number_format($total, 0, ',', '.') }}</span>
-            </div>
-            <div class="payment-section">
+            <div class="info-section">
                 <h3>Informasi Pembayaran</h3>
-                <table class="payment-table">
-                    <tr>
-                        <td>Metode</td>
-                        <td align="right">Transfer Bank</td>
-                    </tr>
-                    <tr>
-                        <td>Tanggal Pembayaran</td>
-                        <td align="right">{{ $transaksi->updated_at->format('d M Y') }}</td>
-                    </tr>
-                </table>
-            </div>
-            <div class="thank-you">
-                <div class="icon">✅</div>
-                <h2>Terima Kasih!</h2>
-                <p>Order Anda telah diterima</p>
+                <div class="info-row clearfix">
+                    <span class="info-label">Metode:</span>
+                    <span class="info-value">{{ isset($pembayaran->metode_pembayaran) ? ucfirst($pembayaran->metode_pembayaran) : 'Belum ditentukan' }}</span>
+                </div>
+                <div class="info-row clearfix">
+                    <span class="info-label">Tanggal Bayar:</span>
+                    <span class="info-value">
+                        {{ isset($pembayaran) && $pembayaran && $pembayaran->updated_at ? $pembayaran->updated_at->format('d M Y, H:i') : 'Belum dibayar' }}
+                    </span>
+                </div>
             </div>
         </div>
+
+        <!-- Items Section -->
+        <div class="items-section no-break">
+            <div class="section-title">Item yang Dipesan</div>
+            <table class="items-table">
+                <thead>
+                    <tr>
+                        <th>Nama Menu</th>
+                        <th class="text-center">Qty</th>
+                        <th class="text-right">Harga Satuan</th>
+                        <th class="text-right">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if(isset($transaksi->detail_transaksi))
+                        @foreach($transaksi->detail_transaksi as $detail)
+                            <tr>
+                                <td class="item-name">{{ $detail->menu->nama ?? 'N/A' }}</td>
+                                <td class="text-center">{{ $detail->jumlah ?? 0 }}</td>
+                                <td class="text-right">Rp{{ number_format($detail->menu->harga ?? 0, 0, ',', '.') }}</td>
+                                <td class="text-right item-price">Rp{{ number_format($detail->subtotal ?? 0, 0, ',', '.') }}</td>
+                            </tr>
+                        @endforeach
+                    @endif
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="summary-section">
+            @php
+                $subtotal = isset($transaksi->detail_transaksi) ? $transaksi->detail_transaksi->sum('subtotal') : 0;
+                $pajak = isset($pajak) ? $pajak : round($subtotal * 0.1);
+                $biaya_pengiriman = isset($biaya_pengiriman) ? $biaya_pengiriman : 10000;
+            @endphp
+
+            <div class="summary-row clearfix">
+                <span class="summary-label">Subtotal:</span>
+                <span class="summary-value">Rp{{ number_format($subtotal, 0, ',', '.') }}</span>
+            </div>
+            <div class="summary-row clearfix">
+                <span class="summary-label">Biaya Pengiriman:</span>
+                <span class="summary-value">Rp{{ number_format($biaya_pengiriman, 0, ',', '.') }}</span>
+            </div>
+            <div class="summary-row clearfix">
+                <span class="summary-label">Pajak:</span>
+                <span class="summary-value">Rp{{ number_format($pajak, 0, ',', '.') }}</span>
+            </div>
+
+            <div class="total-row clearfix">
+                <span class="total-label">TOTAL PEMBAYARAN:</span>
+                <span class="total-amount">Rp{{ number_format($transaksi->total_harga ?? 0, 0, ',', '.') }}</span>
+            </div>
+        </div>
+
+        <!-- Thank You Section -->
+        <div class="thank-you">
+            <h2>Terima Kasih!</h2>
+            <p>Order Anda telah berhasil diproses dan akan segera kami kirimkan.</p>
+            <p>Simpan bukti pembayaran ini sebagai referensi transaksi Anda.</p>
+        </div>
+
+        <!-- Footer -->
         <div class="footer">
-            <p>Butuh bantuan? Hubungi <a href="mailto:jogfood25@gmail.com"
-                    style="color:#fff;text-decoration:underline;">jogfood25@gmail.com</a> | <a
-                    href="https://wa.me/6282172394367" style="color:#fff;text-decoration:underline;">0821-7239-4367</a>
-            </p>
-            <p class="contact">© 2025 JogFood. Jl. Malioboro No. 123, Yogyakarta</p>
+            <h3>Butuh Bantuan?</h3>
+            <p><strong>Email:</strong> jogfood25@gmail.com</p>
+            <p><strong>WhatsApp:</strong> 0821-7239-4367</p>
+            <div class="footer-divider"></div>
+            <p>&copy; 2025 JogFood - Jl. Malioboro No. 123, Yogyakarta</p>
+            <p>Dokumen ini dibuat secara otomatis pada {{ now()->format('d M Y, H:i:s') }} WIB</p>
         </div>
     </div>
 </body>
-
 </html>

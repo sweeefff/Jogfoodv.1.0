@@ -38,8 +38,9 @@
                                 style="margin: 0 auto 20px;">
                                 <tr>
                                     <td>
-                                        <img src="{{ asset('assets/icon/jogfood.png') }}" alt="Logo Jogfood"
-                                            style="width: 300px; height: auto;">
+                                        <img src="{{ asset('assets/icon/jogfood-shadow.png') }}" alt="Jogfood Logo">
+                                        alt="Jogfood Logo">
+                                        style="width: 300px; height: auto;">
                                     </td>
                                 </tr>
                             </table>
