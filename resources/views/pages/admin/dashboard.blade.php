@@ -52,7 +52,7 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-100">
-                        @forelse($activities as $activity)
+                        @foreach($activities as $activity)
                             <tr>
                                 <td class="px-4 py-2 text-sm text-gray-700">{{ $activity->created_at->format('d-m-Y H:i:s') }}</td>
                                 <td class="px-4 py-2 text-sm text-gray-700">{{ $admin->nama ?? '-' }}</td>
@@ -67,11 +67,7 @@
                                 </td>
                                 <td class="px-4 py-2 text-sm text-gray-500">{{ $activity->ip_address }}</td>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="4" class="px-4 py-4 text-center text-gray-400">Belum ada aktivitas admin.</td>
-                            </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>

@@ -57,7 +57,6 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/order', [OrderController::class, 'order'])->name('admin.order');
     Route::get('/data', [DataController::class, 'data'])->name('admin.data');
-    Route::get('/rekap', [RekapController::class, 'rekap'])->name('admin.rekap');
 
     // CRUD menu
     Route::resource('/tblmenu', TblmenuController::class)->only([
@@ -74,6 +73,11 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
 
     // Route Live Search untuk halaman admin
     Route::get('/tblmenu/search', [TblmenuController::class, 'search'])->name('tblmenu.search');
+    Route::get('/edit', [DataController::class, 'edit'])->name('admin.edit');
+    Route::put('/update', [DataController::class, 'update'])->name('admin.update');
+    Route::get('/changepass', [DataController::class, 'showChangePass'])->name('admin.changepass');
+    Route::post('/changepass', [DataController::class, 'changePass'])->name('admin.changepass.update');
+    Route::get('/rekap', [DataController::class, 'rekap'])->name('admin.rekap');
 });
 
 // User Routes - Hanya user yang bisa akses

@@ -1,0 +1,31 @@
+@extends('layouts.appadm')
+@section('title', 'Edit Profil Admin')
+
+@section('content')
+<div class="max-w-xl mx-auto bg-white rounded-xl shadow p-8 mt-8">
+    <h2 class="text-2xl font-bold mb-6">Edit Profil Admin</h2>
+    <form action="{{ route('admin.update') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+        <input type="hidden" name="id" value="{{ $admin->id ?? '' }}">
+        <div class="mb-4">
+            <label class="block mb-1">Nama</label>
+            <input type="text" name="nama" class="w-full border rounded p-2" value="{{ old('nama', $admin->nama ?? '') }}">
+        </div>
+        <div class="mb-4">
+            <label class="block mb-1">Username</label>
+            <input type="text" name="username" class="w-full border rounded p-2" value="{{ old('username', $admin->username ?? '') }}">
+        </div>
+        <div class="mb-4">
+            <label class="block mb-1">Email</label>
+            <input type="email" name="email" class="w-full border rounded p-2" value="{{ old('email', $admin->email ?? '') }}">
+        </div>
+        <div class="mb-4">
+            <label class="block mb-1">Foto Profil</label>
+            <input type="file" name="foto" class="w-full border rounded p-2">
+        </div>
+        <button type="submit" class="px-4 py-2 bg-amber-500 text-white rounded hover:bg-amber-600">Simpan</button>
+        <a href="{{ route('admin.data') }}" class="ml-4 text-gray-600 hover:underline">Batal</a>
+    </form>
+</div>
+@endsection

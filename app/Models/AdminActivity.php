@@ -13,12 +13,12 @@ class AdminActivity extends Model
 use Illuminate\Support\Facades\Auth;
 
 AdminActivity::create([
-    'admin_name' => Auth::user()->nama,
+    'admin_name' => Auth::user()->nama ?? '-',
     'activity' => 'login',
     'ip_address' => request()->ip(),
 ]);
 AdminActivity::create([
-    'admin_name' => Auth::user()->nama,
+    'admin_name' => Auth::user()->nama ?? '-',
     'activity' => 'logout',
     'ip_address' => request()->ip(),
 ]);
