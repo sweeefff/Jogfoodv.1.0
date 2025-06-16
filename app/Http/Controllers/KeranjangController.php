@@ -19,30 +19,30 @@ class KeranjangController extends Controller
         return view('pages.user.keranjang', compact('items'));
     }
 
-    public function store($id)
+    public function store(Request $request, $id)
     {
         if (!session()->has('user_id')) {
             return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu');
         }
 
         $userId = session('user_id');
+        $jumlah = $request->input('jumlah', 1);
 
         $item = Keranjang::where('id_user', $userId)
             ->where('id_menu', $id)
             ->first();
 
         if ($item) {
-            $item->increment('jumlah');
+            $item->increment('jumlah', $jumlah);
         } else {
             Keranjang::create([
                 'id_user' => $userId,
                 'id_menu' => $id,
-                'jumlah' => 1,
+                'jumlah' => $jumlah,
             ]);
         }
         session()->flash('success', 'Produk ditambahkan ke keranjang');
         return redirect()->back();
-
     }
 
     public function remove($idKeranjang)
