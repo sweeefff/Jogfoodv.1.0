@@ -56,31 +56,38 @@
         </div>
 
         <!-- Action Buttons -->
-        <div class="flex gap-4 mt-auto">
-          <button class="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-medium py-3 px-6 rounded-lg shadow-md transition duration-300 flex items-center justify-center gap-2">
+        <form id="cart-form" action="{{ route('keranjang.store', $menu->id_menu) }}" method="POST" class="flex gap-4 mt-auto w-full">
+          @csrf
+          <input type="hidden" name="jumlah" id="input-jumlah" value="1">
+          <button type="submit"
+            class="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-medium py-3 px-6 rounded-lg shadow-md transition duration-300 flex items-center justify-center gap-2">
             <i class="fas fa-shopping-cart"></i>
             <span>Tambah ke Keranjang</span>
           </button>
-          <button class="flex-1 bg-white border-2 border-amber-500 text-amber-600 hover:bg-amber-50 font-medium py-3 px-6 rounded-lg shadow-sm transition duration-300 flex items-center justify-center gap-2">
-            <i class="fas fa-bolt"></i>
-            <span>Beli Sekarang</span>
-          </button>
-        </div>
+        </form>
+
+        <form id="beli-sekarang-form" action="{{ route('menu.beli_sekarang', $menu->id_menu) }}" method="POST" style="display: none;">
+          @csrf
+          <input type="hidden" name="jumlah" id="beli-sekarang-jumlah" value="1">
+        </form>
+        <button type="button" id="beli-sekarang"
+          class="flex-1 bg-white border-2 border-amber-500 text-amber-600 hover:bg-amber-50 font-medium py-3 px-6 rounded-lg shadow-sm transition duration-300 flex items-center justify-center gap-2">
+          <i class="fas fa-bolt"></i>
+          <span>Beli Sekarang</span>
+        </button>
       </div>
     </div>
 
     <!-- Tabs (Deskripsi, Komposisi, Ulasan) -->
     <div class="border-t border-gray-200">
       <div class="flex overflow-x-auto">
-        <button class="px-6 py-4 font-medium text-amber-600 tab-active whitespace-nowrap">Deskripsi Produk</button>
-        <button class="px-6 py-4 font-medium text-gray-500 hover:text-amber-500 whitespace-nowrap">Komposisi</button>
-        <button class="px-6 py-4 font-medium text-gray-500 hover:text-amber-500 whitespace-nowrap">Ulasan (25)</button>
+        <button class="px-6 py-4 font-medium text-amber-600 tab-active whitespace-nowrap">Ulasan</button>
       </div>
 
       <div class="p-6">
-        <h3 class="text-lg font-semibold mb-3">Deskripsi Lengkap</h3>
+        <h3 class="text-lg font-semibold mb-3">Ulasan</h3>
         <div class="prose max-w-none text-gray-700">
-          <p>{{ $menu->deskripsi_menu }}</p>
+          <p></p>
         </div>
       </div>
     </div>
@@ -90,15 +97,36 @@
 @endsection
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const tabs = document.querySelectorAll('[class*="px-6 py-4"]');
-    tabs.forEach(tab => {
-      tab.addEventListener('click', function () {
-        tabs.forEach(t => t.classList.remove('tab-active', 'text-amber-600'));
-        tabs.forEach(t => t.classList.add('text-gray-500'));
-        this.classList.add('tab-active', 'text-amber-600');
-        this.classList.remove('text-gray-500');
-      });
+document.addEventListener('DOMContentLoaded', function () {
+    let jumlah = 1;
+    const jumlahSpan = document.querySelector('.w-16 span');
+    const inputJumlah = document.getElementById('input-jumlah');
+    const btnMinus = document.querySelectorAll('.quantity-btn')[0];
+    const btnPlus = document.querySelectorAll('.quantity-btn')[1];
+
+    btnMinus.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (jumlah > 1) jumlah--;
+        jumlahSpan.textContent = jumlah;
+        inputJumlah.value = jumlah;
     });
-  });
+
+    btnPlus.addEventListener('click', function (e) {
+        e.preventDefault();
+        jumlah++;
+        jumlahSpan.textContent = jumlah;
+        inputJumlah.value = jumlah;
+    });
+
+    // Beli Sekarang
+    document.getElementById('beli-sekarang').addEventListener('click', function () {
+        document.getElementById('beli-sekarang-jumlah').value = document.getElementById('input-jumlah').value;
+        document.getElementById('beli-sekarang-form').submit();
+    });
+});
 </script>
+
+
+
+
+
