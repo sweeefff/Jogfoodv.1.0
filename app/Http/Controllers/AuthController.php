@@ -31,43 +31,43 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $request->validate([
-            'login' => 'required',
-            'password' => 'required',
-        ]);
-        // Cek user berdasarkan username atau email
-        $user = User::where('username', $request->login)
-            ->orWhere('email', $request->login)
-            ->first();
+        try {
+            $request->validate([
+                'login' => 'required',
+                'password' => 'required',
+            ]);
 
-        if ($user && Hash::check($request->password, $user->password)) {
-            // Manual session set
-            $request->session()->put('user_id', $user->id);
-            $request->session()->put('user_role', $user->role);
-            $request->session()->put('username', $user->username);
-            $request->session()->put('email', $user->email);
-            $request->session()->put('name', $user->name);
-            $request->session()->put('no_hp', $user->no_hp);
-            $request->session()->put('alamat', $user->alamat);
-            $request->session()->put('foto', $user->foto);
-            $request->session()->regenerate();
+            $user = User::where('username', $request->login)
+                ->orWhere('email', $request->login)
+                ->first();
 
-            // Redirect by role
-            if ($user->role === 'admin') {
-                return redirect()->route('admin.dashboard')->with('success', 'Login berhasil sebagai admin!');
-            } else {
-                // Redirect ke home publik
-                return redirect()->route('home')->with('success', 'Login berhasil!');
+            if ($user && Hash::check($request->password, $user->password)) {
+                $request->session()->put('user_id', $user->id);
+                $request->session()->put('user_role', $user->role);
+                $request->session()->put('username', $user->username);
+                $request->session()->put('email', $user->email);
+                $request->session()->put('name', $user->name);
+                $request->session()->put('no_hp', $user->no_hp);
+                $request->session()->put('alamat', $user->alamat);
+                $request->session()->put('foto', $user->foto);
+                $request->session()->regenerate();
+
+                if ($user->role === 'admin') {
+                    return redirect()->route('admin.dashboard')->with('success', 'Login berhasil sebagai admin!');
+                } else {
+                    return redirect()->route('home')->with('success', 'Login berhasil!');
+                }
             }
+
+            return back()->withErrors([
+                'login' => 'Username atau password salah',
+            ])->withInput($request->only('login'));
+        } catch (\Exception $e) {
+            Log::error('Login error: ' . $e->getMessage());
+            return back()->withErrors([
+                'login' => 'Terjadi kesalahan pada sistem, silakan coba lagi nanti.',
+            ])->withInput($request->only('login'));
         }
-        // // ✅ UX redirect: kalau belum isi nama, arahkan ke form profil
-        // if (is_null($user->name)) {
-        //     return redirect()->route('profile.edit')
-        //         ->with('alert', 'Silakan lengkapi nama kamu terlebih dahulu.');
-        // }
-        return back()->withErrors([
-            'login' => 'Username atau password salah',
-        ])->withInput($request->only('login'));
     }
     //Register
     public function register(Request $request)
@@ -85,7 +85,7 @@ class AuthController extends Controller
                 'required',
                 'min:8',
                 'confirmed',
-                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d\W]).+$/'
+                'regex:/^(?=.[a-z])(?=.[A-Z])(?=.*[\d\W]).+$/'
             ],
             'g-recaptcha-response' => 'required|captcha',
         ], [
@@ -116,7 +116,7 @@ class AuthController extends Controller
             'no_hp' => null,
             'alamat' => null,
             'foto' => null,
-        ])->save();
+        ]);
 
         return redirect()->route('login')->with('success', 'Registrasi berhasil. Silakan login.');
     }
@@ -206,7 +206,7 @@ class AuthController extends Controller
         DB::table('password_resets')->where('email', $request->email)->delete();
 
         return redirect('/login')->with('status', 'Password berhasil diubah.');
-    }
+   }
 
 
 }

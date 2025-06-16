@@ -111,8 +111,8 @@ class MetodeController extends Controller
             $transaksi = Transaksi::create([
                 'id_transaksi' => $orderId,
                 'id_user' => session('user_id', Auth::id()),
-                'total_harga' => $total, // hanya total_harga yang disimpan
-                'status_transaksi' => 'pending',
+                'total_harga' => $total,
+                'status_transaksi' => $paymentMethod === 'cod' ? 'pending' : 'pending',
             ]);
 
             // Simpan detail transaksi
@@ -308,7 +308,7 @@ class MetodeController extends Controller
         }
 
         // Update status menjadi lunas jika belum lunas
-        if ($transaksi->status_transaksi !== 'lunas') {
+        if ($transaksi->status_transaksi !== 'lunas' && ($transaksi->pembayaran->metode_pembayaran ?? '') !== 'cod') {
             $transaksi->status_transaksi = 'lunas';
             $transaksi->save();
         }
@@ -333,7 +333,8 @@ class MetodeController extends Controller
             return redirect()->back()->with('error', 'Transaksi tidak ditemukan atau tidak bisa dibatalkan.');
         }
 
-        $transaksi->status_transaksi = 'dibatalkan' ; $transaksi->updated_at = now();
+        $transaksi->status_transaksi = 'dibatalkan';
+        $transaksi->updated_at = now();
         $statusPengiriman = StatusPengiriman::where('id_transaksi', $id)->first();
         if ($statusPengiriman) {
             $statusPengiriman->status_pengiriman = 'dibatalkan';

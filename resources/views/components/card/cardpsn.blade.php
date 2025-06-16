@@ -69,17 +69,26 @@
             </div>
             <div class="flex flex-wrap gap-2">
                 @if ($status == 'pending')
-                    <form action="{{ route('metode.bayar') }}" method="POST" class="inline">
-                        @csrf
-                        <input type="hidden" name="id_transaksi" value="{{ $id_transaksi }}">
-                        <button type="submit" class="bg-orange-500 text-white px-6 py-2 rounded">Bayar</button>
-                    </form>
-                    <form action="{{ route('transaksi.batal', $id_transaksi) }}" method="POST" class="inline">
-                        @csrf
-                        @method('PATCH')
-                        <button type="submit" class="border border-gray-300 text-gray-600 px-6 py-2 rounded"
-                            onclick="return confirm('Batalkan pesanan ini?')">Batal</button>
-                    </form>
+                    @if (($transaksi->pembayaran->metode_pembayaran ?? '') == 'cod')
+                        <form action="{{ route('transaksi.batal', $id_transaksi) }}" method="POST" class="inline">
+                            @csrf
+                            @method('PATCH')
+                            <button type="submit" class="border border-gray-300 text-gray-600 px-6 py-2 rounded"
+                                onclick="return confirm('Batalkan pesanan ini?')">Batal</button>
+                        </form>
+                    @else
+                        <form action="{{ route('metode.bayar') }}" method="POST" class="inline">
+                            @csrf
+                            <input type="hidden" name="id_transaksi" value="{{ $id_transaksi }}">
+                            <button type="submit" class="bg-orange-500 text-white px-6 py-2 rounded">Bayar</button>
+                        </form>
+                        <form action="{{ route('transaksi.batal', $id_transaksi) }}" method="POST" class="inline">
+                            @csrf
+                            @method('PATCH')
+                            <button type="submit" class="border border-gray-300 text-gray-600 px-6 py-2 rounded"
+                                onclick="return confirm('Batalkan pesanan ini?')">Batal</button>
+                        </form>
+                    @endif
                 @elseif ($status == 'lunas')
                     @if (!empty($id_struk))
                         <a href="{{ route('struk.show', $id_struk) }}">
