@@ -80,16 +80,4 @@ class StrukMail extends Mailable
     /**
      * Get the attachments for the message.
      */
-    public function attachments(): array
-    {
-        if ($this->struk) {
-            return [
-                Attachment::fromStorageDisk('public', $this->struk->file_struk)
-                    ->as('Bukti-Pembayaran-' . $this->transaksi->id_transaksi . '.pdf')
-                    ->withMime('application/pdf')
-            ];
-        }
-
-        return [];
-    }
 }

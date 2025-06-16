@@ -53,7 +53,7 @@
                 <a href="{{ route('admin.data') }}"
                     class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
                     <i class="fas fa-user-gear w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
-                    <span class="ms-3">Profile Restoran</span>
+                    <span class="ms-3">Profile Admin</span>
                 </a>
             </li>
             <li>

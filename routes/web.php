@@ -40,8 +40,13 @@ Route::get('/auth/google/callback', [SocialiteController::class, 'handleGoogleCa
 
 // Public Routes - Dapat diakses tanpa login
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/menu', [MenuController::class, 'index'])->name('menu');
-Route::get('/menu/search', [MenuController::class, 'search'])->name('menu.live_search'); // ✅ Live search route
+
+// Search biasa (form submit)
+Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
+
+// Live search (AJAX)
+Route::get('/menu/search', [MenuController::class, 'search'])->name('menu.search');
+
 Route::get('/about', [AboutController::class, 'about'])->name('about');
 Route::get('/detail/{id}', [DetailController::class, 'detail'])->name('detail');
 Route::get('/detailpsn', [DetailpsnController::class, 'detailpsn'])->name('detailpsn');
@@ -52,7 +57,6 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/order', [OrderController::class, 'order'])->name('admin.order');
     Route::get('/data', [DataController::class, 'data'])->name('admin.data');
-    Route::get('/rekap', [RekapController::class, 'rekap'])->name('admin.rekap');
 
     // CRUD menu
     Route::resource('/tblmenu', TblmenuController::class)->only([
@@ -67,8 +71,13 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
                 'destroy' => 'tblmenu.destroy'
             ]);
 
-    // ✅ Route Live Search untuk halaman admin
+    // Route Live Search untuk halaman admin
     Route::get('/tblmenu/search', [TblmenuController::class, 'search'])->name('tblmenu.search');
+    Route::get('/edit', [DataController::class, 'edit'])->name('admin.edit');
+    Route::put('/update', [DataController::class, 'update'])->name('admin.update');
+    Route::get('/changepass', [DataController::class, 'showChangePass'])->name('admin.changepass');
+    Route::post('/changepass', [DataController::class, 'changePass'])->name('admin.changepass.update');
+    Route::get('/rekap', [DataController::class, 'rekap'])->name('admin.rekap');
 });
 
 // User Routes - Hanya user yang bisa akses
@@ -79,6 +88,7 @@ Route::middleware([RoleMiddleware::class . ':user'])->prefix('user')->group(func
     Route::post('/payment/process', [MetodeController::class, 'process'])->name('metode.process');
     Route::get('/payment/snap', [MetodeController::class, 'snap'])->name('metode.snap');
     Route::get('/payment/success', [MetodeController::class, 'success'])->name('metode.success');
+    Route::patch('/transaksi/{id}/batal', [MetodeController::class, 'batal'])->name('transaksi.batal');
 
     Route::get('/struk/{id_struk}', [StrukController::class, 'show'])->name('struk.show');
     Route::get('/struk/generate/{id_transaksi}', [StrukController::class, 'generate'])->name('struk.generate');
@@ -92,6 +102,8 @@ Route::middleware([RoleMiddleware::class . ':user'])->prefix('user')->group(func
     Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang.index');
     Route::post('/keranjang/tambah/{id}', [KeranjangController::class, 'store'])->name('keranjang.store');
     Route::delete('/keranjang/hapus/{id}', [KeranjangController::class, 'remove'])->name('keranjang.destroy');
+
+    Route::get('/detailpsn', [DetailpsnController::class, 'detailpsn'])->name('detailpsn');
 
     Route::get('/riwayat', [RiwayatController::class, 'riwayat'])->name('riwayat');
     Route::get('/rating', [RatingController::class, 'rating'])->name('rating');

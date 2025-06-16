@@ -22,7 +22,7 @@ class User extends Authenticatable
         'no_hp',
         'alamat',
         'password',
-        'user_role',
+        'role',
         'foto'
     ];
 
@@ -57,6 +57,6 @@ class User extends Authenticatable
     {
         return $this->hasMany(Transaksi::class, 'id_user');
     }
-    
+
 
 }

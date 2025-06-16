@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 use App\Services\StrukService;
+use App\Models\Pembayaran;
+use App\Models\StatusPengiriman;
 
 class MetodeController extends Controller
 {
@@ -76,7 +78,11 @@ class MetodeController extends Controller
     public function process(Request $request)
     {
         $request->validate([
-            'amount' => 'required|numeric'
+            'amount' => 'required|numeric',
+            'payment_method' => 'required|string',
+            'pajak' => 'required|numeric',
+            'subtotal' => 'required|numeric',
+            'biaya_pengiriman' => 'required|numeric',
         ]);
 
         $orderId = 'ORD-' . Str::uuid();
@@ -90,24 +96,26 @@ class MetodeController extends Controller
             ], 422);
         }
 
-        $total = $request->amount;
+        // Hitung total harga di backend agar selalu konsisten
+        $subtotal = $request->subtotal;
+        $pajak = $request->pajak;
+        $biayaPengiriman = $request->biaya_pengiriman;
+        $total = $subtotal + $pajak + $biayaPengiriman;
+
+        $paymentMethod = $request->payment_method;
+
         try {
             DB::beginTransaction();
 
-            // Buat transaksi baru
+            // Simpan transaksi hanya dengan total_harga
             $transaksi = Transaksi::create([
                 'id_transaksi' => $orderId,
                 'id_user' => session('user_id', Auth::id()),
                 'total_harga' => $total,
-                'status_transaksi' => 'pending',
-
+                'status_transaksi' => $paymentMethod === 'cod' ? 'pending' : 'pending',
             ]);
 
-            \Midtrans\Config::$serverKey = config('services.midtrans.server_key');
-            \Midtrans\Config::$isProduction = config('services.midtrans.is_production');
-            \Midtrans\Config::$isSanitized = config('services.midtrans.is_sanitized');
-            \Midtrans\Config::$is3ds = config('services.midtrans.is_3ds');
-
+            // Simpan detail transaksi
             foreach ($checkoutItems as $item) {
                 $checkoutItems = $checkoutItems->filter(fn($item) => $item->menu);
                 if (!$item->menu)
@@ -120,15 +128,42 @@ class MetodeController extends Controller
                 ]);
             }
 
+            // Simpan ke tabel pembayaran
+            Pembayaran::create([
+                'id_transaksi' => $orderId,
+                'metode_pembayaran' => $paymentMethod,
+            ]);
+
+            // Simpan ke tabel status pengiriman
+            StatusPengiriman::create([
+                'id_user' => session('user_id', Auth::id()),
+                'id_transaksi' => $orderId,
+                'status_pembayaran' => $paymentMethod === 'cod' ? 'belum dibayar' : 'dibayar',
+                'status_pengiriman' => 'menunggu',
+                'tanggal_transaksi' => now(),
+                'tanggal_update' => now(),
+            ]);
+
             DB::commit();
-            // Hapus keranjang setelah checkout
-            $menuIds = $checkoutItems->pluck('menu.id_menu')->filter()->all(); // Ambil hanya id_menu valid
 
-            Keranjang::where('id_user', session('user_id', Auth::id()))
-                ->whereIn('id_menu', $menuIds)
-                ->delete();
-            session()->forget('checkout_items');
+            if ($paymentMethod === 'cod') {
+                $menuIds = $checkoutItems->pluck('menu.id_menu')->filter()->all();
+                Keranjang::where('id_user', session('user_id', Auth::id()))
+                    ->whereIn('id_menu', $menuIds)
+                    ->delete();
+                session()->forget('checkout_items');
+            }
 
+
+            session(['last_order_id' => $orderId]);
+
+            if ($paymentMethod === 'cod') {
+                $transaksi->status_transaksi = 'pending';
+                $transaksi->save();
+                return Response::json([
+                    'redirect' => route('metode.success')
+                ]);
+            }
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -137,8 +172,15 @@ class MetodeController extends Controller
             ], 500);
         }
 
-        $itemDetails = [];
+        // Jika COD, langsung redirect ke success
+        if ($paymentMethod === 'cod') {
+            return Response::json([
+                'redirect' => route('metode.success')
+            ]);
+        }
 
+        // Jika non-COD, proses Midtrans
+        $itemDetails = [];
         foreach ($checkoutItems as $item) {
             $itemDetails[] = [
                 'id' => $item->menu->id_menu,
@@ -147,20 +189,35 @@ class MetodeController extends Controller
                 'name' => $item->menu->nama,
             ];
         }
+        if ($biayaPengiriman > 0) {
+            $itemDetails[] = [
+                'id' => 'DELIVERY',
+                'price' => $biayaPengiriman,
+                'quantity' => 1,
+                'name' => 'Biaya Pengiriman',
+            ];
+        }
+        if ($pajak > 0) {
+            $itemDetails[] = [
+                'id' => 'TAX',
+                'price' => $pajak,
+                'quantity' => 1,
+                'name' => 'Pajak',
+            ];
+        }
 
-
-        $params = array(
-            'transaction_details' => array(
+        $params = [
+            'transaction_details' => [
                 'order_id' => $orderId,
-                'gross_amount' => (int) $total,
-            ),
+                'gross_amount' => (int) $total, // total harga akhir
+            ],
             'item_details' => $itemDetails,
-            'customer_details' => array(
+            'customer_details' => [
                 'email' => session('email'),
                 'name' => session('username'),
                 'phone' => session('phone') ?? 'N/A'
-            ),
-        );
+            ],
+        ];
 
         $snapToken = Snap::getSnapToken($params);
         $transaksi->snap_token = $snapToken;
@@ -170,7 +227,6 @@ class MetodeController extends Controller
             'snap_token' => $snapToken,
             'order_id' => $orderId
         ]);
-
     }
 
 
@@ -206,8 +262,23 @@ class MetodeController extends Controller
                         $transaksi->status_transaksi = 'lunas';
                     }
                 }
-            } elseif ($transactionStatus == 'settlement') {
+            } elseif ($transactionStatus == 'settlement' || ($transactionStatus == 'capture' && $fraudStatus != 'challenge')) {
                 $transaksi->status_transaksi = 'lunas';
+
+                // Hapus item dari keranjang
+                $detailTransaksis = $transaksi->detail_transaksi;
+                $menuIds = $detailTransaksis->pluck('id_menu');
+
+                Keranjang::where('id_user', $transaksi->id_user)
+                    ->whereIn('id_menu', $menuIds)
+                    ->delete();
+
+                // Update status pengiriman
+                $statusPengiriman = StatusPengiriman::where('id_transaksi', $orderId)->first();
+                if ($statusPengiriman) {
+                    $statusPengiriman->status_pembayaran = 'sudah dibayar';
+                    $statusPengiriman->save();
+                }
             } elseif ($transactionStatus == 'pending') {
                 $transaksi->status_transaksi = 'pending';
             } elseif ($transactionStatus == 'deny') {
@@ -229,13 +300,17 @@ class MetodeController extends Controller
 
     public function success(Request $request, StrukService $strukService)
     {
-        $transaksi = Transaksi::where('id_user', session('user_id', Auth::id()))
-            ->where('status_transaksi', 'lunas')
-            ->orderBy('created_at', 'desc')
-            ->first();
+        $orderId = session('last_order_id');
+        $transaksi = Transaksi::where('id_transaksi', $orderId)->first();
 
         if (!$transaksi) {
             return redirect()->route('home')->with('error', 'Transaksi belum berhasil.');
+        }
+
+        // Update status menjadi lunas jika belum lunas
+        if ($transaksi->status_transaksi !== 'lunas' && ($transaksi->pembayaran->metode_pembayaran ?? '') !== 'cod') {
+            $transaksi->status_transaksi = 'lunas';
+            $transaksi->save();
         }
 
         // Generate dan kirim struk otomatis
@@ -247,5 +322,27 @@ class MetodeController extends Controller
             ->with('success', 'Transaksi berhasil! Struk telah dikirim ke email Anda.');
     }
 
+    public function batal($id)
+    {
+        $transaksi = Transaksi::where('id_transaksi', $id)
+            ->where('id_user', session('user_id', Auth::id()))
+            ->where('status_transaksi', 'pending')
+            ->first();
+
+        if (!$transaksi) {
+            return redirect()->back()->with('error', 'Transaksi tidak ditemukan atau tidak bisa dibatalkan.');
+        }
+
+        $transaksi->status_transaksi = 'dibatalkan';
+        $transaksi->updated_at = now();
+        $statusPengiriman = StatusPengiriman::where('id_transaksi', $id)->first();
+        if ($statusPengiriman) {
+            $statusPengiriman->status_pengiriman = 'dibatalkan';
+            $statusPengiriman->save();
+        }
+        $transaksi->save();
+
+        return redirect()->back()->with('success', 'Transaksi berhasil dibatalkan.');
+    }
 }
 
