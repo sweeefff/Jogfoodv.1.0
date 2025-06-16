@@ -9,8 +9,8 @@
         @method('PUT')
         <input type="hidden" name="id" value="{{ $admin->id ?? '' }}">
         <div class="mb-4">
-            <label class="block mb-1">Nama</label>
-            <input type="text" name="nama" class="w-full border rounded p-2" value="{{ old('nama', $admin->nama ?? '') }}">
+            <label class="block mb-1">Name</label>
+            <input type="text" name="name" class="w-full border rounded p-2" value="{{ old('name', $admin->name ?? '') }}">
         </div>
         <div class="mb-4">
             <label class="block mb-1">Username</label>
