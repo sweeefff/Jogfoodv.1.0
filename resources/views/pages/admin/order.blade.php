@@ -88,7 +88,7 @@
                                             @foreach($order->detail_transaksi as $detail)
                                                 <li class="flex justify-between items-center">
                                                     <div>
-                                                        <span class="font-medium">{{ $detail->menu->nama_menu ?? '-' }}</span>
+                                                        <span class="font-medium">{{ $detail->menu->nama ?? '-' }}</span>
                                                         <span class="text-gray-500">x{{ $detail->jumlah }}</span>
                                                     </div>
                                                     <div class="text-gray-700">{{ $detail->subtotal_formatted }}</div>
