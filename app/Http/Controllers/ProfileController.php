@@ -65,6 +65,8 @@ class ProfileController extends Controller
         $request->session()->put('alamat', $user->alamat);
         $request->session()->put('foto', $user->foto);
 
+        $request->session()->flash('success', 'Profil berhasil diperbarui.');
+
         // Redirect ke profile dengan pesan sukses
         return redirect()->route('profile')->with('success', 'Profil berhasil diperbarui.');
     }

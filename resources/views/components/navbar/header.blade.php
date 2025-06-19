@@ -12,19 +12,25 @@
 	<div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 h-24">
 		<!-- Logo -->
 		<a href="{{ route('home') }}" class="flex items-center">
-			<img src="assets/icon/jogfood.png" class="h-8 mr-3" alt="Jogfood Logo">
+			<img src="{{ asset('assets/icon/jogfood.png') }}" class="h-8 mr-3" alt="Jogfood Logo">
 		</a>
 
 		<!-- Mobile menu button -->
 		<div class="flex items-center space-x-3 md:hidden">
 			<!-- Cart icon -->
-			<a href="{{ route('keranjang.index') }}" class="flex items-center">
+			<a href="{{ route('keranjang.index') }}" class="flex items-center relative">
 				<button type="button" class="flex text-white">
 					<svg class="w-7 h-7" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
 						viewBox="0 0 24 24">
 						<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
 							d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312" />
 					</svg>
+					@if(isset($cartCount) && $cartCount > 0)
+						<span
+							class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full px-2 py-0.5">
+							{{ $cartCount }}
+						</span>
+					@endif
 				</button>
 			</a>
 
@@ -86,23 +92,29 @@
 				</form>
 			</div>
 			<!-- Keranjang -->
-			<a href="{{ route('keranjang.index') }}" class="flex items-center">
+			<a href="{{ route('keranjang.index') }}" class="flex items-center relative">
 				<button type="button" class="flex text-white">
 					<svg class="w-7 h-7" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
 						viewBox="0 0 24 24">
 						<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
 							d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312" />
 					</svg>
+					@if(isset($cartCount) && $cartCount > 0)
+						<span
+							class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full px-2 py-0.5">
+							{{ $cartCount }}
+						</span>
+					@endif
 				</button>
 			</a>
 			<!-- Profile Dropdown -->
 			<div class="relative">
 				<button type="button" class="flex text-sm rounded-full" id="user-menu-button" aria-expanded="false">
 					<span class="sr-only">Open user menu</span>
-					
-<img class="w-9 h-9 rounded-full border-2 border-white"
-    src="{{ asset('assets/img/profile/' . (session('foto') ? session('foto') : 'default.avif')) }}"
-    alt="User Profile">
+
+					<img class="w-9 h-9 rounded-full border-2 border-white"
+						src="{{ asset('assets/img/profile/' . (session('foto') ? session('foto') : 'default.avif')) }}"
+						alt="User Profile">
 				</button>
 				<div class="hidden absolute top-10 right-0 my-4 text-base list-none bg-amber-50 divide-y divide-gray-100 rounded-lg shadow w-56"
 					id="user-dropdown">
@@ -111,13 +123,17 @@
 						<span class="block text-base text-gray-500 truncate">ID : {{ session('user_id', '-') }}</span>
 					</div>
 					<ul class="py-2" aria-labelledby="user-menu-button">
-						<li><a href="{{ route('profile') }}" class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Profile</a></li>
-						<li><a href="{{ route('riwayat') }}" class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Riwayat</a></li>
-						<li><a href="{{ route('detailpsn') }}" class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Pesanan</a></li>
+						<li><a href="{{ route('profile') }}"
+								class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Profile</a></li>
+						<li><a href="{{ route('riwayat') }}"
+								class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Riwayat</a></li>
+						<li><a href="{{ route('detailpsn') }}"
+								class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Pesanan</a></li>
 						<li>
 							<form method="POST" action="{{ route('logout') }}">
 								@csrf
-								<button type="submit" class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Sign out</button>
+								<button type="submit"
+									class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Sign out</button>
 							</form>
 						</li>
 					</ul>
@@ -131,8 +147,8 @@
 				<!-- Search input for mobile -->
 				<div class="relative px-3 py-2">
 					<div class="absolute inset-y-0 left-6 flex items-center pl-3 pointer-events-none">
-						<svg class="w-5 h-5 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-							viewBox="0 0 20 20">
+						<svg class="w-5 h-5 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+							fill="none" viewBox="0 0 20 20">
 							<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
 								d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
 						</svg>

@@ -17,6 +17,7 @@ use Illuminate\Support\Str;
 use App\Services\StrukService;
 use App\Models\Pembayaran;
 use App\Models\StatusPengiriman;
+use Illuminate\Support\Facades\Log;
 
 class MetodeController extends Controller
 {
@@ -97,9 +98,9 @@ class MetodeController extends Controller
         }
 
         // Hitung total harga di backend agar selalu konsisten
-        $subtotal = $request->subtotal;
-        $pajak = $request->pajak;
-        $biayaPengiriman = $request->biaya_pengiriman;
+        $subtotal = (int) round($request->subtotal);
+        $pajak = (int) round($request->pajak);
+        $biayaPengiriman = (int) round($request->biaya_pengiriman);
         $total = $subtotal + $pajak + $biayaPengiriman;
 
         $paymentMethod = $request->payment_method;
@@ -107,15 +108,13 @@ class MetodeController extends Controller
         try {
             DB::beginTransaction();
 
-            // Simpan transaksi hanya dengan total_harga
             $transaksi = Transaksi::create([
                 'id_transaksi' => $orderId,
                 'id_user' => session('user_id', Auth::id()),
                 'total_harga' => $total,
-                'status_transaksi' => $paymentMethod === 'cod' ? 'pending' : 'pending',
+                'status_transaksi' => 'pending',
             ]);
 
-            // Simpan detail transaksi
             foreach ($checkoutItems as $item) {
                 $checkoutItems = $checkoutItems->filter(fn($item) => $item->menu);
                 if (!$item->menu)
@@ -128,18 +127,17 @@ class MetodeController extends Controller
                 ]);
             }
 
-            // Simpan ke tabel pembayaran
             Pembayaran::create([
                 'id_transaksi' => $orderId,
                 'metode_pembayaran' => $paymentMethod,
             ]);
 
-            // Simpan ke tabel status pengiriman
             StatusPengiriman::create([
                 'id_user' => session('user_id', Auth::id()),
                 'id_transaksi' => $orderId,
                 'status_pembayaran' => $paymentMethod === 'cod' ? 'belum dibayar' : 'dibayar',
                 'status_pengiriman' => 'menunggu',
+                'tanggal_pengiriman' => null,
                 'tanggal_transaksi' => now(),
                 'tanggal_update' => now(),
             ]);
@@ -152,14 +150,8 @@ class MetodeController extends Controller
                     ->whereIn('id_menu', $menuIds)
                     ->delete();
                 session()->forget('checkout_items');
-            }
 
-
-            session(['last_order_id' => $orderId]);
-
-            if ($paymentMethod === 'cod') {
-                $transaksi->status_transaksi = 'pending';
-                $transaksi->save();
+                session(['last_order_id' => $orderId]);
                 return Response::json([
                     'redirect' => route('metode.success')
                 ]);
@@ -172,23 +164,18 @@ class MetodeController extends Controller
             ], 500);
         }
 
-        // Jika COD, langsung redirect ke success
-        if ($paymentMethod === 'cod') {
-            return Response::json([
-                'redirect' => route('metode.success')
-            ]);
-        }
-
-        // Jika non-COD, proses Midtrans
+        // Persiapan untuk pembayaran Midtrans
         $itemDetails = [];
         foreach ($checkoutItems as $item) {
             $itemDetails[] = [
-                'id' => $item->menu->id_menu,
-                'price' => $item->menu->harga,
-                'quantity' => $item->jumlah,
-                'name' => $item->menu->nama,
+                'id' => (string) $item->menu->id_menu,
+                'price' => (int) round($item->menu->harga),
+                'quantity' => (int) $item->jumlah,
+                'name' => (string) $item->menu->nama,
             ];
         }
+
+        // Tambahkan biaya pengiriman dan pajak sebagai item terpisah
         if ($biayaPengiriman > 0) {
             $itemDetails[] = [
                 'id' => 'DELIVERY',
@@ -197,6 +184,7 @@ class MetodeController extends Controller
                 'name' => 'Biaya Pengiriman',
             ];
         }
+
         if ($pajak > 0) {
             $itemDetails[] = [
                 'id' => 'TAX',
@@ -209,31 +197,48 @@ class MetodeController extends Controller
         $params = [
             'transaction_details' => [
                 'order_id' => $orderId,
-                'gross_amount' => (int) $total, // total harga akhir
+                'gross_amount' => $total,
             ],
             'item_details' => $itemDetails,
             'customer_details' => [
                 'email' => session('email'),
-                'name' => session('username'),
-                'phone' => session('phone') ?? 'N/A'
+                'name' => session('name'),
+                'phone' => session('no_hp'),
             ],
         ];
 
-        $snapToken = Snap::getSnapToken($params);
-        $transaksi->snap_token = $snapToken;
-        $transaksi->save();
+        try {
+            Config::$serverKey = config('services.midtrans.server_key');
+            Config::$isProduction = config('services.midtrans.is_production');
+            Config::$isSanitized = true;
+            Config::$is3ds = true;
 
-        return Response::json([
-            'snap_token' => $snapToken,
-            'order_id' => $orderId
-        ]);
+            $snapToken = Snap::getSnapToken($params);
+
+            $transaksi->snap_token = $snapToken;
+            $transaksi->save();
+
+            return Response::json([
+                'snap_token' => $snapToken,
+                'order_id' => $orderId
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Midtrans Error: ' . $e->getMessage(), [
+                'params' => $params,
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return Response::json([
+                'error' => 'Gagal memproses pembayaran: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
 
     public function callback(Request $request)
     {
         try {
-            // Konfigurasi Midtrans
             \Midtrans\Config::$serverKey = config('services.midtrans.server_key');
             \Midtrans\Config::$isProduction = config('services.midtrans.is_production');
             \Midtrans\Config::$isSanitized = true;
@@ -244,12 +249,12 @@ class MetodeController extends Controller
             $transactionStatus = $notif->transaction_status;
             $paymentType = $notif->payment_type;
             $fraudStatus = $notif->fraud_status;
-            $orderId = $notif->order_id;
 
-            // Ambil transaksi dari DB
+            $orderId = $notif->order_id;
             $transaksi = Transaksi::where('id_transaksi', $orderId)->first();
 
             if (!$transaksi) {
+                Log::error('Transaksi tidak ditemukan', ['order_id' => $orderId]);
                 return response()->json(['message' => 'Transaksi tidak ditemukan'], 404);
             }
 
@@ -276,7 +281,7 @@ class MetodeController extends Controller
                 // Update status pengiriman
                 $statusPengiriman = StatusPengiriman::where('id_transaksi', $orderId)->first();
                 if ($statusPengiriman) {
-                    $statusPengiriman->status_pembayaran = 'sudah dibayar';
+                    $statusPengiriman->status_pembayaran = 'dibayar';
                     $statusPengiriman->save();
                 }
             } elseif ($transactionStatus == 'pending') {
@@ -294,13 +299,14 @@ class MetodeController extends Controller
             return response()->json(['message' => 'Notification handled'], 200);
 
         } catch (\Exception $e) {
+            Log::error('Midtrans Callback Error', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
             return response()->json(['message' => 'Internal Server Error'], 500);
         }
     }
 
     public function success(Request $request, StrukService $strukService)
     {
-        $orderId = session('last_order_id');
+        $orderId = $request->input('order_id');
         $transaksi = Transaksi::where('id_transaksi', $orderId)->first();
 
         if (!$transaksi) {

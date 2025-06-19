@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\AdminActivity; // pastikan model sudah ada
+use App\Models\User;
+use App\Models\AdminActivity;
 
 class DashboardController extends Controller
 {
@@ -15,7 +16,7 @@ class DashboardController extends Controller
     }
     public function data()
     {
-        $admin = auth()->user(); // atau Admin::first();
+        $admin = User::find(session('user_id', 'admin')); // atau Admin::first();
         if (!$admin) {
             return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
         }

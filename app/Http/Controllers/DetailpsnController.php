@@ -17,10 +17,9 @@ class DetailpsnController extends Controller
             'pembayaran',
             'status_pengiriman',
             'user',
+            'struk',
         ])
-            // Jika ingin semua status, hapus where('status', 'selesai')
             ->where('id_user', session('user_id', Auth::id()))
-            // ->orderByDesc('created_at')
             ->get();
 
         return view('pages.user.detailpsn', compact('riwayat'));

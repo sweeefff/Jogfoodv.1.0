@@ -44,9 +44,16 @@
 </head>
 
 <body class="bg-amber-50 min-h-screen">
-    <header>
-        @include('components.navbar.admnav')
-    </header>
+    <!-- Include the header based on user role -->
+    @if (session('role') == 'admin')
+        <header>
+            @include('components.navbar.adm-nav')
+        </header>
+    @else (session('role') == 'kurir')
+        <header>
+            @include('components.navbar.kurir-nav')
+        </header>
+    @endif
     <main>
         @yield('content')
     </main>

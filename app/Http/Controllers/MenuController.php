@@ -8,34 +8,31 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class MenuController extends Controller
 {
-    // 📌 Search biasa (form submit)
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $kategori = $request->input('kategori', 'Makanan');
+        $kategori = $request->input('kategori'); // Tidak ada default 'Makanan'
 
         $menu = Menu::query()
             ->when($search, function ($query, $search) {
-                $query->where('nama', 'like', "%{$search}%")
-                      ->orWhere('deskripsi_menu', 'like', "%{$search}%");
+                $query->where('nama', 'like', "%{$search}%");
             })
-            ->where('kategori', $kategori)
+            ->when($kategori, function ($query, $kategori) {
+                $query->where('kategori', $kategori);
+            })
             ->paginate(9);
 
-        return view('pages.search-menu', compact('menu', 'search', 'kategori'));
+        return view('pages.menu', compact('menu', 'search', 'kategori'));
     }
 
     // ⚡ Live search (AJAX)
     public function search(Request $request)
     {
         $q = $request->input('query'); // AJAX pakai "query"
-        $kategori = $request->input('kategori', 'Makanan');
 
         $results = Menu::query()
-            ->where('kategori', $kategori)
-            ->where(function($query) use ($q) {
-                $query->where('nama', 'like', "%{$q}%")
-                      ->orWhere('deskripsi_menu', 'like', "%{$q}%");
+            ->where(function ($query) use ($q) {
+                $query->where('nama', 'like', "%{$q}%");
             })
             ->get();
 
@@ -48,7 +45,7 @@ class MenuController extends Controller
             return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu');
         }
 
-        $menu = \App\Models\Menu::findOrFail($id);
+        $menu = Menu::findOrFail($id);
         $jumlah = $request->input('jumlah', 1);
 
         // Buat objek mirip keranjang untuk 1 item saja

@@ -15,7 +15,7 @@
                 <!-- Header with gradient background -->
                 <div class="bg-amber-gradient py-6 px-8 text-center">
                     <div class="flex justify-center mb-2">
-                        <img class="h-16" src="assets/icon/jogfood.png" alt="Logo Jogfood">
+                        <img class="h-16" src="{{ asset('assets/icon/jogfood.png') }}" alt="Logo Jogfood">
                     </div>
                     <h1 class="text-2xl font-bold text-white">Selamat Datang</h1>
                     <p class="text-amber-100 mt-1">Silakan masuk ke akun Anda</p>
