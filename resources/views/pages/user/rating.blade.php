@@ -1,170 +1,103 @@
-    <style>
-        .star-rating {
-            display: inline-flex;
-            direction: rtl;
-        }
-        .star-rating input {
-            display: none;
-        }
-        .star-rating label {
-            color: #e5e7eb;
-            font-size: 2.5rem;
-            padding: 0 5px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .star-rating input:checked ~ label,
-        .star-rating label:hover,
-        .star-rating label:hover ~ label {
-            color: #f97316;
-            transform: scale(1.1);
-        }
-        .animate-pulse {
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.7;
-            }
-        }
-    </style>
-</head>
-<body>
 @extends('layouts.user')
 
-@section('title', 'Detail')
+@section('title', 'Beri Rating')
 
 @section('content')
-
 <div class="min-h-screen bg-amber-100 flex items-center justify-center p-4">
     <div class="max-w-md w-full bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
-        <!-- Header with decorative orange bar -->
-        <div class="h-2 bg-amber-orange-600"></div>
-        
         <div class="p-6">
-            <!-- Thank you message -->
             <div class="text-center mb-6">
                 <i class="fas fa-heart text-orange-500 text-4xl mb-3 animate-pulse"></i>
                 <h2 class="text-2xl font-bold text-gray-800">Terima Kasih!</h2>
                 <p class="text-gray-600 mt-1">Silakan berikan penilaian untuk produk ini</p>
             </div>
-
-            <!-- Product Info -->
-            <div class="flex items-center space-x-4 p-4 bg-orange-50 rounded-xl">
-                <img src="https://via.placeholder.com/100" class="w-16 h-16 object-cover rounded-lg border-2 border-orange-200" alt="Product Image">
+            <div class="flex items-center space-x-4 p-4 bg-orange-50 rounded-xl mb-6">
+                <img src="{{ asset('assets/img/menu/' . $menu->gambar_menu) }}" class="w-16 h-16 object-cover rounded-lg border-2 border-orange-200" alt="{{ $menu->nama }}">
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-800">Gudeg</h3>
-                    <p class="text-sm text-gray-500">Pedas</p>
-                    <div class="flex items-center mt-1">
-                        <span class="text-yellow-400 text-sm">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                        </span>
-                        <span class="text-gray-500 text-xs ml-1">(4.5)</span>
-                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800">{{ $menu->nama }}</h3>
+                    <p class="text-sm text-gray-500">{{ $menu->kategori }}</p>
                 </div>
             </div>
+            @if(session('success'))
+                <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-3 rounded mb-4">
+                    {{ session('success') }}
+                </div>
+            @endif
 
-            <!-- Rating Section -->
-            <div class="mt-8">
-                <h2 class="text-xl font-bold text-center text-orange-600 mb-6">Bagaimana kualitas produknya?</h2>
-                
-                <!-- Star Rating -->
-                <div class="flex justify-center">
-                    <div class="star-rating">
-                        <input id="star5" type="radio" name="rating" value="5">
-                        <label for="star5" title="Sangat Baik">★</label>
-                        
-                        <input id="star4" type="radio" name="rating" value="4">
-                        <label for="star4" title="Baik">★</label>
-                        
-                        <input id="star3" type="radio" name="rating" value="3">
-                        <label for="star3" title="Cukup">★</label>
-                        
-                        <input id="star2" type="radio" name="rating" value="2">
-                        <label for="star2" title="Kurang">★</label>
-                        
-                        <input id="star1" type="radio" name="rating" value="1">
-                        <label for="star1" title="Buruk">★</label>
+            @if(session('error'))
+                <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-3 rounded mb-4">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            @if($sudahReview)
+                <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-3 rounded mb-4">
+                    Anda sudah memberi rating untuk produk ini pada pesanan ini.
+                </div>
+            @else
+                <form action="{{ route('rating.store', [$menu->id_menu, $id_detail]) }}" method="POST" class="space-y-6">
+                    @csrf
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Rating</label>
+                        <div class="star-rating flex flex-row-reverse justify-center text-3xl">
+                            @for($i = 5; $i >= 1; $i--)
+                                <input type="radio" id="star{{ $i }}" name="rating" value="{{ $i }}" class="hidden" required />
+                                <label for="star{{ $i }}" class="cursor-pointer text-gray-300 hover:text-amber-400">&#9733;</label>
+                            @endfor
+                        </div>
+                        @error('rating')
+                            <div class="text-red-500 text-xs mt-1">{{ $message }}</div>
+                        @enderror
                     </div>
-                </div>
-                
-                <p class="text-center text-gray-500 text-sm mt-3">Pilih 1-5 bintang</p>
-                
-                <!-- Optional comment -->
-                <div class="mt-6">
-                    <label for="comment" class="block text-sm font-medium text-gray-700 mb-1">Komentar (opsional)</label>
-                    <textarea id="comment" rows="2" class="w-full px-3 py-2 text-gray-700 border border-orange-200 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" placeholder="Bagaimana pengalaman Anda dengan produk ini?"></textarea>
-                </div>
-            </div>
-
-            <!-- Buttons -->
-            <div class="mt-8 flex justify-between">
-                <button class="px-6 py-2 text-gray-600 font-medium rounded-lg border border-gray-300 hover:bg-gray-50 transition flex items-center">
-                    <i class="far fa-clock mr-2"></i> Nanti Saja
-                </button>
-                <button id="submitBtn" class="px-6 py-2 bg-amber-600 text-white font-medium rounded-lg hover:from-orange-600 hover:to-orange-700 transition flex items-center disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-                    <i class="fas fa-check mr-2"></i> Kirim Penilaian
-                </button>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Komentar</label>
+                        <textarea name="review" rows="3" class="w-full border border-amber-300 rounded-lg p-2 focus:ring-amber-400 focus:border-amber-400" placeholder="Tulis komentar..."></textarea>
+                        @error('review')
+                            <div class="text-red-500 text-xs mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 rounded-lg shadow transition duration-200">
+                        Kirim Rating
+                    </button>
+                </form>
+            @endif
+            <div class="mt-6 text-center">
+                <a href="{{ route('detail', $menu->id_menu) }}" class="text-amber-600 hover:underline text-sm">Kembali ke Detail Produk</a>
             </div>
         </div>
     </div>
 </div>
 
+{{-- Star rating interaction --}}
 <script>
-    // Star rating interaction
-    const stars = document.querySelectorAll('.star-rating input');
-    const submitBtn = document.getElementById('submitBtn');
-    
-    stars.forEach(star => {
-        star.addEventListener('change', function() {
-            const ratingValue = this.value;
-            console.log(`Selected rating: ${ratingValue}`);
-            
-            // Enable submit button when rating is selected
-            submitBtn.disabled = false;
-            
-            // Add visual feedback
-            const labels = document.querySelectorAll('.star-rating label');
-            labels.forEach(label => label.style.transform = 'scale(1)');
-            this.nextElementSibling.style.transform = 'scale(1.2)';
-        });
-    });
-    
-    // Optional: Add hover effect for stars
     document.querySelectorAll('.star-rating label').forEach(label => {
         label.addEventListener('mouseenter', function() {
-            if (!document.querySelector('.star-rating input:checked')) {
-                this.style.transform = 'scale(1.2)';
-                const nextLabels = getAllNextSiblings(this);
-                nextLabels.forEach(label => label.style.transform = 'scale(1.2)');
-            }
+            let val = this.htmlFor.replace('star', '');
+            highlightStars(val);
         });
-        
         label.addEventListener('mouseleave', function() {
-            if (!document.querySelector('.star-rating input:checked')) {
-                const labels = document.querySelectorAll('.star-rating label');
-                labels.forEach(label => label.style.transform = 'scale(1)');
-            }
+            let checked = document.querySelector('.star-rating input:checked');
+            highlightStars(checked ? checked.value : 0);
+        });
+        label.addEventListener('click', function() {
+            let val = this.htmlFor.replace('star', '');
+            highlightStars(val);
         });
     });
-    
-    function getAllNextSiblings(element) {
-        const siblings = [];
-        let next = element.nextElementSibling;
-        while (next) {
-            siblings.push(next);
-            next = next.nextElementSibling;
-        }
-        return siblings;
+
+    function highlightStars(count) {
+        document.querySelectorAll('.star-rating label').forEach(label => {
+            let val = label.htmlFor.replace('star', '');
+            if(val <= count) {
+                label.classList.add('text-amber-400');
+                label.classList.remove('text-gray-300');
+            } else {
+                label.classList.remove('text-amber-400');
+                label.classList.add('text-gray-300');
+            }
+        });
     }
+    // Initial highlight
+    highlightStars(document.querySelector('.star-rating input:checked') ? document.querySelector('.star-rating input:checked').value : 0);
 </script>
 @endsection
-</body>
-</html>
