@@ -18,10 +18,10 @@ use App\Http\Controllers\RekapController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\StrukController;
 use App\Http\Controllers\TblmenuController;
-use App\Http\Controllers\ChangePassController;
 use App\Http\Middleware\RoleMiddleware;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SocialiteController;
+use App\Http\Controllers\KurirController;
 
 
 // Auth Routes - Tidak perlu middleware
@@ -78,6 +78,7 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
     Route::get('/changepass', [DataController::class, 'showChangePass'])->name('admin.changepass');
     Route::post('/changepass', [DataController::class, 'changePass'])->name('admin.changepass.update');
     Route::get('/rekap', [DataController::class, 'rekap'])->name('admin.rekap');
+    Route::post('/admin/order/tugas-kurir/{id}', [OrderController::class, 'tugaskanKurir'])->name('order.tugas.kurir');
 });
 
 // User Routes - Hanya user yang bisa akses
@@ -106,7 +107,23 @@ Route::middleware([RoleMiddleware::class . ':user'])->prefix('user')->group(func
     Route::get('/detailpsn', [DetailpsnController::class, 'detailpsn'])->name('detailpsn');
 
     Route::get('/riwayat', [RiwayatController::class, 'riwayat'])->name('riwayat');
-    Route::get('/rating', [RatingController::class, 'rating'])->name('rating');
+    Route::get('/user/rating/{id_menu}', [RatingController::class, 'index'])->name('rating.form');
+    Route::post('/user/rating/{id_menu}', [RatingController::class, 'store'])->name('rating.store');
+    Route::post('/beli-sekarang/{id}', [MenuController::class, 'beliSekarang'])->name('menu.beli_sekarang');
+});
 
-    Route::post('/beli-sekarang/{id}', [\App\Http\Controllers\MenuController::class, 'beliSekarang'])->name('menu.beli_sekarang');
+// Kurir Routes - Hanya kurir yang bisa akses
+Route::middleware([RoleMiddleware::class . ':kurir'])->prefix('kurir')->group(function () {
+    Route::get('/dashboard', [KurirController::class, 'kurirDashboard'])->name('kurir.dashboard');
+    Route::get('/order', [KurirController::class, 'kurirOrder'])->name('kurir.order');
+    Route::post('/order/terima/{id}', [KurirController::class, 'terimaOrder'])->name('kurir.order.terima');
+    Route::post('/kurir/order/selesai/{id}', [KurirController::class, 'kurirSelesaikanOrder'])->name('order.kurir.selesai');
+    Route::get('/data', [KurirController::class, 'kurirData'])->name('kurir.data');
+    Route::get('/edit', [KurirController::class, 'kurirEdit'])->name('kurir.edit');
+    Route::get('/update', [KurirController::class, 'kurirUpdate'])->name('kurir.update');
+    Route::put('/update', [KurirController::class, 'kurirUpdate'])->name('kurir.update');
+});
+
+Route::get('/kurir/update/', function () {
+    return view('pages.kurir.update');
 });

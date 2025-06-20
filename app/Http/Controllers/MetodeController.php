@@ -310,7 +310,7 @@ class MetodeController extends Controller
         $transaksi = Transaksi::where('id_transaksi', $orderId)->first();
 
         if (!$transaksi) {
-            return redirect()->route('home')->with('error', 'Transaksi belum berhasil.');
+            return redirect()->route('keranjang.index')->with('error', 'Transaksi belum berhasil.');
         }
 
         // Update status menjadi lunas jika belum lunas
