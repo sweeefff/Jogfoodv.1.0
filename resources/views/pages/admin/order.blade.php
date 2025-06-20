@@ -85,7 +85,7 @@
                                     </div>
                                     <div>
                                         <span class="text-gray-500">Metode Pembayaran:</span>
-                                        <span class="font-medium">{{ $order->pembayaran->metode ?? '-' }}</span>
+                                        <span class="font-medium">{{ $order->pembayaran->metode_pembayaran ?? '-' }}</span>
                                     </div>
                                 </div>
                             </div>

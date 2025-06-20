@@ -62,7 +62,7 @@ Route::get('/kurir', [PengirimanController::class, 'pengiriman'])->name('kurir')
 // Admin Routes - Hanya admin yang bisa akses
 Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
-    Route::get('/order', [OrderController::class, 'order'])->name('admin.order');
+    Route::get('/order', [OrderController::class, 'index'])->name('admin.order');
     Route::get('/data', [DataController::class, 'data'])->name('admin.data');
     Route::get('/pengiriman', [PengirimanController::class, 'pengiriman'])->name('admin.pengiriman');
 

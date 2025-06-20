@@ -29,7 +29,7 @@
                     <td>{{ $order->user->name ?? '-' }}</td>
                     <td>{{ $order->id_transaksi ?? '-' }}</td>
                     <td>Rp {{ number_format($order->total_harga, 0, ',', '.') }}</td>
-                    <td>{{ $order->pembayaran->metode ?? '-' }}</td>
+                    <td>{{ $order->pembayaran->metode_pembayaran ?? '-' }}</td>
                     <td>{{ $order->created_at ? $order->created_at->format('d-m-Y H:i') : '-' }}</td>
                 </tr>
             @endforeach
