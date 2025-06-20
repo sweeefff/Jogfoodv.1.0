@@ -20,18 +20,22 @@
       <!-- Product Info -->
       <div class="flex flex-col">
         <div class="flex justify-between items-start mb-2">
-          <h1 class="text-3xl font-bold text-gray-800">{{ $menu->nama }}</h1>
-          <button class="text-gray-400 hover:text-amber-500 transition-colors">
-            <i class="far fa-heart text-2xl"></i>
-          </button>
+          {{-- ... Bagian Nama Produk dan Bintang ... --}}
+          <div class="mb-6">
+              <h1 class="text-3xl font-bold text-gray-800 mb-2">{{ $menu->nama }}</h1>
+              <div class="flex items-center mb-1">
+                  @for ($i = 1; $i <= 5; $i++)
+                      <svg class="w-6 h-6 {{ $i <= round($avgRating) ? 'text-amber-400' : 'text-gray-300' }}" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.385 2.46a1 1 0 00-.364 1.118l1.287 3.966c.3.921-.755 1.688-1.54 1.118l-3.385-2.46a1 1 0 00-1.176 0l-3.385 2.46c-.784.57-1.838-.197-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118l-3.385-2.46c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69l1.286-3.967z"/>
+                      </svg>
+                  @endfor
+                  <span class="ml-2 text-sm text-gray-600">({{ $ratings->count() }} ulasan)</span>
+              </div>
+          </div>
+
         </div>
 
-        <div class="flex items-center mb-4">
-          <div class="flex rating-star">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-          </div>
-          <span class="ml-2 text-sm text-gray-600">(25 ulasan)</span>
-        </div>
+
 
         <p class="text-2xl font-semibold text-amber-600 mb-4">Rp {{ number_format($menu->harga, 0, ',', '.') }}</p>
 
@@ -80,14 +84,34 @@
 
     <!-- Tabs (Deskripsi, Komposisi, Ulasan) -->
     <div class="border-t border-gray-200">
-      <div class="flex overflow-x-auto">
-        <button class="px-6 py-4 font-medium text-amber-600 tab-active whitespace-nowrap">Ulasan</button>
-      </div>
+
 
       <div class="p-6">
-        <h3 class="text-lg font-semibold mb-3">Ulasan</h3>
         <div class="prose max-w-none text-gray-700">
-          <p></p>
+          {{-- ... Bagian Ulasan ... --}}
+          <div class="mt-8">
+              <h2 class="text-xl font-semibold text-amber-600 mb-4">Ulasan Pengguna</h2>
+              @forelse($ratings as $rating)
+                  <div class="flex items-start mb-6 bg-amber-50 rounded-lg p-4 shadow-sm">
+                      <img src="{{ $rating->user->foto ? asset('assets/img/profile/' . $rating->user->foto) : asset('assets/img/profile/default.png') }}"
+                           class="w-12 h-12 rounded-full object-cover border-2 border-amber-300 mr-4" alt="profile">
+                      <div>
+                          <div class="flex items-center mb-1">
+                              <span class="font-semibold text-gray-800 mr-2">{{ $rating->user->username }}</span>
+                              @for ($i = 1; $i <= 5; $i++)
+                                  <svg class="w-5 h-5 {{ $i <= $rating->rating ? 'text-amber-400' : 'text-gray-300' }}" fill="currentColor" viewBox="0 0 20 20">
+                                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.385 2.46a1 1 0 00-.364 1.118l1.287 3.966c.3.921-.755 1.688-1.54 1.118l-3.385-2.46a1 1 0 00-1.176 0l-3.385 2.46c-.784.57-1.838-.197-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118l-3.385-2.46c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69l1.286-3.967z"/>
+                                  </svg>
+                              @endfor
+                          </div>
+                          <div class="text-gray-700">{{ $rating->komentar }}</div>
+                          <div class="text-xs text-gray-400 mt-1">{{ $rating->created_at->format('d M Y H:i') }}</div>
+                      </div>
+                  </div>
+              @empty
+                  <div class="text-gray-500 italic">Belum ada ulasan untuk produk ini.</div>
+              @endforelse
+          </div>
         </div>
       </div>
     </div>

@@ -21,7 +21,9 @@ use App\Http\Controllers\TblmenuController;
 use App\Http\Middleware\RoleMiddleware;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SocialiteController;
+use App\Http\Controllers\PengirimanController;
 use App\Http\Controllers\KurirController;
+
 
 
 // Auth Routes - Tidak perlu middleware
@@ -52,11 +54,18 @@ Route::get('/detail/{id}', [DetailController::class, 'detail'])->name('detail');
 Route::get('/detailpsn', [DetailpsnController::class, 'detailpsn'])->name('detailpsn');
 Route::get('/komentar', [KomentarController::class, 'komentar'])->name('komentar');
 
+
+//testing kurir
+
+Route::get('/kurir', [PengirimanController::class, 'pengiriman'])->name('kurir');
+
+
 // Admin Routes - Hanya admin yang bisa akses
 Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
-    Route::get('/order', [OrderController::class, 'order'])->name('admin.order');
+    Route::get('/order', [OrderController::class, 'index'])->name('admin.order');
     Route::get('/data', [DataController::class, 'data'])->name('admin.data');
+    Route::get('/pengiriman', [PengirimanController::class, 'pengiriman'])->name('admin.pengiriman');
 
     // CRUD menu
     Route::resource('/tblmenu', TblmenuController::class)->only([
@@ -77,8 +86,9 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
     Route::put('/update', [DataController::class, 'update'])->name('admin.update');
     Route::get('/changepass', [DataController::class, 'showChangePass'])->name('admin.changepass');
     Route::post('/changepass', [DataController::class, 'changePass'])->name('admin.changepass.update');
-    Route::get('/rekap', [DataController::class, 'rekap'])->name('admin.rekap');
-    Route::post('/admin/order/tugas-kurir/{id}', [OrderController::class, 'tugaskanKurir'])->name('order.tugas.kurir');
+    Route::get('/rekap', [RekapController::class, 'rekap'])->name('admin.rekap');
+    Route::post('/admin/order/update-tanggal/{id}', [OrderController::class, 'updateTanggal']);
+    Route::get('/admin/order/export', [OrderController::class, 'export'])->name('admin.order.export');
 });
 
 // User Routes - Hanya user yang bisa akses
@@ -107,10 +117,11 @@ Route::middleware([RoleMiddleware::class . ':user'])->prefix('user')->group(func
     Route::get('/detailpsn', [DetailpsnController::class, 'detailpsn'])->name('detailpsn');
 
     Route::get('/riwayat', [RiwayatController::class, 'riwayat'])->name('riwayat');
-    Route::get('/user/rating/{id_menu}', [RatingController::class, 'index'])->name('rating.form');
-    Route::post('/user/rating/{id_menu}', [RatingController::class, 'store'])->name('rating.store');
-    Route::post('/beli-sekarang/{id}', [MenuController::class, 'beliSekarang'])->name('menu.beli_sekarang');
-});
+
+    //Rating
+    Route::get('/user/rating/{id_menu}/{id_detail}', [RatingController::class, 'index'])->name('rating.form');
+    Route::post('/user/rating/{id_menu}/{id_detail}', [RatingController::class, 'store'])->name('rating.store');
+
 
 // Kurir Routes - Hanya kurir yang bisa akses
 Route::middleware([RoleMiddleware::class . ':kurir'])->prefix('kurir')->group(function () {
