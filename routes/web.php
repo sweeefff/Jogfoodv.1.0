@@ -22,6 +22,7 @@ use App\Http\Controllers\ChangePassController;
 use App\Http\Middleware\RoleMiddleware;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SocialiteController;
+use App\Http\Controllers\PengirimanController;
 
 
 // Auth Routes - Tidak perlu middleware
@@ -52,11 +53,18 @@ Route::get('/detail/{id}', [DetailController::class, 'detail'])->name('detail');
 Route::get('/detailpsn', [DetailpsnController::class, 'detailpsn'])->name('detailpsn');
 Route::get('/komentar', [KomentarController::class, 'komentar'])->name('komentar');
 
+
+//testing kurir
+
+Route::get('/kurir', [PengirimanController::class, 'pengiriman'])->name('kurir');
+
+
 // Admin Routes - Hanya admin yang bisa akses
 Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/order', [OrderController::class, 'order'])->name('admin.order');
     Route::get('/data', [DataController::class, 'data'])->name('admin.data');
+    Route::get('/pengiriman', [PengirimanController::class, 'pengiriman'])->name('admin.pengiriman');
 
     // CRUD menu
     Route::resource('/tblmenu', TblmenuController::class)->only([
@@ -75,7 +83,11 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
     Route::get('/tblmenu/search', [TblmenuController::class, 'search'])->name('tblmenu.search');
     Route::get('/edit', [DataController::class, 'edit'])->name('admin.edit');
     Route::put('/update', [DataController::class, 'update'])->name('admin.update');
+    Route::get('/changepass', [DataController::class, 'showChangePass'])->name('admin.changepass');
+    Route::post('/changepass', [DataController::class, 'changePass'])->name('admin.changepass.update');
     Route::get('/rekap', [RekapController::class, 'rekap'])->name('admin.rekap');
+    Route::post('/admin/order/update-tanggal/{id}', [OrderController::class, 'updateTanggal']);
+    Route::get('/admin/order/export', [OrderController::class, 'export'])->name('admin.order.export');
 });
 
 // User Routes - Hanya user yang bisa akses
