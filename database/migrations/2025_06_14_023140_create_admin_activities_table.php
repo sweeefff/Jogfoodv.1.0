@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('admin_activities', function (Blueprint $table) {
             $table->id();
             $table->string('admin_name');
-            $table->string('activity'); // login/logout
-            $table->string('ip_address')->nullable();
+            $table->string('activity'); // Menambahkan, Menghapus, Mengedit Kuliner
             $table->timestamps();
         });
     }

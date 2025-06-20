@@ -24,7 +24,13 @@
             </div>
             <div class="flex flex-wrap gap-2">
                 @if ($transaksi->status_pengiriman && $transaksi->status_pengiriman->status_pengiriman == 'selesai')
-                    <a href="rating"><button class="bg-orange-500 text-white px-6 py-2 rounded">Nilai</button></a>
+                    <a href="{{ route('rating.form', [$detail->menu->id_menu, $detail->id_detail]) }}"
+                    class="inline-flex items-center px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold rounded-lg shadow transition duration-200 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2">
+                    <svg class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 15l-5.878 3.09 1.122-6.545L.488 6.91l6.561-.955L10 0l2.951 5.955 6.561.955-4.756 4.635 1.122 6.545z"/>
+                    </svg>
+                        Nilai
+                    </a>
                 @endif
                 <a href="{{ route('detail', $id_menu) }}"><button
                         class="bg-orange-500 text-white px-6 py-2 rounded">Lihat Detail Menu</button></a>

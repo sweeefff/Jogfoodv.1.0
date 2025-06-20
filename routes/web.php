@@ -116,7 +116,11 @@ Route::middleware([RoleMiddleware::class . ':user'])->prefix('user')->group(func
     Route::get('/detailpsn', [DetailpsnController::class, 'detailpsn'])->name('detailpsn');
 
     Route::get('/riwayat', [RiwayatController::class, 'riwayat'])->name('riwayat');
-    Route::get('/rating', [RatingController::class, 'rating'])->name('rating');
+
+    //Rating
+    Route::get('/user/rating/{id_menu}/{id_detail}', [RatingController::class, 'index'])->name('rating.form');
+    Route::post('/user/rating/{id_menu}/{id_detail}', [RatingController::class, 'store'])->name('rating.store');
+
 
     Route::post('/beli-sekarang/{id}', [\App\Http\Controllers\MenuController::class, 'beliSekarang'])->name('menu.beli_sekarang');
 });
