@@ -75,9 +75,7 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
     Route::get('/tblmenu/search', [TblmenuController::class, 'search'])->name('tblmenu.search');
     Route::get('/edit', [DataController::class, 'edit'])->name('admin.edit');
     Route::put('/update', [DataController::class, 'update'])->name('admin.update');
-    Route::get('/changepass', [DataController::class, 'showChangePass'])->name('admin.changepass');
-    Route::post('/changepass', [DataController::class, 'changePass'])->name('admin.changepass.update');
-    Route::get('/rekap', [DataController::class, 'rekap'])->name('admin.rekap');
+    Route::get('/rekap', [RekapController::class, 'rekap'])->name('admin.rekap');
 });
 
 // User Routes - Hanya user yang bisa akses

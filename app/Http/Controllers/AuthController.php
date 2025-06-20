@@ -19,7 +19,7 @@ class AuthController extends Controller
         // Jika user sudah login, redirect sesuai role
         if (session('user_id')) {
             $user = User::find(session('user_id'));
-            if ($user->user_role === 'admin') {
+            if ($user->role === 'admin') {
                 return redirect('/admin/dashboard');
             } else {
                 return redirect('/user/dashboard');

@@ -6,19 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class AdminActivity extends Model
 {
-    protected $fillable = ['admin_name', 'activity', 'ip_address'];
+    protected $fillable = ['id_user', 'activity', 'keterangan']; // Tambah keterangan
+    public $timestamps = true;
+
+    public function admin()
+    {
+        return $this->belongsTo(User::class, 'id_user');
+    }
 }
-
-// Saat login sukses
-use Illuminate\Support\Facades\Auth;
-
-AdminActivity::create([
-    'admin_name' => Auth::user()->nama ?? '-',
-    'activity' => 'login',
-    'ip_address' => request()->ip(),
-]);
-AdminActivity::create([
-    'admin_name' => Auth::user()->nama ?? '-',
-    'activity' => 'logout',
-    'ip_address' => request()->ip(),
-]);
