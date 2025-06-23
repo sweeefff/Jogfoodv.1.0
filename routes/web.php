@@ -138,3 +138,5 @@ Route::middleware([RoleMiddleware::class . ':kurir'])->prefix('kurir')->group(fu
 Route::get('/kurir/update/', function () {
     return view('pages.kurir.update');
 });
+
+});
