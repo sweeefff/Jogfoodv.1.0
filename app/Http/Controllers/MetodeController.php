@@ -21,6 +21,14 @@ use Illuminate\Support\Facades\Log;
 
 class MetodeController extends Controller
 {
+    public function __construct()
+    {
+        Config::$serverKey = config('services.midtrans.server_key');
+        Config::$isProduction = config('services.midtrans.is_production');
+        Config::$isSanitized = true;
+        Config::$is3ds = true;
+    }
+
     public function bayar(Request $request)
     {
         try {
@@ -208,11 +216,6 @@ class MetodeController extends Controller
         ];
 
         try {
-            Config::$serverKey = config('services.midtrans.server_key');
-            Config::$isProduction = config('services.midtrans.is_production');
-            Config::$isSanitized = true;
-            Config::$is3ds = true;
-
             $snapToken = Snap::getSnapToken($params);
 
             $transaksi->snap_token = $snapToken;
@@ -239,11 +242,6 @@ class MetodeController extends Controller
     public function callback(Request $request)
     {
         try {
-            \Midtrans\Config::$serverKey = config('services.midtrans.server_key');
-            \Midtrans\Config::$isProduction = config('services.midtrans.is_production');
-            \Midtrans\Config::$isSanitized = true;
-            \Midtrans\Config::$is3ds = true;
-
             $notif = new \Midtrans\Notification();
 
             $transactionStatus = $notif->transaction_status;

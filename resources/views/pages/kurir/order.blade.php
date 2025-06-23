@@ -100,6 +100,18 @@
             text-transform: uppercase;
         }
 
+        .detail-button {
+            background-color: #3b82f6;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
         .tabs {
             display: flex;
             background: white;
@@ -129,182 +141,148 @@
         .tab-content.active {
             display: block;
         }
+
+        .item-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
     </style>
 
     <div class="main-content min-h-screen lg:px-16 md:px-6 px-4 py-6 mt-10">
         <div class="bg-gray-50 min-h-screen">
+            <!-- Header -->
+            <div class="mb-6">
+                <h1 class="text-2xl font-bold text-gray-800">Antaran</h1>
+                <p class="text-gray-600">Kelola pesanan yang sedang dikirim</p>
+            </div>
+
             <!-- On Going Tab Content -->
-            @foreach($transaksi = Transaksi::with(['user', 'detail_transaksi.menu', 'pembayaran'])->where('status_pengiriman', 'dikirim') as $transaksi)
-                <div class="order-card">
-                    <div class="order-date">
-                        DELIVERY | {{ \Carbon\Carbon::parse($transaksi->tanggal_transaksi)->format('M d, H:i') }}
-                    </div>
-
-                    <div class="order-header">
-                        <div class="order-id">{{ $transaksi->id_transaksi }}</div>
-                    </div>
-
-                    <div class="customer-name">{{ $transaksi->user->name ?? '-' }}</div>
-                    <div class="customer-address">{{ $transaksi->user->alamat ?? '-' }}</div>
-
-                    <div class="flex justify-between items-center mt-3">
-                        <div>
-                            @if($transaksi->pembayaran->metode_pembayaran == 'cod')
-                                <button class="cod-button" onclick="toggleUpdate('{{ $transaksi->id_transaksi }}')">COD</button>
-                            @endif
-                            <button class="process-button ml-2" onclick="toggleDetail('{{ $transaksi->id_transaksi }}')">ON
-                                PROCESS</button>
+            <div id="ongoing" class="tab-content active">
+                @forelse($transaksi->where('status_pengiriman.status_pengiriman', 'dikirim') as $item)
+                    <div class="order-card">
+                        <div class="order-date">
+                            DELIVERY | {{ \Carbon\Carbon::parse($item->created_at)->format('M d, H:i') }}
                         </div>
-                        <div>
-                            <span class="font-semibold">{{ $transaksi->total_harga_formatted }}</span>
-                        </div>
-                    </div>
 
-                    <!-- Detail Section (Hidden by default) -->
-                    <div id="detail-{{ $transaksi->id_transaksi }}" class="hidden mt-4 pt-4 border-t border-gray-200">
-                        <div class="space-y-2">
-                            <div><strong>Order ID:</strong> #{{ $transaksi->id_transaksi }}</div>
-                            <div><strong>Tanggal:</strong>
-                                {{ \Carbon\Carbon::parse($transaksi->tanggal_transaksi)->format('d M Y, H:i') }}</div>
-                            <div><strong>Metode Pembayaran:</strong> {{ $transaksi->pembayaran->metode_pembayaran ?? '-' }}
+                        <div class="order-header">
+                            <div class="order-id">#{{ substr($item->id_transaksi, -8) }}</div>
+                            <div class="status-badge status-process">Sedang Dikirim</div>
+                        </div>
+
+                        <div class="customer-name">{{ $item->user->name ?? '-' }}</div>
+                        <div class="customer-address">{{ $item->user->alamat ?? 'Alamat tidak tersedia' }}</div>
+
+                        <div class="flex justify-between items-center mt-3">
+                            <div class="flex gap-2">
+                                @if($item->pembayaran && $item->pembayaran->metode_pembayaran == 'cod')
+                                    <button class="cod-button">COD</button>
+                                @endif
+                                <button class="detail-button" onclick="toggleDetail('{{ $item->id_transaksi }}')">
+                                    LIHAT DETAIL
+                                </button>
+                                <a href="{{ route('kurir.showUpdate', $item->id_transaksi) }}">
+                                    <button class="process-button">
+                                        UPDATE STATUS
+                                    </button>
+                                </a>
                             </div>
+                            <div>
+                                <span class="font-semibold">Rp {{ number_format($item->total_harga, 0, ',', '.') }}</span>
+                            </div>
+                        </div>
 
-                            <div><strong>Item yang Dipesan:</strong></div>
-                            <ul class="ml-4 space-y-1">
-                                @foreach($transaksi->detail_transaksi as $detail)
-                                    <li class="flex justify-between">
-                                        <span>{{ $detail->menu->nama ?? '-' }} x{{ $detail->jumlah }}</span>
-                                        <span>{{ $detail->subtotal_formatted }}</span>
-                                    </li>
-                                @endforeach
-                            </ul>
+                        <!-- Detail Section (Hidden by default) -->
+                        <div id="detail-{{ $item->id_transaksi }}" class="hidden mt-4 pt-4 border-t border-gray-200">
+                            <div class="space-y-3">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div><strong>Order ID:</strong> {{ $item->id_transaksi }}</div>
+                                    <div><strong>Tanggal:</strong>
+                                        {{ \Carbon\Carbon::parse($item->created_at)->format('d M Y, H:i') }}</div>
+                                </div>
 
-                            <div class="pt-2 border-t">
-                                <div class="flex justify-between font-semibold">
-                                    <span>Total:</span>
-                                    <span>{{ $transaksi->total_harga_formatted }}</span>
+                                <div><strong>Metode Pembayaran:</strong>
+                                    {{ $item->pembayaran->metode_pembayaran ?? 'Tidak tersedia' }}
+                                </div>
+
+                                <div><strong>Alamat Pengiriman:</strong> {{ $item->user->alamat ?? 'Tidak tersedia' }}</div>
+
+                                <div><strong>Item yang Dipesan:</strong></div>
+                                <div class="item-list bg-gray-50 p-3 rounded">
+                                    @forelse($item->detail_transaksi as $detail)
+                                        <div
+                                            class="flex justify-between items-center py-2 border-b border-gray-200 last:border-b-0">
+                                            <div class="flex-1">
+                                                <div class="font-medium">{{ $detail->menu->nama ?? 'Menu tidak tersedia' }}</div>
+                                                <div class="text-sm text-gray-500">
+                                                    Qty: {{ $detail->jumlah }} × Rp
+                                                    {{ number_format($detail->harga_satuan, 0, ',', '.') }}
+                                                </div>
+                                            </div>
+                                            <div class="font-semibold">
+                                                Rp {{ number_format($detail->subtotal, 0, ',', '.') }}
+                                            </div>
+                                        </div>
+                                    @empty
+                                        <div class="text-gray-500 text-center py-2">Tidak ada item</div>
+                                    @endforelse
+                                </div>
+
+                                <div class="pt-2 border-t border-gray-300">
+                                    <div class="flex justify-between font-semibold text-lg">
+                                        <span>Total:</span>
+                                        <span>Rp {{ number_format($item->total_harga, 0, ',', '.') }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Update Status Section (Hidden by default) -->
-                    <div id="update-{{ $transaksi->id_transaksi }}" class="hidden mt-4 pt-4 border-t border-gray-200">
-                        <form action="{{ route('kurir.updateStatus', $transaksi->id_transaksi) }}" method="POST"
-                            class="space-y-3">
-                            @csrf
-                            @method('PUT')
+                        <!-- Update Status Section (Hidden by default) -->
+                        <div id="update-{{ $item->id_transaksi }}" class="hidden mt-4 pt-4 border-t border-gray-200">
+                            <form action="{{ route('kurir.updateStatus', $item->id_transaksi) }}" method="POST"
+                                class="space-y-3">
+                                @csrf
+                                @method('PUT')
 
-                            <div>
-                                <label class="block text-sm font-semibold mb-1">Status Pengiriman</label>
-                                <select name="status_pengiriman" class="w-full border rounded px-3 py-2" required>
-                                    <option value="">Pilih Status</option>
-                                    <option value="success" {{ $transaksi->status_pengiriman == 'success' ? 'selected' : '' }}>
-                                        Sukses</option>
-                                    <option value="gagal" {{ $transaksi->status_pengiriman == 'gagal' ? 'selected' : '' }}>Gagal
-                                    </option>
-                                </select>
-                            </div>
+                                <div>
+                                    <label class="block text-sm font-semibold mb-1">Status Pengiriman</label>
+                                    <select name="status_pengiriman" class="w-full border rounded px-3 py-2" required>
+                                        <option value="">Pilih Status</option>
+                                        <option value="selesai">Berhasil Dikirim</option>
+                                        <option value="antar-ulang">Perlu Antar Ulang</option>
+                                    </select>
+                                </div>
 
-                            <div>
-                                <label class="block text-sm font-semibold mb-1">Alasan (jika gagal)</label>
-                                <input type="text" name="reason" class="w-full border rounded px-3 py-2"
-                                    value="{{ $transaksi->reason ?? '' }}" placeholder="Contoh: Penerima tidak di rumah">
-                            </div>
+                                <div>
+                                    <label class="block text-sm font-semibold mb-1">Nama Penerima</label>
+                                    <input type="text" name="nama_penerima" class="w-full border rounded px-3 py-2"
+                                        placeholder="Nama yang menerima pesanan" required>
+                                </div>
 
-                            <div>
-                                <label class="block text-sm font-semibold mb-1">Nama Penerima</label>
-                                <input type="text" name="receiver_real_name" class="w-full border rounded px-3 py-2"
-                                    value="{{ $transaksi->receiver_real_name ?? '' }}" placeholder="Nama penerima">
-                            </div>
+                                <div>
+                                    <label class="block text-sm font-semibold mb-1">Alasan (jika perlu antar ulang)</label>
+                                    <textarea name="alasan" class="w-full border rounded px-3 py-2 h-20"
+                                        placeholder="Contoh: Penerima tidak di rumah, alamat tidak ditemukan, dll."></textarea>
+                                </div>
 
-                            <button type="submit" class="w-full bg-amber-600 text-white py-2 rounded hover:bg-amber-700">
-                                Simpan
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            @endforeach
-
-            @if($transaksi->where('status_pengiriman', '!=', 'success')->count() == 0)
-                <div class="text-center py-8 text-gray-400">
-                    Tidak ada order yang sedang berlangsung.
-                </div>
-            @endif
-        </div>
-
-        <!-- Done Tab Content -->
-        <div id="done" class="tab-content">
-            @foreach($transaksi->where('status_pengiriman', 'success') as $transaksi)
-                <div class="order-card">
-                    <div class="order-date">
-                        DELIVERY | {{ \Carbon\Carbon::parse($transaksi->tanggal_transaksi)->format('M d, H:i') }}
-                    </div>
-
-                    <div class="order-header">
-                        <div class="order-id">{{ $transaksi->id_transaksi }}</div>
-                        <div class="text-green-500 text-xl">✓</div>
-                    </div>
-
-                    <div class="customer-name">{{ $transaksi->user->name ?? '-' }}</div>
-                    <div class="customer-address">{{ $transaksi->user->alamat ?? '-' }}</div>
-
-                    <div class="flex justify-between items-center mt-3">
-                        <div>
-                            <span class="status-badge status-success">Pengiriman Berhasil</span>
-                        </div>
-                        <div>
-                            <span class="font-semibold">{{ $transaksi->total_harga_formatted }}</span>
+                                <button type="submit"
+                                    class="w-full bg-amber-600 text-white py-2 rounded hover:bg-amber-700 transition-colors">
+                                    Update Status
+                                </button>
+                            </form>
                         </div>
                     </div>
-
-                    @if($transaksi->receiver_real_name)
-                        <div class="mt-2 text-sm text-gray-600">
-                            <strong>Diterima oleh:</strong> {{ $transaksi->receiver_real_name }}
-                        </div>
-                    @endif
-                </div>
-            @endforeach
-
-            @if($transaksi->where('status_pengiriman', 'success')->count() == 0)
-                <div class="text-center py-8 text-gray-400">
-                    Belum ada order yang selesai.
-                </div>
-            @endif
-        </div>
-
-        <!-- Pagination -->
-        <div class="px-4 py-4 bg-white rounded-lg mt-4">
-            <div class="text-sm text-gray-500 text-center mb-2">
-                Menampilkan {{ $transaksi->firstItem() }} sampai {{ $transaksi->lastItem() }}
-                dari {{ $transaksi->total() }} order
-            </div>
-            <div class="flex justify-center">
-                {{ $transaksi->links() }}
+                @empty
+                    <div class="text-center py-12 text-gray-400">
+                        <div class="text-6xl mb-4">📦</div>
+                        <div class="text-xl font-semibold mb-2">Tidak ada pesanan</div>
+                        <div>Belum ada pesanan yang perlu dikirim saat ini.</div>
+                    </div>
+                @endforelse
             </div>
         </div>
-    </div>
     </div>
 
     <script>
-        function showTab(tabName) {
-            // Hide all tab contents
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-
-            // Remove active class from all tabs
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-
-            // Show selected tab content
-            document.getElementById(tabName).classList.add('active');
-
-            // Add active class to clicked tab
-            event.target.classList.add('active');
-        }
-
         function toggleDetail(id) {
             const row = document.getElementById('detail-' + id);
             if (row) {
