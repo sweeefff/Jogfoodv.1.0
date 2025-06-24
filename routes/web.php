@@ -23,7 +23,8 @@ use App\Http\Middleware\RoleMiddleware;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\PengirimanController;
-
+use App\Http\Controllers\KurirController;
+use App\Http\Controllers\UserController;
 
 // Auth Routes - Tidak perlu middleware
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -53,18 +54,41 @@ Route::get('/detail/{id}', [DetailController::class, 'detail'])->name('detail');
 Route::get('/detailpsn', [DetailpsnController::class, 'detailpsn'])->name('detailpsn');
 Route::get('/komentar', [KomentarController::class, 'komentar'])->name('komentar');
 
-
-//testing kurir
-
-Route::get('/kurir', [PengirimanController::class, 'pengiriman'])->name('kurir');
-
-
 // Admin Routes - Hanya admin yang bisa akses
 Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/order', [OrderController::class, 'order'])->name('admin.order');
     Route::get('/data', [DataController::class, 'data'])->name('admin.data');
     Route::get('/pengiriman', [PengirimanController::class, 'pengiriman'])->name('admin.pengiriman');
+    Route::get('/user', [UserController::class, 'index'])->name('admin.user');
+    Route::get('/kurir', [KurirController::class, 'kurir'])->name('admin.kurir');
+
+    // Resource route untuk AJAX/form
+    Route::resource('/kurir-resource', KurirController::class)->parameters(['kurir-resource' => 'id'])->names([
+        'index' => 'kurir.index',
+        'store' => 'kurir.store',
+        'show' => 'kurir.show',
+        'update' => 'kurir.update',
+        'destroy' => 'kurir.destroy',
+    ])->except(['create', 'edit']);
+
+    //  Untuk Data User dibagian admin 
+    Route::resource('/users-resource', UserController::class)->parameters(['users-resource' => 'id'])->names([
+        'index' => 'users.index',
+        'create' => 'users.create',
+        'store' => 'users.store',
+        'show' => 'users.show',
+        'edit' => 'users.edit',
+        'update' => 'users.update',
+        'destroy' => 'users.destroy'
+    ]);
+    
+    // Route tambahan untuk UserController
+    Route::get('users/role/{role}', [UserController::class, 'getUsersByRole'])->name('admin.users.role');
+    Route::post('users/{id}/toggle-status', [UserController::class, 'toggleStatus'])->name('admin.users.toggle-status');
+    Route::get('users/search', [UserController::class, 'search'])->name('admin.users.search');
+    Route::get('users/statistics', [UserController::class, 'getStatistics'])->name('admin.users.statistics');
+    Route::post('users/bulk-delete', [UserController::class, 'bulkDelete'])->name('admin.users.bulk-delete');
 
     // CRUD menu
     Route::resource('/tblmenu', TblmenuController::class)->only([
@@ -73,11 +97,11 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
         'update',
         'destroy'
     ])->names([
-                'index' => 'pages.admin.tblmenu',
-                'store' => 'tblmenu.store',
-                'update' => 'tblmenu.update',
-                'destroy' => 'tblmenu.destroy'
-            ]);
+        'index' => 'pages.admin.tblmenu',
+        'store' => 'tblmenu.store',
+        'update' => 'tblmenu.update',
+        'destroy' => 'tblmenu.destroy'
+    ]);
 
     // Route Live Search untuk halaman admin
     Route::get('/tblmenu/search', [TblmenuController::class, 'search'])->name('tblmenu.search');
@@ -86,8 +110,8 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
     Route::get('/changepass', [DataController::class, 'showChangePass'])->name('admin.changepass');
     Route::post('/changepass', [DataController::class, 'changePass'])->name('admin.changepass.update');
     Route::get('/rekap', [RekapController::class, 'rekap'])->name('admin.rekap');
-    Route::post('/admin/order/update-tanggal/{id}', [OrderController::class, 'updateTanggal']);
-    Route::get('/admin/order/export', [OrderController::class, 'export'])->name('admin.order.export');
+    Route::post('/order/update-tanggal/{id}', [OrderController::class, 'updateTanggal'])->name('admin.order.update-tanggal');
+    Route::get('/order/export', [OrderController::class, 'export'])->name('admin.order.export');
 });
 
 // User Routes - Hanya user yang bisa akses
