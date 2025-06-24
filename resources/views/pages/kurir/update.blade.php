@@ -106,7 +106,7 @@
             <div id="inputMode">
                 <div class="mb-4">
                     <div class="text-gray-600 mb-2">Upload Photo</div>
-                    <input type="file" id="photo1Input" accept="image/*" class="w-full border rounded px-2 py-1">
+                    <input type="file" id="photo1Input" accept="image/*" capture="environment" class="w-full border rounded px-2 py-1">
                 </div>
             </div>
             <div class="mt-12 px-8 py-6 w-full sm:w-auto">
@@ -147,6 +147,16 @@
 </div>
 
 <script>
+    // Function to display a SweetAlert
+    function showAlert(type, title, text) {
+        Swal.fire({
+            icon: type,
+            title: title,
+            text: text,
+            confirmButtonColor: '#f59e0b'
+        });
+    }
+
     function handlePaymentMethodChange() {
         const codSection = document.getElementById('codSection');
         const cashSection = document.getElementById('cashSection');
@@ -155,9 +165,11 @@
         if (paymentMethod === 'cod') {
             codSection.classList.remove('hidden');
             cashSection.classList.remove('hidden');
+            showAlert('info', 'COD Selected', 'Cash on Delivery option is selected.');
         } else {
             codSection.classList.add('hidden');
             cashSection.classList.add('hidden');
+            showAlert('info', 'Other Payment', 'Non-COD payment method selected.');
         }
     }
 
@@ -169,9 +181,11 @@
         if (status === 'success') {
             reasonSection.classList.add('hidden');
             nameSection.classList.remove('hidden');
+            showAlert('success', 'Status Updated', 'Delivery marked as successful.');
         } else if (status === 'gagal' || status === 'antar-ulang') {
             reasonSection.classList.remove('hidden');
             nameSection.classList.add('hidden');
+            showAlert('warning', 'Status Updated', 'Delivery requires attention: ' + status);
         } else {
             reasonSection.classList.add('hidden');
             nameSection.classList.add('hidden');
