@@ -54,6 +54,9 @@ Route::get('/detail/{id}', [DetailController::class, 'detail'])->name('detail');
 Route::get('/detailpsn', [DetailpsnController::class, 'detailpsn'])->name('detailpsn');
 Route::get('/komentar', [KomentarController::class, 'komentar'])->name('komentar');
 
+Route::post('/menu/beli-sekarang/{id}', [MenuController::class, 'beliSekarang'])->name('menu.beli_sekarang');
+
+
 // Admin Routes - Hanya admin yang bisa akses
 Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
@@ -136,4 +139,22 @@ Route::middleware([RoleMiddleware::class . ':user'])->prefix('user')->group(func
     Route::get('/rating', [RatingController::class, 'rating'])->name('rating');
 
     Route::post('/beli-sekarang/{id}', [\App\Http\Controllers\MenuController::class, 'beliSekarang'])->name('menu.beli_sekarang');
+
+    // Rating
+    Route::get('/user/rating/{id_menu}/{id_detail}', [RatingController::class, 'index'])->name('rating.form');
+    Route::post('/user/rating/{id_menu}/{id_detail}', [RatingController::class, 'store'])->name('rating.store');
+});
+
+// Kurir Routes - Hanya kurir yang bisa akses
+Route::middleware([RoleMiddleware::class . ':kurir'])->prefix('kurir')->group(function () {
+    Route::get('/dashboard', [KurirController::class, 'kurirDashboard'])->name('kurir.dashboard');
+    Route::get('/order', [KurirController::class, 'kurirOrder'])->name('kurir.order');
+    Route::get('/kurir/order/{id}/update', [KurirController::class, 'kurirShowUpdate'])->name('kurir.showUpdate');
+    Route::put('/order/{id}/update-status', [KurirController::class, 'kurirUpdateStatus'])->name('kurir.updateStatus');
+    Route::put('/order/{id}/selesai', [KurirController::class, 'kurirSelesaikanOrder'])->name('kurir.selesaikan');
+
+
+    Route::get('/data', [KurirController::class, 'kurirData'])->name('kurir.data');
+    Route::get('/edit', [KurirController::class, 'kurirEdit'])->name('kurir.edit');
+    Route::put('/update', [KurirController::class, 'kurirUpdate'])->name('kurir.update');
 });

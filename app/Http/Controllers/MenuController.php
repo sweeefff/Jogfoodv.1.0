@@ -11,15 +11,21 @@ class MenuController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $kategori = $request->input('kategori'); // Tidak ada default 'Makanan'
+        $kategori = $request->input('kategori');
 
-        $menu = Menu::query()
+        $menu = \App\Models\Menu::withCount([
+                'ratings as avg_rating' => function($q) {
+                    $q->select(\DB::raw('coalesce(avg(rating),0)'));
+                },
+                'ratings as total_ulasan'
+            ])
             ->when($search, function ($query, $search) {
                 $query->where('nama', 'like', "%{$search}%");
             })
             ->when($kategori, function ($query, $kategori) {
                 $query->where('kategori', $kategori);
             })
+            ->orderByDesc('avg_rating') // Tambahkan baris ini
             ->paginate(9);
 
         return view('pages.menu', compact('menu', 'search', 'kategori'));

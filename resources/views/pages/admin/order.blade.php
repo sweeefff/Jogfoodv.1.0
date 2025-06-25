@@ -102,7 +102,7 @@
                                     <div><span class="font-semibold">Customer:</span> {{ $order->user->name ?? '-' }}</div>
                                     <div><span class="font-semibold">Alamat:</span> {{ $order->user->alamat ?? '-' }}</div>
                                     <div><span class="font-semibold">Kurir:</span> {{ $order->status_pengiriman->nama_kurir ?? 'Belum Ditugaskan' }}</div>
-                                    <div><span class="font-semibold">Status:</span> {{ $order->status_pengiriman->status ?? 'Belum Ditugaskan' }}</div>
+                                    <div><span class="font-semibold">Status:</span> {{ $order->status_pengiriman->status ?? 'Menunggu' }}</div>
                                 </div>
                                 @if(empty($order->status_pengiriman) || $order->status_pengiriman->status == 'Belum Ditugaskan')
                                     <form action="{{ route('admin.pengiriman.tugaskan', $order->id_transaksi) }}" method="POST" class="mt-4">

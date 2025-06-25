@@ -37,5 +37,8 @@ class Menu extends Model
     {
         return $this->hasMany(Menu::class, 'id_menu');
     }
-
+    public function ratings()
+    {
+        return $this->hasMany(\App\Models\Ratings::class, 'id_menu', 'id_menu');
+    }
 }
