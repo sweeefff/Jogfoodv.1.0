@@ -62,25 +62,18 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
     Route::get('/pengiriman', [PengirimanController::class, 'pengiriman'])->name('admin.pengiriman');
     Route::get('/user', [UserController::class, 'index'])->name('admin.user');
     Route::get('/kurir', [KurirController::class, 'kurir'])->name('admin.kurir');
-
-    // Resource route untuk AJAX/form
-    Route::resource('/kurir-resource', KurirController::class)->parameters(['kurir-resource' => 'id'])->names([
-        'index' => 'kurir.index',
-        'store' => 'kurir.store',
-        'show' => 'kurir.show',
-        'update' => 'kurir.update',
-        'destroy' => 'kurir.destroy',
-    ])->except(['create', 'edit']);
+    // ✅ Route ini untuk menampilkan halaman daftar kurir
+    Route::get('/kurir', [KurirController::class, 'index'])->name('admin.kurir');
+    // ✅ Route ini untuk menyimpan data kurir (dipakai oleh form tambah kurir)
+    Route::post('/kurir', [KurirController::class, 'store'])->name('kurir.store');
+    // ✅ Route ini untuk menghapus kurir (dipakai oleh modal hapus)
+    Route::delete('/kurir/{id}', [KurirController::class, 'destroy'])->name('kurir.destroy');
 
     //  Untuk Data User dibagian admin 
     Route::resource('/users-resource', UserController::class)->parameters(['users-resource' => 'id'])->names([
         'index' => 'users.index',
-        'create' => 'users.create',
         'store' => 'users.store',
         'show' => 'users.show',
-        'edit' => 'users.edit',
-        'update' => 'users.update',
-        'destroy' => 'users.destroy'
     ]);
     
     // Route tambahan untuk UserController
