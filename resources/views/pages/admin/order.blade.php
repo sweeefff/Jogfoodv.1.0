@@ -2,7 +2,7 @@
 @section('title', 'Order - Jogfood')
 @section('content')
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<div class="min-h-screen flex items-center justify-center bg-amber-50 py-10">
+<div class="min-h-screen flex items-center justify-center bg-amber-50 py-10 mt-20">
     <div class="w-full max-w-6xl bg-white p-8 rounded-xl shadow-lg">
         <h2 class="text-2xl font-semibold mb-6 text-amber-700">DAFTAR ORDER TERBARU</h2>
         <form method="GET" action="{{ route('admin.order') }}" class="mb-6 flex flex-col md:flex-row md:items-center gap-3">
