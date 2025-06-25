@@ -42,12 +42,24 @@
             </div>
 
             <div class="p-6">
-                <div class="bg-amber-100 px-4 py-2 rounded-lg overflow-hidden">
-                    <div class="flex items-center justify-between">
-                        <span class="text-gray-500">Alamat</span>
-                        <span class="text-right font-medium">Jl. Hang Kesturi I No.8, Batam</span>
+                <div class="bg-amber-100 px-4 py-3 rounded-lg overflow-hidden flex items-center justify-between mb-4 shadow-sm border border-amber-200">
+                    <div class="flex items-center gap-3">
+                        <span class="text-amber-500 text-xl">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </span>
+                        <div>
+                            <div class="text-xs text-gray-500 font-semibold uppercase tracking-wide">Alamat Pengiriman</div>
+                            <div class="font-semibold text-gray-700">
+                                {{ $user->alamat ?? '-' }}
+                            </div>
+                        </div>
                     </div>
-                    <a href="#" class="text-amber-500 hover:text-amber-700 transition-colors duration-200 block w-full text-right font-medium mt-2">Ubah Alamat</a>
+                    <div>
+                        <a href="{{ route('profile.edit') }}"
+                           class="inline-block bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold px-3 py-1 rounded transition-colors duration-200 shadow">
+                            Ubah
+                        </a>
+                    </div>
                 </div>
 
                 <div id="cart-items" class="space-y-4 mt-4">

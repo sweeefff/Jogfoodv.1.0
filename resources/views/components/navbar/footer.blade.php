@@ -2,7 +2,7 @@
 <footer class="bg-amber-500 flex items-center justify-center">
 	<div class="container py-6">
 		<div class="flex flex-col items-center justify-center">
-			<img alt="Logo" src="assets/icon/jogfood.png" class="w-48 mb-5" />
+			<img alt="Logo" src="{{ asset('assets/icon/jogfood.png') }}" class="w-48 mb-5" />
 			<p class="text-lg text-white text-center">
 				<strong>Tempat berbagi pengalaman</strong><br />
 				Bagikan pengalamanmu mengenai kuliner yogyakarta <br />

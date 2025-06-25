@@ -5,19 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MenuReview extends Model
+class Ratings extends Model
 {
     use HasFactory;
 
-    protected $table = 'menu_review';
+    protected $table = 'ratings';
 
-    protected $primaryKey = 'id_review';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'id_menu',
         'id_user',
-        'rate',
-        'review',
+        'id_detail',
+        'rating',
+        'komentar',
     ];
 
     public function menu()

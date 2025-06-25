@@ -29,7 +29,7 @@
                     <div class="text-gray-500">Tanggal Order</div>
                     <div class="text-right font-medium">{{ $transaksi->created_at->format('d M Y') }}</div>
                     <div class="text-gray-500">Alamat</div>
-                    <div class="text-right font-medium">{{ $transaksi->alamat ?? '-' }}</div>
+                    <div class="text-right font-medium">{{ $transaksi->user->alamat ?? '-' }}</div>
                 </div>
 
                 {{-- Item Dipesan --}}
@@ -100,19 +100,11 @@
                 {{-- Terima Kasih & Tombol --}}
                 <div class="text-center mt-8">
                     <div class="flex justify-center mb-2">
-                        @if ($pembayaran->metode_pembayaran == 'bank-transfer' || $pembayaran->metode_pembayaran == 'e-wallet')
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-green-500" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        @elseif ($pembayaran->metode_pembayaran == 'cod')
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-yellow-500" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        @endif
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-green-500" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
                     </div>
                     <h2 class="text-lg font-bold text-gray-800 mb-1">Terima Kasih!</h2>
                     <p class="text-gray-500 mb-4">Order Anda telah diterima</p>

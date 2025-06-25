@@ -21,8 +21,10 @@ class AuthController extends Controller
             $user = User::find(session('user_id'));
             if ($user->role === 'admin') {
                 return redirect('/admin/dashboard');
-            } else {
+            } elseif ($user->role === 'user') {
                 return redirect('/user/dashboard');
+            } elseif ($user->role === 'kurir') {
+                return redirect('/kurir/dashboard');
             }
         }
 
@@ -54,8 +56,10 @@ class AuthController extends Controller
 
                 if ($user->role === 'admin') {
                     return redirect()->route('admin.dashboard')->with('success', 'Login berhasil sebagai admin!');
-                } else {
+                } elseif ($user->role === 'user') {
                     return redirect()->route('home')->with('success', 'Login berhasil!');
+                } elseif ($user->role === 'kurir') {
+                    return redirect()->route('kurir.dashboard')->with('success', 'Login berhasil sebagai kurir!');
                 }
             }
 

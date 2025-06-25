@@ -16,7 +16,8 @@ class KeranjangController extends Controller
         $items = Keranjang::with('menu')
             ->where('id_user', $userId)
             ->get();
-        return view('pages.user.keranjang', compact('items'));
+        $user = \App\Models\User::find($userId); // pastikan ambil user dari session
+        return view('pages.user.keranjang', compact('items', 'user'));
     }
 
     public function store(Request $request, $id)

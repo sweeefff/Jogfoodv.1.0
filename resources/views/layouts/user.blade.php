@@ -15,7 +15,7 @@
     <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('services.midtrans.client_key') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="assets/styles/flowbite.min.css" rel="stylesheet" />
     <script src="assets/styles/flowbite.min.js" rel=""></script>
     <link href="assets/styles/css/style.css" rel="stylesheet" />
@@ -80,8 +80,8 @@
         });
     }
 </script>
-    <!-- 🧠 Script Live Search -->
-    <!-- <script>
+<!-- 🧠 Script Live Search -->
+<!-- <script>
         $('#search-input').on('keyup', function () {
             let query = $(this).val();
 

@@ -15,6 +15,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="assets/styles/flowbite.min.css" rel="stylesheet" />
     <script src="assets/styles/flowbite.min.js"></script>
     <link href="assets/styles/css/style.css" rel="stylesheet" />
@@ -77,24 +78,24 @@
         });
     }
 </script>
-    <!-- 🧠 Script Live Search -->
-    <script>
-        $('#search-input').on('keyup', function () {
-            let query = $(this).val();
+<!-- 🧠 Script Live Search -->
+<script>
+    $('#search-input').on('keyup', function () {
+        let query = $(this).val();
 
-            if (query.length > 0) {
-                $.ajax({
-                    type: "GET",
-                    data: { query: query },
-                    success: function (data) {
-                        $('#menu-list').empty();
-                        $('#pagination').hide();
+        if (query.length > 0) {
+            $.ajax({
+                type: "GET",
+                data: { query: query },
+                success: function (data) {
+                    $('#menu-list').empty();
+                    $('#pagination').hide();
 
-                        if (data.length === 0) {
-                            $('#menu-list').append('<p class="col-span-3 text-center text-gray-500">Tidak ada menu ditemukan</p>');
-                        } else {
-                            $.each(data, function (i, item) {
-                                $('#menu-list').append(`
+                    if (data.length === 0) {
+                        $('#menu-list').append('<p class="col-span-3 text-center text-gray-500">Tidak ada menu ditemukan</p>');
+                    } else {
+                        $.each(data, function (i, item) {
+                            $('#menu-list').append(`
                                     <div class="bg-white shadow-md rounded-lg overflow-hidden">
                                         <img src="/gambar/${item.gambar_menu}" alt="${item.nama}" class="w-full h-48 object-cover">
                                         <div class="p-4">
@@ -104,13 +105,14 @@
                                         </div>
                                     </div>
                                 `);
-                            });
-                        }
+                        });
                     }
-                });
-            } else {
-                location.reload(); // reset ke awal kalau input dikosongkan
-            }
-        });
-    </script>
+                }
+            });
+        } else {
+            location.reload(); // reset ke awal kalau input dikosongkan
+        }
+    });
+</script>
+
 </html>

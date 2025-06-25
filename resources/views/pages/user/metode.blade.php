@@ -125,25 +125,30 @@
         </div>
     </main>
 
-<script src="https://app.sandbox.midtrans.com/snap/snap.js"
-        data-client-key="{{ config('midtrans.client_key') }}"></script>
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js"
+        data-client-key="{{ config('services.midtrans.client_key') }}"></script>
 
-<script>
-function payNow() {
-    // Ambil nilai dari input hidden
-    const subtotal = parseInt(document.getElementById("subtotal").value) || 0;
-const tax = parseFloat(document.getElementById("tax").value) || 0;
-const deliveryFee = parseInt(document.getElementById("deliveryFee").value) || 0;
-const pajakNominal = Math.round(subtotal * tax);
-const totalHarga = subtotal + pajakNominal + deliveryFee;
+    <script>
+    function payNow() {
+        // Ambil nilai dari input hidden
+        const subtotal = parseInt(document.getElementById("subtotal").value) || 0;
+        const tax = parseFloat(document.getElementById("tax").value) || 0;
+        const deliveryFee = parseInt(document.getElementById("deliveryFee").value) || 0;
+        const pajakNominal = Math.round(subtotal * tax);
+        const totalHarga = subtotal + pajakNominal + deliveryFee;
 
-    const paymentMethod = document.querySelector('input[name="payment-method"]:checked');
-    if (!paymentMethod) {
-        alert("Silakan pilih metode pembayaran terlebih dahulu.");
-        return;
-    }
+        const paymentMethod = document.querySelector('input[name="payment-method"]:checked');
+        if (!paymentMethod) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Pilih Metode Pembayaran',
+                text: 'Silakan pilih metode pembayaran terlebih dahulu.',
+                confirmButtonColor: '#f59e0b'
+            });
+            return;
+        }
 
-    fetch("{{ route('metode.process') }}", {
+        fetch("{{ route('metode.process') }}", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -163,36 +168,71 @@ const totalHarga = subtotal + pajakNominal + deliveryFee;
             window.location.href = data.redirect;
             return;
         }
-        if (data.error) {
-            alert("Gagal mendapatkan Snap Token: " + data.error);
-            return;
-        }
-        if (data.snap_token) {
-            snap.pay(data.snap_token, {
-                onSuccess: function(result) {
-                    window.location.href = "{{ route('metode.success') }}";
-                },
-                onPending: function(result) {
-                    alert("Menunggu pembayaran...");
-                },
-                onError: function(result) {
-                    alert("Pembayaran gagal.");
-                },
-                onClose: function() {
-                    alert("Anda membatalkan pembayaran.");
-                }
+            if (data.error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal',
+                    text: "Gagal mendapatkan Snap Token: " + data.error,
+                    confirmButtonColor: '#f59e0b'
+                });
+                return;
+            }
+            if (data.snap_token) {
+                snap.pay(data.snap_token, {
+                    onSuccess: function(result) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Pembayaran Berhasil',
+                            text: 'Transaksi berhasil!',
+                            confirmButtonColor: '#f59e0b'
+                        }).then(() => {
+                            window.location.href = "{{ route('metode.success') }}?order_id=" + result.order_id;});
+                    },
+                    onPending: function(result) {
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Menunggu Pembayaran',
+                            text: 'Silakan selesaikan pembayaran Anda.',
+                            confirmButtonColor: '#f59e0b'
+                        });
+                    },
+                    onError: function(result) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Pembayaran Gagal',
+                            text: 'Pembayaran gagal.',
+                            confirmButtonColor: '#f59e0b'
+                        });
+                    },
+                    onClose: function() {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Dibatalkan',
+                            text: 'Anda membatalkan pembayaran.',
+                            confirmButtonColor: '#f59e0b'
+                        });
+                    }
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Snap token tidak ditemukan.',
+                    confirmButtonColor: '#f59e0b'
+                });
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            Swal.fire({
+                icon: 'error',
+                title: 'Terjadi Kesalahan',
+                text: 'Terjadi kesalahan saat memproses pembayaran.',
+                confirmButtonColor: '#f59e0b'
             });
-        } else {
-            alert("Snap token tidak ditemukan.");
-        }
-    })
-    .catch(err => {
-        console.error(err);
-        alert("Terjadi kesalahan saat memproses pembayaran.");
-    });
-}
-</script>
-
+        });
+    }
+    </script>
 @endsection
 
 

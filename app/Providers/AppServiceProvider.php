@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Midtrans\Config;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\View;
+use App\Models\Keranjang;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,6 +27,12 @@ class AppServiceProvider extends ServiceProvider
         Config::$isSanitized = true;
         Config::$is3ds = true;
 
-
+        View::composer('*', function ($view) {
+            $cartCount = 0;
+            if (session('user_id')) {
+                $cartCount = \App\Models\Keranjang::where('id_user', session('user_id'))->sum('jumlah');
+            }
+            $view->with('cartCount', $cartCount);
+        });
     }
 }
