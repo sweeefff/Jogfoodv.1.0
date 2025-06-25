@@ -76,7 +76,7 @@
         </form>
         <button type="button" id="beli-sekarang"
           class="flex-1 bg-white border-2 border-amber-500 text-amber-600 hover:bg-amber-50 font-medium py-3 px-6 rounded-lg shadow-sm transition duration-300 flex items-center justify-center gap-2">
-          <i class="fas fa-bolt"></i>
+          <i class="fas fa-shopping-bag"></i>
           <span>Beli Sekarang</span>
         </button>
       </div>
