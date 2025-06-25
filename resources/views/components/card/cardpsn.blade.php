@@ -4,6 +4,9 @@
     $subtotal = collect($menus)->sum('subtotal');
     $taxAmount = $subtotal * $tax;
     $totalAkhir = $subtotal + $taxAmount + $deliveryFee;
+
+    $snapTokenTime = $transaksi->snap_token_created_at ? \Carbon\Carbon::parse($transaksi->snap_token_created_at) : null;
+    $isExpired = $snapTokenTime && now()->diffInSeconds($snapTokenTime, false) < -3600;
 @endphp
 
 <div class="bg-white border border-gray-200 rounded-lg shadow-sm mb-4">
@@ -61,11 +64,15 @@
         </div>
     @endforeach
 
+    @php
+        $uniqueId = uniqid('countdown-');
+    @endphp
+
     <!-- Order Summary -->
     <div class="p-4 border-t">
         <div class="flex flex-wrap justify-between items-center mb-4">
             <div class="text-gray-500 text-sm">
-                Bayar sebelum {{ \Carbon\Carbon::parse($transaksi->updated_at)->addMonths(1)->format('d-m-Y') }}
+                Bayar sebelum <span id="countdown-{{ $id_transaksi }}"></span>
             </div>
             <div class="flex flex-wrap gap-2">
                 @if ($status == 'pending')
@@ -77,9 +84,13 @@
                                 onclick="return confirm('Batalkan pesanan ini?')">Batal</button>
                         </form>
                     @else
-                        <a href="{{ route('metode.bayar', ['id_transaksi' => $id_transaksi]) }}">
-                            <button type="button" class="bg-orange-500 text-white px-6 py-2 rounded">Bayar</button>
-                        </a>
+                        @if(!$isExpired)
+                            <a href="{{ route('metode.bayar', ['id_transaksi' => $id_transaksi]) }}">
+                                <button class="bg-orange-500 text-white px-6 py-2 rounded">Bayar</button>
+                            </a>
+                        @else
+                            <span class="text-red-500 font-semibold">Kadaluwarsa</span>
+                        @endif
                         <form action="{{ route('transaksi.batal', $id_transaksi) }}" method="POST" class="inline">
                             @csrf
                             @method('PATCH')
@@ -123,3 +134,30 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        @if($snapTokenTime)
+            const countdownElem = document.getElementById("countdown-{{ $id_transaksi }}");
+            const expiredTime = new Date("{{ $snapTokenTime->addHour()->format('Y-m-d H:i:s') }}").getTime();
+
+            if (countdownElem) {
+                const interval = setInterval(function () {
+                    const now = new Date().getTime();
+                    const distance = expiredTime - now;
+
+                    if (distance <= 0) {
+                        clearInterval(interval);
+                        countdownElem.innerHTML = "Kadaluwarsa";
+                        // Optionally, reload page or disable button
+                    } else {
+                        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                        countdownElem.innerHTML = hours + "j " + minutes + "m " + seconds + "d";
+                    }
+                }, 1000);
+            }
+        @endif
+});
+</script>

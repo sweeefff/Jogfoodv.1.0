@@ -78,7 +78,7 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
         'store' => 'users.store',
         'show' => 'users.show',
     ]);
-    
+
     // Route tambahan untuk UserController
     Route::get('users/role/{role}', [UserController::class, 'getUsersByRole'])->name('admin.users.role');
     Route::post('users/{id}/toggle-status', [UserController::class, 'toggleStatus'])->name('admin.users.toggle-status');
@@ -93,11 +93,11 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
         'update',
         'destroy'
     ])->names([
-        'index' => 'pages.admin.tblmenu',
-        'store' => 'tblmenu.store',
-        'update' => 'tblmenu.update',
-        'destroy' => 'tblmenu.destroy'
-    ]);
+                'index' => 'pages.admin.tblmenu',
+                'store' => 'tblmenu.store',
+                'update' => 'tblmenu.update',
+                'destroy' => 'tblmenu.destroy'
+            ]);
 
     // Route Live Search untuk halaman admin
     Route::get('/tblmenu/search', [TblmenuController::class, 'search'])->name('tblmenu.search');
@@ -137,7 +137,7 @@ Route::middleware([RoleMiddleware::class . ':user'])->prefix('user')->group(func
 
     //Detail Pesanan
     Route::get('/detailpsn', [DetailpsnController::class, 'detailpsn'])->name('detailpsn');
-    Route::get('/bayar/{id_transaksi}', [DetailpsnController::class, 'bayar'])->name('metode.bayar');
+    Route::get('/bayar/{id_transaksi}', [DetailpsnController::class, 'bayar'])->name('detailpsn.bayar');
 
     //Riwayat
     Route::get('/riwayat', [RiwayatController::class, 'riwayat'])->name('riwayat');

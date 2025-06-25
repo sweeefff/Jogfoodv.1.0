@@ -13,7 +13,7 @@ class MenuController extends Controller
         $search = $request->input('search');
         $kategori = $request->input('kategori');
 
-        $menu = \App\Models\Menu::withCount([
+        $menu = Menu::withCount([
                 'ratings as avg_rating' => function($q) {
                     $q->select(\DB::raw('coalesce(avg(rating),0)'));
                 },

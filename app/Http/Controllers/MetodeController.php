@@ -116,39 +116,39 @@ class MetodeController extends Controller
         try {
             DB::beginTransaction();
 
-            $transaksi = Transaksi::create([
-                'id_transaksi' => $orderId,
-                'id_user' => session('user_id', Auth::id()),
-                'total_harga' => $total,
-                'status_transaksi' => 'pending',
-            ]);
+            $transaksi = Transaksi::where('id_transaksi', $orderId)->first();
 
-            foreach ($checkoutItems as $item) {
-                $checkoutItems = $checkoutItems->filter(fn($item) => $item->menu);
-                if (!$item->menu)
-                    continue;
+            if (!$transaksi) {
+                $transaksi = Transaksi::create([
+                    'id_transaksi' => $orderId,
+                    'id_user' => session('user_id', Auth::id()),
+                    'total_harga' => $total,
+                    'status_transaksi' => 'pending',
+                ]);
 
-                $transaksi->detail_transaksi()->create([
-                    'id_menu' => $item->menu->id_menu,
-                    'jumlah' => $item->jumlah,
-                    'subtotal' => $item->menu->harga * $item->jumlah
+                foreach ($checkoutItems as $item) {
+                    $transaksi->detail_transaksi()->create([
+                        'id_menu' => $item->menu->id_menu,
+                        'jumlah' => $item->jumlah,
+                        'subtotal' => $item->menu->harga * $item->jumlah
+                    ]);
+                }
+
+                Pembayaran::create([
+                    'id_transaksi' => $orderId,
+                    'metode_pembayaran' => $paymentMethod,
+                ]);
+
+                StatusPengiriman::create([
+                    'id_user' => session('user_id', Auth::id()),
+                    'id_transaksi' => $orderId,
+                    'status_pembayaran' => $paymentMethod === 'cod' ? 'belum dibayar' : 'dibayar',
+                    'status_pengiriman' => 'menunggu',
+                    'tanggal_transaksi' => now(),
+                    'tanggal_update' => now(),
                 ]);
             }
 
-            Pembayaran::create([
-                'id_transaksi' => $orderId,
-                'metode_pembayaran' => $paymentMethod,
-            ]);
-
-            StatusPengiriman::create([
-                'id_user' => session('user_id', Auth::id()),
-                'id_transaksi' => $orderId,
-                'status_pembayaran' => $paymentMethod === 'cod' ? 'belum dibayar' : 'dibayar',
-                'status_pengiriman' => 'menunggu',
-                'tanggal_pengiriman' => null,
-                'tanggal_transaksi' => now(),
-                'tanggal_update' => now(),
-            ]);
 
             DB::commit();
 
@@ -216,10 +216,16 @@ class MetodeController extends Controller
         ];
 
         try {
-            $snapToken = Snap::getSnapToken($params);
+            $needNewToken = !$transaksi->snap_token || $this->isSnapTokenExpired($transaksi->created_at);
 
-            $transaksi->snap_token = $snapToken;
-            $transaksi->save();
+            if ($needNewToken) {
+                $snapToken = Snap::getSnapToken($params);
+                $transaksi->snap_token = $snapToken;
+                $transaksi->save();
+            } else {
+                $snapToken = $transaksi->snap_token;
+            }
+
 
             return Response::json([
                 'snap_token' => $snapToken,
@@ -348,5 +354,11 @@ class MetodeController extends Controller
 
         return redirect()->back()->with('success', 'Transaksi berhasil dibatalkan.');
     }
+    private function isSnapTokenExpired($createdAt)
+    {
+        $expiredMinutes = 60; // misalnya token berlaku 1 jam
+        return now()->diffInMinutes($createdAt) > $expiredMinutes;
+    }
+
 }
 
