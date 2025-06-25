@@ -6,14 +6,16 @@
                 <h5 class="modal-title font-bold" id="deleteKurirModalLabel">
                     <i class="fas fa-trash-alt mr-2"></i>Hapus Kurir
                 </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
             <form id="deleteKurirForm" method="POST" action="#">
                 @csrf
                 @method('DELETE')
                 <div class="modal-body">
                     <p class="text-gray-700 text-center">
-                        Apakah Anda yakin ingin menghapus kurir <span id="deleteKurirName" class="font-bold text-red-600"></span>?
+                        Apakah Anda yakin ingin menghapus kurir <span id="deleteKurirName"
+                            class="font-bold text-red-600"></span>?
                     </p>
                 </div>
                 <div class="modal-footer bg-gray-50 rounded-b-xl">
