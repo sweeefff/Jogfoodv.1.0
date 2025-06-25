@@ -94,10 +94,12 @@ Route::middleware([RoleMiddleware::class . ':user'])->prefix('user')->group(func
     Route::get('/payment/success', [MetodeController::class, 'success'])->name('metode.success');
     Route::patch('/transaksi/{id}/batal', [MetodeController::class, 'batal'])->name('transaksi.batal');
 
+    //Struk
     Route::get('/struk/{id_struk}', [StrukController::class, 'show'])->name('struk.show');
     Route::get('/struk/generate/{id_transaksi}', [StrukController::class, 'generate'])->name('struk.generate');
     Route::get('/struk/download/{id_struk}', [StrukController::class, 'download'])->name('struk.download');
 
+    // Profile
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
@@ -107,8 +109,11 @@ Route::middleware([RoleMiddleware::class . ':user'])->prefix('user')->group(func
     Route::post('/keranjang/tambah/{id}', [KeranjangController::class, 'store'])->name('keranjang.store');
     Route::delete('/keranjang/hapus/{id}', [KeranjangController::class, 'remove'])->name('keranjang.destroy');
 
+    //Detail Pesanan
     Route::get('/detailpsn', [DetailpsnController::class, 'detailpsn'])->name('detailpsn');
+    Route::get('/bayar/{id_transaksi}', [DetailpsnController::class, 'bayar'])->name('metode.bayar');
 
+    //Riwayat
     Route::get('/riwayat', [RiwayatController::class, 'riwayat'])->name('riwayat');
 
     // Rating

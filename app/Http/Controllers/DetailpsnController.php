@@ -24,5 +24,28 @@ class DetailpsnController extends Controller
 
         return view('pages.user.detailpsn', compact('riwayat'));
     }
-    
+    public function bayar($id_transaksi)
+    {
+        $transaksi = Transaksi::with('detail_transaksi.menu')->findOrFail($id_transaksi);
+        $items = $transaksi->detail_transaksi;
+
+        $subtotal = $items->sum('subtotal');
+        $tax = 0.1;
+        $taxAmount = $subtotal * $tax;
+        $deliveryFee = 10000;
+        $total = $subtotal + $taxAmount + $deliveryFee;
+
+        return view('pages.user.metode', compact(
+            'transaksi',
+            'items',
+            'id_transaksi',
+            'subtotal',
+            'tax',
+            'taxAmount',
+            'deliveryFee',
+            'total'
+        ));
+    }
+
+
 }

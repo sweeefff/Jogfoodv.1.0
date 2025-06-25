@@ -87,11 +87,7 @@
 
             if (query.length > 0) {
                 $.ajax({
-<<<<<<< HEAD
-                    url: "{{ route('menu.search') }}",
-=======
                     url:"",
->>>>>>> 21ed55be8509ee090b2e29b8ead85cf4a7fb6955
                     type: "GET",
                     data: { query: query },
                     success: function (data) {
