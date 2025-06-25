@@ -34,10 +34,15 @@
         <div class="flex items-center justify-center w-full mt-4">
             <form action="{{ route('keranjang.store', ['id' => $menu->id_menu]) }}" method="POST">
                 @csrf
-                <button type="submit" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4
-                focus:ring-green-300 font-medium rounded-lg text-sm px-16 py-2.5 me-2 mb-2 dark:bg-green-600
-                dark:hover:bg-green-700 dark:focus:ring-green-800">Add
-                    to Cart</button>
+                <button type="submit"
+                    class="flex items-center justify-center focus:outline-none bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 rounded-md w-20 h-10 text-white transition duration-200"
+                    title="Tambah ke Keranjang">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path
+                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m13-9l2 9m-5-9V6a2 2 0 10-4 0v3"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
             </form>
         </div>
     </div>

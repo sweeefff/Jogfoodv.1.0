@@ -64,7 +64,7 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
     Route::get('/data', [DataController::class, 'data'])->name('admin.data');
     Route::get('/pengiriman', [PengirimanController::class, 'pengiriman'])->name('admin.pengiriman');
     Route::get('/user', [UserController::class, 'index'])->name('admin.user');
-    Route::get('/kurir', [KurirController::class, 'kurir'])->name('admin.kurir');
+    Route::get('/kurir', [KurirController::class, 'kurir'])->name('kurir.index');
     // ✅ Route ini untuk menampilkan halaman daftar kurir
     Route::get('/kurir', [KurirController::class, 'index'])->name('admin.kurir');
     // ✅ Route ini untuk menyimpan data kurir (dipakai oleh form tambah kurir)
