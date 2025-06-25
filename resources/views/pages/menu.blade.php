@@ -4,7 +4,7 @@
 
 @section('content')
     <link rel=stylesheet href="assets/style/css/menu.css">
-    <div class="bg-white flex justify-center py-12">
+    <div class="bg-amber-50 flex justify-center py-12">
         <div class="max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
