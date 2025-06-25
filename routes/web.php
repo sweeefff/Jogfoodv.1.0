@@ -52,6 +52,8 @@ Route::get('/detail/{id}', [DetailController::class, 'detail'])->name('detail');
 Route::get('/detailpsn', [DetailpsnController::class, 'detailpsn'])->name('detailpsn');
 Route::get('/komentar', [KomentarController::class, 'komentar'])->name('komentar');
 
+Route::post('/menu/beli-sekarang/{id}', [MenuController::class, 'beliSekarang'])->name('menu.beli_sekarang');
+
 
 // Admin Routes - Hanya admin yang bisa akses
 Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(function () {
