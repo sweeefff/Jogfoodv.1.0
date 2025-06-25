@@ -1,322 +1,212 @@
 @extends('layouts.appadm')
-@section('title', 'Order - Jogfood')
+
+@section('title', 'Antaran - Jogfood')
 @section('content')
-    <style>
-        .main-content {
-            margin-left: 250px;
-            transition: all 0.3s ease;
-        }
+<div class="main-content min-h-screen bg-amber-50">
+    <!-- Container with proper responsive padding -->
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8 xl:py-12 mt-16 lg:mt-20">
+        <!-- Header -->
+        <div class="mb-6">
+            <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">Antaran</h1>
+            <p class="text-gray-600 text-sm sm:text-base">Kelola pesanan yang sedang dikirim</p>
+        </div>
 
-        @media (max-width: 768px) {
-            .main-content {
-                margin-left: 0;
-            }
-        }
-
-        .order-card {
-            background: white;
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            border-left: 4px solid #f59e0b;
-        }
-
-        .order-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .order-id {
-            font-weight: bold;
-            font-size: 16px;
-            color: #374151;
-        }
-
-        .order-date {
-            font-size: 12px;
-            color: #9ca3af;
-            text-transform: uppercase;
-        }
-
-        .customer-name {
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 4px;
-        }
-
-        .customer-address {
-            color: #6b7280;
-            font-size: 14px;
-            line-height: 1.4;
-        }
-
-        .status-badge {
-            padding: 4px 12px;
-            border-radius: 16px;
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .status-success {
-            background-color: #d1fae5;
-            color: #065f46;
-        }
-
-        .status-process {
-            background-color: #fef3c7;
-            color: #92400e;
-        }
-
-        .status-failed {
-            background-color: #fee2e2;
-            color: #991b1b;
-        }
-
-        .cod-button {
-            background-color: #10b981;
-            color: white;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            text-transform: uppercase;
-        }
-
-        .process-button {
-            background-color: #f59e0b;
-            color: white;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            text-transform: uppercase;
-        }
-
-        .tabs {
-            display: flex;
-            background: white;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .tab {
-            flex: 1;
-            padding: 12px;
-            text-align: center;
-            cursor: pointer;
-            font-weight: 600;
-            border-bottom: 3px solid transparent;
-        }
-
-        .tab.active {
-            border-bottom-color: #f59e0b;
-            color: #f59e0b;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-    </style>
-
-    <div class="main-content min-h-screen lg:px-16 md:px-6 px-4 py-6 mt-10">
-        <div class="bg-gray-50 min-h-screen">
-            <!-- On Going Tab Content -->
-            @foreach($transaksi = Transaksi::with(['user', 'detail_transaksi.menu', 'pembayaran'])->where('status_pengiriman', 'dikirim') as $transaksi)
-                <div class="order-card">
-                    <div class="order-date">
-                        DELIVERY | {{ \Carbon\Carbon::parse($transaksi->tanggal_transaksi)->format('M d, H:i') }}
+        <!-- On Going Tab Content -->
+        <div id="ongoing" class="tab-content active">
+            @forelse($transaksi->where('status_pengiriman.status_pengiriman', 'dikirim') as $item)
+                <div
+                    class="order-card bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-4 sm:p-6 mb-4 sm:mb-6 mt-4">
+                    <!-- Order Date -->
+                    <div class="order-date text-xs sm:text-sm text-gray-600 mb-3">
+                        DELIVERY | {{ \Carbon\Carbon::parse($item->created_at)->format('M d, H:i') }}
                     </div>
 
-                    <div class="order-header">
-                        <div class="order-id">{{ $transaksi->id_transaksi }}</div>
-                    </div>
-
-                    <div class="customer-name">{{ $transaksi->user->name ?? '-' }}</div>
-                    <div class="customer-address">{{ $transaksi->user->alamat ?? '-' }}</div>
-
-                    <div class="flex justify-between items-center mt-3">
-                        <div>
-                            @if($transaksi->pembayaran->metode_pembayaran == 'cod')
-                                <button class="cod-button" onclick="toggleUpdate('{{ $transaksi->id_transaksi }}')">COD</button>
-                            @endif
-                            <button class="process-button ml-2" onclick="toggleDetail('{{ $transaksi->id_transaksi }}')">ON
-                                PROCESS</button>
+                    <!-- Order Header -->
+                    <div
+                        class="order-header flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-0 mb-4">
+                        <div class="order-id text-lg sm:text-xl font-bold text-gray-800">
+                            #{{ substr($item->id_transaksi, -8) }}
                         </div>
-                        <div>
-                            <span class="font-semibold">{{ $transaksi->total_harga_formatted }}</span>
+                        <div
+                            class="status-badge bg-blue-100 text-blue-800 rounded-full px-3 py-1 text-xs font-semibold w-fit">
+                            Sedang Dikirim
+                        </div>
+                    </div>
+
+                    <!-- Customer Info -->
+                    <div class="customer-info mb-4">
+                        <div class="customer-name font-semibold text-gray-800 text-base sm:text-lg mb-1">
+                            {{ $item->user->name ?? '-' }}
+                        </div>
+                        <div class="customer-address text-sm text-gray-600 leading-relaxed">
+                            {{ $item->user->alamat ?? 'Alamat tidak tersedia' }}
+                        </div>
+                    </div>
+
+                    <!-- Actions and Price -->
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+                        <!-- Action Buttons -->
+                        <div class="flex flex-wrap gap-2">
+                            @if($item->pembayaran && $item->pembayaran->metode_pembayaran == 'cod')
+                                <span class="cod-badge bg-yellow-500 text-white rounded-full px-3 py-1 text-xs font-semibold">
+                                    COD
+                                </span>
+                            @endif
+                            <button
+                                class="detail-button bg-blue-500 hover:bg-blue-600 text-white rounded-full px-3 py-1 text-xs font-semibold transition-colors duration-200"
+                                onclick="toggleDetail('{{ $item->id_transaksi }}')">
+                                LIHAT DETAIL
+                            </button>
+                            <a href="{{ route('kurir.showUpdate', $item->id_transaksi) }}">
+                                <button
+                                    class="process-button bg-orange-500 hover:bg-orange-600 text-white rounded-full px-3 py-1 text-xs font-semibold transition-colors duration-200">
+                                    UPDATE STATUS
+                                </button>
+                            </a>
+                        </div>
+
+                        <!-- Price -->
+                        <div class="font-bold text-lg sm:text-xl text-gray-800">
+                            Rp {{ number_format($item->total_harga, 0, ',', '.') }}
                         </div>
                     </div>
 
                     <!-- Detail Section (Hidden by default) -->
-                    <div id="detail-{{ $transaksi->id_transaksi }}" class="hidden mt-4 pt-4 border-t border-gray-200">
-                        <div class="space-y-2">
-                            <div><strong>Order ID:</strong> #{{ $transaksi->id_transaksi }}</div>
-                            <div><strong>Tanggal:</strong>
-                                {{ \Carbon\Carbon::parse($transaksi->tanggal_transaksi)->format('d M Y, H:i') }}</div>
-                            <div><strong>Metode Pembayaran:</strong> {{ $transaksi->pembayaran->metode_pembayaran ?? '-' }}
+                    <div id="detail-{{ $item->id_transaksi }}" class="hidden mt-6 pt-4 border-t border-gray-200">
+                        <div class="space-y-4">
+                            <!-- Order Info Grid -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                                <div class="space-y-2">
+                                    <div><span class="font-semibold">Order ID:</span> {{ $item->id_transaksi }}</div>
+                                    <div><span class="font-semibold">Tanggal:</span>
+                                        {{ \Carbon\Carbon::parse($item->created_at)->format('d M Y, H:i') }}</div>
+                                </div>
+                                <div class="space-y-2">
+                                    <div><span class="font-semibold">Metode Pembayaran:</span>
+                                        {{ $item->pembayaran->metode_pembayaran ?? 'Tidak tersedia' }}
+                                    </div>
+                                </div>
                             </div>
 
-                            <div><strong>Item yang Dipesan:</strong></div>
-                            <ul class="ml-4 space-y-1">
-                                @foreach($transaksi->detail_transaksi as $detail)
-                                    <li class="flex justify-between">
-                                        <span>{{ $detail->menu->nama ?? '-' }} x{{ $detail->jumlah }}</span>
-                                        <span>{{ $detail->subtotal_formatted }}</span>
-                                    </li>
-                                @endforeach
-                            </ul>
+                            <!-- Delivery Address -->
+                            <div class="text-sm">
+                                <span class="font-semibold">Alamat Pengiriman:</span>
+                                <div class="mt-1 text-gray-600">{{ $item->user->alamat ?? 'Tidak tersedia' }}</div>
+                            </div>
 
-                            <div class="pt-2 border-t">
-                                <div class="flex justify-between font-semibold">
+                            <!-- Items Ordered -->
+                            <div>
+                                <div class="font-semibold text-sm mb-3">Item yang Dipesan:</div>
+                                <div class="item-list bg-gray-50 rounded-lg p-3 sm:p-4">
+                                    @forelse($item->detail_transaksi as $detail)
+                                        <div
+                                            class="flex flex-col sm:flex-row sm:justify-between sm:items-center py-3 border-b border-gray-200 last:border-b-0 gap-2">
+                                            <div class="flex-1">
+                                                <div class="font-medium text-gray-800">
+                                                    {{ $detail->menu->nama ?? 'Menu tidak tersedia' }}
+                                                </div>
+                                                <div class="text-sm text-gray-500 mt-1">
+                                                    Qty: {{ $detail->jumlah }} × Rp
+                                                    {{ number_format($detail->harga_satuan, 0, ',', '.') }}
+                                                </div>
+                                            </div>
+                                            <div class="font-semibold text-gray-800 text-right">
+                                                Rp {{ number_format($detail->subtotal, 0, ',', '.') }}
+                                            </div>
+                                        </div>
+                                    @empty
+                                        <div class="text-gray-500 text-center py-4">Tidak ada item</div>
+                                    @endforelse
+                                </div>
+                            </div>
+
+                            <!-- Total -->
+                            <div class="pt-4 border-t border-gray-200">
+                                <div class="flex justify-between items-center font-bold text-lg">
                                     <span>Total:</span>
-                                    <span>{{ $transaksi->total_harga_formatted }}</span>
+                                    <span>Rp {{ number_format($item->total_harga, 0, ',', '.') }}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Update Status Section (Hidden by default) -->
-                    <div id="update-{{ $transaksi->id_transaksi }}" class="hidden mt-4 pt-4 border-t border-gray-200">
-                        <form action="{{ route('kurir.updateStatus', $transaksi->id_transaksi) }}" method="POST"
-                            class="space-y-3">
+                    <div id="update-{{ $item->id_transaksi }}" class="hidden mt-6 pt-4 border-t border-gray-200">
+                        <form action="{{ route('kurir.updateStatus', $item->id_transaksi) }}" method="POST"
+                            class="space-y-4">
                             @csrf
                             @method('PUT')
 
                             <div>
-                                <label class="block text-sm font-semibold mb-1">Status Pengiriman</label>
-                                <select name="status_pengiriman" class="w-full border rounded px-3 py-2" required>
+                                <label class="block text-sm font-semibold mb-2 text-gray-700">Status Pengiriman</label>
+                                <select name="status_pengiriman"
+                                    class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                    required>
                                     <option value="">Pilih Status</option>
-                                    <option value="success" {{ $transaksi->status_pengiriman == 'success' ? 'selected' : '' }}>
-                                        Sukses</option>
-                                    <option value="gagal" {{ $transaksi->status_pengiriman == 'gagal' ? 'selected' : '' }}>Gagal
-                                    </option>
+                                    <option value="selesai">Berhasil Dikirim</option>
+                                    <option value="antar-ulang">Perlu Antar Ulang</option>
                                 </select>
                             </div>
 
                             <div>
-                                <label class="block text-sm font-semibold mb-1">Alasan (jika gagal)</label>
-                                <input type="text" name="reason" class="w-full border rounded px-3 py-2"
-                                    value="{{ $transaksi->reason ?? '' }}" placeholder="Contoh: Penerima tidak di rumah">
+                                <label class="block text-sm font-semibold mb-2 text-gray-700">Nama Penerima</label>
+                                <input type="text" name="nama_penerima"
+                                    class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                    placeholder="Nama yang menerima pesanan" required>
                             </div>
 
                             <div>
-                                <label class="block text-sm font-semibold mb-1">Nama Penerima</label>
-                                <input type="text" name="receiver_real_name" class="w-full border rounded px-3 py-2"
-                                    value="{{ $transaksi->receiver_real_name ?? '' }}" placeholder="Nama penerima">
+                                <label class="block text-sm font-semibold mb-2 text-gray-700">Alasan (jika perlu antar
+                                    ulang)</label>
+                                <textarea name="alasan"
+                                    class="w-full border border-gray-300 rounded-lg px-3 py-2 h-24 resize-none focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                    placeholder="Contoh: Penerima tidak di rumah, alamat tidak ditemukan, dll."></textarea>
                             </div>
 
-                            <button type="submit" class="w-full bg-amber-600 text-white py-2 rounded hover:bg-amber-700">
-                                Simpan
+                            <button type="submit"
+                                class="w-full bg-amber-600 hover:bg-amber-700 text-white py-3 rounded-lg font-semibold transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2">
+                                Update Status
                             </button>
                         </form>
                     </div>
                 </div>
-            @endforeach
-
-            @if($transaksi->where('status_pengiriman', '!=', 'success')->count() == 0)
-                <div class="text-center py-8 text-gray-400">
-                    Tidak ada order yang sedang berlangsung.
+            @empty
+                <div class="text-center py-12 sm:py-16">
+                    <div class="text-4xl sm:text-6xl mb-4">📦</div>
+                    <div class="text-xl sm:text-2xl font-semibold mb-2 text-gray-400">Tidak ada pesanan</div>
+                    <div class="text-gray-500 text-sm sm:text-base">Belum ada pesanan yang perlu dikirim saat ini.</div>
                 </div>
-            @endif
-        </div>
-
-        <!-- Done Tab Content -->
-        <div id="done" class="tab-content">
-            @foreach($transaksi->where('status_pengiriman', 'success') as $transaksi)
-                <div class="order-card">
-                    <div class="order-date">
-                        DELIVERY | {{ \Carbon\Carbon::parse($transaksi->tanggal_transaksi)->format('M d, H:i') }}
-                    </div>
-
-                    <div class="order-header">
-                        <div class="order-id">{{ $transaksi->id_transaksi }}</div>
-                        <div class="text-green-500 text-xl">✓</div>
-                    </div>
-
-                    <div class="customer-name">{{ $transaksi->user->name ?? '-' }}</div>
-                    <div class="customer-address">{{ $transaksi->user->alamat ?? '-' }}</div>
-
-                    <div class="flex justify-between items-center mt-3">
-                        <div>
-                            <span class="status-badge status-success">Pengiriman Berhasil</span>
-                        </div>
-                        <div>
-                            <span class="font-semibold">{{ $transaksi->total_harga_formatted }}</span>
-                        </div>
-                    </div>
-
-                    @if($transaksi->receiver_real_name)
-                        <div class="mt-2 text-sm text-gray-600">
-                            <strong>Diterima oleh:</strong> {{ $transaksi->receiver_real_name }}
-                        </div>
-                    @endif
-                </div>
-            @endforeach
-
-            @if($transaksi->where('status_pengiriman', 'success')->count() == 0)
-                <div class="text-center py-8 text-gray-400">
-                    Belum ada order yang selesai.
-                </div>
-            @endif
-        </div>
-
-        <!-- Pagination -->
-        <div class="px-4 py-4 bg-white rounded-lg mt-4">
-            <div class="text-sm text-gray-500 text-center mb-2">
-                Menampilkan {{ $transaksi->firstItem() }} sampai {{ $transaksi->lastItem() }}
-                dari {{ $transaksi->total() }} order
-            </div>
-            <div class="flex justify-center">
-                {{ $transaksi->links() }}
-            </div>
+            @endforelse
         </div>
     </div>
-    </div>
+</div>
 
-    <script>
-        function showTab(tabName) {
-            // Hide all tab contents
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
+<script>
+    function toggleDetail(id) {
+        const row = document.getElementById('detail-' + id);
+        if (row) {
+            row.classList.toggle('hidden');
 
-            // Remove active class from all tabs
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-
-            // Show selected tab content
-            document.getElementById(tabName).classList.add('active');
-
-            // Add active class to clicked tab
-            event.target.classList.add('active');
-        }
-
-        function toggleDetail(id) {
-            const row = document.getElementById('detail-' + id);
-            if (row) {
-                row.classList.toggle('hidden');
+            // Smooth scroll to detail section when opened
+            if (!row.classList.contains('hidden')) {
+                setTimeout(() => {
+                    row.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 100);
             }
         }
+    }
 
-        function toggleUpdate(id) {
-            const row = document.getElementById('update-' + id);
-            if (row) {
-                row.classList.toggle('hidden');
+    function toggleUpdate(id) {
+        const row = document.getElementById('update-' + id);
+        if (row) {
+            row.classList.toggle('hidden');
+
+            // Smooth scroll to update section when opened
+            if (!row.classList.contains('hidden')) {
+                setTimeout(() => {
+                    row.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 100);
             }
         }
-    </script>
-@endsection
+    }
+</script>

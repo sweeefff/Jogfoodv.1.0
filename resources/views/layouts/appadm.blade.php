@@ -45,11 +45,11 @@
 
 <body class="bg-amber-50 min-h-screen">
     <!-- Include the header based on user role -->
-    @if (session('role') == 'admin')
+    @if (session('user_role') == 'admin')
         <header>
             @include('components.navbar.adm-nav')
         </header>
-    @else (session('role') == 'kurir')
+    @else (session('user_role') == 'kurir')
         <header>
             @include('components.navbar.kurir-nav')
         </header>
