@@ -10,10 +10,10 @@ class PengirimanController extends Controller
 {
     public function pengiriman()
     {
-        $pengiriman = \App\Models\Transaksi::with(['user', 'detail_transaksi.menu'])
+        $pengiriman = \App\Models\Transaksi::with(['user', 'detail_transaksi.menu', 'pembayaran'])
             ->where('status_transaksi', '!=', 'Batal')
             ->orderByDesc('created_at')
-            ->get();
+            ->paginate(10); // PAGINATE 10
 
         $kurirList = User::where('role', 'kurir')->get();
 

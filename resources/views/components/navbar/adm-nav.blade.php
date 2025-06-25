@@ -100,6 +100,21 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('admin.user') }}"
+                    class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
+                    <i class="fas fa-users w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
+                    <span class="ms-3">Data User</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.kurir') }}"
+                    class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
+                    <i class="fas fa-users w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
+                    <span class="ms-3">Data Kurir</span>
+                </a>
+            </li>
+
+            <li>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit"

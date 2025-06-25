@@ -2,12 +2,13 @@
 @section('title', 'Pengiriman - Jogfood')
 @section('content')
 <div class="min-h-screen flex items-center justify-center bg-amber-50 py-10">
-    <div class="w-full max-w-5xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+    <div class="w-full max-w-6xl bg-white p-8 rounded-xl shadow-lg">
         <h2 class="text-2xl font-semibold mb-6 text-amber-700 text-center">DAFTAR PENGIRIMAN</h2>
         <div class="overflow-x-auto flex justify-center">
             <table class="min-w-[900px] max-w-4xl mx-auto border-collapse">
                 <thead>
                     <tr class="bg-gray-100 text-gray-600 text-left text-sm uppercase">
+                        <th class="px-4 py-3">No</th>
                         <th class="px-4 py-3">Order ID</th>
                         <th class="px-4 py-3">Customer</th>
                         <th class="px-4 py-3">Tanggal</th>
@@ -17,8 +18,11 @@
                     </tr>
                 </thead>
                 <tbody class="text-gray-700 text-sm">
-                    @forelse($pengiriman as $order)
+                    @forelse($pengiriman as $index => $order)
                     <tr class="border-b hover:bg-amber-50 transition">
+                        <td class="px-4 py-3 font-semibold">
+                            {{ ($pengiriman->currentPage() - 1) * $pengiriman->perPage() + $index + 1 }}
+                        </td>
                         <td class="px-4 py-3 font-semibold">{{ $order->id_transaksi }}</td>
                         <td class="px-4 py-3">{{ $order->user->name ?? '-' }}</td>
                         <td class="px-4 py-3">{{ \Carbon\Carbon::parse($order->created_at)->format('d M Y, H:i') }}</td>
@@ -36,10 +40,10 @@
                             <button 
                                 onclick="showKurirModal(
                                     '{{ $order->id_transaksi }}',
-                                    '{{ $order->alamat ?? '-' }}',
+                                    '{{ $order->user->alamat ?? '-' }}',
                                     '{{ $order->total_harga_formatted }}',
                                     '{{ $order->status_pengiriman }}',
-                                    `@foreach($order->detail_transaksi as $dt){{ $dt->menu->nama_menu }}@if(!$loop->last), @endif @endforeach`
+                                    `@foreach($order->detail_transaksi as $dt){{ $dt->menu->nama }}@if(!$loop->last), @endif @endforeach`,
                                 )" 
                                 class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 text-xs">
                                 Pilih Kurir
@@ -48,11 +52,15 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="7" class="text-center py-8 text-gray-400">Belum ada data pengiriman.</td>
+                        <td colspan="8" class="text-center py-8 text-gray-400">Belum ada data pengiriman.</td>
                     </tr>
                     @endforelse
                 </tbody>
             </table>
+        </div>
+
+        <div class="mt-6 flex justify-center">
+            {{ $pengiriman->links() }}
         </div>
     </div>
 </div>
@@ -69,17 +77,17 @@
                 <label class="block text-sm text-gray-700">Order ID:</label>
                 <span id="modal_order_id" class="font-semibold"></span>
             </div>
-                <div class="mb-2">
+            <div class="mb-2">
                 <label class="block text-sm text-gray-700">Menu:</label>
-                <span id="modal_menu"></span>
+                <span id="modal_menu" class="font-semibold"></span>
             </div>
             <div class="mb-2">
                 <label class="block text-sm text-gray-700">Alamat:</label>
-                <span id="modal_alamat"></span>
+                <span id="modal_alamat" class="font-semibold"></span>
             </div>
             <div class="mb-2">
                 <label class="block text-sm text-gray-700">Subtotal:</label>
-                <span id="modal_subtotal"></span>
+                <span id="modal_subtotal" class="font-semibold"></span>
             </div>
             <div class="mb-4">
                 <label for="kurir" class="block mb-2 text-sm font-medium text-gray-700">Nama Kurir</label>
@@ -93,9 +101,10 @@
         </form>
     </div>
 </div>
+?>
 
 <script>
-    function showKurirModal(idTransaksi, alamat, subtotal, statusPengiriman, menu) {
+    function showKurirModal(idTransaksi, alamat, subtotal, statusPengiriman, menu, metodePembayaran) {
         document.getElementById('kurirModal').classList.remove('hidden');
         document.getElementById('modal_id_transaksi').value = idTransaksi;
         document.getElementById('modal_order_id').textContent = idTransaksi;

@@ -28,18 +28,25 @@
                 </h5>
                 <p class="mt-2">Total: <strong>{{ $totalRestoran ?? 1000 }}</strong></p>
             </div>
-            <div class="bg-yellow-500 rounded-lg p-4 text-black">
+            <div class="bg-blue-600 rounded-lg p-4">
                 <h5 class="text-lg font-bold flex items-center">
                     <i class="fas fa-users mr-2"></i> User
                 </h5>
                 <p class="mt-2">Total: <strong>{{ $totalUser ?? 10000 }}</strong></p>
             </div>
-                        <div class="bg-yellow-500 rounded-lg p-4 text-black">
+                <div class="bg-red-600 rounded-lg p-4">
                 <h5 class="text-lg font-bold flex items-center">
-                    <i class="fas fa-users mr-2"></i> Kurir
+                    <i class="fas fa-users mr-2"></i> Data Kurir
                 </h5>
                 <p class="mt-2">Total: <strong>{{ $totalUser ?? 10000 }}</strong></p>
             </div>
+                <div class="bg-yellow-500 rounded-lg p-4">
+                <h5 class="text-lg font-bold flex items-center">
+                    <i class="fas fa-users mr-2"></i> Data User
+                </h5>
+                <p class="mt-2">Total: <strong>{{ $totalUser ?? 10000 }}</strong></p>
+            </div>
+
 
         </div>
 
