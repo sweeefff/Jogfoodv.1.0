@@ -36,10 +36,10 @@
                             <button 
                                 onclick="showKurirModal(
                                     '{{ $order->id_transaksi }}',
-                                    '{{ $order->alamat ?? '-' }}',
+                                    '{{ $order->user->alamat ?? '-' }}',
                                     '{{ $order->total_harga_formatted }}',
                                     '{{ $order->status_pengiriman }}',
-                                    `@foreach($order->detail_transaksi as $dt){{ $dt->menu->nama_menu }}@if(!$loop->last), @endif @endforeach`
+                                    `@foreach($order->detail_transaksi as $dt){{ $dt->menu->nama }}@if(!$loop->last), @endif @endforeach`,
                                 )" 
                                 class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 text-xs">
                                 Pilih Kurir
@@ -69,17 +69,17 @@
                 <label class="block text-sm text-gray-700">Order ID:</label>
                 <span id="modal_order_id" class="font-semibold"></span>
             </div>
-                <div class="mb-2">
+            <div class="mb-2">
                 <label class="block text-sm text-gray-700">Menu:</label>
-                <span id="modal_menu"></span>
+                <span id="modal_menu" class="font-semibold"></span>
             </div>
             <div class="mb-2">
                 <label class="block text-sm text-gray-700">Alamat:</label>
-                <span id="modal_alamat"></span>
+                <span id="modal_alamat" class="font-semibold"></span>
             </div>
             <div class="mb-2">
                 <label class="block text-sm text-gray-700">Subtotal:</label>
-                <span id="modal_subtotal"></span>
+                <span id="modal_subtotal" class="font-semibold"></span>
             </div>
             <div class="mb-4">
                 <label for="kurir" class="block mb-2 text-sm font-medium text-gray-700">Nama Kurir</label>
@@ -93,9 +93,10 @@
         </form>
     </div>
 </div>
+?>
 
 <script>
-    function showKurirModal(idTransaksi, alamat, subtotal, statusPengiriman, menu) {
+    function showKurirModal(idTransaksi, alamat, subtotal, statusPengiriman, menu, metodePembayaran) {
         document.getElementById('kurirModal').classList.remove('hidden');
         document.getElementById('modal_id_transaksi').value = idTransaksi;
         document.getElementById('modal_order_id').textContent = idTransaksi;
