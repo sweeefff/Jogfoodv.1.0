@@ -77,11 +77,9 @@
                                 onclick="return confirm('Batalkan pesanan ini?')">Batal</button>
                         </form>
                     @else
-                        <form action="{{ route('metode.bayar') }}" method="POST" class="inline">
-                            @csrf
-                            <input type="hidden" name="id_transaksi" value="{{ $id_transaksi }}">
-                            <button type="submit" class="bg-orange-500 text-white px-6 py-2 rounded">Bayar</button>
-                        </form>
+                        <a href="{{ route('metode.bayar', ['id_transaksi' => $id_transaksi]) }}">
+                            <button type="button" class="bg-orange-500 text-white px-6 py-2 rounded">Bayar</button>
+                        </a>
                         <form action="{{ route('transaksi.batal', $id_transaksi) }}" method="POST" class="inline">
                             @csrf
                             @method('PATCH')

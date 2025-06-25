@@ -18,11 +18,13 @@ use App\Http\Controllers\RekapController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\StrukController;
 use App\Http\Controllers\TblmenuController;
+use App\Http\Controllers\ChangePassController;
 use App\Http\Middleware\RoleMiddleware;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\PengirimanController;
 use App\Http\Controllers\KurirController;
+use App\Http\Controllers\UserController;
 
 // Auth Routes - Tidak perlu middleware
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -58,9 +60,31 @@ Route::post('/menu/beli-sekarang/{id}', [MenuController::class, 'beliSekarang'])
 // Admin Routes - Hanya admin yang bisa akses
 Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
-    Route::get('/order', [OrderController::class, 'index'])->name('admin.order');
+    Route::get('/order', [OrderController::class, 'order'])->name('admin.order');
     Route::get('/data', [DataController::class, 'data'])->name('admin.data');
     Route::get('/pengiriman', [PengirimanController::class, 'pengiriman'])->name('admin.pengiriman');
+    Route::get('/user', [UserController::class, 'index'])->name('admin.user');
+    Route::get('/kurir', [KurirController::class, 'kurir'])->name('admin.kurir');
+    // ✅ Route ini untuk menampilkan halaman daftar kurir
+    Route::get('/kurir', [KurirController::class, 'index'])->name('admin.kurir');
+    // ✅ Route ini untuk menyimpan data kurir (dipakai oleh form tambah kurir)
+    Route::post('/kurir', [KurirController::class, 'store'])->name('kurir.store');
+    // ✅ Route ini untuk menghapus kurir (dipakai oleh modal hapus)
+    Route::delete('/kurir/{id}', [KurirController::class, 'destroy'])->name('kurir.destroy');
+
+    //  Untuk Data User dibagian admin 
+    Route::resource('/users-resource', UserController::class)->parameters(['users-resource' => 'id'])->names([
+        'index' => 'users.index',
+        'store' => 'users.store',
+        'show' => 'users.show',
+    ]);
+    
+    // Route tambahan untuk UserController
+    Route::get('users/role/{role}', [UserController::class, 'getUsersByRole'])->name('admin.users.role');
+    Route::post('users/{id}/toggle-status', [UserController::class, 'toggleStatus'])->name('admin.users.toggle-status');
+    Route::get('users/search', [UserController::class, 'search'])->name('admin.users.search');
+    Route::get('users/statistics', [UserController::class, 'getStatistics'])->name('admin.users.statistics');
+    Route::post('users/bulk-delete', [UserController::class, 'bulkDelete'])->name('admin.users.bulk-delete');
 
     // CRUD menu
     Route::resource('/tblmenu', TblmenuController::class)->only([
@@ -69,11 +93,11 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
         'update',
         'destroy'
     ])->names([
-                'index' => 'pages.admin.tblmenu',
-                'store' => 'tblmenu.store',
-                'update' => 'tblmenu.update',
-                'destroy' => 'tblmenu.destroy'
-            ]);
+        'index' => 'pages.admin.tblmenu',
+        'store' => 'tblmenu.store',
+        'update' => 'tblmenu.update',
+        'destroy' => 'tblmenu.destroy'
+    ]);
 
     // Route Live Search untuk halaman admin
     Route::get('/tblmenu/search', [TblmenuController::class, 'search'])->name('tblmenu.search');
@@ -82,8 +106,8 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
     Route::get('/changepass', [DataController::class, 'showChangePass'])->name('admin.changepass');
     Route::post('/changepass', [DataController::class, 'changePass'])->name('admin.changepass.update');
     Route::get('/rekap', [RekapController::class, 'rekap'])->name('admin.rekap');
-    Route::post('/admin/order/update-tanggal/{id}', [OrderController::class, 'updateTanggal']);
-    Route::get('/admin/order/export', [OrderController::class, 'export'])->name('admin.order.export');
+    Route::post('/order/update-tanggal/{id}', [OrderController::class, 'updateTanggal'])->name('admin.order.update-tanggal');
+    Route::get('/order/export', [OrderController::class, 'export'])->name('admin.order.export');
 });
 
 // User Routes - Hanya user yang bisa akses
@@ -96,22 +120,30 @@ Route::middleware([RoleMiddleware::class . ':user'])->prefix('user')->group(func
     Route::get('/payment/success', [MetodeController::class, 'success'])->name('metode.success');
     Route::patch('/transaksi/{id}/batal', [MetodeController::class, 'batal'])->name('transaksi.batal');
 
+    //Struk
     Route::get('/struk/{id_struk}', [StrukController::class, 'show'])->name('struk.show');
     Route::get('/struk/generate/{id_transaksi}', [StrukController::class, 'generate'])->name('struk.generate');
     Route::get('/struk/download/{id_struk}', [StrukController::class, 'download'])->name('struk.download');
 
+    // Profile
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
-    // Keranjang
+    //Keranjang
     Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang.index');
     Route::post('/keranjang/tambah/{id}', [KeranjangController::class, 'store'])->name('keranjang.store');
     Route::delete('/keranjang/hapus/{id}', [KeranjangController::class, 'remove'])->name('keranjang.destroy');
 
+    //Detail Pesanan
     Route::get('/detailpsn', [DetailpsnController::class, 'detailpsn'])->name('detailpsn');
+    Route::get('/bayar/{id_transaksi}', [DetailpsnController::class, 'bayar'])->name('metode.bayar');
 
+    //Riwayat
     Route::get('/riwayat', [RiwayatController::class, 'riwayat'])->name('riwayat');
+    Route::get('/rating', [RatingController::class, 'rating'])->name('rating');
+
+    Route::post('/beli-sekarang/{id}', [\App\Http\Controllers\MenuController::class, 'beliSekarang'])->name('menu.beli_sekarang');
 
     // Rating
     Route::get('/user/rating/{id_menu}/{id_detail}', [RatingController::class, 'index'])->name('rating.form');
