@@ -71,103 +71,23 @@
                     Favorit lokal yang tak boleh dilewatkan
                 </p>
             </div>
-
-            <div class="grid grid-cols-1 gap-x-6 sm:grid-cols-2 lg:grid-cols-3">
-                <!-- Hidangan 1 -->
-                <div
-                    class="food-card group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
-                    <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-t-lg bg-gray-200">
-                        <img src="{{ asset('assets/img/gudeg.jpg') }}" alt="Gudeg"
-                            class="h-60 w-full object-cover object-center food-image transition duration-300">
-                    </div>
-                    <div class="p-4">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <h3 class="text-lg font-medium text-gray-900">Gudeg</h3>
-                                <p class="mt-1 text-sm text-gray-500">Rebung nangka manis</p>
-                            </div>
-                            <span
-                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                <i class="fas fa-fire mr-1"></i> Populer
-                            </span>
-                        </div>
-                        <div class="mt-4 flex justify-between items-center">
-                            <div class="flex items-center">
-                                <i class="fas fa-utensils text-gray-400 text-sm mr-1"></i>
-                                <span class="text-gray-500 text-sm">Gudeg Yu Djum</span>
-                            </div>
-                            <span class="text-gray-900 font-medium">Rp 25.000</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Hidangan 2 -->
-                <div
-                    class="food-card group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
-                    <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-t-lg bg-gray-200">
-                        <img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=2070&auto=format&fit=crop"
-                            alt="Sate Klathak"
-                            class="h-60 w-full object-cover object-center food-image transition duration-300">
-                    </div>
-                    <div class="p-4">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <h3 class="text-lg font-medium text-gray-900">Sate Klathak</h3>
-                                <p class="mt-1 text-sm text-gray-500">Sate kambing bakar</p>
-                            </div>
-                            <span
-                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                <i class="fas fa-fire mr-1"></i> Populer
-                            </span>
-                        </div>
-                        <div class="mt-4 flex justify-between items-center">
-                            <div class="flex items-center">
-                                <i class="fas fa-utensils text-gray-400 text-sm mr-1"></i>
-                                <span class="text-gray-500 text-sm">Sate Klathak Pak Bari</span>
-                            </div>
-                            <span class="text-gray-900 font-medium">Rp 35.000</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Hidangan 3 -->
-                <div
-                    class="food-card group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
-                    <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-t-lg bg-gray-200">
-                        <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?q=80&w=2127&auto=format&fit=crop"
-                            alt="Bakpia" class="h-60 w-full object-cover object-center food-image transition duration-300">
-                    </div>
-                    <div class="p-4">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <h3 class="text-lg font-medium text-gray-900">Bakpia Pathok</h3>
-                                <p class="mt-1 text-sm text-gray-500">Pastry kacang manis</p>
-                            </div>
-                            <span
-                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                <i class="fas fa-fire mr-1"></i> Populer
-                            </span>
-                        </div>
-                        <div class="mt-4 flex justify-between items-center">
-                            <div class="flex items-center">
-                                <i class="fas fa-utensils text-gray-400 text-sm mr-1"></i>
-                                <span class="text-gray-500 text-sm">Bakpia Pathok 25</span>
-                            </div>
-                            <span class="text-gray-900 font-medium">Rp 40.000</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                @foreach($topMenus as $menu)
+                    @include('components.card.card', [
+                        'id' => $menu->id_menu,
+                        'nama' => $menu->nama,
+                        'gambar_menu' => $menu->gambar_menu,
+                        'desc' => $menu->deskripsi_menu,
+                        'rating' => round($menu->avg_rating, 1),
+                        'total_ulasan' => $menu->total_ulasan,
+                        'harga' => 'Rp. ' . number_format($menu->harga, 0, ',', '.'),
+                    ])
+                @endforeach
             </div>
-            <div class="mt-12 flex items-center justify-center">
-                <a href="#" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white 
-                                        bg-amber-600 hover:bg-amber-700">
-                    Lihat Semua Menu
-                    <svg class="ml-3 -mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                        fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd"
-                            d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
-                            clip-rule="evenodd" />
-                    </svg>
+            <div class="flex justify-center mt-6">
+                <a href="{{ route('menu.index') }}"
+                class="inline-block px-8 py-3 bg-amber-600 text-white rounded-full font-semibold shadow transition-all duration-300 hover:bg-amber-700">
+                Lihat Lainnya
                 </a>
             </div>
         </div>
