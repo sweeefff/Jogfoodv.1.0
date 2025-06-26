@@ -64,15 +64,11 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
     Route::get('/data', [DataController::class, 'data'])->name('admin.data');
     Route::get('/pengiriman', [PengirimanController::class, 'pengiriman'])->name('admin.pengiriman');
     Route::get('/user', [UserController::class, 'index'])->name('admin.user');
-    Route::get('/kurir', [KurirController::class, 'kurir'])->name('kurir.index');
-    // ✅ Route ini untuk menampilkan halaman daftar kurir
-    Route::get('/kurir', [KurirController::class, 'index'])->name('admin.kurir');
-    // ✅ Route ini untuk menyimpan data kurir (dipakai oleh form tambah kurir)
-    Route::post('/kurir', [KurirController::class, 'store'])->name('kurir.store');
-    // ✅ Route ini untuk menghapus kurir (dipakai oleh modal hapus)
-    Route::delete('/kurir/{id}', [KurirController::class, 'destroy'])->name('kurir.destroy');
+   Route::get('/kurir', [KurirController::class, 'kurir'])->name('admin.kurir'); // Menampilkan daftar kurir
+    Route::post('/kurir', [KurirController::class, 'store'])->name('kurir.store'); // Menyimpan kurir baru
+    Route::delete('/kurir/{id}', [KurirController::class, 'destroy'])->name('kurir.destroy'); // Menghapus kurir
 
-    //  Untuk Data User dibagian admin 
+});    //  Untuk Data User dibagian admin 
     Route::resource('/users-resource', UserController::class)->parameters(['users-resource' => 'id'])->names([
         'index' => 'users.index',
         'store' => 'users.store',
@@ -108,7 +104,7 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
     Route::get('/rekap', [RekapController::class, 'rekap'])->name('admin.rekap');
     Route::post('/order/update-tanggal/{id}', [OrderController::class, 'updateTanggal'])->name('admin.order.update-tanggal');
     Route::get('/order/export', [OrderController::class, 'export'])->name('admin.order.export');
-});
+
 
 // User Routes - Hanya user yang bisa akses
 Route::middleware([RoleMiddleware::class . ':user'])->prefix('user')->group(function () {

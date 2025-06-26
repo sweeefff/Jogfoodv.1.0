@@ -11,7 +11,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class KurirController extends Controller
 {
-    public function index()
+    public function kurir()
     {
         $kurirs = User::where('role', 'kurir')->get();
         return view('pages.admin.data-kurir', compact('kurirs'));
@@ -19,18 +19,19 @@ class KurirController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'username' => 'required|unique:users',
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'alamat' => 'nullable|string|max:255',
-            'password' => 'required|min:8',
-            'role' => 'kurir',
-            'no_hp' => 'nullable',
-        ]);
+    $request->validate([
+        'username' => 'required|unique:users',
+        'name' => 'required',
+        'email' => 'required|email|unique:users',
+        'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'alamat' => 'nullable|string|max:255',
+        'password' => 'required|min:8',
+        'no_hp' => 'nullable|string|max:15',
+    ]);
 
-        $data = $request->only(['username', 'name', 'email', 'password', 'role', 'no_hp', 'alamat', 'foto']);
+    $data = $request->only(['username', 'name', 'email', 'alamat', 'no_hp']);
+    $data['role'] = 'kurir'; 
+    $data['password'] = bcrypt($request->password);
         
         if ($request->hasFile('foto')) {
             $data['foto'] = $request->file('foto')->store('kurir', 'public');
@@ -38,7 +39,7 @@ class KurirController extends Controller
 
         User::create($data);
 
-        return redirect()->route('kurir.index')->with('success', 'Kurir berhasil ditambahkan');
+        return redirect()->route('admin.kurir')->with('success', 'Kurir berhasil ditambahkan');
     }
 
     public function destroy($id)
@@ -52,7 +53,7 @@ class KurirController extends Controller
 
         $kurir->delete();
 
-        return redirect()->route('kurir.index')->with('success', 'Kurir berhasil dihapus');
+        return redirect()->route('admin.kurir')->with('success', 'Kurir berhasil dihapus');
     }
 
 
