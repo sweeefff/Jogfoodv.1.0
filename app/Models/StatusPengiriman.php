@@ -19,7 +19,7 @@ class StatusPengiriman extends Model
         'status_pembayaran',
         'status_pengiriman',
         'nama_penerima',
-        'foto',
+        'foto_penerima',
         'id_kurir',
         'alasan',
         'tanggal_transaksi',

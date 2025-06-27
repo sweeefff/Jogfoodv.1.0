@@ -152,13 +152,16 @@ Route::middleware([RoleMiddleware::class . ':user'])->prefix('user')->group(func
 
 // Kurir Routes - Hanya kurir yang bisa akses
 Route::middleware([RoleMiddleware::class . ':kurir'])->prefix('kurir')->group(function () {
+    // menampilkan dashboard kurir
     Route::get('/dashboard', [KurirController::class, 'kurirDashboard'])->name('kurir.dashboard');
     Route::get('/order', [KurirController::class, 'kurirOrder'])->name('kurir.order');
-    Route::get('/kurir/order/{id}/update', [KurirController::class, 'kurirShowUpdate'])->name('kurir.showUpdate');
-    Route::put('/order/{id}/update-status', [KurirController::class, 'kurirUpdateStatus'])->name('kurir.updateStatus');
+
+    //Menampilkan Update Status
+    Route::get('/kurir/update/{id}', [KurirController::class, 'kurirShowUpdate'])->name('kurir.showUpdate');
+    Route::put('/kurir/update/{id}', [KurirController::class, 'kurirUpdateStatus'])->name('kurir.updateStatus');
     Route::put('/order/{id}/selesai', [KurirController::class, 'kurirSelesaikanOrder'])->name('kurir.selesaikan');
 
-
+    // Menampilkan Profile Kurir
     Route::get('/data', [KurirController::class, 'kurirData'])->name('kurir.data');
     Route::get('/edit', [KurirController::class, 'kurirEdit'])->name('kurir.edit');
     Route::put('/update', [KurirController::class, 'kurirUpdate'])->name('kurir.update');
