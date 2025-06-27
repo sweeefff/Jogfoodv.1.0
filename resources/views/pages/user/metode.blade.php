@@ -10,11 +10,11 @@
             <div class="mt-4 p-4">
                 <h2 class="text-lg font-medium">Alamat</h2>
                 <p class="text-gray-700 mt-2">
-                    Jl. Hang Kesturi I No.8 Kawasan Industri Terpadu Kabil, Batam 29467, Indonesia
+                    {{ $items->first()->user->alamat ?? 'Alamat tidak tersedia' }}
                 </p>
-                <button class="text-amber-600 hover:text-amber-800 mt-2">
+                <a href="{{ route('profile.edit') }}" class="text-amber-600 hover:text-amber-800 mt-2">
                     Ubah Alamat
-                </button>
+                </a>
             </div>
 
             <!-- Tampilkan item yang dipilih -->

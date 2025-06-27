@@ -8,6 +8,7 @@ use App\Models\StatusPengiriman;
 use App\Models\User;
 use App\Models\Transaksi;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Storage;
 
 class KurirController extends Controller
 {
@@ -45,10 +46,10 @@ class KurirController extends Controller
     public function destroy($id)
     {
         $kurir = User::findOrFail($id);
-        
+
         // Hapus foto jika ada
-        if ($kurir->foto && \Storage::disk('public')->exists($kurir->foto)) {
-            \Storage::disk('public')->delete($kurir->foto);
+        if ($kurir->foto && Storage::disk('public')->exists($kurir->foto)) {
+            Storage::disk('public')->delete($kurir->foto);
         }
 
         $kurir->delete();
@@ -62,16 +63,18 @@ class KurirController extends Controller
         $userId = session('user_id');
 
         // Statistik
-        $totalPengiriman = StatusPengiriman::where('id_user', $userId)->count();
-        $totalSukses = StatusPengiriman::where('id_user', $userId)
+        $totalPengiriman = StatusPengiriman::where('id_kurir', $userId)->count();
+        $totalSukses = StatusPengiriman::where('id_kurir', $userId)
             ->whereIn('status_pengiriman', ['selesai'])
             ->count();
-        $totalGagal = StatusPengiriman::where('id_user', $userId)
-            ->whereIn('status_pengiriman', ['gagal', 'dibatalkan', 'antar-ulang'])
+        $totalGagal = StatusPengiriman::where('id_kurir', $userId)
+            ->whereIn('status_pengiriman', ['gagal', 'dibatalkan'])
             ->count();
 
         // Riwayat pengiriman (20 terakhir)
-        $riwayat = StatusPengiriman::where('id_user', $userId)
+        $riwayat = StatusPengiriman::where('id_kurir', $userId)
+            ->whereIn('status_pengiriman', ['selesai', 'gagal', 'dibatalkan'])
+            ->with(['transaksi.user', 'transaksi.detail_transaksi.menu'])
             ->orderByDesc('tanggal_update')
             ->limit(20)
             ->get();
@@ -127,9 +130,11 @@ class KurirController extends Controller
     public function kurirUpdateStatus(Request $request, $id)
     {
         $request->validate([
-            'status_pengiriman' => 'required|in:selesai,antar-ulang',
+            'status_pengiriman' => 'required|in:selesai,gagal',
             'alasan' => 'nullable|string|max:255',
             'nama_penerima' => 'nullable|string|max:255',
+            'status_pembayaran' => 'nullable|in:pending,lunas',
+            'foto_penerima' => 'nullable|image|mimes:jpeg,png,jpg|max:5120', // 5MB tanpa titik
         ]);
 
         $status = StatusPengiriman::where('id_transaksi', $id)
@@ -146,22 +151,37 @@ class KurirController extends Controller
             $updateData['nama_penerima'] = $request->nama_penerima;
         }
 
-
-
-        if ($request->alasan) {
+        if ($request->status_pengiriman === 'gagal') {
             $updateData['alasan'] = $request->alasan;
+        }
 
-
-
+        // Simpan foto jika ada
+        if ($request->hasFile('foto_penerima')) {
+            $fotoPath = $request->file('foto_penerima')->store('foto_penerima', 'public');
+            $updateData['foto_penerima'] = $fotoPath;
         }
 
         $status->update($updateData);
+
+        // Jika pembayaran COD dan status pembayaran diubah menjadi lunas
+        if (
+            $request->status_pengiriman === 'selesai' &&
+            $request->has('status_pembayaran') &&
+            $status->transaksi &&
+            $status->transaksi->pembayaran &&
+            $status->transaksi->pembayaran->metode_pembayaran === 'cod'
+        ) {
+            $pembayaran = $status->transaksi->pembayaran;
+            $pembayaran->status_pembayaran = $request->status_pembayaran;
+            $pembayaran->save();
+        }
 
         $message = $request->status_pengiriman === 'selesai'
             ? 'Pesanan berhasil ditandai selesai!'
             : 'Status pesanan berhasil diperbarui!';
 
-        return redirect()->back()->with('success', $message);
+        // Redirect ke route yang benar
+        return redirect()->route('kurir.order')->with('success', $message);
     }
 
     public function kurirShowUpdate($id)
@@ -172,10 +192,38 @@ class KurirController extends Controller
             ->where('id_kurir', $userId)
             ->firstOrFail();
 
-
-
-
         return view('pages.kurir.update', compact('status'));
     }
 
+    public function kurirUpdate(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users,username,' . $request->id,
+            'email' => 'required|email|max:255|unique:users,email,' . $request->id,
+            'no_hp' => 'nullable|string|max:20',
+            'alamat' => 'nullable|string|max:255',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        $kurir = User::findOrFail($request->id);
+
+        $kurir->name = $request->name;
+        $kurir->username = $request->username;
+        $kurir->email = $request->email;
+        $kurir->no_hp = $request->no_hp;
+        $kurir->alamat = $request->alamat;
+
+        if ($request->hasFile('foto')) {
+            // Hapus foto lama jika ada
+            if ($kurir->foto && Storage::disk('public')->exists($kurir->foto)) {
+                Storage::disk('public')->delete($kurir->foto);
+            }
+            $kurir->foto = $request->file('foto')->store('kurir', 'public');
+        }
+
+        $kurir->save();
+
+        return redirect()->route('kurir.data')->with('success', 'Profil berhasil diperbarui.');
+    }
 }

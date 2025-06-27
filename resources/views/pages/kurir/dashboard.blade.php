@@ -53,16 +53,16 @@
                                 </td>
                                 <td class="px-2 sm:px-4 py-2 text-gray-700 break-all">{{ $item->id_transaksi }}</td>
                                 <td class="px-2 sm:px-4 py-2">
-                                    @if(in_array($item->status_pengiriman, ['sampai', 'success']))
+                                    @if(in_array($item->status_pengiriman, ['selesai']))
                                         <span class="text-green-600 font-semibold">Sukses</span>
-                                    @elseif(in_array($item->status_pengiriman, ['gagal',  'antar-ulang']))
+                                    @elseif(in_array($item->status_pengiriman, ['gagal']))
                                         <span class="text-red-600 font-semibold">{{ ucfirst(str_replace('-', ' ', $item->status_pengiriman)) }}</span>
                                     @else
                                         <span class="text-yellow-600 font-semibold">{{ ucfirst(str_replace('-', ' ', $item->status_pengiriman)) }}</span>
                                     @endif
                                 </td>
                                 <td class="px-2 sm:px-4 py-2">
-                                    <a href="{{ route('kurir.update', $item->id_transaksi) }}" class="text-gray-700 underline">Lihat Status</a>
+                                    <a href="{{ route('kurir.showUpdate', $item->id_transaksi) }}" class="text-green-700 underline">Lihat Status</a>
                                 </td>
                             </tr>
                         @empty
