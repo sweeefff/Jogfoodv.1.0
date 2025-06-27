@@ -86,13 +86,6 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.rekap') }}"
-                    class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
-                    <i class="fas fa-chart-line w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
-                    <span class="ms-3">Rekap Penjualan</span>
-                </a>
-            </li>
-            <li>
                 <a href="{{ route('admin.pengiriman') }}"
                     class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
                     <i class="fas fa-truck w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>

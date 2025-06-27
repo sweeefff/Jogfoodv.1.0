@@ -11,19 +11,29 @@ class DashboardController extends Controller
 {
     public function dashboard()
     {
-        $activities = AdminActivity::latest()->limit(20)->get();
 
         // Statistik total (pastikan modelnya tersedia)
         $totalKuliner = Menu::where('kategori', 'kuliner')->count(); // Ganti 'kuliner' dengan kategori yang sesuai di model Kuliner::count();
         $totalMinuman = Menu::where('kategori', 'minuman')->count(); // Ganti 'minuman' dengan kategori yang sesuai di model Minuman::count();
         $totalSideDish = Menu::where('kategori', 'side dish')->count(); // Ganti 'side dish' dengan kategori yang sesuai di model SideDish::count();
         $totalUser = User::count();
+        $topMenus = \App\Models\Menu::withCount([
+                'ratings as avg_rating' => function($q) {
+                    $q->select(\DB::raw('coalesce(avg(rating),0)'));
+                },
+                'ratings as total_ulasan'
+            ])
+            ->orderByDesc('avg_rating')
+            ->limit(5)
+            ->get();
 
         return view('pages.admin.dashboard', compact(
-            'activities',
             'totalKuliner',
             'totalMinuman',
-            'totalSideDish',));
+            'totalSideDish',
+            'totalUser',
+            'topMenus'));
+            
     }
 
     public function data()
