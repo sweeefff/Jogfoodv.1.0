@@ -42,8 +42,8 @@
                         <td class="px-4 py-2">{{ $k->alamat ?? '-' }}</td>
                         <td class="px-4 py-2">{{ $k->no_hp ?? '-' }}</td>
                         <td class="px-4 py-2 text-center">
-                            @if($k->foto)
-                            <img src="{{ asset('uploads/foto/' . $k->foto) }}" alt="Foto {{ $k->name }}"
+                            @if($k->foto && file_exists(public_path('storage/' . $k->foto)))
+                            <img src="{{ asset('storage/' . $k->foto) }}" alt="Foto {{ $k->name }}"
                                 class="w-10 h-10 rounded-full object-cover mx-auto border border-gray-200 shadow">
                             @else
                             <span class="text-gray-400 text-xs">Tidak ada foto</span>
