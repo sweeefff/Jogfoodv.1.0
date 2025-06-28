@@ -1,21 +1,33 @@
 @extends('layouts.appadm')
 @section('title', 'Menu Makanan - Jogfood')
 @section('content')
-    <!-- Content -->
     <div class="p-6 mt-16 ml-auto lg:ml-64">
         <div class="bg-white rounded-lg shadow-md p-6">
-            <!-- Header with search and add button -->
+            <!-- Kategori Button Tabs -->
+            <div class="flex gap-3 mb-6">
+                @foreach(['Makanan', 'Minuman', 'Side Dish'] as $kat)
+                    <button 
+                        onclick="loadKategori('{{ $kat }}')" 
+                        class="kategori-btn px-4 py-2 rounded-lg font-semibold 
+                            hover:bg-amber-600 hover:text-white transition
+                            {{ $kategori == $kat ? 'bg-amber-700 text-white' : 'bg-amber-100 text-amber-700' }}">
+                        {{ $kat }}
+                    </button>
+                @endforeach
+            </div>
+
+            <!-- Search & Add Button -->
             <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
                 <div class="mb-4 md:mb-0">
-                    <h2 class="text-2xl font-bold text-gray-800">{{ $kategori }} Item</h2>
-                    <p class="text-amber-600">Mengelola semua item {{ $kategori }} restoran</p>
+                    <h2 class="text-2xl font-bold text-gray-800">{{ $kategori }} </h2>
+                    <p class="text-amber-600">Mengelola semua {{ $kategori }}</p>
                 </div>
                 <div class="flex flex-col sm:flex-row gap-3">
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                             <i class="fas fa-search text-amber-500"></i>
                         </div>
-                        <input type="text" id="search"
+                        <input type="text" id="tblmenu.search"
                             class="bg-amber-50 border border-amber-300 text-amber-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full pl-10 p-2.5"
                             placeholder="Search menus...">
                     </div>
@@ -25,215 +37,121 @@
                     </button>
                 </div>
             </div>
-            
-            @include('components.card.add-modal', ['kategori' => $kategori])
-            @include('components.card.edit-modal', ['kategori' => $kategori])
-            
-            <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const searchInput = document.getElementById("search");
-        const tableBody = document.getElementById("menuTableBody");
 
-        searchInput.addEventListener("keyup", function () {
-            const filter = searchInput.value.toLowerCase();
-            const rows = tableBody.getElementsByTagName("tr");
+            <div id="menuContent">
+                @include('components.card.add-modal', ['kategori' => $kategori])
+                @include('components.card.edit-modal', ['kategori' => $kategori])
 
-            Array.from(rows).forEach(row => {
-                const nama = row.cells[1]?.textContent.toLowerCase() || '';
-                const deskripsi = row.cells[2]?.textContent.toLowerCase() || '';
-
-                if (nama.includes(filter) || deskripsi.includes(filter)) {
-                    row.style.display = "";
-                } else {
-                    row.style.display = "none";
-                }
-            });
-        });
-    });
-</script>
-
-            <!-- Table Container -->
-            <div class="table-container custom-scrollbar shadow-md sm:rounded-lg overflow-x-auto">
-                <table class="menu-table text-sm text-left text-amber-500 w-full">
-                    <thead class="text-xs text-amber-700 uppercase bg-amber-50">
-                        <tr>
-                            <th scope="col" class="col-id px-3 py-3">
-                                <div class="flex items-center justify-center">
-                                    ID
-                                    <button onclick="sortTable(0)">
-                                        <i class="fas fa-sort ml-1"></i>
-                                    </button>
-                                </div>
-                            </th>
-                            <th scope="col" class="col-nama px-3 py-3">
-                                <div class="flex items-center">
-                                    Nama
-                                    <button onclick="sortTable(1)">
-                                        <i class="fas fa-sort ml-1"></i>
-                                    </button>
-                                </div>
-                            </th>
-                            <th scope="col" class="col-deskripsi px-3 py-3">
-                                <div class="flex items-center">
-                                    Deskripsi
-                                </div>
-                            </th>
-                            <th scope="col" class="col-harga px-3 py-3">
-                                <div class="flex items-center justify-end">
-                                    Harga
-                                    <button onclick="sortTable(3)">
-                                        <i class="fas fa-sort ml-1"></i>
-                                    </button>
-                                </div>
-                            </th>
-                            <th scope="col" class="col-gambar px-3 py-3">
-                                <div class="flex items-center justify-center">
-                                    Gambar
-                                </div>
-                            </th>
-                            <th scope="col" class="col-aksi px-3 py-3">
-                                <div class="flex items-center justify-center">
-                                    Aksi
-                                </div>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody id="menuTableBody">
-                        @forelse ($menu as $item)
-                            <tr class="bg-white border-b hover:bg-amber-50 animate-fade-in">
-                                <td class="id-cell px-3 py-4">{{ $item->id_menu }}</td>
-                                <td class="px-3 py-4 font-medium text-amber-900" style="word-wrap: break-word;">
-                                    {{ $item->nama }}
-                                </td>
-                                <td class="description-cell font-small text-amber-900">{{ $item->deskripsi_menu }}</td>
-                                <td class="harga-cell px-3 py-4 font-medium text-amber-900">
-                                    Rp {{ number_format((float)$item->harga, 0, ',', '.') }}
-                                </td>
-                                <td class="gambar-cell px-3 py-4">
-                                    @if($item->gambar_menu && file_exists(public_path('assets/img/menu/' . $item->gambar_menu)))
-                                        <img src="{{ asset('assets/img/menu/' . $item->gambar_menu) }}"
-                                            alt="{{ $item->nama }}" class="w-12 h-12 object-cover mx-auto rounded-lg shadow-sm">
-                                    @else
-                                        <div class="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center mx-auto">
-                                            <i class="fas fa-image text-gray-400"></i>
-                                        </div>
-                                    @endif
-                                </td>
-                                <td class="aksi-cell px-3 py-4">
-                                    <div class="flex items-center justify-center gap-2">
-                                        <button class="text-amber-600 hover:text-amber-900 p-1 rounded hover:bg-amber-100 transition-colors edit-button" 
-                                            type="button"
-                                            data-id="{{ $item->id_menu }}" 
-                                            data-nama="{{ $item->nama }}"
-                                            data-harga="{{ (float)$item->harga }}" 
-                                            data-deskripsi="{{ $item->deskripsi_menu }}"
-                                            data-image="{{ $item->gambar_menu }}" 
-                                            data-kategori="{{ $kategori }}"
-                                            data-action="{{ route('tblmenu.update', $item->id_menu) }}"
-                                            data-modal-target="edit-modal" data-modal-toggle="edit-modal">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <form action="{{ route('tblmenu.destroy', $item->id_menu) }}" method="POST"
-                                            class="inline-block">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                class="text-red-600 hover:text-red-900 p-1 rounded hover:bg-red-100 transition-colors"
-                                                onclick="return confirm('Apakah Anda yakin ingin menghapus item ini?')">
-                                                <i class="fas fa-trash"></i>
+                <!-- Table -->
+                <div class="table-container custom-scrollbar shadow-md sm:rounded-lg overflow-x-auto">
+                    <table class="menu-table text-sm text-left text-amber-500 w-full">
+                        <thead class="text-xs text-amber-700 uppercase bg-amber-50">
+                            <tr>
+                                <th class="px-3 py-3">ID</th>
+                                <th class="px-3 py-3">Nama</th>
+                                <th class="px-3 py-3">Deskripsi</th>
+                                <th class="px-3 py-3 text-right">Harga</th>
+                                <th class="px-3 py-3 text-center">Gambar</th>
+                                <th class="px-3 py-3 text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="menuTableBody">
+                            @forelse ($menu as $item)
+                                <tr class="bg-white border-b hover:bg-amber-50 animate-fade-in">
+                                    <td class="px-3 py-4">{{ $item->id_menu }}</td>
+                                    <td class="px-3 py-4 font-medium text-amber-900">{{ $item->nama }}</td>
+                                    <td class="text-amber-900">{{ $item->deskripsi_menu }}</td>
+                                    <td class="px-3 py-4 font-medium text-amber-900 text-right">Rp {{ number_format((float)$item->harga, 0, ',', '.') }}</td>
+                                    <td class="px-3 py-4 text-center">
+                                        @if($item->gambar_menu && file_exists(public_path('assets/img/menu/' . $item->gambar_menu)))
+                                            <img src="{{ asset('assets/img/menu/' . $item->gambar_menu) }}" class="w-12 h-12 object-cover mx-auto rounded-lg shadow-sm">
+                                        @else
+                                            <div class="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center mx-auto">
+                                                <i class="fas fa-image text-gray-400"></i>
+                                            </div>
+                                        @endif
+                                    </td>
+                                    <td class="px-3 py-4 text-center">
+                                        <div class="flex items-center justify-center gap-2">
+                                            <button class="text-amber-600 hover:text-amber-900 p-1 rounded hover:bg-amber-100 edit-button"
+                                                data-id="{{ $item->id_menu }}" 
+                                                data-nama="{{ $item->nama }}"
+                                                data-harga="{{ (float)$item->harga }}" 
+                                                data-deskripsi="{{ $item->deskripsi_menu }}"
+                                                data-image="{{ $item->gambar_menu }}" 
+                                                data-kategori="{{ $kategori }}"
+                                                data-action="{{ route('tblmenu.update', $item->id_menu) }}"
+                                                data-modal-target="edit-modal" data-modal-toggle="edit-modal">
+                                                <i class="fas fa-edit"></i>
                                             </button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr class="bg-white border-b hover:bg-amber-50 animate-fade-in">
-                                <td colspan="6" class="px-6 py-4 text-center text-amber-900">Tidak ada data tersedia</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                                            <form action="{{ route('tblmenu.destroy', $item->id_menu) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-red-600 hover:text-red-900 p-1 rounded hover:bg-red-100"
+                                                    onclick="return confirm('Yakin ingin menghapus item ini?')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr class="bg-white border-b hover:bg-amber-50 animate-fade-in">
+                                    <td colspan="6" class="px-6 py-4 text-center text-amber-900">Tidak ada data tersedia</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
-            <!-- Pagination -->
-            <nav class="flex flex-col md:flex-row items-center justify-between pt-4" aria-label="Table navigation">
-                <span class="text-sm font-normal text-amber-500">Showing <span
-                        class="font-semibold text-amber-900">1-10</span> of <span
-                        class="font-semibold text-amber-900">100</span></span>
-                <ul class="inline-flex -space-x-px text-sm h-8">
-                    <li>
-                        <a href="#"
-                            class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-amber-500 bg-white border border-amber-300 rounded-s-lg hover:bg-amber-100 hover:text-amber-700">Previous</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="flex items-center justify-center px-3 h-8 leading-tight text-amber-500 bg-white border border-amber-300 hover:bg-amber-100 hover:text-amber-700">1</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="flex items-center justify-center px-3 h-8 leading-tight text-amber-500 bg-white border border-amber-300 hover:bg-amber-100 hover:text-amber-700">2</a>
-                    </li>
-                    <li>
-                        <a href="#" aria-current="page"
-                            class="flex items-center justify-center px-3 h-8 text-amber-600 border border-amber-300 bg-amber-50 hover:bg-amber-100 hover:text-amber-700">3</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="flex items-center justify-center px-3 h-8 leading-tight text-amber-500 bg-white border border-amber-300 hover:bg-amber-100 hover:text-amber-700">4</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="flex items-center justify-center px-3 h-8 leading-tight text-amber-500 bg-white border border-amber-300 hover:bg-amber-100 hover:text-amber-700">5</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="flex items-center justify-center px-3 h-8 leading-tight text-amber-500 bg-white border border-amber-300 rounded-e-lg hover:bg-amber-100 hover:text-amber-700">Next</a>
-                    </li>
-                </ul>
-            </nav>
         </div>
     </div>
 
+    <!-- JS: Search & Kategori -->
     <script>
-        let currentSort = { column: null, asc: true };
-
-        function sortTable(columnIndex) {
-            const table = document.querySelector("table");
-            const tbody = table.querySelector("tbody");
-            const rows = Array.from(tbody.querySelectorAll("tr"));
-
-            const sortedRows = rows.sort((a, b) => {
-                let aText = a.children[columnIndex].textContent.trim().toLowerCase();
-                let bText = b.children[columnIndex].textContent.trim().toLowerCase();
-
-                // Convert to number if sorting ID or Harga
-                if (columnIndex === 0 || columnIndex === 3) {
-                    // Remove 'Rp' and dots for price sorting
-                    if (columnIndex === 3) {
-                        aText = parseFloat(aText.replace(/[^\d]/g, ''));
-                        bText = parseFloat(bText.replace(/[^\d]/g, ''));
-                    } else {
-                        aText = parseFloat(aText);
-                        bText = parseFloat(bText);
-                    }
+        function loadKategori(kategori) {
+            fetch(`/tblmenu?kategori=${kategori}`, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
                 }
+            })
+            .then(res => res.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const newContent = doc.querySelector('#menuContent').innerHTML;
+                document.querySelector('#menuContent').innerHTML = newContent;
 
-                if (aText < bText) return currentSort.asc ? -1 : 1;
-                if (aText > bText) return currentSort.asc ? 1 : -1;
-                return 0;
+                // Highlight active tab
+                document.querySelectorAll('.kategori-btn').forEach(btn => {
+                    if (btn.innerText === kategori) {
+                        btn.classList.add('bg-amber-700', 'text-white');
+                        btn.classList.remove('bg-amber-100', 'text-amber-700');
+                    } else {
+                        btn.classList.remove('bg-amber-700', 'text-white');
+                        btn.classList.add('bg-amber-100', 'text-amber-700');
+                    }
+                });
             });
-
-            // Toggle ascending/descending
-            if (currentSort.column === columnIndex) {
-                currentSort.asc = !currentSort.asc;
-            } else {
-                currentSort.column = columnIndex;
-                currentSort.asc = true;
-            }
-
-            // Append sorted rows
-            sortedRows.forEach(row => tbody.appendChild(row));
         }
-    </script>
 
+        // Filter search
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchInput = document.getElementById("search");
+            const tableBody = document.getElementById("menuTableBody");
+
+            if (searchInput && tableBody) {
+                searchInput.addEventListener("keyup", function () {
+                    const filter = searchInput.value.toLowerCase();
+                    const rows = tableBody.getElementsByTagName("tr");
+
+                    Array.from(rows).forEach(row => {
+                        const nama = row.cells[1]?.textContent.toLowerCase() || '';
+                        const deskripsi = row.cells[2]?.textContent.toLowerCase() || '';
+                        row.style.display = (nama.includes(filter) || deskripsi.includes(filter)) ? "" : "none";
+                    });
+                });
+            }
+        });
+    </script>
 @endsection

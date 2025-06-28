@@ -8,7 +8,7 @@
             <i class="fas fa-tachometer-alt mr-2"></i> Dashboard Admin
         </h3>
 
-        <!-- Dashboard Cards (opsional, bisa tambahkan statistik lain di sini) -->
+        <!-- Dashboard Cards -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-white mb-8">
             <!-- Card Makanan (link ke tblmenu) -->
                 <a href="{{ route('pages.admin.tblmenu', ['kategori' => 'Makanan']) }}" class="bg-blue-600 rounded-lg p-4 block hover:bg-blue-700 transition">
@@ -26,7 +26,7 @@
             </a>
             </class=>
             <!-- Card Camilan -->
-            <a href="{{ route('pages.admin.tblmenu', ['kategori' => 'Side Dish']) }}" class="bg-green-600 rounded-lg p-4 block hover:bg-green-700 transition">
+            <a href="{{ route('pages.admin.tblmenu', ['kategori' => 'Side dish']) }}" class="bg-green-600 rounded-lg p-4 block hover:bg-green-700 transition">
                 <h5 class="text-lg font-bold flex items-center">
                     <i class="fas fa-utensils mr-2"></i> Camilan
                 </h5>

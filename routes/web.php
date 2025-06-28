@@ -67,6 +67,10 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
    Route::get('/kurir', [KurirController::class, 'kurir'])->name('admin.kurir'); // Menampilkan daftar kurir
     Route::post('/kurir', [KurirController::class, 'store'])->name('kurir.store'); // Menyimpan kurir baru
     Route::delete('/kurir/{id}', [KurirController::class, 'destroy'])->name('kurir.destroy'); // Menghapus kurir
+    Route::get('/tblmenu', [TblmenuController::class, 'index'])->name('pages.admin.tblmenu');
+    Route::get('/tblmenu/search', [TblmenuController::class, 'search'])->name('tblmenu.search');
+
+
 
 });    //  Untuk Data User dibagian admin 
     Route::resource('/users-resource', UserController::class)->parameters(['users-resource' => 'id'])->names([

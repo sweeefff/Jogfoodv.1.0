@@ -9,13 +9,17 @@ use Illuminate\Support\Facades\DB; // Tambahkan ini untuk menggunakan DB facade
 
 class TblmenuController extends Controller
 {
-    public function index(Request $request)
-    {
-        $kategori = $request->get('kategori', 'Makanan'); // default: Makanan jika tidak ada parameter
-        $menu = Menu::where('kategori', $kategori)->get();
+public function index(Request $request)
+{
+    $kategori = $request->get('kategori', 'Makanan');
+    $menu = Menu::where('kategori', $kategori)->get();
 
-        return view('pages.admin.tblmenu', compact('menu', 'kategori'));
+    if ($request->ajax()) {
+        return response()->view('pages.admin.tblmenu', compact('menu', 'kategori'))->header('Content-Type', 'text/html');
     }
+
+    return view('pages.admin.tblmenu', compact('menu', 'kategori'));
+}
     public function store(Request $request)
     {
         $validatedData = $request->validate([
