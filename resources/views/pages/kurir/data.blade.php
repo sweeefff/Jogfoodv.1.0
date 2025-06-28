@@ -21,7 +21,7 @@
                     class="inline-flex items-center justify-center px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition shadow text-sm font-medium">
                     <i class="fas fa-edit mr-2"></i>Edit Profil
                 </a>
-                <a href="{{ route('password.request') }}"
+                <a href="{{ route('password.email') }}"
                     class="inline-flex items-center justify-center px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition shadow text-sm font-medium">
                     <i class="fas fa-key mr-2"></i>Ganti Password
                 </a>

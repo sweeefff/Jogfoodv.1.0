@@ -7,22 +7,24 @@
     <div class="bg-amber-50 flex justify-center py-12">
         <div class="max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-                    Menu {{ $kategori }}
-                </h2>
-                <p class="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
-                    Temukan berbagai {{ $kategori }} khas Jogja yang lezat
-                </p>
+                @if(request('search'))
+                    <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                        Menu dengan hasil pencarian "{{ request('search') }}"
+                    </h2>
+                    <p class="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
+                        Temukan berbagai menu khas Jogja yang sesuai pencarianmu.
+                    </p>
+                @else
+                    <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                        Menu {{ $kategori }}
+                    </h2>
+                    <p class="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
+                        Temukan berbagai {{ $kategori }} khas Jogja yang lezat
+                    </p>
+                @endif
             </div>
         </div>
     </div>
-
-    @if (session('success'))
-        <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4 rounded-lg mx-auto" role="alert" style="max-width: 650px;">
-            <p class="font-bold">Berhasil</p>
-            <p>{{ session('success') }}</p>
-        </div>
-    @endif
 
     <!-- Sort by dropdown -->
     <div class="max-w-7xl mx-auto px-4 flex justify-end mb-4">
@@ -53,4 +55,33 @@
             <a href="#" class="px-3 py-2 rounded-r-md border border-gray-300 bg-white text-gray-500 hover:bg-gray-50">Next</a>
         </nav>
     </div>
+
+    {{-- SweetAlert Toast --}}
+    @if(session('success'))
+    <script>
+        Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: '{{ session('success') }}',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true
+        });
+    </script>
+    @endif
+
+    @if(session('error'))
+    <script>
+        Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'error',
+            title: '{{ session('error') }}',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true
+        });
+    </script>
+    @endif
 @endsection

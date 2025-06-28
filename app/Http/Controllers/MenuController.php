@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Menu;
+use App\Models\Ratings;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 
 class MenuController extends Controller
 {
@@ -15,7 +17,7 @@ class MenuController extends Controller
 
         $menu = Menu::withCount([
                 'ratings as avg_rating' => function($q) {
-                    $q->select(\DB::raw('coalesce(avg(rating),0)'));
+                    $q->select(DB::raw('coalesce(avg(rating),0)'));
                 },
                 'ratings as total_ulasan'
             ])
@@ -25,24 +27,22 @@ class MenuController extends Controller
             ->when($kategori, function ($query, $kategori) {
                 $query->where('kategori', $kategori);
             })
-            ->orderByDesc('avg_rating') // Tambahkan baris ini
+            ->orderByDesc('avg_rating')
             ->paginate(9);
 
         return view('pages.menu', compact('menu', 'search', 'kategori'));
     }
 
-    // ⚡ Live search (AJAX)
     public function search(Request $request)
     {
-        $q = $request->input('query'); // AJAX pakai "query"
+        $q = $request->input('query');
 
         $results = Menu::query()
             ->where(function ($query) use ($q) {
                 $query->where('nama', 'like', "%{$q}%");
             })
             ->get();
-
-        // Kembalikan view partial komponen kartu (HTML)
+        
         return view('components.card.search-results', compact('results'));
     }
     public function beliSekarang(Request $request, $id)
@@ -54,7 +54,6 @@ class MenuController extends Controller
         $menu = Menu::findOrFail($id);
         $jumlah = $request->input('jumlah', 1);
 
-        // Buat objek mirip keranjang untuk 1 item saja
         $item = new \stdClass();
         $item->id = $menu->id_menu;
         $item->menu = $menu;

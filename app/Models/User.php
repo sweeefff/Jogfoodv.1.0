@@ -23,7 +23,9 @@ class User extends Authenticatable
         'alamat',
         'password',
         'role',
-        'foto'
+        'foto',
+        'latitude',
+        'longitude'
     ];
 
     /**

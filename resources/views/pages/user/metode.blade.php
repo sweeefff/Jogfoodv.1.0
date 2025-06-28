@@ -60,8 +60,8 @@
                         </span>
                     </div>
                     <input type="hidden" id="subtotal" value="{{ $total }}">
-<input type="hidden" id="tax" value="{{ $tax }}">
-<input type="hidden" id="deliveryFee" value="{{ $deliveryFee }}">
+                    <input type="hidden" id="tax" value="{{ $tax }}">
+                    <input type="hidden" id="deliveryFee" value="{{ $deliveryFee }}">
                 </div>
             </div>
 
@@ -207,8 +207,8 @@
                     onClose: function() {
                         Swal.fire({
                             icon: 'warning',
-                            title: 'Dibatalkan',
-                            text: 'Anda membatalkan pembayaran.',
+                            title: 'Belum Dibayar',
+                            text: 'Anda belum membayar pesanan ini',
                             confirmButtonColor: '#f59e0b'
                         });
                     }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
@@ -16,7 +18,7 @@ class ProfileController extends Controller
     public function edit(Request $request)
     {
         $userId = $request->session()->get('user_id');
-        $user = \App\Models\User::find($userId);
+        $user = User::find($userId);
 
         if (!$user) {
             return redirect()->route('login')->with('alert', 'Silakan login terlebih dahulu.');
@@ -28,7 +30,7 @@ class ProfileController extends Controller
     public function update(Request $request)
     {
         $userId = $request->session()->get('user_id');
-        $user = \App\Models\User::find($userId);
+        $user = User::find($userId);
 
         if (!$user) {
             return redirect()->route('login')->with('alert', 'Silakan login terlebih dahulu.');
@@ -39,6 +41,8 @@ class ProfileController extends Controller
             'email' => 'required|email|unique:users,email,' . $user->id,
             'no_hp' => 'nullable|string|max:20',
             'alamat' => 'nullable|string|max:255',
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric',
             'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
@@ -65,6 +69,12 @@ class ProfileController extends Controller
         $request->session()->put('alamat', $user->alamat);
         $request->session()->put('foto', $user->foto);
 
+        if ($request->has('latitude') && $request->has('longitude')) {
+            $user->latitude = $request->latitude;
+            $user->longitude = $request->longitude;
+            $user->save();
+        }
+
         $request->session()->flash('success', 'Profil berhasil diperbarui.');
 
         // Redirect ke profile dengan pesan sukses
@@ -74,7 +84,7 @@ class ProfileController extends Controller
     public function profile(Request $request)
     {
         $userId = $request->session()->get('user_id');
-        $user = \App\Models\User::find($userId);
+        $user = User::find($userId);
 
         if (!$user) {
             return redirect()->route('login')->with('alert', 'Silakan login terlebih dahulu.');

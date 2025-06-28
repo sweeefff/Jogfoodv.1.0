@@ -41,6 +41,14 @@
                     </svg>
                     <span class="font-semibold">Dibatalkan</span>
                 </div>
+            @elseif ($status == 'kadaluwarsa')
+                <div class="flex items-center text-red-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    <span class="font-semibold">Kadaluwarsa</span>
+                </div>
             @endif
         </div>
     </div>
@@ -77,26 +85,31 @@
             <div class="flex flex-wrap gap-2">
                 @if ($status == 'pending')
                     @if (($transaksi->pembayaran->metode_pembayaran ?? '') == 'cod')
-                        <form action="{{ route('transaksi.batal', $id_transaksi) }}" method="POST" class="inline">
-                            @csrf
-                            @method('PATCH')
-                            <button type="submit" class="border border-gray-300 text-gray-600 px-6 py-2 rounded"
-                                onclick="return confirm('Batalkan pesanan ini?')">Batal</button>
-                        </form>
-                    @else
                         @if(!$isExpired)
-                            <a href="{{ route('metode.bayar', ['id_transaksi' => $id_transaksi]) }}">
-                                <button class="bg-orange-500 text-white px-6 py-2 rounded">Bayar</button>
-                            </a>
+                            <form action="{{ route('transaksi.batal', $id_transaksi) }}" method="POST" class="inline">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit" class="border border-gray-300 text-gray-600 px-6 py-2 rounded"
+                                    onclick="return confirm('Batalkan pesanan ini?')">Batal</button>
+                            </form>
                         @else
                             <span class="text-red-500 font-semibold">Kadaluwarsa</span>
                         @endif
-                        <form action="{{ route('transaksi.batal', $id_transaksi) }}" method="POST" class="inline">
-                            @csrf
-                            @method('PATCH')
-                            <button type="submit" class="border border-gray-300 text-gray-600 px-6 py-2 rounded"
-                                onclick="return confirm('Batalkan pesanan ini?')">Batal</button>
-                        </form>
+                    @else
+                        @if(!$isExpired)
+                            <a href="{{ route('detailpsn.bayar', ['id_transaksi' => $id_transaksi]) }}">
+                                <button class="bg-orange-500 text-white px-6 py-2 rounded">Bayar</button>
+                            </a>
+                            <form action="{{ route('transaksi.batal', $id_transaksi) }}" method="POST" class="inline form-batal">
+                                @csrf
+                                @method('PATCH')
+                                <button type="button" class="border border-gray-300 text-gray-600 px-6 py-2 rounded btn-batal">
+                                    Batal
+                                </button>
+                            </form>
+                        @else
+                            <span class="text-red-500 font-semibold">Kadaluwarsa</span>
+                        @endif
                     @endif
                 @elseif ($status == 'lunas')
                     @if (!empty($id_struk))
@@ -159,5 +172,25 @@
                 }, 1000);
             }
         @endif
-});
+
+        document.querySelectorAll('.btn-batal').forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                Swal.fire({
+                    title: 'Batalkan pesanan ini?',
+                    text: "Pesanan yang dibatalkan tidak dapat dikembalikan.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#aaa',
+                    confirmButtonText: 'Ya, batalkan!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        btn.closest('form').submit();
+                    }
+                });
+            });
+        });
+    });
 </script>

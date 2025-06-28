@@ -64,50 +64,54 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
     Route::get('/data', [DataController::class, 'data'])->name('admin.data');
     Route::get('/pengiriman', [PengirimanController::class, 'pengiriman'])->name('admin.pengiriman');
     Route::get('/user', [UserController::class, 'index'])->name('admin.user');
-   Route::get('/kurir', [KurirController::class, 'kurir'])->name('admin.kurir'); // Menampilkan daftar kurir
-    Route::post('/kurir', [KurirController::class, 'store'])->name('kurir.store'); // Menyimpan kurir baru
-    Route::delete('/kurir/{id}', [KurirController::class, 'destroy'])->name('kurir.destroy'); // Menghapus kurir
+
+    //CRUD untuk Data Kurir
+    Route::get('/kurir', [KurirController::class, 'kurir'])->name('admin.kurir');
+    Route::post('/kurir', [KurirController::class, 'store'])->name('kurir.store');
+    Route::delete('/kurir/{id}', [KurirController::class, 'destroy'])->name('kurir.destroy');
+
+    //Data Menu
     Route::get('/tblmenu', [TblmenuController::class, 'index'])->name('pages.admin.tblmenu');
     Route::get('/tblmenu/search', [TblmenuController::class, 'search'])->name('tblmenu.search');
 
 
 
 });    //  Untuk Data User dibagian admin 
-    Route::resource('/users-resource', UserController::class)->parameters(['users-resource' => 'id'])->names([
-        'index' => 'users.index',
-        'store' => 'users.store',
-        'show' => 'users.show',
-    ]);
+Route::resource('/users-resource', UserController::class)->parameters(['users-resource' => 'id'])->names([
+    'index' => 'users.index',
+    'store' => 'users.store',
+    'show' => 'users.show',
+]);
 
-    // Route tambahan untuk UserController
-    Route::get('users/role/{role}', [UserController::class, 'getUsersByRole'])->name('admin.users.role');
-    Route::post('users/{id}/toggle-status', [UserController::class, 'toggleStatus'])->name('admin.users.toggle-status');
-    Route::get('users/search', [UserController::class, 'search'])->name('admin.users.search');
-    Route::get('users/statistics', [UserController::class, 'getStatistics'])->name('admin.users.statistics');
-    Route::post('users/bulk-delete', [UserController::class, 'bulkDelete'])->name('admin.users.bulk-delete');
+// Route tambahan untuk UserController
+Route::get('users/role/{role}', [UserController::class, 'getUsersByRole'])->name('admin.users.role');
+Route::post('users/{id}/toggle-status', [UserController::class, 'toggleStatus'])->name('admin.users.toggle-status');
+Route::get('users/search', [UserController::class, 'search'])->name('admin.users.search');
+Route::get('users/statistics', [UserController::class, 'getStatistics'])->name('admin.users.statistics');
+Route::post('users/bulk-delete', [UserController::class, 'bulkDelete'])->name('admin.users.bulk-delete');
 
-    // CRUD menu
-    Route::resource('/tblmenu', TblmenuController::class)->only([
-        'index',
-        'store',
-        'update',
-        'destroy'
-    ])->names([
-                'index' => 'pages.admin.tblmenu',
-                'store' => 'tblmenu.store',
-                'update' => 'tblmenu.update',
-                'destroy' => 'tblmenu.destroy'
-            ]);
+// CRUD menu
+Route::resource('/tblmenu', TblmenuController::class)->only([
+    'index',
+    'store',
+    'update',
+    'destroy'
+])->names([
+            'index' => 'pages.admin.tblmenu',
+            'store' => 'tblmenu.store',
+            'update' => 'tblmenu.update',
+            'destroy' => 'tblmenu.destroy'
+        ]);
 
-    // Route Live Search untuk halaman admin
-    Route::get('/tblmenu/search', [TblmenuController::class, 'search'])->name('tblmenu.search');
-    Route::get('/edit', [DataController::class, 'edit'])->name('admin.edit');
-    Route::put('/update', [DataController::class, 'update'])->name('admin.update');
-    Route::get('/changepass', [DataController::class, 'showChangePass'])->name('admin.changepass');
-    Route::post('/changepass', [DataController::class, 'changePass'])->name('admin.changepass.update');
-    Route::get('/rekap', [RekapController::class, 'rekap'])->name('admin.rekap');
-    Route::post('/order/update-tanggal/{id}', [OrderController::class, 'updateTanggal'])->name('admin.order.update-tanggal');
-    Route::get('/order/export', [OrderController::class, 'export'])->name('admin.order.export');
+// Route Live Search untuk halaman admin
+Route::get('/tblmenu/search', [TblmenuController::class, 'search'])->name('tblmenu.search');
+Route::get('/edit', [DataController::class, 'edit'])->name('admin.edit');
+Route::put('/update', [DataController::class, 'update'])->name('admin.update');
+Route::get('/changepass', [DataController::class, 'showChangePass'])->name('admin.changepass');
+Route::post('/changepass', [DataController::class, 'changePass'])->name('admin.changepass.update');
+Route::get('/rekap', [RekapController::class, 'rekap'])->name('admin.rekap');
+Route::post('/order/update-tanggal/{id}', [OrderController::class, 'updateTanggal'])->name('admin.order.update-tanggal');
+Route::get('/order/export', [OrderController::class, 'export'])->name('admin.order.export');
 
 
 // User Routes - Hanya user yang bisa akses

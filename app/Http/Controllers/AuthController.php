@@ -51,6 +51,8 @@ class AuthController extends Controller
                 $request->session()->put('name', $user->name);
                 $request->session()->put('no_hp', $user->no_hp);
                 $request->session()->put('alamat', $user->alamat);
+                $request->session()->put('latitude', $user->latitude);
+                $request->session()->put('longitude', $user->longitude);
                 $request->session()->put('foto', $user->foto);
                 $request->session()->regenerate();
 
