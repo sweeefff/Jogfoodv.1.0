@@ -1,39 +1,43 @@
 @extends('layouts.appadm')
-@section('title', 'Menu Makanan - Jogfood')
+@section('title', 'Daftar Kuliner - Jogfood')
 @section('content')
     <div class="p-6 mt-16 ml-auto lg:ml-64">
         <div class="bg-white rounded-lg shadow-md p-6">
+            
             <!-- Kategori Button Tabs -->
             <div class="flex gap-3 mb-6">
                 @foreach(['Makanan', 'Minuman', 'Side Dish'] as $kat)
-                    <button 
-                        onclick="loadKategori('{{ $kat }}')" 
-                        class="kategori-btn px-4 py-2 rounded-lg font-semibold 
-                            hover:bg-amber-600 hover:text-white transition
-                            {{ $kategori == $kat ? 'bg-amber-700 text-white' : 'bg-amber-100 text-amber-700' }}">
+                    <a href="{{ route('pages.admin.tblmenu', ['kategori' => $kat]) }}"
+                    class="kategori-btn px-4 py-2 rounded-lg font-semibold 
+                    hover:bg-amber-600 hover:text-white transition
+                    {{ $kategori == $kat ? 'bg-amber-700 text-white' : 'bg-amber-100 text-amber-700' }}">
                         {{ $kat }}
-                    </button>
+                    </a>
                 @endforeach
             </div>
 
             <!-- Search & Add Button -->
             <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
                 <div class="mb-4 md:mb-0">
-                    <h2 class="text-2xl font-bold text-gray-800">{{ $kategori }} </h2>
-                    <p class="text-amber-600">Mengelola semua {{ $kategori }}</p>
+                <h2 class="text-2xl font-bold text-gray-800">
+                    {{ $kategori ? $kategori : 'Daftar Kuliner' }}
+                </h2>
+                <p class="text-amber-600">
+                    Mengelola {{ $kategori ? 'semua ' . $kategori : 'semua Makanan, Minuman, dan Side Dish' }}
+                </p>
                 </div>
                 <div class="flex flex-col sm:flex-row gap-3">
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                             <i class="fas fa-search text-amber-500"></i>
                         </div>
-                        <input type="text" id="tblmenu.search"
+                        <input type="text" id="search"
                             class="bg-amber-50 border border-amber-300 text-amber-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full pl-10 p-2.5"
                             placeholder="Search menus...">
-                    </div>
+                                            </div>
                     <button type="button" data-modal-target="crud-modal" data-modal-toggle="crud-modal"
                         class="flex items-center justify-center text-white bg-amber-700 hover:bg-amber-800 focus:ring-4 focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5">
-                        <i class="fas fa-plus mr-2"></i> Tambah {{ $kategori }}
+                        <i class="fas fa-plus mr-2"></i> Tambah {{ $kategori ? $kategori : 'Kuliner' }}
                     </button>
                 </div>
             </div>

@@ -11,11 +11,16 @@ class TblmenuController extends Controller
 {
 public function index(Request $request)
 {
-    $kategori = $request->get('kategori', 'Makanan');
-    $menu = Menu::where('kategori', $kategori)->get();
+    $kategori = $request->get('kategori');
 
-    if ($request->ajax()) {
-        return response()->view('pages.admin.tblmenu', compact('menu', 'kategori'))->header('Content-Type', 'text/html');
+    // Cek apakah kategori valid (Makanan, Minuman, Side Dish)
+    $allowedKategori = ['Makanan', 'Minuman', 'Side Dish'];
+
+    if ($kategori && in_array($kategori, $allowedKategori)) {
+        $menu = Menu::where('kategori', $kategori)->get();
+    } else {
+        $menu = Menu::all(); // Ambil semua data kalau kategori tidak ada/valid
+        $kategori = null; // Agar tetap bisa tampilkan "Daftar Kuliner"
     }
 
     return view('pages.admin.tblmenu', compact('menu', 'kategori'));
