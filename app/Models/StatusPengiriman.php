@@ -39,4 +39,10 @@ class StatusPengiriman extends Model
     {
         return $this->belongsTo(Transaksi::class, 'id_transaksi');
     }
+
+    // Relasi ke Kurir
+    public function kurir(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'id_kurir');
+    }
 }

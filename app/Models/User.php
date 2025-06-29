@@ -60,5 +60,35 @@ class User extends Authenticatable
         return $this->hasMany(Transaksi::class, 'id_user');
     }
 
+    public function statusPengiriman()
+    {
+        return $this->hasMany(StatusPengiriman::class, 'id_user');
+    }
+
+    public function pembayaran()
+    {
+        return $this->hasMany(Pembayaran::class, 'id_user');
+    }
+
+    public function kurir()
+    {
+        return $this->hasMany(StatusPengiriman::class, 'id_kurir');
+    }
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isUser()
+    {
+        return $this->role === 'user';
+    }
+
+    public function isKurir()
+    {
+        return $this->role === 'kurir';
+    }
+
 
 }
