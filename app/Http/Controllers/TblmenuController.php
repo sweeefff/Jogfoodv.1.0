@@ -11,22 +11,27 @@ class TblmenuController extends Controller
 {
 public function index(Request $request)
 {
+    if (!session()->has('user_id')) {
+        return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu');
+    }
+
     $kategori = $request->get('kategori');
 
-    // Cek apakah kategori valid (Makanan, Minuman, Side Dish)
-    $allowedKategori = ['Makanan', 'Minuman', 'Side Dish'];
-
-    if ($kategori && in_array($kategori, $allowedKategori)) {
+    // Jika kategori valid, filter berdasarkan kategori
+    if (in_array($kategori, ['Makanan', 'Minuman', 'Side Dish'])) {
         $menu = Menu::where('kategori', $kategori)->get();
     } else {
-        $menu = Menu::all(); // Ambil semua data kalau kategori tidak ada/valid
-        $kategori = null; // Agar tetap bisa tampilkan "Daftar Kuliner"
+        $kategori = null; // Kembalikan ke null jika kategori tidak valid
+        $menu = Menu::all(); // Tampilkan semua data
     }
-            if (!session()->has('user_id')) {
-            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu');
-        }
+
+    if ($request->ajax()) {
+        return response()->view('pages.admin.tblmenu', compact('menu', 'kategori'))->header('Content-Type', 'text/html');
     }
-    
+
+    return view('pages.admin.tblmenu', compact('menu', 'kategori'));
+}
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([
