@@ -31,6 +31,10 @@ class MetodeController extends Controller
 
     public function bayar(Request $request)
     {
+        if (!session()->has('user_id')) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu');
+        }
+
         // Ambil user dari session
         $user = User::find(session('user_id', Auth::id()));
 

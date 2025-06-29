@@ -10,6 +10,10 @@ class PengirimanController extends Controller
 {
     public function pengiriman()
     {
+        if (!session()->has('user_id')) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu');
+        }
+
         $pengiriman = \App\Models\Transaksi::with(['user', 'detail_transaksi.menu', 'pembayaran'])
             ->where('status_transaksi', '!=', 'Batal')
             ->orderByDesc('created_at')

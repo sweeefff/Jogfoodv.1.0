@@ -9,17 +9,21 @@ use Illuminate\Support\Facades\DB; // Tambahkan ini untuk menggunakan DB facade
 
 class TblmenuController extends Controller
 {
-public function index(Request $request)
-{
-    $kategori = $request->get('kategori', 'Makanan');
-    $menu = Menu::where('kategori', $kategori)->get();
+    public function index(Request $request)
+    {
+        if (!session()->has('user_id')) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu');
+        }
 
-    if ($request->ajax()) {
-        return response()->view('pages.admin.tblmenu', compact('menu', 'kategori'))->header('Content-Type', 'text/html');
+        $kategori = $request->get('kategori', 'Makanan');
+        $menu = Menu::where('kategori', $kategori)->get();
+
+        if ($request->ajax()) {
+            return response()->view('pages.admin.tblmenu', compact('menu', 'kategori'))->header('Content-Type', 'text/html');
+        }
+
+        return view('pages.admin.tblmenu', compact('menu', 'kategori'));
     }
-
-    return view('pages.admin.tblmenu', compact('menu', 'kategori'));
-}
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -97,15 +101,15 @@ public function index(Request $request)
     }
 
     public function search(Request $request)
-{
-    $query = $request->get('query');
+    {
+        $query = $request->get('query');
 
-    $menus = DB::table('tblmenu')
-        ->where('namamenu', 'like', '%' . $query . '%')
-        ->orWhere('kategori', 'like', '%' . $query . '%')
-        ->get();
+        $menus = DB::table('tblmenu')
+            ->where('namamenu', 'like', '%' . $query . '%')
+            ->orWhere('kategori', 'like', '%' . $query . '%')
+            ->get();
 
-    return response()->json($menus);
-}
+        return response()->json($menus);
+    }
 
 }

@@ -38,6 +38,10 @@
                         class="text-white bg-green-500 hover:bg-green-600 p-2 rounded-full w-10 h-10 flex items-center justify-center">
                         <i class="fab fa-whatsapp"></i>
                     </a>
+                    <a href="https://maps.google.com/?q={{ urlencode($status->user->latitude . ',' . $status->user->longitude) }}"
+                        class="text-white bg-blue-500 hover:bg-blue-600 p-2 rounded-full w-10 h-10 flex items-center justify-center">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </a>
                 </div>
             </div>
             <hr class="my-4">

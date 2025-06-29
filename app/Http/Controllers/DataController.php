@@ -9,6 +9,10 @@ class DataController extends Controller
 {
     public function data()
     {
+        if (!session()->has('user_id')) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu');
+        }
+
         $admin = User::find(session('user_id', 'admin'));
         if (!$admin) {
             return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
@@ -53,5 +57,5 @@ class DataController extends Controller
         $admin->save();
 
         return redirect()->route('admin.data')->with('success', 'Profil berhasil diperbarui!');
-}
+    }
 }

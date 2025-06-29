@@ -12,6 +12,10 @@ class DetailpsnController extends Controller
 {
     public function detailpsn()
     {
+        if (!session()->has('user_id')) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu');
+        }
+
         // Update status_transaksi menjadi 'kadaluwarsa' jika sudah expired
         $expiredTime = now()->subHour(); // expired 1 jam setelah snap_token_created_at
         Transaksi::where('status_transaksi', 'pending')
