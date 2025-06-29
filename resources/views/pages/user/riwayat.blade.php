@@ -1,4 +1,3 @@
-
 @extends('layouts.user')
 
 @section('title', 'Riwayat Pemesanan')
@@ -101,11 +100,26 @@
                 </div>
             </div>
         @empty
-            <div class="flex flex-col items-center text-gray-600 mt-8">
-                <i class="fas fa-box-open text-6xl mb-4"></i>
-                <p class="text-center">Belum ada riwayat pemesanan.</p>
-            </div>
+            {{-- Tidak perlu apa-apa di sini --}}
         @endforelse
+
+        {{-- Pesan kosong untuk tiap tab, SELALU ADA --}}
+        <div class="flex flex-col items-center text-gray-600 mt-8 empty-message" data-status="menunggu" style="display:none">
+            <i class="fas fa-clock text-6xl mb-4"></i>
+            <p class="text-center">Belum ada pesanan menunggu.</p>
+        </div>
+        <div class="flex flex-col items-center text-gray-600 mt-8 empty-message" data-status="dikirim" style="display:none">
+            <i class="fas fa-truck text-6xl mb-4"></i>
+            <p class="text-center">Belum ada pesanan yang sedang dikirim.</p>
+        </div>
+        <div class="flex flex-col items-center text-gray-600 mt-8 empty-message" data-status="selesai" style="display:none">
+            <i class="fas fa-check-circle text-6xl mb-4"></i>
+            <p class="text-center">Belum ada pesanan selesai.</p>
+        </div>
+        <div class="flex flex-col items-center text-gray-600 mt-8 empty-message" data-status="dibatalkan" style="display:none">
+            <i class="fas fa-times-circle text-6xl mb-4"></i>
+            <p class="text-center">Belum ada pesanan dibatalkan.</p>
+        </div>
     </div>
 </div>
 
@@ -126,11 +140,22 @@
             button.classList.remove('text-gray-600', 'border-transparent');
 
             // Filter orders based on status
+            let hasOrder = false;
             document.querySelectorAll('.order-item').forEach(order => {
                 if (order.getAttribute('data-status') === status || status === 'all') {
                     order.classList.remove('hidden');
+                    hasOrder = true;
                 } else {
                     order.classList.add('hidden');
+                }
+            });
+
+            // Show/hide empty message
+            document.querySelectorAll('.empty-message').forEach(msg => {
+                if (msg.getAttribute('data-status') === status && !hasOrder) {
+                    msg.style.display = '';
+                } else {
+                    msg.style.display = 'none';
                 }
             });
         });

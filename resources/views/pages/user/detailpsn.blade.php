@@ -74,7 +74,12 @@
             // Filter order items
             const status = this.getAttribute('data-status');
             document.querySelectorAll('.order-item').forEach(item => {
-                item.style.display = (item.getAttribute('data-status') === status) ? '' : 'none';
+                // Untuk tab dibatalkan, tampilkan juga kadaluwarsa
+                if (status === 'dibatalkan') {
+                    item.style.display = (item.getAttribute('data-status') === 'dibatalkan' || item.getAttribute('data-status') === 'kadaluwarsa') ? '' : 'none';
+                } else {
+                    item.style.display = (item.getAttribute('data-status') === status) ? '' : 'none';
+                }
             });
         });
     });

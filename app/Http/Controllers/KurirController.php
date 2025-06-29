@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\StatusPengirimanMail;
 
 use Illuminate\Http\Request;
 use App\Models\StatusPengiriman;
@@ -14,26 +16,30 @@ class KurirController extends Controller
 {
     public function kurir()
     {
+        if (!session()->has('user_id')) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu');
+        }
+
         $kurirs = User::where('role', 'kurir')->get();
         return view('pages.admin.data-kurir', compact('kurirs'));
     }
 
     public function store(Request $request)
     {
-    $request->validate([
-        'username' => 'required|unique:users',
-        'name' => 'required',
-        'email' => 'required|email|unique:users',
-        'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        'alamat' => 'nullable|string|max:255',
-        'password' => 'required|min:8',
-        'no_hp' => 'nullable|string|max:15',
-    ]);
+        $request->validate([
+            'username' => 'required|unique:users',
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'alamat' => 'nullable|string|max:255',
+            'password' => 'required|min:8',
+            'no_hp' => 'nullable|string|max:15',
+        ]);
 
-    $data = $request->only(['username', 'name', 'email', 'alamat', 'no_hp']);
-    $data['role'] = 'kurir'; 
-    $data['password'] = bcrypt($request->password);
-        
+        $data = $request->only(['username', 'name', 'email', 'alamat', 'no_hp']);
+        $data['role'] = 'kurir';
+        $data['password'] = bcrypt($request->password);
+
         if ($request->hasFile('foto')) {
             $data['foto'] = $request->file('foto')->store('kurir', 'public');
         }
@@ -155,7 +161,7 @@ class KurirController extends Controller
             $updateData['alasan'] = $request->alasan;
         }
 
-        // Simpan foto jika ada
+
         if ($request->hasFile('foto_penerima')) {
             $fotoPath = $request->file('foto_penerima')->store('foto_penerima', 'public');
             $updateData['foto_penerima'] = $fotoPath;
@@ -163,7 +169,19 @@ class KurirController extends Controller
 
         $status->update($updateData);
 
-        // Jika pembayaran COD dan status pembayaran diubah menjadi lunas
+
+        if ($status->transaksi && $status->transaksi->user) {
+            $user = $status->transaksi->user;
+            $transaksi = $status->transaksi;
+            Mail::to($user->email)->send(new StatusPengirimanMail(
+                $request->status_pengiriman,
+                $user,
+                $transaksi,
+                $request->alasan ?? null
+            ));
+        }
+
+
         if (
             $request->status_pengiriman === 'selesai' &&
             $request->has('status_pembayaran') &&
@@ -180,7 +198,7 @@ class KurirController extends Controller
             ? 'Pesanan berhasil ditandai selesai!'
             : 'Status pesanan berhasil diperbarui!';
 
-        // Redirect ke route yang benar
+
         return redirect()->route('kurir.order')->with('success', $message);
     }
 
@@ -226,4 +244,6 @@ class KurirController extends Controller
 
         return redirect()->route('kurir.data')->with('success', 'Profil berhasil diperbarui.');
     }
+
+
 }

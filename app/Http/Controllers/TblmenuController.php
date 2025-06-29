@@ -22,9 +22,11 @@ public function index(Request $request)
         $menu = Menu::all(); // Ambil semua data kalau kategori tidak ada/valid
         $kategori = null; // Agar tetap bisa tampilkan "Daftar Kuliner"
     }
-
-    return view('pages.admin.tblmenu', compact('menu', 'kategori'));
-}
+            if (!session()->has('user_id')) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu');
+        }
+    }
+    
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -102,15 +104,15 @@ public function index(Request $request)
     }
 
     public function search(Request $request)
-{
-    $query = $request->get('query');
+    {
+        $query = $request->get('query');
 
-    $menus = DB::table('tblmenu')
-        ->where('namamenu', 'like', '%' . $query . '%')
-        ->orWhere('kategori', 'like', '%' . $query . '%')
-        ->get();
+        $menus = DB::table('tblmenu')
+            ->where('namamenu', 'like', '%' . $query . '%')
+            ->orWhere('kategori', 'like', '%' . $query . '%')
+            ->get();
 
-    return response()->json($menus);
-}
+        return response()->json($menus);
+    }
 
 }

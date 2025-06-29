@@ -16,6 +16,7 @@ use Illuminate\Support\Str;
 use App\Services\StrukService;
 use App\Models\Pembayaran;
 use App\Models\StatusPengiriman;
+use App\Models\User;
 use Illuminate\Support\Facades\Log;
 
 class MetodeController extends Controller
@@ -30,6 +31,19 @@ class MetodeController extends Controller
 
     public function bayar(Request $request)
     {
+        if (!session()->has('user_id')) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu');
+        }
+
+        // Ambil user dari session
+        $user = User::find(session('user_id', Auth::id()));
+
+        // Cek nama dan alamat
+        if (!$user || empty($user->name) || empty($user->alamat)) {
+            return redirect()->route('profile.edit')
+                ->with('error', 'Silakan lengkapi nama dan alamat Anda terlebih dahulu sebelum melakukan pemesanan.');
+        }
+
         try {
             $request->validate([
                 'selected_items' => 'required|string',
@@ -274,7 +288,6 @@ class MetodeController extends Controller
             } elseif ($transactionStatus == 'settlement' || ($transactionStatus == 'capture' && $fraudStatus != 'challenge')) {
                 $transaksi->status_transaksi = 'lunas';
 
-                // Hapus item dari keranjang
                 $detailTransaksis = $transaksi->detail_transaksi;
                 $menuIds = $detailTransaksis->pluck('id_menu');
 
@@ -317,17 +330,19 @@ class MetodeController extends Controller
             return redirect()->route('keranjang.index')->with('error', 'Transaksi belum berhasil.');
         }
 
-        // Update status menjadi lunas jika belum lunas
         if ($transaksi->status_transaksi !== 'lunas' && ($transaksi->pembayaran->metode_pembayaran ?? '') !== 'cod') {
             $transaksi->status_transaksi = 'lunas';
             $transaksi->save();
         }
 
-        // Generate dan kirim struk otomatis
+        $menuIds = $transaksi->detail_transaksi->pluck('id_menu');
+        Keranjang::where('id_user', $transaksi->id_user)
+            ->whereIn('id_menu', $menuIds)
+            ->delete();
+
         $struk = $strukService->generateStruk($transaksi->id_transaksi);
         $strukService->sendStrukEmail($struk);
 
-        // Redirect ke halaman struk user (bisa download PDF)
         return redirect()->route('struk.show', ['id_struk' => $struk->id_struk])
             ->with('success', 'Transaksi berhasil! Struk telah dikirim ke email Anda.');
     }

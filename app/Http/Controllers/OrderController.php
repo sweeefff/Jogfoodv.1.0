@@ -11,6 +11,10 @@ class OrderController extends Controller
 {
     public function order()
     {
+        if (!session()->has('user_id')) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu');
+        }
+
         // Ambil semua transaksi beserta user dan detail_transaksi + menu
         $transaksi = Transaksi::with(['user', 'detail_transaksi.menu'])
             ->orderByDesc('created_at')

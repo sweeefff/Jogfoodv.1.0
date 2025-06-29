@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\Keranjang;
 use App\Models\Menu;
 use Illuminate\Support\Facades\Auth;
@@ -12,11 +13,15 @@ class KeranjangController extends Controller
 {
     public function index()
     {
+        if (!session()->has('user_id')) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu');
+        }
+
         $userId = session('user_id');
         $items = Keranjang::with('menu')
             ->where('id_user', $userId)
             ->get();
-        $user = \App\Models\User::find($userId); // pastikan ambil user dari session
+        $user = User::find($userId); // pastikan ambil user dari session
         return view('pages.user.keranjang', compact('items', 'user'));
     }
 
@@ -55,6 +60,6 @@ class KeranjangController extends Controller
 
         return redirect()->route('keranjang.index')->with('success', 'Produk dihapus dari keranjang');
     }
-    
+
 }
 

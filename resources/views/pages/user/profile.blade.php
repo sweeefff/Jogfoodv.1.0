@@ -45,6 +45,14 @@
                     <textarea class="w-full px-3 py-2 bg-amber-100 rounded text-center"
                         disabled>{{ $user->alamat }}</textarea>
                 </div>
+
+                @if($user->latitude && $user->longitude)
+                    <div class="mt-4">
+                        <label class="block text-amber-600 text-center w-full">Lokasi di Peta</label>
+                        <div id="map" style="height: 300px;" class="rounded mt-2 border border-gray-300 shadow-sm"></div>
+                    </div>
+                @endif
+
                 <div class="text-sm text-center text-blue-500 mt-1">
                     <a href="{{ route('password.email') }}">Change Password</a>
                 </div>
@@ -56,32 +64,43 @@
             </div>
         </div>
     </div>
-
-    {{-- SweetAlert for Success --}}
+    @if($user->latitude && $user->longitude)
+        <script>
+            const map = L.map('map').setView([{{ $user->latitude }}, {{ $user->longitude }}], 15);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+            L.marker([{{ $user->latitude }}, {{ $user->longitude }}]).addTo(map)
+                .bindPopup("Lokasi Anda").openPopup();
+        </script>
+    @endif
     @if(session('success'))
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 Swal.fire({
+                    toast: true,
+                    position: 'top-end',
                     icon: 'success',
-                    title: 'Berhasil!',
-                    text: '{{ session('success') }}',
-                    confirmButtonColor: '#f59e0b'
+                    title: '{{ session('success') }}',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true
                 });
             });
         </script>
     @endif
-
-    {{-- SweetAlert for Error --}}
     @if(session('error'))
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 Swal.fire({
+                    toast: true,
+                    position: 'top-end',
                     icon: 'warning',
                     title: 'Lengkapi Data!',
                     text: '{{ session('error') }}',
-                    confirmButtonColor: '#f59e0b'
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true
                 });
             });
         </script>
