@@ -11,6 +11,9 @@
 </head>
 <body>
     <h2>Data Rekap Penjualan</h2>
+    <p style="font-weight:bold; color:green; margin-bottom:10px;">
+        Total Pendapatan: Rp {{ number_format($totalPendapatan, 0, ',', '.') }}
+    </p>
     <table>
         <thead>
             <tr>

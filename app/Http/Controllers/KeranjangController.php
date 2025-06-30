@@ -13,6 +13,10 @@ class KeranjangController extends Controller
 {
     public function index()
     {
+        if (!session()->has('user_id')) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu');
+        }
+
         $userId = session('user_id');
         $items = Keranjang::with('menu')
             ->where('id_user', $userId)
@@ -56,6 +60,6 @@ class KeranjangController extends Controller
 
         return redirect()->route('keranjang.index')->with('success', 'Produk dihapus dari keranjang');
     }
-    
+
 }
 

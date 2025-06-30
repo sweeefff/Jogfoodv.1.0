@@ -11,12 +11,14 @@ class OrderController extends Controller
 {
     public function order()
     {
-        // Ambil semua transaksi beserta user dan detail_transaksi + menu
         $transaksi = Transaksi::with(['user', 'detail_transaksi.menu'])
             ->orderByDesc('created_at')
             ->paginate(10);
 
-        return view('pages.admin.order', compact('transaksi'));
+        // Hitung total pendapatan untuk semua transaksi (misal status Lunas/Selesai)
+        $totalPendapatan = Transaksi::whereIn('status_transaksi', ['Lunas', 'Selesai'])->sum('total_harga');
+
+        return view('pages.admin.order', compact('transaksi', 'totalPendapatan'));
     }
 
     public function index(Request $request)
@@ -29,10 +31,23 @@ class OrderController extends Controller
         if ($request->tanggal_selesai) {
             $query->whereDate('created_at', '<=', $request->tanggal_selesai);
         }
+        if ($request->status) {
+            $query->where('status_transaksi', $request->status);
+        }
+        if ($request->metode_pembayaran) {
+            $query->whereHas('pembayaran', function($q) use ($request) {
+                $q->where('metode_pembayaran', $request->metode_pembayaran);
+            });
+        }
 
         $transaksi = $query->orderByDesc('created_at')->paginate(10);
 
-        return view('pages.admin.order', compact('transaksi'));
+        // Hitung total pendapatan sesuai filter dan status Lunas/Selesai
+        $totalPendapatan = (clone $query)
+            ->whereIn('status_transaksi', ['Lunas', 'Selesai'])
+            ->sum('total_harga');
+
+        return view('pages.admin.order', compact('transaksi', 'totalPendapatan'));
     }
 
     public function updateTanggal(Request $request, $id)
@@ -46,7 +61,7 @@ class OrderController extends Controller
 
     public function export(Request $request)
     {
-        $query = \App\Models\Transaksi::with(['user', 'detail_transaksi.menu', 'pembayaran', 'status_pengiriman']);
+        $query = \App\Models\Transaksi::with(['user', 'detail_transaksi.menu', 'pembayaran']);
 
         if ($request->tanggal_mulai) {
             $query->whereDate('created_at', '>=', $request->tanggal_mulai);
@@ -54,14 +69,23 @@ class OrderController extends Controller
         if ($request->tanggal_selesai) {
             $query->whereDate('created_at', '<=', $request->tanggal_selesai);
         }
+        if ($request->status) {
+            $query->where('status_transaksi', $request->status);
+        }
+        if ($request->metode_pembayaran) {
+            $query->whereHas('pembayaran', function($q) use ($request) {
+                $q->where('metode_pembayaran', $request->metode_pembayaran);
+            });
+        }
 
         $orders = $query->orderByDesc('created_at')->get();
 
-        if ($request->type == 'excel') {
-            return Excel::download(new OrderExport($orders), 'order-export.xlsx');
-        } else {
-            $pdf = PDF::loadView('pages.pdf.order-pdf', compact('orders'));
-            return $pdf->download('order-export.pdf');
-        }
+        // Hitung total pendapatan sesuai filter (status Lunas/Selesai)
+        $totalPendapatan = (clone $query)
+            ->whereIn('status_transaksi', ['Lunas', 'Selesai'])
+            ->sum('total_harga');
+
+        $pdf = PDF::loadView('pages.pdf.order-pdf', compact('orders', 'totalPendapatan'));
+        return $pdf->download('order-export.pdf');
     }
 }

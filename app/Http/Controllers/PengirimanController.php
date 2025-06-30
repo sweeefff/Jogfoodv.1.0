@@ -8,12 +8,26 @@ use App\Models\User;
 
 class PengirimanController extends Controller
 {
-    public function pengiriman()
+    public function pengiriman(Request $request)
     {
-        $pengiriman = \App\Models\Transaksi::with(['user', 'detail_transaksi.menu', 'pembayaran'])
-            ->where('status_transaksi', '!=', 'Batal')
-            ->orderByDesc('created_at')
-            ->paginate(10); // PAGINATE 10
+        $query = \App\Models\Transaksi::with(['user', 'detail_transaksi.menu', 'pembayaran', 'status_pengiriman.kurir'])
+            ->where('status_transaksi', '!=', 'Batal');
+
+        // Filter search nama customer
+        if ($request->filled('search')) {
+            $query->whereHas('user', function($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        // Filter status pengiriman
+        if ($request->filled('status')) {
+            $query->whereHas('status_pengiriman', function($q) use ($request) {
+                $q->where('status_pengiriman', $request->status);
+            });
+        }
+
+        $pengiriman = $query->orderByDesc('created_at')->paginate(10)->appends($request->all());
 
         $kurirList = User::where('role', 'kurir')->get();
 
@@ -22,9 +36,21 @@ class PengirimanController extends Controller
 
     public function updatePengiriman(Request $request, $id)
     {
-        // Logika untuk memperbarui status pengiriman berdasarkan ID
-        // Validasi dan proses update di sini
+        // Validasi
+        $request->validate([
+            'kurir' => 'required|exists:users,id',
+        ]);
 
-        return redirect()->route('admin.pengiriman')->with('success', 'Status pengiriman berhasil diperbarui.');
+        // Update status_pengiriman
+        $pengiriman = \App\Models\StatusPengiriman::where('id_transaksi', $id)->first();
+        if ($pengiriman) {
+            $pengiriman->id_kurir = $request->kurir;
+            $pengiriman->status_pengiriman = 'dikirim'; // Atau status lain sesuai kebutuhan
+            $pengiriman->save();
+        }
+
+        // (Opsional) Kirim notifikasi ke kurir di sini
+
+        return redirect()->route('admin.pengiriman')->with('success', 'Kurir berhasil ditugaskan!');
     }
 }
