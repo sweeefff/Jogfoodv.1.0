@@ -1,7 +1,7 @@
 @extends('layouts.appadm')
 @section('title', 'Menu Makanan - Jogfood')
 @section('content')
-    <div class="p-6 mt-16 ml-auto lg:ml-64">
+    <div class="p-6 2mt-16 ml-auto lg:ml-64">
         <div class="bg-white rounded-lg shadow-md p-6">
             <!-- Kategori Button Tabs -->
             <div class="flex gap-3 mb-6">

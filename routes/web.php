@@ -60,7 +60,7 @@ Route::post('/menu/beli-sekarang/{id}', [MenuController::class, 'beliSekarang'])
 // Admin Routes - Hanya admin yang bisa akses
 Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
-    Route::get('/order', [OrderController::class, 'order'])->name('admin.order');
+    Route::get('/order', [OrderController::class, 'index'])->name('admin.order');
     Route::get('/data', [DataController::class, 'data'])->name('admin.data');
     Route::get('/pengiriman', [PengirimanController::class, 'pengiriman'])->name('admin.pengiriman');
     Route::get('/user', [UserController::class, 'index'])->name('admin.user');
@@ -112,6 +112,7 @@ Route::post('/changepass', [DataController::class, 'changePass'])->name('admin.c
 Route::get('/rekap', [RekapController::class, 'rekap'])->name('admin.rekap');
 Route::post('/order/update-tanggal/{id}', [OrderController::class, 'updateTanggal'])->name('admin.order.update-tanggal');
 Route::get('/order/export', [OrderController::class, 'export'])->name('admin.order.export');
+Route::post('/admin/pengiriman/tugaskan/{id}', [PengirimanController::class, 'updatePengiriman'])->name('admin.pengiriman.tugaskan');
 
 
 // User Routes - Hanya user yang bisa akses
