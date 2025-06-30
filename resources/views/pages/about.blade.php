@@ -1,5 +1,4 @@
-
-  <style>
+<style>
     .hero-pattern {
       background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23fb923c' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     }
@@ -19,17 +18,28 @@
 @section('content')
 <div class="text-gray-800 font-sans antialiased">
   
-  <section class="hero-pattern bg-gradient-to-b from-orange-500 to-orange-600 text-white py-24 text-center relative overflow-hidden">
-    <div class="absolute inset-0 bg-black opacity-10"></div>
-    <div class="container mx-auto px-6 relative z-10">
-      <h1 class="text-5xl font-bold mb-6 animate-fade-in-down">Tentang JogFood</h1>
+  <section class="relative bg-gradient-to-b from-orange-500 to-orange-600 py-24 overflow-hidden">
+    <div class="absolute inset-0">
+      <img src="{{ asset('assets/img/jogja.webp') }}"
+           alt="Tugu Jogja"
+           class="w-full h-full object-cover opacity-30">
+      <div class="absolute inset-0 bg-black opacity-30"></div>
+    </div>
+    <div class="relative z-10 container mx-auto px-6 flex flex-col items-center justify-center text-center">
+      <h1 class="text-5xl md:text-6xl font-extrabold mb-6 text-white drop-shadow-lg animate-fade-in-down">
+        Tentang <span class="text-orange-200">JogFood</span>
+      </h1>
       <div class="w-24 h-1.5 bg-white rounded-full mx-auto mb-8"></div>
-      <p class="text-xl max-w-2xl mx-auto leading-relaxed">Panduan kuliner Jogja yang siap menemani petualangan rasa kamu.</p>
-      <div class="mt-12">
-        <a href="#profile" class="inline-block px-6 py-3 bg-white text-orange-600 rounded-full font-medium hover:bg-orange-50 transition duration-300">
-          <i class="fas fa-chevron-down mr-2"></i> Jelajahi
-        </a>
+      <p class="text-xl md:text-2xl max-w-2xl mx-auto leading-relaxed text-white/90 mb-8">
+        Panduan kuliner Jogja yang siap menemani petualangan rasa kamu.  
+        Temukan hidden gem, rekomendasi lokal, dan pengalaman kuliner terbaik di Yogyakarta bersama JogFood!
+      </p>
+      <div class="flex justify-center mt-6">
+
       </div>
+      <a href="#profile" class="inline-block mt-12 px-8 py-3 bg-white text-orange-600 rounded-full font-semibold shadow hover:bg-orange-50 transition duration-300">
+        <i class="fas fa-chevron-down mr-2"></i> Jelajahi
+      </a>
     </div>
   </section>
 
@@ -37,7 +47,7 @@
   <section id="profile" class="py-20 px-6 max-w-6xl mx-auto">
     <div class="flex flex-col md:flex-row items-center gap-12">
       <div class="md:w-1/2">
-        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" 
+        <img src="{{ asset('assets/img/jogja2.jpeg') }}" 
              alt="Jogja Culinary" 
              class="rounded-2xl shadow-xl w-full h-auto object-cover">
       </div>
@@ -107,62 +117,49 @@
     </div>
   </section>
 
-  <!-- Testimoni -->
+
+
+  <!-- Developer Section -->
   <section class="py-20 bg-orange-50">
     <div class="max-w-6xl mx-auto px-6">
       <div class="text-center mb-16">
-        <span class="text-orange-500 font-semibold mb-2 inline-block">Testimonial</span>
-        <h2 class="text-4xl font-bold text-gray-800 mb-6">Apa Kata Mereka?</h2>
+        <span class="text-orange-500 font-semibold mb-2 inline-block">Tim Developer</span>
+        <h2 class="text-4xl font-bold text-gray-800 mb-6">Developer JogFood</h2>
         <div class="w-24 h-1.5 bg-orange-500 rounded-full mx-auto"></div>
+        <p class="mt-4 text-lg text-gray-600">JogFood dikembangkan oleh tim fullstack developer yang berdedikasi.</p>
       </div>
-      
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="bg-white p-8 rounded-2xl shadow-md testimonial-card transition duration-300">
-          <div class="text-orange-400 mb-4">
-            <i class="fas fa-quote-left text-3xl opacity-20"></i>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+        <div class="bg-white p-8 rounded-2xl shadow-md flex flex-col items-center">
+          <div class="w-20 h-20 rounded-full bg-orange-100 flex items-center justify-center mb-4 overflow-hidden">
+            <img src="{{ asset('assets/img/ridho.jpeg') }}" alt="Ridho Putrawan" class="w-full h-full object-cover">
           </div>
-          <p class="italic mb-6 text-gray-600">"JogFood bantu banget waktu pertama kali ke Jogja. Nemu makanan enak dan murah yang gak ada di Google Maps!"</p>
-          <div class="flex items-center">
-            <div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center text-orange-500 mr-4">
-              <i class="fas fa-user"></i>
-            </div>
-            <div>
-              <h4 class="font-semibold text-orange-500">Rina</h4>
-              <p class="text-sm text-gray-500">Jakarta</p>
-            </div>
-          </div>
+          <h4 class="font-semibold text-orange-500 text-xl mb-1 text-center">Ridho Putrawan</h4>
+          <p class="text-gray-600 mb-1 text-center">Fullstack Developer</p>
+          <span class="text-sm text-gray-400 text-center">Lead Developer</span>
         </div>
-        
-        <div class="bg-white p-8 rounded-2xl shadow-md testimonial-card transition duration-300">
-          <div class="text-orange-400 mb-4">
-            <i class="fas fa-quote-left text-3xl opacity-20"></i>
+        <div class="bg-white p-8 rounded-2xl shadow-md flex flex-col items-center">
+          <div class="w-20 h-20 rounded-full bg-orange-100 flex items-center justify-center mb-4 overflow-hidden">
+            <img src="{{ asset('assets/img/ruth.jpeg') }}" alt="Ruth Yohana Manurung" class="w-full h-full object-cover">
           </div>
-          <p class="italic mb-6 text-gray-600">"Fitur pencariannya keren. Aku bisa filter makanan tradisional & tempat yang estetik buat foto-foto!"</p>
-          <div class="flex items-center">
-            <div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center text-orange-500 mr-4">
-              <i class="fas fa-user"></i>
-            </div>
-            <div>
-              <h4 class="font-semibold text-orange-500">Yoga</h4>
-              <p class="text-sm text-gray-500">Surabaya</p>
-            </div>
-          </div>
+          <h4 class="font-semibold text-orange-500 text-xl mb-1 text-center">Ruth Yohana Manurung</h4>
+          <p class="text-gray-600 mb-1 text-center">Fullstack Developer</p>
+          <span class="text-sm text-gray-400 text-center"></span>
         </div>
-        
-        <div class="bg-white p-8 rounded-2xl shadow-md testimonial-card transition duration-300">
-          <div class="text-orange-400 mb-4">
-            <i class="fas fa-quote-left text-3xl opacity-20"></i>
+        <div class="bg-white p-8 rounded-2xl shadow-md flex flex-col items-center">
+          <div class="w-20 h-20 rounded-full bg-orange-100 flex items-center justify-center mb-4 overflow-hidden">
+            <img src="{{ asset('assets/img/josepine.jpeg') }}" alt="Josepine Stevie Hia" class="w-full h-full object-cover">
           </div>
-          <p class="italic mb-6 text-gray-600">"JogFood itu hidden gem buat nemuin... hidden gem. Suka banget sama rekomendasi kopinya."</p>
-          <div class="flex items-center">
-            <div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center text-orange-500 mr-4">
-              <i class="fas fa-user"></i>
-            </div>
-            <div>
-              <h4 class="font-semibold text-orange-500">Dwi</h4>
-              <p class="text-sm text-gray-500">Bandung</p>
-            </div>
+          <h4 class="font-semibold text-orange-500 text-xl mb-1 text-center">Josepine Stevie Hia</h4>
+          <p class="text-gray-600 mb-1 text-center">Fullstack Developer</p>
+          <span class="text-sm text-gray-400 text-center"></span>
+        </div>
+        <div class="bg-white p-8 rounded-2xl shadow-md flex flex-col items-center">
+          <div class="w-20 h-20 rounded-full bg-orange-100 flex items-center justify-center mb-4 overflow-hidden">
+            <img src="{{ asset('assets/img/muhammad.jpeg') }}" alt="Muhammad Rizky Raapi Ramadhan" class="w-full h-full object-cover">
           </div>
+          <h4 class="font-semibold text-orange-500 text-xl mb-1 text-center">Muhammad Rizky Raapi Ramadhan</h4>
+          <p class="text-gray-600 mb-1 text-center">Fullstack Developer</p>
+          <span class="text-sm text-gray-400 text-center"></span>
         </div>
       </div>
     </div>

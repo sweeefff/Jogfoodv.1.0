@@ -107,28 +107,25 @@
                             <h1 class="text-4xl md:text-5xl font-bold text-gray-800">
                                 Makanan <span class="text-amber-600">Terpopuler!</span>
                             </h1>
-                            <h4 class="text-2xl font-semibold text-gray-700">Gudeg</h4>
-                            <p class="text-gray-600 leading-relaxed">
-                                Gudeg adalah hidangan khas Provinsi Daerah Istimewa Yogyakarta yang terbuat dari
-                                nangka muda yang dimasak dengan santan. Perlu waktu berjam-jam untuk membuat
-                                hidangan ini.
-                                Warna coklat biasanya dihasilkan oleh daun jati yang dimasak bersamaan.
-                            </p>
-                            <p class="text-gray-600 leading-relaxed">
-                                Gudeg biasanya dimakan dengan nasi dan disajikan dengan kuah santan kental
-                                (areh), ayam kampung, telur, tempe, tahu dan sambal goreng krecek.
-                            </p>
-                            <a href="#"
+                            @if($topMenus->first())
+                                <h4 class="text-2xl font-semibold text-gray-700">{{ $topMenus->first()->nama }}</h4>
+                                <p class="text-gray-600 leading-relaxed">
+                                    {{ $topMenus->first()->deskripsi_menu }}
+                                </p>
+                            @endif
+                            <a href="{{ route('detail', ['id' => $topMenus->first()->id_menu]) }}"
                                 class="inline-block px-8 py-3 bg-amber-600 text-white rounded-full font-medium transition-all duration-300 hover:bg-amber-700 btn-hover">
                                 Rincian
                             </a>
                         </div>
                     </div>
                     <div class="lg:w-1/2">
+                        @if($topMenus->first())
                             <div class="rounded-xl overflow-hidden shadow-xl">
-                            <img src="{{ asset('assets/img/menu/gudeg.jpg') }}" alt="Gudeg Yogyakarta"
-                                class="w-full h-auto object-cover">
-                        </div>
+                                <img src="{{ asset('assets/img/menu/' . $topMenus->first()->gambar_menu) }}" alt="{{ $topMenus->first()->nama }}"
+                                    class="w-full h-auto object-cover">
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -138,41 +135,70 @@
             <div class="max-w-6xl mx-auto">
                 <div class="flex flex-col lg:flex-row items-center gap-12">
                     <div class="lg:w-1/2">
+                        @if($topDrink)
                         <div class="rounded-xl overflow-hidden custom-shadow">
-                            <img src="{{ asset('assets/img/menu/gudeg-transformed.png') }}" alt="Wedang Uwuh"
+                            <img src="{{ asset('assets/img/menu/' . $topDrink->gambar_menu) }}" alt="{{ $topDrink->nama }}"
+
                                 class="w-full h-auto object-cover">
                         </div>
+                        @endif
                     </div>
                     <div class="lg:w-1/2 text-center lg:text-left">
                         <div class="space-y-6">
                             <h1 class="text-4xl md:text-5xl font-bold text-gray-800">
                                 Minuman <span class="text-amber-600">Terpopuler!</span>
                             </h1>
-                            <h4 class="text-2xl font-semibold text-gray-700">Wedang Uwuh</h4>
-                            <p class="text-gray-600 leading-relaxed">
-                                Wedang Uwuh adalah minuman dengan bahan-bahan yang berupa dedaunan mirip dengan
-                                rempah. Dalam bahasa Jawa, Wedang berarti minuman yang diseduh, sedangkan uwuh
-                                berarti sampah.
-                            </p>
-                            <p class="text-gray-600 leading-relaxed">
-                                    Di Yogyakarta sendiri Wedang Uwuh sangat mudah sekali untuk dijumpai. Mulai dari
-                                pasar-pasar Tradisional, Rumah Makan, Kafe, Tempat oleh-oleh. Selain itu Wedang Uwuh
-                                juga
-                                menjadi salah satu andalan oleh-oleh khas dari Yogyakarta yang selalu dicari oleh
-                                para
-                                wisatawan saat mereka berkunjung ke Yogyakarta.
-                            </p>
-                            <a href="#" class="inline-block px-8 py-3 bg-amber-600 text-white rounded-full font-medium 
-                                                    transition-all duration-300 hover:bg-amber-700 btn-hover">
+                            @if($topDrink)
+                                <h4 class="text-2xl font-semibold text-gray-700">{{ $topDrink->nama }}</h4>
+                                <p class="text-gray-600 leading-relaxed">
+                                    {{ $topDrink->deskripsi_menu }}
+                                </p>
+                                <a href="{{ route('detail', ['id' => $topDrink->id_menu]) }}"
+                                    class="inline-block px-8 py-3 bg-amber-600 text-white rounded-full font-medium 
+                                        transition-all duration-300 hover:bg-amber-700 btn-hover">
                                     Rincian
-                            </a>
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-    </div>
+    
     <!-- End Section -->
+    <!-- Side Dish Section -->
+        <section class="py-16 px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex flex-col lg:flex-row items-center gap-12">
+                    <div class="lg:w-1/2 text-center lg:text-left">
+                        <div class="space-y-6">
+                            <h1 class="text-4xl md:text-5xl font-bold text-gray-800">
+                            Camilan <span class="text-amber-600">Terpopuler!</span>
+                        </h1>
+                        @if($topSideDish)
+                            <h4 class="text-2xl font-semibold text-gray-700">{{ $topSideDish->nama }}</h4>
+                            <p class="text-gray-600 leading-relaxed">
+                                {{ $topSideDish->deskripsi_menu }}
+                            </p>
+                            <a href="{{ route('detail', ['id' => $topSideDish->id_menu]) }}"
+                                class="inline-block px-8 py-3 bg-amber-600 text-white rounded-full font-medium transition-all duration-300 hover:bg-amber-700 btn-hover">
+                                Rincian
+                            </a>
+                        @endif
+                    </div>
+                </div>
+                <div class="lg:w-1/2">
+                    @if($topSideDish)
+                    <div class="rounded-xl overflow-hidden shadow-xl">
+                        <img src="{{ asset('assets/img/menu/' . $topSideDish->gambar_menu) }}" alt="{{ $topSideDish->nama }}"
+                            class="w-full h-auto object-cover">
+                    </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
     <!--============Start QT Section===========-->
     <div class="qt relative h-72 bg-cover bg-center">
         <div class="absolute inset-0 bg-black/40"></div> <!-- Overlay hitam transparan -->

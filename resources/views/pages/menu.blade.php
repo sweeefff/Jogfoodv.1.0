@@ -46,15 +46,11 @@
 </div>
 
     <!-- Pagination (boleh disembunyikan jika sedang search) -->
-    <div class="flex justify-center mt-8 mb-12" id="pagination">
-        <nav class="inline-flex rounded-md shadow">
-            <a href="#" class="px-3 py-2 rounded-l-md border border-gray-300 bg-white text-gray-500 hover:bg-gray-50">Previous</a>
-            <a href="#" class="px-3 py-2 border-t border-b border-gray-300 bg-white text-gray-500 hover:bg-gray-50">1</a>
-            <a href="#" class="px-3 py-2 border border-gray-300 bg-white text-gray-500 hover:bg-gray-50">2</a>
-            <a href="#" class="px-3 py-2 border border-gray-300 bg-white text-gray-500 hover:bg-gray-50">3</a>
-            <a href="#" class="px-3 py-2 rounded-r-md border border-gray-300 bg-white text-gray-500 hover:bg-gray-50">Next</a>
-        </nav>
+    @if($menu instanceof \Illuminate\Pagination\LengthAwarePaginator)
+    <div class="flex justify-center mt-8 mb-12">
+        {{ $menu->appends(request()->except('page'))->links('pagination::tailwind') }}
     </div>
+    @endif
 
     {{-- SweetAlert Toast --}}
     @if(session('success'))
