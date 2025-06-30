@@ -10,6 +10,10 @@ class RiwayatController extends Controller
 {
     public function riwayat()
     {
+        if (!session()->has('user_id')) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu');
+        }
+
         $userId = session('user_id', Auth::id());
 
         // Ambil semua transaksi user beserta detail_transaksi dan menu

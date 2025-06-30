@@ -72,7 +72,6 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
 
     //Data Menu
     Route::get('/tblmenu', [TblmenuController::class, 'index'])->name('pages.admin.tblmenu');
-    Route::get('/tblmenu/search', [TblmenuController::class, 'search'])->name('tblmenu.search');
 
 
 

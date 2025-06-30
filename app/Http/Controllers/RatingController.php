@@ -11,6 +11,10 @@ class RatingController extends Controller
     // Menampilkan halaman beri rating untuk 1 menu tertentu
     public function index($id_menu, $id_detail)
     {
+        if (!session()->has('user_id')) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu');
+        }
+
         $menu = \App\Models\Menu::findOrFail($id_menu);
 
         // Cek apakah user sudah review produk ini di detail transaksi ini

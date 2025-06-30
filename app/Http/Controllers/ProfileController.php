@@ -11,6 +11,10 @@ class ProfileController extends Controller
 {
     public function show()
     {
+        if (!session()->has('user_id')) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu');
+        }
+
         $user = Auth::user();
         return view('pages.user.profile', compact('user'));
     }

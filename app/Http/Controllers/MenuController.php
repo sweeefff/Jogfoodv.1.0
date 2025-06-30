@@ -16,11 +16,11 @@ class MenuController extends Controller
         $kategori = $request->input('kategori');
 
         $menu = Menu::withCount([
-                'ratings as avg_rating' => function($q) {
-                    $q->select(DB::raw('coalesce(avg(rating),0)'));
-                },
-                'ratings as total_ulasan'
-            ])
+            'ratings as avg_rating' => function ($q) {
+                $q->select(DB::raw('coalesce(avg(rating),0)'));
+            },
+            'ratings as total_ulasan'
+        ])
             ->when($search, function ($query, $search) {
                 $query->where('nama', 'like', "%{$search}%");
             })
@@ -42,7 +42,7 @@ class MenuController extends Controller
                 $query->where('nama', 'like', "%{$q}%");
             })
             ->get();
-        
+
         return view('components.card.search-results', compact('results'));
     }
     public function beliSekarang(Request $request, $id)

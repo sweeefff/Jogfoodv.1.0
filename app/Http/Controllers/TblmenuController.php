@@ -11,8 +11,19 @@ class TblmenuController extends Controller
 {
 public function index(Request $request)
 {
-    $kategori = $request->get('kategori', 'Makanan');
-    $menu = Menu::where('kategori', $kategori)->get();
+    if (!session()->has('user_id')) {
+        return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu');
+    }
+
+    $kategori = $request->get('kategori');
+
+    // Jika kategori valid, filter berdasarkan kategori
+    if (in_array($kategori, ['Makanan', 'Minuman', 'Side Dish'])) {
+        $menu = Menu::where('kategori', $kategori)->get();
+    } else {
+        $kategori = null; // Kembalikan ke null jika kategori tidak valid
+        $menu = Menu::all(); // Tampilkan semua data
+    }
 
     if ($request->ajax()) {
         return response()->view('pages.admin.tblmenu', compact('menu', 'kategori'))->header('Content-Type', 'text/html');
@@ -20,6 +31,7 @@ public function index(Request $request)
 
     return view('pages.admin.tblmenu', compact('menu', 'kategori'));
 }
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -97,15 +109,15 @@ public function index(Request $request)
     }
 
     public function search(Request $request)
-{
-    $query = $request->get('query');
+    {
+        $query = $request->get('query');
 
-    $menus = DB::table('tblmenu')
-        ->where('namamenu', 'like', '%' . $query . '%')
-        ->orWhere('kategori', 'like', '%' . $query . '%')
-        ->get();
+        $menus = DB::table('tblmenu')
+            ->where('namamenu', 'like', '%' . $query . '%')
+            ->orWhere('kategori', 'like', '%' . $query . '%')
+            ->get();
 
-    return response()->json($menus);
-}
+        return response()->json($menus);
+    }
 
 }

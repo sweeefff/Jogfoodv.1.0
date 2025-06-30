@@ -14,6 +14,10 @@ class StrukController extends Controller
 
     public function __construct(StrukService $strukService)
     {
+        if (!session()->has('user_id')) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu');
+        }
+
         $this->strukService = $strukService;
     }
     public function show($id_struk)
