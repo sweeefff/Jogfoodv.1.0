@@ -20,11 +20,16 @@
 			<!-- Cart icon -->
 			<a href="{{ route('keranjang.index') }}" class="flex items-center">
 				<button type="button" class="flex text-white">
-					<svg class="w-7 h-7" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-						viewBox="0 0 24 24">
-						<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-							d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312" />
-					</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 98.89" fill="currentColor" class="w-9 h-9">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M1.72,92h119.43c0.94,0,1.72,0.79,1.72,1.72v3.44
+        c0,0.93-0.78,1.72-1.72,1.72H1.72C0.78,98.89,0,98.12,0,97.17v-3.44C0,92.78,0.78,92,1.72,92L1.72,92z M66.4,19.73
+        c31.57,2.52,56.4,25.25,56.4,57.47c0,2.62-0.17,5.19-0.48,7.72H0.57c-0.32-2.56-0.48-5.14-0.48-7.73
+        c0-32.37,25.06-55.19,56.83-57.5V9.92h-9.68c-0.98,0-1.78-0.8-1.78-1.78V1.78c0-0.98,0.8-1.78,1.78-1.78h28.7
+        c0.98,0,1.78,0.8,1.78,1.78v6.37c0,0.98-0.8,1.78-1.78,1.78H66.4V19.73L66.4,19.73z"/>
+</svg>
+
+
+
 				</button>
 			</a>
 
@@ -88,11 +93,16 @@
 			<!-- Cart icon -->
 			<a href="{{ route('keranjang.index') }}" class="flex items-center">
 				<button type="button" class="flex text-white">
-					<svg class="w-7 h-7" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-						viewBox="0 0 24 24">
-						<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-							d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312" />
-					</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 98.89" fill="currentColor" class="w-9 h-9">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M1.72,92h119.43c0.94,0,1.72,0.79,1.72,1.72v3.44
+        c0,0.93-0.78,1.72-1.72,1.72H1.72C0.78,98.89,0,98.12,0,97.17v-3.44C0,92.78,0.78,92,1.72,92L1.72,92z M66.4,19.73
+        c31.57,2.52,56.4,25.25,56.4,57.47c0,2.62-0.17,5.19-0.48,7.72H0.57c-0.32-2.56-0.48-5.14-0.48-7.73
+        c0-32.37,25.06-55.19,56.83-57.5V9.92h-9.68c-0.98,0-1.78-0.8-1.78-1.78V1.78c0-0.98,0.8-1.78,1.78-1.78h28.7
+        c0.98,0,1.78,0.8,1.78,1.78v6.37c0,0.98-0.8,1.78-1.78,1.78H66.4V19.73L66.4,19.73z"/>
+</svg>
+
+
+
 				</button>
 			</a>
 			<button type="button"

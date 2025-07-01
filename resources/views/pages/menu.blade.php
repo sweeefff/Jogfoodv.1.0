@@ -31,25 +31,26 @@
         <!-- (sort menu tetap seperti sebelumnya) -->
     </div>
 
-<div class="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-    @foreach ($menu as $item => $menu)
-    @include('components.card.card', [
-        'id' => $menu->id_menu,
-        'nama' => $menu->nama,
-        'gambar_menu' => $menu->gambar_menu,
-        'desc' => $menu->deskripsi_menu,
-        'rating' => round($menu->avg_rating, 1),
-        'total_ulasan' => $menu->total_ulasan,
-        'harga' => 'Rp. ' . number_format($menu->harga, 0, ',', '.'),
-    ])
-    @endforeach
-</div>
-
-    <!-- Pagination (boleh disembunyikan jika sedang search) -->
-    @if($menu instanceof \Illuminate\Pagination\LengthAwarePaginator)
-    <div class="flex justify-center mt-8 mb-12">
-        {{ $menu->appends(request()->except('page'))->links('pagination::tailwind') }}
+    <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        @foreach ($menu as $item => $m)
+            @include('components.card.card', [
+                'id' => $m->id_menu,
+                'nama' => $m->nama,
+                'gambar_menu' => $m->gambar_menu,
+                'desc' => $m->deskripsi_menu,
+                'rating' => round($m->avg_rating, 1),
+                'total_ulasan' => $m->total_ulasan,
+                'harga' => 'Rp. ' . number_format($m->harga, 0, ',', '.'),
+            ])
+        @endforeach
     </div>
+
+    @if ($menu->hasPages())
+        <div class="mt-10 flex justify-center">
+            <nav class="inline-flex rounded-lg shadow bg-white px-4 py-2" aria-label="Pagination">
+                {{ $menu->appends(request()->except('page'))->links('pagination::tailwind') }}
+            </nav>
+        </div>
     @endif
 
     {{-- SweetAlert Toast --}}
