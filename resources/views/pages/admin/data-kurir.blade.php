@@ -1,5 +1,7 @@
 @extends('layouts.appadm')
+
 @section('title', 'Data Kurir')
+
 @section('content')
 <div class="min-h-screen bg-gray-50 pt-28 pl-56 pr-4 pb-5">
     <div class="max-w-6xl mx-auto">
@@ -50,12 +52,14 @@
                             @endif
                         </td>
                         <td class="px-4 py-2 text-center">
-                            <div class="flex justify-center gap-2">
-                                <button type="button" class="p-2 rounded bg-red-100 hover:bg-red-200 text-red-700"
-                                    onclick="openDeleteKurirModal('{{ $k->id }}', '{{ $k->name }}')" title="Hapus">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
+                            <form id="delete-form-{{ $k->id }}" action="{{ route('kurir.destroy', $k->id) }}" method="POST" class="hidden">
+                                @csrf
+                                @method('DELETE')
+                            </form>
+                            <button type="button" class="p-2 rounded bg-red-100 hover:bg-red-200 text-red-700"
+                                onclick="confirmDeleteKurir({{ $k->id }}, '{{ $k->name }}')" title="Hapus">
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </td>
                     </tr>
                     @empty
@@ -72,21 +76,14 @@
     </div>
 </div>
 
-{{-- Modal Tambah dan Hapus Kurir --}}
 @include('components.kurir.add-kurir-modal')
-@include('components.kurir.delete-kurir-modal')
 @endsection
 
 @section('scripts')
-<script>
-    function openDeleteKurirModal(id, name) {
-        const form = document.getElementById('deleteKurirForm');
-        form.action = '/admin/kurir/' + id;
-        document.getElementById('deleteKurirName').textContent = name;
-        const myModal = new bootstrap.Modal(document.getElementById('deleteKurirModal'));
-        myModal.show();
-    }
+<!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<script>
     function openAddModal() {
         const modal = document.getElementById('addKurirModal');
         if (modal) {
@@ -101,6 +98,22 @@
             modal.classList.remove('flex');
             modal.classList.add('hidden');
         }
+    }
+
+    function confirmDeleteKurir(id, name) {
+        Swal.fire({
+            title: 'Yakin ingin menghapus kurir ini?',
+            text: 'Kurir bernama "' + name + '" akan dihapus permanen!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#e3342f',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Ya, hapus!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('delete-form-' + id).submit();
+            }
+        });
     }
 </script>
 @endsection
