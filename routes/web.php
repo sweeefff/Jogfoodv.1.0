@@ -80,6 +80,7 @@ Route::resource('/users-resource', UserController::class)->parameters(['users-re
     'index' => 'users.index',
     'store' => 'users.store',
     'show' => 'users.show',
+    'destroy' => 'users.destroy',
 ]);
 
 // Route tambahan untuk UserController

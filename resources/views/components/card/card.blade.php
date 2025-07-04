@@ -32,7 +32,8 @@
             <span class="text-gray-900 font-medium">{{ $harga }}</span>
         </div>
         <div class="flex items-center justify-center w-full mt-4">
-            <form action="{{ route('keranjang.store', ['id' => $menu->id_menu]) }}" method="POST">
+            <form action="{{ route('keranjang.store', ['id' => $id]) }}" method="POST">
+
                 @csrf
                 <button type="submit"
                     class="flex items-center justify-center focus:outline-none bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 rounded-md w-20 h-10 text-white transition duration-200"

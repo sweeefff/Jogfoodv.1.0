@@ -164,7 +164,7 @@ class KurirController extends Controller
 
         if ($request->hasFile('foto_penerima')) {
             $fotoPath = $request->file('foto_penerima')->store('foto_penerima', 'public');
-            $updateData['foto_penerima'] = $fotoPath;
+            $updateData['foto'] = $fotoPath;
         }
 
         $status->update($updateData);
