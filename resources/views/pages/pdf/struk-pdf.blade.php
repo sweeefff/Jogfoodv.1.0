@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -369,7 +370,8 @@
                 <h3>Informasi Order</h3>
                 <div class="info-row clearfix">
                     <span class="info-label">Tanggal Order:</span>
-                    <span class="info-value">{{ isset($transaksi->created_at) ? $transaksi->created_at->format('d M Y, H:i') : 'N/A' }}</span>
+                    <span
+                        class="info-value">{{ isset($transaksi->created_at) ? $transaksi->created_at->format('d M Y, H:i') : 'N/A' }}</span>
                 </div>
                 <div class="info-row clearfix">
                     <span class="info-label">Alamat Pengiriman:</span>
@@ -380,7 +382,8 @@
                 <h3>Informasi Pembayaran</h3>
                 <div class="info-row clearfix">
                     <span class="info-label">Metode:</span>
-                    <span class="info-value">{{ isset($pembayaran->metode_pembayaran) ? ucfirst($pembayaran->metode_pembayaran) : 'Belum ditentukan' }}</span>
+                    <span
+                        class="info-value">{{ isset($pembayaran->metode_pembayaran) ? ucfirst($pembayaran->metode_pembayaran) : 'Belum ditentukan' }}</span>
                 </div>
                 <div class="info-row clearfix">
                     <span class="info-label">Tanggal Bayar:</span>
@@ -410,7 +413,8 @@
                                 <td class="item-name">{{ $detail->menu->nama ?? 'N/A' }}</td>
                                 <td class="text-center">{{ $detail->jumlah ?? 0 }}</td>
                                 <td class="text-right">Rp{{ number_format($detail->menu->harga ?? 0, 0, ',', '.') }}</td>
-                                <td class="text-right item-price">Rp{{ number_format($detail->subtotal ?? 0, 0, ',', '.') }}</td>
+                                <td class="text-right item-price">Rp{{ number_format($detail->subtotal ?? 0, 0, ',', '.') }}
+                                </td>
                             </tr>
                         @endforeach
                     @endif
@@ -463,4 +467,5 @@
         </div>
     </div>
 </body>
+
 </html>

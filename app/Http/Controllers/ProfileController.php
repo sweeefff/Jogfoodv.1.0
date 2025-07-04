@@ -52,9 +52,8 @@ class ProfileController extends Controller
 
         $data = $request->only(['name', 'email', 'no_hp', 'alamat']);
 
-        // Handle upload foto
         if ($request->hasFile('foto')) {
-            // Hapus foto lama jika ada
+
             if ($user->foto && file_exists(public_path('assets/img/profile/' . $user->foto))) {
                 unlink(public_path('assets/img/profile/' . $user->foto));
             }

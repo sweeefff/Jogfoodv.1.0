@@ -24,7 +24,7 @@ class StrukController extends Controller
     {
         $struk = Struk::with(['transaksi.user', 'transaksi.detail_transaksi.menu', 'transaksi.pembayaran'])->findOrFail($id_struk);
         $transaksi = $struk->transaksi;
-        $pembayaran = $transaksi->pembayaran; // Ambil relasi pembayaran
+        $pembayaran = $transaksi->pembayaran;
 
         return view('pages.user.struk', compact('struk', 'transaksi', 'pembayaran'));
     }
@@ -36,7 +36,6 @@ class StrukController extends Controller
         $struk = $this->strukService->generateStruk($id_transaksi);
         $this->strukService->sendStrukEmail($struk);
 
-        // Redirect ke tampilan struk setelah email terkirim
         return redirect()->route('struk.show', ['id_struk' => $struk->id_struk])
             ->with('success', 'Struk berhasil dibuat dan dikirim ke email!');
     }

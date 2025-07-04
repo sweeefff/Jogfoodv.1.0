@@ -63,8 +63,7 @@ class MenuController extends Controller
         $subtotal = $menu->harga * $jumlah;
         $deliveryFee = 10000;
         $tax = 0.1;
-
-        // Simpan ke session checkout
+        
         session([
             'checkout_items' => $items,
             'checkout_total' => $subtotal,

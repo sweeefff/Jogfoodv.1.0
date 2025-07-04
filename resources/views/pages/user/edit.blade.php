@@ -94,60 +94,60 @@
     @endif
 
     <script>
-    const latInput = document.getElementById('latitude');
-    const lngInput = document.getElementById('longitude');
-    const alamatTextarea = document.getElementById('alamat');
+        const latInput = document.getElementById('latitude');
+        const lngInput = document.getElementById('longitude');
+        const alamatTextarea = document.getElementById('alamat');
 
-    const defaultLat = parseFloat(latInput.value) || -6.2;
-    const defaultLng = parseFloat(lngInput.value) || 106.8;
+        const defaultLat = parseFloat(latInput.value) || -6.2;
+        const defaultLng = parseFloat(lngInput.value) || 106.8;
 
-    const map = L.map('map').setView([defaultLat, defaultLng], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
+        const map = L.map('map').setView([defaultLat, defaultLng], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
 
-    let marker = L.marker([defaultLat, defaultLng], { draggable: true }).addTo(map);
+        let marker = L.marker([defaultLat, defaultLng], { draggable: true }).addTo(map);
 
-    function updateInputsAndAddress(lat, lng) {
-        latInput.value = lat.toFixed(6);
-        lngInput.value = lng.toFixed(6);
+        function updateInputsAndAddress(lat, lng) {
+            latInput.value = lat.toFixed(6);
+            lngInput.value = lng.toFixed(6);
 
-        fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`)
-            .then(res => res.json())
-            .then(data => {
-                if (data.display_name) {
-                    alamatTextarea.value = data.display_name;
-                }
+            fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.display_name) {
+                        alamatTextarea.value = data.display_name;
+                    }
+                });
+        }
+
+        // Geolocation default
+        if (navigator.geolocation && !latInput.value && !lngInput.value) {
+            navigator.geolocation.getCurrentPosition(position => {
+                const userLat = position.coords.latitude;
+                const userLng = position.coords.longitude;
+
+                map.setView([userLat, userLng], 15);
+                marker.setLatLng([userLat, userLng]);
+
+                updateInputsAndAddress(userLat, userLng);
+            }, error => {
+                console.warn('Gagal mendapatkan lokasi:', error.message);
             });
-    }
+        }
 
-    // Geolocation default
-    if (navigator.geolocation && !latInput.value && !lngInput.value) {
-        navigator.geolocation.getCurrentPosition(position => {
-            const userLat = position.coords.latitude;
-            const userLng = position.coords.longitude;
-
-            map.setView([userLat, userLng], 15);
-            marker.setLatLng([userLat, userLng]);
-
-            updateInputsAndAddress(userLat, userLng);
-        }, error => {
-            console.warn('Gagal mendapatkan lokasi:', error.message);
+        // Marker drag
+        marker.on('dragend', function (e) {
+            const { lat, lng } = e.target.getLatLng();
+            updateInputsAndAddress(lat, lng);
         });
-    }
 
-    // Marker drag
-    marker.on('dragend', function (e) {
-        const { lat, lng } = e.target.getLatLng();
-        updateInputsAndAddress(lat, lng);
-    });
-
-    // Map click
-    map.on('click', function (e) {
-        marker.setLatLng(e.latlng);
-        updateInputsAndAddress(e.latlng.lat, e.latlng.lng);
-    });
-</script>
+        // Map click
+        map.on('click', function (e) {
+            marker.setLatLng(e.latlng);
+            updateInputsAndAddress(e.latlng.lat, e.latlng.lng);
+        });
+    </script>
 
 
 @endsection

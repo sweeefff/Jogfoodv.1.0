@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Menu;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\DB; // Tambahkan ini untuk menggunakan DB facade
+use Illuminate\Support\Facades\DB;
 
 class TblmenuController extends Controller
 {
@@ -17,12 +17,11 @@ public function index(Request $request)
 
     $kategori = $request->get('kategori');
 
-    // Jika kategori valid, filter berdasarkan kategori
     if (in_array($kategori, ['Makanan', 'Minuman', 'Side Dish'])) {
         $menu = Menu::where('kategori', $kategori)->get();
     } else {
-        $kategori = null; // Kembalikan ke null jika kategori tidak valid
-        $menu = Menu::all(); // Tampilkan semua data
+        $kategori = null;
+        $menu = Menu::all();
     }
 
     if ($request->ajax()) {

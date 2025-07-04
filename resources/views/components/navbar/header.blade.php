@@ -20,18 +20,14 @@
 			<!-- Cart icon -->
 			<a href="{{ route('keranjang.index') }}" class="flex items-center relative">
 				<button type="button" class="flex text-white">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 98.89" fill="currentColor" class="w-9 h-9">
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M1.72,92h119.43c0.94,0,1.72,0.79,1.72,1.72v3.44
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 98.89" fill="currentColor"
+						class="w-9 h-9">
+						<path fill-rule="evenodd" clip-rule="evenodd" d="M1.72,92h119.43c0.94,0,1.72,0.79,1.72,1.72v3.44
         c0,0.93-0.78,1.72-1.72,1.72H1.72C0.78,98.89,0,98.12,0,97.17v-3.44C0,92.78,0.78,92,1.72,92L1.72,92z M66.4,19.73
         c31.57,2.52,56.4,25.25,56.4,57.47c0,2.62-0.17,5.19-0.48,7.72H0.57c-0.32-2.56-0.48-5.14-0.48-7.73
         c0-32.37,25.06-55.19,56.83-57.5V9.92h-9.68c-0.98,0-1.78-0.8-1.78-1.78V1.78c0-0.98,0.8-1.78,1.78-1.78h28.7
-        c0.98,0,1.78,0.8,1.78,1.78v6.37c0,0.98-0.8,1.78-1.78,1.78H66.4V19.73L66.4,19.73z"/>
-</svg>
-
-
-
-
-					
+        c0.98,0,1.78,0.8,1.78,1.78v6.37c0,0.98-0.8,1.78-1.78,1.78H66.4V19.73L66.4,19.73z" />
+					</svg>
 					@if(isset($cartCount) && $cartCount > 0)
 						<span
 							class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full px-2 py-0.5">
@@ -101,13 +97,14 @@
 			<!-- Keranjang -->
 			<a href="{{ route('keranjang.index') }}" class="flex items-center relative">
 				<button type="button" class="flex text-white">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 98.89" fill="currentColor" class="w-9 h-9">
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M1.72,92h119.43c0.94,0,1.72,0.79,1.72,1.72v3.44
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 98.89" fill="currentColor"
+						class="w-9 h-9">
+						<path fill-rule="evenodd" clip-rule="evenodd" d="M1.72,92h119.43c0.94,0,1.72,0.79,1.72,1.72v3.44
         c0,0.93-0.78,1.72-1.72,1.72H1.72C0.78,98.89,0,98.12,0,97.17v-3.44C0,92.78,0.78,92,1.72,92L1.72,92z M66.4,19.73
         c31.57,2.52,56.4,25.25,56.4,57.47c0,2.62-0.17,5.19-0.48,7.72H0.57c-0.32-2.56-0.48-5.14-0.48-7.73
         c0-32.37,25.06-55.19,56.83-57.5V9.92h-9.68c-0.98,0-1.78-0.8-1.78-1.78V1.78c0-0.98,0.8-1.78,1.78-1.78h28.7
-        c0.98,0,1.78,0.8,1.78,1.78v6.37c0,0.98-0.8,1.78-1.78,1.78H66.4V19.73L66.4,19.73z"/>
-</svg>
+        c0.98,0,1.78,0.8,1.78,1.78v6.37c0,0.98-0.8,1.78-1.78,1.78H66.4V19.73L66.4,19.73z" />
+					</svg>
 
 
 

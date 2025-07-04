@@ -31,14 +31,12 @@ class SocialiteController extends Controller
                 ]
             );
 
-            // ✅ Set session manual, konsisten dengan AuthController
             session()->put('user_id', $user->id);
             session()->put('user_role', $user->role);
             session()->put('username', $user->username);
             session()->put('email', $user->email);
             session()->regenerate();
 
-            // ✅ Redirect sesuai role
             if ($user->role === 'admin') {
                 return redirect()->route('admin.dashboard')->with('success', 'Login berhasil sebagai admin!');
             } else {

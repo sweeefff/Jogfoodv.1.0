@@ -36,84 +36,64 @@ Route::get('/forgot-password', [AuthController::class, 'showForgotForm'])->name(
 Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('password.email');
 Route::get('/reset-password/{token}', [AuthController::class, 'showResetForm'])->name('password.reset');
 Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
-
+// Google Auth
 Route::get('/auth/google', [SocialiteController::class, 'redirectToGoogle'])->name('google.login');
 Route::get('/auth/google/callback', [SocialiteController::class, 'handleGoogleCallback'])->name('google.callback');
-
-// Public Routes - Dapat diakses tanpa login
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// Search biasa (form submit)
 Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
-
-// Live search (AJAX)
 Route::get('/menu/search', [MenuController::class, 'search'])->name('menu.search');
 
 Route::get('/about', [AboutController::class, 'about'])->name('about');
-Route::get('/detail/{id}', [DetailController::class, 'detail'])->name('detail');
-Route::get('/detailpsn', [DetailpsnController::class, 'detailpsn'])->name('detailpsn');
-Route::get('/komentar', [KomentarController::class, 'komentar'])->name('komentar');
 
 Route::post('/menu/beli-sekarang/{id}', [MenuController::class, 'beliSekarang'])->name('menu.beli_sekarang');
 
 
 // Admin Routes - Hanya admin yang bisa akses
 Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(function () {
+    // Dashboard Admin
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
-    Route::get('/order', [OrderController::class, 'index'])->name('admin.order');
-    Route::get('/data', [DataController::class, 'data'])->name('admin.data');
-    Route::get('/pengiriman', [PengirimanController::class, 'pengiriman'])->name('admin.pengiriman');
-    Route::get('/user', [UserController::class, 'index'])->name('admin.user');
 
-    //CRUD untuk Data Kurir
+    //CRUD Data Kurir
     Route::get('/kurir', [KurirController::class, 'kurir'])->name('admin.kurir');
     Route::post('/kurir', [KurirController::class, 'store'])->name('kurir.store');
     Route::delete('/kurir/{id}', [KurirController::class, 'destroy'])->name('kurir.destroy');
 
-    //Data Menu
-    Route::get('/tblmenu', [TblmenuController::class, 'index'])->name('pages.admin.tblmenu');
+    // Data User
+    Route::resource('/users-resource', UserController::class)->parameters(['users-resource' => 'id'])->names([
+        'index' => 'users.index',
+        'destroy' => 'users.destroy',
+    ]);
 
+    // CRUD menu
+    Route::get('/user', [UserController::class, 'index'])->name('admin.user');
+    Route::resource('/tblmenu', TblmenuController::class)->only([
+        'index',
+        'store',
+        'update',
+        'destroy'
+    ])->names([
+                'index' => 'pages.admin.tblmenu',
+                'store' => 'tblmenu.store',
+                'update' => 'tblmenu.update',
+                'destroy' => 'tblmenu.destroy'
+            ]);
+    Route::get('/tblmenu/search', [TblmenuController::class, 'search'])->name('tblmenu.search');
 
+    // Profile
+    Route::get('/data', [DataController::class, 'data'])->name('admin.data');
+    Route::get('/edit', [DataController::class, 'edit'])->name('admin.edit');
+    Route::put('/update', [DataController::class, 'update'])->name('admin.update');
 
-});    //  Untuk Data User dibagian admin 
-Route::resource('/users-resource', UserController::class)->parameters(['users-resource' => 'id'])->names([
-    'index' => 'users.index',
-    'store' => 'users.store',
-    'show' => 'users.show',
-    'destroy' => 'users.destroy',
-]);
+    // Order
+    Route::get('/order', [OrderController::class, 'index'])->name('admin.order');
+    Route::post('/order/update-tanggal/{id}', [OrderController::class, 'updateTanggal'])->name('admin.order.update-tanggal');
+    Route::get('/order/export', [OrderController::class, 'export'])->name('admin.order.export');
 
-// Route tambahan untuk UserController
-Route::get('users/role/{role}', [UserController::class, 'getUsersByRole'])->name('admin.users.role');
-Route::post('users/{id}/toggle-status', [UserController::class, 'toggleStatus'])->name('admin.users.toggle-status');
-Route::get('users/search', [UserController::class, 'search'])->name('admin.users.search');
-Route::get('users/statistics', [UserController::class, 'getStatistics'])->name('admin.users.statistics');
-Route::post('users/bulk-delete', [UserController::class, 'bulkDelete'])->name('admin.users.bulk-delete');
-
-// CRUD menu
-Route::resource('/tblmenu', TblmenuController::class)->only([
-    'index',
-    'store',
-    'update',
-    'destroy'
-])->names([
-            'index' => 'pages.admin.tblmenu',
-            'store' => 'tblmenu.store',
-            'update' => 'tblmenu.update',
-            'destroy' => 'tblmenu.destroy'
-        ]);
-
-// Route Live Search untuk halaman admin
-Route::get('/tblmenu/search', [TblmenuController::class, 'search'])->name('tblmenu.search');
-Route::get('/edit', [DataController::class, 'edit'])->name('admin.edit');
-Route::put('/update', [DataController::class, 'update'])->name('admin.update');
-Route::get('/changepass', [DataController::class, 'showChangePass'])->name('admin.changepass');
-Route::post('/changepass', [DataController::class, 'changePass'])->name('admin.changepass.update');
-Route::get('/rekap', [RekapController::class, 'rekap'])->name('admin.rekap');
-Route::post('/order/update-tanggal/{id}', [OrderController::class, 'updateTanggal'])->name('admin.order.update-tanggal');
-Route::get('/order/export', [OrderController::class, 'export'])->name('admin.order.export');
-Route::post('/admin/pengiriman/tugaskan/{id}', [PengirimanController::class, 'updatePengiriman'])->name('admin.pengiriman.tugaskan');
-
+    //Penugasan Kurir
+    Route::get('/pengiriman', [PengirimanController::class, 'pengiriman'])->name('admin.pengiriman');
+    Route::post('/admin/pengiriman/tugaskan/{id}', [PengirimanController::class, 'updatePengiriman'])->name('admin.pengiriman.tugaskan');
+});
 
 // User Routes - Hanya user yang bisa akses
 Route::middleware([RoleMiddleware::class . ':user'])->prefix('user')->group(function () {
@@ -148,7 +128,7 @@ Route::middleware([RoleMiddleware::class . ':user'])->prefix('user')->group(func
     Route::get('/riwayat', [RiwayatController::class, 'riwayat'])->name('riwayat');
     Route::get('/rating', [RatingController::class, 'rating'])->name('rating');
 
-    Route::post('/beli-sekarang/{id}', [\App\Http\Controllers\MenuController::class, 'beliSekarang'])->name('menu.beli_sekarang');
+    Route::post('/beli-sekarang/{id}', [MenuController::class, 'beliSekarang'])->name('menu.beli_sekarang');
 
     // Rating
     Route::get('/user/rating/{id_menu}/{id_detail}', [RatingController::class, 'index'])->name('rating.form');
@@ -157,16 +137,16 @@ Route::middleware([RoleMiddleware::class . ':user'])->prefix('user')->group(func
 
 // Kurir Routes - Hanya kurir yang bisa akses
 Route::middleware([RoleMiddleware::class . ':kurir'])->prefix('kurir')->group(function () {
-    // menampilkan dashboard kurir
+    //  Dashboard kurir
     Route::get('/dashboard', [KurirController::class, 'kurirDashboard'])->name('kurir.dashboard');
     Route::get('/order', [KurirController::class, 'kurirOrder'])->name('kurir.order');
 
-    //Menampilkan Update Status
+    //Update Status
     Route::get('/kurir/update/{id}', [KurirController::class, 'kurirShowUpdate'])->name('kurir.showUpdate');
     Route::put('/kurir/update/{id}', [KurirController::class, 'kurirUpdateStatus'])->name('kurir.updateStatus');
     Route::put('/order/{id}/selesai', [KurirController::class, 'kurirSelesaikanOrder'])->name('kurir.selesaikan');
 
-    // Menampilkan Profile Kurir
+    // Profile Kurir
     Route::get('/data', [KurirController::class, 'kurirData'])->name('kurir.data');
     Route::get('/edit', [KurirController::class, 'kurirEdit'])->name('kurir.edit');
     Route::put('/update', [KurirController::class, 'kurirUpdate'])->name('kurir.update');

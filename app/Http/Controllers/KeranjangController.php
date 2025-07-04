@@ -21,7 +21,7 @@ class KeranjangController extends Controller
         $items = Keranjang::with('menu')
             ->where('id_user', $userId)
             ->get();
-        $user = User::find($userId); // pastikan ambil user dari session
+        $user = User::find($userId);
         return view('pages.user.keranjang', compact('items', 'user'));
     }
 
@@ -47,7 +47,7 @@ class KeranjangController extends Controller
                 'jumlah' => $jumlah,
             ]);
         }
-        session()->flash('success', 'Produk ditambahkan ke keranjang');
+        session()->flash('success', 'Menu ditambahkan ke Order List');
         return redirect()->back();
     }
 
@@ -58,7 +58,7 @@ class KeranjangController extends Controller
             $item->delete();
         }
 
-        return redirect()->route('keranjang.index')->with('success', 'Produk dihapus dari keranjang');
+        return redirect()->route('keranjang.index')->with('success', 'Menu dihapus dari Order List');
     }
 
 }

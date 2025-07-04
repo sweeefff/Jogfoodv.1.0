@@ -99,7 +99,6 @@
     </div>
 </div>
 
-<!-- Style Kategori Aktif -->
 <style>
     .kategori-option.active {
         background-color: #f59e0b !important; /* amber-500 */

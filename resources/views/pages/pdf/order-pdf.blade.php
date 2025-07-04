@@ -1,14 +1,28 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>Export PDF</title>
     <style>
-        body { font-family: DejaVu Sans, sans-serif; }
-        table { border-collapse: collapse; width: 100%; }
-        th, td { border: 1px solid #000; padding: 6px; text-align: left; }
+        body {
+            font-family: DejaVu Sans, sans-serif;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            border: 1px solid #000;
+            padding: 6px;
+            text-align: left;
+        }
     </style>
 </head>
+
 <body>
     <h2>Data Rekap Penjualan</h2>
     <p style="font-weight:bold; color:green; margin-bottom:10px;">
@@ -39,4 +53,5 @@
         </tbody>
     </table>
 </body>
+
 </html>

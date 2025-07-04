@@ -8,7 +8,6 @@ use App\Models\Ratings;
 
 class RatingController extends Controller
 {
-    // Menampilkan halaman beri rating untuk 1 menu tertentu
     public function index($id_menu, $id_detail)
     {
         if (!session()->has('user_id')) {
@@ -17,7 +16,6 @@ class RatingController extends Controller
 
         $menu = \App\Models\Menu::findOrFail($id_menu);
 
-        // Cek apakah user sudah review produk ini di detail transaksi ini
         $sudahReview = \App\Models\Ratings::where('id_user', session('user_id'))
             ->where('id_menu', $id_menu)
             ->where('id_detail', $id_detail)
@@ -26,14 +24,12 @@ class RatingController extends Controller
         return view('pages.user.rating', compact('menu', 'id_detail', 'sudahReview'));
     }
 
-    // Menyimpan rating
     public function store(Request $request, $id_menu, $id_detail)
     {
         if (!session()->has('user_id')) {
             return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu');
         }
 
-        // Cek sudah review
         $sudahReview = \App\Models\Ratings::where('id_user', session('user_id'))
             ->where('id_menu', $id_menu)
             ->where('id_detail', $id_detail)

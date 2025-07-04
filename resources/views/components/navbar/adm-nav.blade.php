@@ -1,5 +1,6 @@
 <!-- Navigation -->
-<nav class="fixed top-0 z-50 w-full bg-gradient-to-r from-blue-600 via-amber-500 to-orange-400 shadow-lg border-b border-amber-200 dark:bg-gradient-to-r dark:from-blue-900 dark:via-amber-700 dark:to-orange-600 dark:border-amber-800">
+<nav
+    class="fixed top-0 z-50 w-full bg-gradient-to-r from-blue-600 via-amber-500 to-orange-400 shadow-lg border-b border-amber-200 dark:bg-gradient-to-r dark:from-blue-900 dark:via-amber-700 dark:to-orange-600 dark:border-amber-800">
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">
             <div class="flex items-center justify-start rtl:justify-end">
@@ -41,63 +42,51 @@
     <div class="h-full px-3 pb-4 overflow-y-auto bg-transparent">
         <ul class="space-y-2 font-medium">
             <li>
-                <a href="{{ route('admin.dashboard') }}"
-
-                   class="flex items-center p-2 text-white rounded-lg group transition
+                <a href="{{ route('admin.dashboard') }}" class="flex items-center p-2 text-white rounded-lg group transition
                    {{ request()->routeIs('admin.dashboard') ? 'bg-orange-600/80 shadow' : 'hover:bg-orange-600/80' }}">
                     <i class="fas fa-table w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
                     <span class="ms-3">Home</span>
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.data') }}"
-
-                   class="flex items-center p-2 text-white rounded-lg group transition
+                <a href="{{ route('admin.data') }}" class="flex items-center p-2 text-white rounded-lg group transition
                    {{ request()->routeIs('admin.data') ? 'bg-orange-600/80 shadow' : 'hover:bg-orange-600/80' }}">
                     <i class="fas fa-user-gear w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
                     <span class="ms-3">Profile Admin</span>
                 </a>
             </li>
             <li>
-                <a href="{{ route('pages.admin.tblmenu', ['kategori' => 'Daftar Kuliner']) }}"
-
-                   class="flex items-center p-2 text-white rounded-lg group transition
+                <a href="{{ route('pages.admin.tblmenu', ['kategori' => 'Daftar Kuliner']) }}" class="flex items-center p-2 text-white rounded-lg group transition
                    {{ request()->is('tblmenu*') ? 'bg-orange-600/80 shadow' : 'hover:bg-orange-600/80' }}">
                     <i class="fas fa-utensils w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
                     <span class="ms-3">Daftar Kuliner</span>
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.order') }}"
-
-                   class="flex items-center p-2 text-white rounded-lg group transition
+                <a href="{{ route('admin.order') }}" class="flex items-center p-2 text-white rounded-lg group transition
                    {{ request()->routeIs('admin.order') ? 'bg-orange-600/80 shadow' : 'hover:bg-orange-600/80' }}">
-                    <i class="fas fa-boxes-stacked w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
+                    <i
+                        class="fas fa-boxes-stacked w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
                     <span class="ms-3">Pesanan</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('admin.pengiriman') }}"
-
-                   class="flex items-center p-2 text-white rounded-lg group transition
+                    class="flex items-center p-2 text-white rounded-lg group transition
                    {{ request()->routeIs('admin.pengiriman') ? 'bg-orange-600/80 shadow' : 'hover:bg-orange-600/80' }}">
                     <i class="fas fa-truck w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
                     <span class="ms-3">Pengiriman</span>
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.user') }}"
-
-                   class="flex items-center p-2 text-white rounded-lg group transition
+                <a href="{{ route('admin.user') }}" class="flex items-center p-2 text-white rounded-lg group transition
                    {{ request()->routeIs('admin.user') ? 'bg-orange-600/80 shadow' : 'hover:bg-orange-600/80' }}">
                     <i class="fas fa-users w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
                     <span class="ms-3">Data User</span>
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.kurir') }}"
-
-                   class="flex items-center p-2 text-white rounded-lg group transition
+                <a href="{{ route('admin.kurir') }}" class="flex items-center p-2 text-white rounded-lg group transition
                    {{ request()->routeIs('admin.kurir') ? 'bg-orange-600/80 shadow' : 'hover:bg-orange-600/80' }}">
                     <i class="fas fa-users w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
                     <span class="ms-3">Data Kurir</span>
@@ -108,7 +97,8 @@
                     @csrf
                     <button type="submit"
                         class="flex items-center w-full p-2 text-white rounded-lg hover:bg-orange-600/80 group">
-                        <i class="fas fa-right-from-bracket w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
+                        <i
+                            class="fas fa-right-from-bracket w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
                         <span class="ms-3">Sign Out</span>
                     </button>
                 </form>

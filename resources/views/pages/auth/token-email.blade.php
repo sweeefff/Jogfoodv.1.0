@@ -51,7 +51,8 @@
                         <!-- Register link -->
                         <div class="mt-4 text-center text-sm">
                             <span class="text-gray-600">Belum punya akun?</span>
-                            <a href="{{ route('register') }}" class="ml-1 font-medium text-amber-600 hover:text-amber-500">Daftar sekarang</a>
+                            <a href="{{ route('register') }}"
+                                class="ml-1 font-medium text-amber-600 hover:text-amber-500">Daftar sekarang</a>
                         </div>
                         <div class="mt-4 text-center text-sm">
                             <span class="text-gray-600">Sudah ingat?</span>
