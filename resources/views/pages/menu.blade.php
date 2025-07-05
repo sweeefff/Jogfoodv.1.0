@@ -27,8 +27,35 @@
     </div>
 
     <!-- Sort by dropdown -->
-    <div class="max-w-7xl mx-auto px-4 flex justify-end mb-4">
-        <!-- (sort menu tetap seperti sebelumnya) -->
+    <div class="max-w-7xl mx-auto px-4 flex justify-end mb-8">
+        <form method="GET" action="{{ route('menu.index') }}" class="flex items-center gap-3 bg-white shadow-lg rounded-2xl px-6 py-3 border border-amber-100">
+            <span class="text-amber-500 font-bold flex items-center text-lg">
+                <i class="fas fa-filter mr-2"></i> Filter
+            </span>
+            <label for="sort" class="text-gray-700 font-semibold mr-1">Urutkan:</label>
+            <select name="sort" id="sort"
+                onchange="this.form.submit()"
+                class="rounded-xl border-2 border-amber-200 focus:ring-amber-500 focus:border-amber-500 transition shadow-sm text-gray-700 font-semibold bg-amber-50 hover:bg-amber-100 px-4 py-2 cursor-pointer min-w-[220px]">
+                <option value="rating" {{ request('sort', 'rating') == 'rating' ? 'selected' : '' }} style="font-size:1.1rem;padding-left:2rem;padding-right:2rem;">
+                    ⭐ Rating Tertinggi
+                </option>
+                <option value="harga_terendah" {{ request('sort') == 'harga_terendah' ? 'selected' : '' }}>
+                    ⇩ Harga Termurah
+                </option>
+                <option value="harga_tertinggi" {{ request('sort') == 'harga_tertinggi' ? 'selected' : '' }}>
+                    ⇧ Harga Termahal
+                </option>
+                <option value="az" {{ request('sort') == 'az' ? 'selected' : '' }}>
+                    A-Z
+                </option>
+            </select>
+            @if(request('search'))
+                <input type="hidden" name="search" value="{{ request('search') }}">
+            @endif
+            @if(request('kategori'))
+                <input type="hidden" name="kategori" value="{{ request('kategori') }}">
+            @endif
+        </form>
     </div>
 
     <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">

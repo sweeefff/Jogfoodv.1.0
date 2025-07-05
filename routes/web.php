@@ -47,6 +47,7 @@ Route::get('/menu/search', [MenuController::class, 'search'])->name('menu.search
 Route::get('/about', [AboutController::class, 'about'])->name('about');
 
 Route::post('/menu/beli-sekarang/{id}', [MenuController::class, 'beliSekarang'])->name('menu.beli_sekarang');
+Route::get('/menu/{id}', [DetailController::class, 'detail'])->name('detail');
 
 
 // Admin Routes - Hanya admin yang bisa akses

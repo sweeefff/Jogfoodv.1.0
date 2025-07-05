@@ -14,6 +14,7 @@ class MenuController extends Controller
     {
         $search = $request->input('search');
         $kategori = $request->input('kategori');
+        $sort = $request->input('sort', 'rating'); // default rating
 
         $menu = Menu::withCount([
             'ratings as avg_rating' => function ($q) {
@@ -26,11 +27,27 @@ class MenuController extends Controller
             })
             ->when($kategori, function ($query, $kategori) {
                 $query->where('kategori', $kategori);
-            })
-            ->orderByDesc('avg_rating')
-            ->paginate(9);
+            });
 
-        return view('pages.menu', compact('menu', 'search', 'kategori'));
+        // Sorting logic
+        switch ($sort) {
+            case 'harga_terendah':
+                $menu = $menu->orderBy('harga', 'asc');
+                break;
+            case 'harga_tertinggi':
+                $menu = $menu->orderBy('harga', 'desc');
+                break;
+            case 'az':
+                $menu = $menu->orderBy('nama', 'asc');
+                break;
+            default: // rating
+                $menu = $menu->orderByDesc('avg_rating');
+                break;
+        }
+
+        $menu = $menu->paginate(9)->appends($request->except('page'));
+
+        return view('pages.menu', compact('menu', 'search', 'kategori', 'sort'));
     }
 
     public function search(Request $request)
