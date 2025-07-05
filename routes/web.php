@@ -39,13 +39,13 @@ Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('
 // Google Auth
 Route::get('/auth/google', [SocialiteController::class, 'redirectToGoogle'])->name('google.login');
 Route::get('/auth/google/callback', [SocialiteController::class, 'handleGoogleCallback'])->name('google.callback');
-Route::get('/', [HomeController::class, 'index'])->name('home');
 
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
 Route::get('/menu/search', [MenuController::class, 'search'])->name('menu.search');
-
 Route::get('/about', [AboutController::class, 'about'])->name('about');
-
+Route::get('/detail/{id}', [DetailController::class, 'detail'])->name('detail');
 Route::post('/menu/beli-sekarang/{id}', [MenuController::class, 'beliSekarang'])->name('menu.beli_sekarang');
 
 
