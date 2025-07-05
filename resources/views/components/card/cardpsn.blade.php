@@ -6,7 +6,7 @@
     $totalAkhir = $subtotal + $taxAmount + $deliveryFee;
 
     $snapTokenTime = $transaksi->snap_token_created_at ? \Carbon\Carbon::parse($transaksi->snap_token_created_at) : null;
-    $isExpired = $snapTokenTime && now()->diffInSeconds($snapTokenTime, false) < -3600;
+    $isExpired = $snapTokenTime && now()->diffInSeconds($snapTokenTime, false) < -900;
 @endphp
 
 <div class="bg-white border border-gray-200 rounded-lg shadow-sm mb-4">
@@ -152,7 +152,7 @@
     document.addEventListener("DOMContentLoaded", function () {
         @if($snapTokenTime)
             const countdownElem = document.getElementById("countdown-{{ $id_transaksi }}");
-            const expiredTime = new Date("{{ $snapTokenTime->addHour()->format('Y-m-d H:i:s') }}").getTime();
+            const expiredTime = new Date("{{ $snapTokenTime->addMinutes(15)->format('Y-m-d H:i:s') }}").getTime(); // ubah addHour() ke addMinutes(15)
 
             if (countdownElem) {
                 const interval = setInterval(function () {
@@ -164,10 +164,9 @@
                         countdownElem.innerHTML = "Kadaluwarsa";
                         // Optionally, reload page or disable button
                     } else {
-                        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                        countdownElem.innerHTML = hours + "j " + minutes + "m " + seconds + "d";
+                        countdownElem.innerHTML = minutes + "m " + seconds + "d";
                     }
                 }, 1000);
             }
