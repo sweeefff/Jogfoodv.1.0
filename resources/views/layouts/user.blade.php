@@ -46,6 +46,14 @@
 </head>
 
 <body class="flex flex-col min-h-screen">
+    <div id="global-loader"
+        style="display:none; position:fixed; inset:0; background:rgba(255,255,255,0.7); z-index:9999; align-items:center; justify-content:center;">
+        <div class="flex flex-row gap-2 justify-center items-center h-screen">
+            <div class="w-4 h-4 rounded-full bg-amber-500 animate-bounce"></div>
+            <div class="w-4 h-4 rounded-full bg-amber-500 animate-bounce [animation-delay:-.3s]"></div>
+            <div class="w-4 h-4 rounded-full bg-amber-500 animate-bounce [animation-delay:-.5s]"></div>
+        </div>
+    </div>
     <header>
         @include('components.navbar.header')
     </header>
@@ -81,43 +89,17 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
+    let loaderTimeout;
+    function showLoader() {
+        document.getElementById('global-loader').style.display = 'flex';
+    }
+    function hideLoader() {
+        document.getElementById('global-loader').style.display = 'none';
+        clearTimeout(loaderTimeout);
+    }
+    loaderTimeout = setTimeout(showLoader, 1000);
+    window.addEventListener('load', hideLoader);
 </script>
-<!-- 🧠 Script Live Search -->
-<!-- <script>
-        $('#search-input').on('keyup', function () {
-            let query = $(this).val();
 
-            if (query.length > 0) {
-                $.ajax({
-                    url:"",
-                    type: "GET",
-                    data: { query: query },
-                    success: function (data) {
-                        $('#menu-list').empty();
-                        $('#pagination').hide();
-
-                        if (data.length === 0) {
-                            $('#menu-list').append('<p class="col-span-3 text-center text-gray-500">Tidak ada menu ditemukan</p>');
-                        } else {
-                            $.each(data, function (i, item) {
-                                $('#menu-list').append(`
-                                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
-                                        <img src="/gambar/${item.gambar_menu}" alt="${item.nama}" class="w-full h-48 object-cover">
-                                        <div class="p-4">
-                                            <h3 class="text-lg font-bold text-gray-900">${item.nama}</h3>
-                                            <p class="text-sm text-gray-600">${item.deskripsi_menu}</p>
-                                            <p class="text-amber-600 font-semibold mt-2">Rp. ${parseInt(item.harga).toLocaleString('id-ID')}</p>
-                                        </div>
-                                    </div>
-                                `);
-                            });
-                        }
-                    }
-                });
-            } else {
-                location.reload(); // reset ke awal kalau input dikosongkan
-            }
-        });
-    </script> -->
 
 </html>

@@ -90,17 +90,31 @@
                         'gambar_menu' => $detail->menu->gambar_menu,
                         'variasi' => $detail->opsi,
                         'jumlah' => 'x' . $detail->jumlah,
-                        'harga' => 'Rp. ' . number_format($detail->menu->harga * $detail->jumlah, 0, ',', '.'),
-                        'diskon' => 'Rp. ' . number_format($detail->subtotal, 0, ',', '.'),
+                        'total' => 'Rp. ' . number_format($detail->subtotal, 0, ',', '.'),
                     ])
                 @endforeach
+                    @php
+                        $tax = 0.1;
+                        $deliveryFee = 10000;
+                        $subtotal = $transaksi->detail_transaksi->sum('subtotal');
+                        $taxAmount = $subtotal * $tax;
+                        $totalAkhir = $subtotal + $taxAmount + $deliveryFee;
+                    @endphp
+
+                <div class="flex justify-start items-center px-6">
+                    <span class="text-gray-700 font-semibold mr-2">Ongkir: </span>
+                    <span class="text-gray-700 font-bold text-lg">Rp{{ number_format($deliveryFee, 0, ',', '.') }}</span>
+                </div>
+                <div class="flex justify-start items-center px-6">
+                    <span class="text-gray-700 font-semibold mr-2">Pajak ({{ $tax * 100 }}%): </span>
+                    <span class="text-gray-700 font-bold text-lg">Rp{{ number_format($taxAmount, 0, ',', '.') }}</span>
+                </div>
                 <div class="flex justify-start items-center px-6 pb-4">
                     <span class="text-gray-700 font-semibold mr-2">Total Pesanan:</span>
-                    <span class="text-orange-500 font-bold text-lg">Rp{{ number_format($transaksi->total_harga, 0, ',', '.') }}</span>
+                    <span class="text-orange-500 font-bold text-lg">Rp{{ number_format($totalAkhir, 0, ',', '.') }}</span>
                 </div>
             </div>
         @empty
-            {{-- Tidak perlu apa-apa di sini --}}
         @endforelse
 
         {{-- Pesan kosong untuk tiap tab, SELALU ADA --}}
