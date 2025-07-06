@@ -94,7 +94,8 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
 
     //Penugasan Kurir
     Route::get('/pengiriman', [PengirimanController::class, 'pengiriman'])->name('admin.pengiriman');
-    Route::post('/admin/pengiriman/tugaskan/{id}', [PengirimanController::class, 'updatePengiriman'])->name('admin.pengiriman.tugaskan');
+    Route::post('/pengiriman/tugaskan/{id}', [PengirimanController::class, 'updatePengiriman'])->name('admin.pengiriman.tugaskan');
+    
 });
 
 // User Routes - Hanya user yang bisa akses

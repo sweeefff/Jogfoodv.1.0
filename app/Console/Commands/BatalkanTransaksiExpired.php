@@ -20,7 +20,7 @@ class BatalkanTransaksiExpired extends Command
      *
      * @var string
      */
-    protected $description = 'Batalkan transaksi yang snap_token sudah lebih dari 1 jam dan belum dibayar';
+    protected $description = 'Batalkan transaksi yang snap_token sudah lebih dari 15 menit dan belum dibayar';
 
     /**
      * Execute the console command.
@@ -30,8 +30,8 @@ class BatalkanTransaksiExpired extends Command
         $now = Carbon::now();
         $expired = Transaksi::where('status_transaksi', 'pending')
             ->whereNotNull('snap_token_created_at')
-            ->where('snap_token_created_at', '<', $now->subHour())
-            ->update(['status_transaksi' => 'dibatalkan']);
+            ->where('snap_token_created_at', '<', $now->subMinutes(15))
+            ->update(['status_transaksi' => 'kadaluwarsa']);
 
         $this->info("Transaksi kadaluwarsa dibatalkan: $expired");
     }

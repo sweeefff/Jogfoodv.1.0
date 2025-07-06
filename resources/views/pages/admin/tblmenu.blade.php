@@ -1,15 +1,16 @@
 @extends('layouts.appadm')
 @section('title', 'Daftar Kuliner - Jogfood')
 @section('content')
-    <div class="p-6 2mt-16 ml-auto lg:ml-64">
+    <div class="p-6 2mt-16 ml-auto lg:ml-64 mt-16">
         <div class="bg-white rounded-lg shadow-md p-6">
 
             <!-- Kategori Button Tabs -->
-            <div class="flex gap-3 mb-6">
+            <div class="flex gap-3 mb-6 ">
                 @foreach(['Makanan', 'Minuman', 'Side Dish'] as $kat)
-                    <a href="{{ route('pages.admin.tblmenu', ['kategori' => $kat]) }}" class="kategori-btn px-4 py-2 rounded-lg font-semibold 
-                            hover:bg-amber-600 hover:text-white transition
-                            {{ $kategori == $kat ? 'bg-amber-700 text-white' : 'bg-amber-100 text-amber-700' }}">
+                    <a href="{{ route('pages.admin.tblmenu', ['kategori' => $kat]) }}"
+                        class="kategori-btn px-4 py-2 rounded-lg font-semibold 
+                                                                                    hover:bg-amber-600 hover:text-white transition
+                                                                                    {{ $kategori == $kat ? 'bg-amber-700 text-white' : 'bg-amber-100 text-amber-700' }}">
                         {{ $kat }}
                     </a>
                 @endforeach
@@ -65,7 +66,8 @@
                                     <td class="px-3 py-4 font-medium text-amber-900">{{ $item->nama }}</td>
                                     <td class="text-amber-900">{{ $item->deskripsi_menu }}</td>
                                     <td class="px-3 py-4 font-medium text-amber-900 text-right">Rp
-                                        {{ number_format((float) $item->harga, 0, ',', '.') }}</td>
+                                        {{ number_format((float) $item->harga, 0, ',', '.') }}
+                                    </td>
                                     <td class="px-3 py-4 text-center">
                                         @if($item->gambar_menu && file_exists(public_path('assets/img/menu/' . $item->gambar_menu)))
                                             <img src="{{ asset('assets/img/menu/' . $item->gambar_menu) }}"
@@ -91,9 +93,8 @@
                                             <form action="{{ route('tblmenu.destroy', $item->id_menu) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit"
-                                                    class="text-red-600 hover:text-red-900 p-1 rounded hover:bg-red-100"
-                                                    onclick="return confirm('Yakin ingin menghapus item ini?')">
+                                                <button type="submit" onclick="return confirm('Apakah Anda yakin ingin menghapus item ini?')"
+                                                    class="text-red-600 hover:text-red-900 p-1 rounded hover:bg-red-100">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </form>
@@ -113,43 +114,40 @@
     </div>
 
     <!-- JS: Search & Kategori -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        function loadKategori(kategori) {
-            fetch(`/tblmenu?kategori=${kategori}`, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-                .then(res => res.text())
-                .then(html => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-                    const newContent = doc.querySelector('#menuContent').innerHTML;
-                    document.querySelector('#menuContent').innerHTML = newContent;
-
-                    // Highlight active tab
-                    document.querySelectorAll('.kategori-btn').forEach(btn => {
-                        if (btn.innerText === kategori) {
-                            btn.classList.add('bg-amber-700', 'text-white');
-                            btn.classList.remove('bg-amber-100', 'text-amber-700');
-                        } else {
-                            btn.classList.remove('bg-amber-700', 'text-white');
-                            btn.classList.add('bg-amber-100', 'text-amber-700');
+        document.addEventListener("DOMContentLoaded", function () {
+            // Event delegation pada document, bukan hanya menuContent
+            document.addEventListener('click', function (e) {
+                // Pastikan klik pada tombol submit di form hapus menu
+                const btn = e.target.closest('form[action*="tblmenu.destroy"] button[type="submit"]');
+                if (btn) {
+                    e.preventDefault();
+                    const form = btn.closest('form');
+                    Swal.fire({
+                        title: 'Hapus Menu?',
+                        text: 'Apakah Anda yakin ingin menghapus menu ini?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#aaa',
+                        confirmButtonText: 'Ya, Hapus',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
                         }
                     });
-                });
-        }
+                }
+            });
 
-        // Filter search
-        document.addEventListener("DOMContentLoaded", function () {
+            // Search filter tetap jalan
             const searchInput = document.getElementById("search");
             const tableBody = document.getElementById("menuTableBody");
-
             if (searchInput && tableBody) {
                 searchInput.addEventListener("keyup", function () {
                     const filter = searchInput.value.toLowerCase();
                     const rows = tableBody.getElementsByTagName("tr");
-
                     Array.from(rows).forEach(row => {
                         const nama = row.cells[1]?.textContent.toLowerCase() || '';
                         const deskripsi = row.cells[2]?.textContent.toLowerCase() || '';
@@ -158,5 +156,29 @@
                 });
             }
         });
+
+        @if(session('success'))
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'success',
+                title: "{{ session('success') }}",
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true
+            });
+        @endif
+
+        @if(session('error'))
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'error',
+                title: "{{ session('error') }}",
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true
+            });
+        @endif
     </script>
 @endsection

@@ -44,6 +44,14 @@
 </head>
 
 <body>
+    <div id="global-loader"
+        style="display:none; position:fixed; inset:0; background:rgba(255,255,255,0.7); z-index:9999; align-items:center; justify-content:center;">
+        <div class="flex flex-row gap-2 justify-center items-center h-screen">
+            <div class="w-4 h-4 rounded-full bg-amber-500 animate-bounce"></div>
+            <div class="w-4 h-4 rounded-full bg-amber-500 animate-bounce [animation-delay:-.3s]"></div>
+            <div class="w-4 h-4 rounded-full bg-amber-500 animate-bounce [animation-delay:-.5s]"></div>
+        </div>
+    </div>
     <header>
         @include('components.navbar.guest-nav')
     </header>
@@ -110,9 +118,19 @@
                 }
             });
         } else {
-            location.reload(); // reset ke awal kalau input dikosongkan
+            location.reload();
         }
     });
+    let loaderTimeout;
+    function showLoader() {
+        document.getElementById('global-loader').style.display = 'flex';
+    }
+    function hideLoader() {
+        document.getElementById('global-loader').style.display = 'none';
+        clearTimeout(loaderTimeout);
+    }
+    loaderTimeout = setTimeout(showLoader, 1000);
+    window.addEventListener('load', hideLoader);
 </script>
 
 </html>

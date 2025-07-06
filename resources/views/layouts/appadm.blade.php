@@ -55,7 +55,15 @@
 </head>
 
 <body class="bg-amber-50 min-h-screen">
-    <!-- Include the header based on user role -->
+    <!-- Loader Overlay -->
+    <div id="global-loader"
+        style="display:none; position:fixed; inset:0; background:rgba(255,255,255,0.7); z-index:9999; align-items:center; justify-content:center;">
+        <div class="flex flex-row gap-2 justify-center items-center h-screen">
+            <div class="w-4 h-4 rounded-full bg-amber-500 animate-bounce"></div>
+            <div class="w-4 h-4 rounded-full bg-amber-500 animate-bounce [animation-delay:-.3s]"></div>
+            <div class="w-4 h-4 rounded-full bg-amber-500 animate-bounce [animation-delay:-.5s]"></div>
+        </div>
+    </div>
     @if (session('user_role') == 'admin')
         <header>
             @include('components.navbar.adm-nav')
@@ -70,4 +78,21 @@
     </main>
 
     @yield('scripts')
+    <script>
+        // Loader muncul jika 2 detik tidak ada respons (misal: loading page/response lambat)
+        let loaderTimeout;
+        function showLoader() {
+            document.getElementById('global-loader').style.display = 'flex';
+        }
+        function hideLoader() {
+            document.getElementById('global-loader').style.display = 'none';
+            clearTimeout(loaderTimeout);
+        }
+        // Tampilkan loader jika 2 detik tidak ada respons
+        loaderTimeout = setTimeout(showLoader, 2000);
+        // Sembunyikan loader saat semua sudah siap
+        window.addEventListener('load', hideLoader);
+    </script>
 </body>
+
+</html>

@@ -47,15 +47,38 @@
                 ])
             </div>
         @empty
-            <div class="flex flex-col items-center text-gray-600 mt-8">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24"
+            <div class="flex flex-col items-center text-gray-600 mt-8 empty-message" data-status="pending">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-4" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                 </svg>
-                <span class="text-2xl font-semibold mt-4">Belum Ada Pesanan</span>
+                <span class="text-2xl font-semibold mt-2">Belum Ada Pesanan</span>
             </div>
         @endforelse
+
+        <!-- Pesan kosong untuk tiap tab -->
+        <div class="flex flex-col items-center text-gray-600 mt-8 empty-message" data-status="pending" style="display:none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <span class="text-2xl font-semibold mt-2">Belum ada pesanan menunggu.</span>
+        </div>
+        <div class="flex flex-col items-center text-gray-600 mt-8 empty-message" data-status="lunas" style="display:none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 17v-2a4 4 0 118 0v2m-4 4h.01M4 6h16M4 10h16M4 14h16" />
+            </svg>
+            <span class="text-2xl font-semibold mt-2">Belum ada pesanan lunas.</span>
+        </div>
+        <div class="flex flex-col items-center text-gray-600 mt-8 empty-message" data-status="dibatalkan" style="display:none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12" />
+            </svg>
+            <span class="text-2xl font-semibold mt-2">Tidak ada pesanan dibatalkan.</span>
+        </div>
     </div>
 </div>
 
@@ -73,13 +96,27 @@
 
             // Filter order items
             const status = this.getAttribute('data-status');
+            let hasOrder = false;
             document.querySelectorAll('.order-item').forEach(item => {
-                // Untuk tab dibatalkan, tampilkan juga kadaluwarsa
                 if (status === 'dibatalkan') {
-                    item.style.display = (item.getAttribute('data-status') === 'dibatalkan' || item.getAttribute('data-status') === 'kadaluwarsa') ? '' : 'none';
+                    if (item.getAttribute('data-status') === 'dibatalkan' || item.getAttribute('data-status') === 'kadaluwarsa') {
+                        item.style.display = '';
+                        hasOrder = true;
+                    } else {
+                        item.style.display = 'none';
+                    }
                 } else {
-                    item.style.display = (item.getAttribute('data-status') === status) ? '' : 'none';
+                    if (item.getAttribute('data-status') === status) {
+                        item.style.display = '';
+                        hasOrder = true;
+                    } else {
+                        item.style.display = 'none';
+                    }
                 }
+            });
+            // Tampilkan/hide pesan kosong
+            document.querySelectorAll('.empty-message').forEach(msg => {
+                msg.style.display = (msg.getAttribute('data-status') === status && !hasOrder) ? '' : 'none';
             });
         });
     });
@@ -90,11 +127,23 @@
     // Search filter
     document.getElementById('searchInput').addEventListener('input', function () {
         const keyword = this.value.toLowerCase();
+        const status = document.querySelector('.tab-btn.text-amber-600').getAttribute('data-status');
+        let hasOrder = false;
         document.querySelectorAll('.order-item').forEach(item => {
             const search = item.getAttribute('data-search');
-            item.style.display = search.includes(keyword) &&
-                document.querySelector('.tab-btn.text-amber-600').getAttribute('data-status') === item.getAttribute('data-status')
-                ? '' : 'none';
+            const matchStatus = (status === 'dibatalkan')
+                ? (item.getAttribute('data-status') === 'dibatalkan' || item.getAttribute('data-status') === 'kadaluwarsa')
+                : (item.getAttribute('data-status') === status);
+            if (search.includes(keyword) && matchStatus) {
+                item.style.display = '';
+                hasOrder = true;
+            } else {
+                item.style.display = 'none';
+            }
+        });
+        // Tampilkan/hide pesan kosong
+        document.querySelectorAll('.empty-message').forEach(msg => {
+            msg.style.display = (msg.getAttribute('data-status') === status && !hasOrder) ? '' : 'none';
         });
     });
 </script>

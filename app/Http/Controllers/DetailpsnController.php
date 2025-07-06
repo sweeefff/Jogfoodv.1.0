@@ -16,7 +16,7 @@ class DetailpsnController extends Controller
             return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu');
         }
 
-        $expiredTime = now()->subHour();
+        $expiredTime = now()->subMinutes(15);
         Transaksi::where('status_transaksi', 'pending')
             ->whereNotNull('snap_token_created_at')
             ->where('snap_token_created_at', '<', $expiredTime)
