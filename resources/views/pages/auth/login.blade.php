@@ -3,6 +3,7 @@
         background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
     }
 </style>
+
 @extends('layouts.guest')
 
 @section('title', 'Login - Jogfood')
@@ -12,7 +13,7 @@
     <div class="min-h-screen bg-amber-50 flex items-center justify-center p-4">
         <div class="w-full max-w-md">
             <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-                <!-- Header with gradient background -->
+                <!-- Header -->
                 <div class="bg-amber-gradient py-6 px-8 text-center">
                     <div class="flex justify-center mb-2">
                         <img class="h-16" src="{{ asset('assets/icon/jogfood.png') }}" alt="Logo Jogfood">
@@ -21,11 +22,12 @@
                     <p class="text-amber-100 mt-1">Silakan masuk ke akun Anda</p>
                 </div>
 
-                <!-- Form section -->
+                <!-- Form -->
                 <div class="px-8 py-6">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
-                        <!-- Username field -->
+
+                        <!-- Username -->
                         <div class="mb-5">
                             <label for="username" name="login"
                                 class="block text-sm font-medium text-gray-700 mb-1">Username</label>
@@ -39,7 +41,7 @@
                             </div>
                         </div>
 
-                        <!-- Password field -->
+                        <!-- Password -->
                         <div class="mb-5">
                             <label for="password" name="password"
                                 class="block text-sm font-medium text-gray-700 mb-1">Password</label>
@@ -53,7 +55,7 @@
                             </div>
                         </div>
 
-                        <!-- Remember me & Forgot password -->
+                        <!-- Remember + Forgot -->
                         <div class="flex items-center justify-between mb-6">
                             <div class="flex items-center">
                                 <input id="remember-me" name="remember" type="checkbox"
@@ -66,18 +68,19 @@
                             </div>
                         </div>
 
-                        <!-- Login button -->
+                        <!-- Button -->
                         <button type="submit" value='login'
                             class="w-full bg-amber-500 text-white font-bold py-3 px-4 rounded-md hover:bg-amber-600 transition-all hover:shadow-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2">
                             Masuk
                         </button>
+
                         <div class="my-6 flex items-center justify-between">
                             <div class="border-t border-gray-300 flex-grow mr-3"></div>
                             <span class="text-gray-500 font-medium">or</span>
                             <div class="border-t border-gray-300 flex-grow ml-3"></div>
                         </div>
 
-                        <!--- Google Button -->
+                        <!-- Google -->
                         <div class="mt-3 space-y-3">
                             <a href="{{ route('google.login') }}"
                                 class="relative inline-flex w-full items-center justify-center rounded-md border border-gray-400 bg-white px-3.5 py-2.5 font-semibold text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:text-black focus:bg-gray-100 focus:text-black focus:outline-none"
@@ -94,31 +97,49 @@
                             </a>
                         </div>
 
-                        <!-- Register link -->
+                        <!-- Register -->
                         <div class="mt-4 text-center text-sm">
                             <span class="text-gray-600">Belum punya akun?</span>
                             <a href="{{ route('register') }}"
                                 class="ml-1 font-medium text-amber-600 hover:text-amber-500">Daftar sekarang</a>
                         </div>
-
-                        @if (session()->has('success'))
-                            <div class="bg-green-100 p-3 rounded-md mt-4">
-                                <p class="text-green-600 text-sm">{{ session('success') }}</p>
-                            </div>
-                        @elseif (session()->has('error'))
-                            <div class="bg-red-100 p-3 rounded-md mt-4">
-                                <p class="text-red-600 text-sm">{{ session('error') }}</p>
-                            </div>
-                        @endif
-
                     </form>
                 </div>
             </div>
 
-            <!-- Footer note -->
+            <!-- Footer -->
             <div class="mt-6 text-center text-xs text-gray-500">
                 <p>&copy; {{ date('Y') }} Jogfood. All rights reserved.</p>
             </div>
         </div>
     </div>
+
+    <!-- SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Toast -->
+    <script>
+        @if (session('success'))
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'success',
+                title: '{{ session('success') }}',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
+        @elseif (session('error'))
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'error',
+                title: '{{ session('error') }}',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
+        @endif
+    </script>
+    
 @endsection

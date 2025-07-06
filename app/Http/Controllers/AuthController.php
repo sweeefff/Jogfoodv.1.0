@@ -65,9 +65,9 @@ class AuthController extends Controller
                 }
             }
 
-            return back()->withErrors([
-                'login' => 'Username atau password salah',
-            ])->withInput($request->only('login'));
+            return back()->with('error', 'Username atau password salah')
+                ->withInput($request->only('login'));
+
         } catch (\Exception $e) {
             Log::error('Login error: ' . $e->getMessage());
             return back()->withErrors([
@@ -163,8 +163,9 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (!$user) {
-            return back()->withErrors(['email' => 'Email tidak ditemukan.']);
+            return back()->with('error', 'Email tidak ditemukan.');
         }
+
 
         $token = Str::random(60);
         DB::table('password_resets')->updateOrInsert(

@@ -33,7 +33,8 @@
                                     <td class="px-3 py-2">{{ $user->name }}</td>
                                     <td class="px-3 py-2">{{ $user->email }}</td>
                                     <td class="px-3 py-2">
-                                        <span class="inline-block px-2 py-0.5 text-xs font-medium bg-green-100 text-green-700 rounded">
+                                        <span
+                                            class="inline-block px-2 py-0.5 text-xs font-medium bg-green-100 text-green-700 rounded">
                                             {{ ucfirst($user->role) }}
                                         </span>
                                     </td>
@@ -48,16 +49,13 @@
                                         @endif
                                     </td>
                                     <td class="px-3 py-2">
-                                    <form id="delete-user-{{ $user->id }}"
-                                        action="{{ route('users.destroy', $user->id) }}"
-                                        method="POST" class="sr-only">
-                                        @csrf
-                                        @method('DELETE')
-                                    </form>
-                                        <button type="button"
-                                                onclick="confirmDeleteUser({{ $user->id }}, '{{ $user->name }}')"
-                                                class="p-2 rounded bg-red-100 hover:bg-red-200 text-red-700"
-                                                title="Hapus">
+                                        <form id="delete-user-{{ $user->id }}" action="{{ route('users.destroy', $user->id) }}"
+                                            method="POST" class="sr-only">
+                                            @csrf
+                                            @method('DELETE')
+                                        </form>
+                                        <button type="button" onclick="confirmDeleteUser({{ $user->id }}, '{{ $user->name }}')"
+                                            class="p-2 rounded bg-red-100 hover:bg-red-200 text-red-700" title="Hapus">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </td>
@@ -83,6 +81,28 @@
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+        @if (session('success'))
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'success',
+                title: @json(session('success')),
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
+        @elseif (session('error'))
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'error',
+                title: @json(session('error')),
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
+        @endif
+
         function confirmDeleteUser(id, name) {
             Swal.fire({
                 title: 'Yakin ingin menghapus user ini?',

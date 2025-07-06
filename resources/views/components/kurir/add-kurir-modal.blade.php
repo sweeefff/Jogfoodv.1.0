@@ -1,9 +1,9 @@
 <!-- Modal Tambah Kurir -->
 <div id="addKurirModal"
-    class="fixed inset-0 z-50 hidden overflow-y-auto bg-black bg-opacity-40 flex items-center justify-center">
+    class="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(255,255,255,0.7)] backdrop-blur-sm transition-all duration-300 hidden">
     <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl mx-4 my-8 overflow-hidden">
         <!-- Modal header -->
-        <div class="flex items-center justify-between px-6 py-4 bg-blue-600 text-white">
+        <div class="flex items-center justify-between px-6 py-4 bg-amber-600 text-white">
             <h3 class="text-lg font-semibold">
                 <i class="fas fa-user-plus mr-2"></i>Tambah Kurir
             </h3>
@@ -38,13 +38,15 @@
                         <input type="password" name="password" class="w-full border rounded px-3 py-2" required>
                     </div>
                     <div>
-                        <label class="block font-medium mb-1 text-gray-700">No. HP</label>
-                        <input type="text" name="no_hp" class="w-full border rounded px-3 py-2">
+                        <label class="block font-medium mb-1 text-gray-700">Nomor Handphone<span
+                                class="text-red-500">*</span></label>
+                        <input type="text" name="no_hp" class="w-full border rounded px-3 py-2" required>
                     </div>
                 </div>
                 <div>
-                    <label class="block font-medium mb-1 text-gray-700">Alamat</label>
-                    <textarea name="alamat" rows="2" class="w-full border rounded px-3 py-2"></textarea>
+                    <label class="block font-medium mb-1 text-gray-700">Alamat <span
+                                class="text-red-500">*</span></label>
+                    <textarea name="alamat" rows="2" class="w-full border rounded px-3 py-2" required></textarea>
                 </div>
                 <div>
                     <label class="block font-medium mb-1 text-gray-700">Foto</label>
@@ -59,10 +61,25 @@
                     class="mr-3 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded">
                     <i class="fas fa-times mr-1"></i>Batal
                 </button>
-                <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded">
+                <button type="submit" class="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded">
                     <i class="fas fa-save mr-1"></i>Simpan
                 </button>
             </div>
         </form>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@if (session('success'))
+    <script>
+        Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: @json(session('success')),
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true
+        });
+    </script>
+@endif

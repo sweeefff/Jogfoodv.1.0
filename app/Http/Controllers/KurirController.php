@@ -12,6 +12,7 @@ use App\Models\Transaksi;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Storage;
 
+
 class KurirController extends Controller
 {
     public function kurir()
@@ -26,7 +27,7 @@ class KurirController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'username' => 'required|unique:users',
             'name' => 'required',
             'email' => 'required|email|unique:users',
@@ -41,11 +42,19 @@ class KurirController extends Controller
         $data['password'] = bcrypt($request->password);
 
         if ($request->hasFile('foto')) {
-            $data['foto'] = $request->file('foto')->store('kurir', 'public');
+            $path = $request->file('foto')->store('foto_kurir', 'public');
         }
 
-        User::create($data);
-
+        User::create([
+            'username' => $validated['username'],
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => bcrypt($validated['password']),
+            'no_hp' => $validated['no_hp'],
+            'alamat' => $validated['alamat'],
+            'foto' => $path,
+            'role' => 'kurir'
+        ]);
         return redirect()->route('admin.kurir')->with('success', 'Kurir berhasil ditambahkan');
     }
 

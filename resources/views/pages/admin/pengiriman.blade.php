@@ -22,7 +22,7 @@
                         </option>
                     </select>
                     <button type="submit"
-                        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition">Cari</button>
+                        class="bg-amber-700 hover:bg-amber-800 text-white px-4 py-2 rounded-lg text-sm font-semibold transition">Cari</button>
                 </form>
 
                 <div class="overflow-x-auto">
@@ -59,11 +59,11 @@
                                             $isMerah = in_array(strtolower($statusPengiriman), ['gagal', 'batal', 'dibatalkan']);
                                         @endphp
                                         <span class="badge
-                                                    @if($isMerah)
-                                                        bg-red-500 text-white
-                                                    @elseif($statusPengiriman == 'dikirim') bg-yellow-400 text-yellow-900
-                                                    @elseif($statusPengiriman == 'selesai') bg-green-500 text-white
-                                                    @else bg-gray-300 text-gray-700 @endif">
+                                                            @if($isMerah)
+                                                                bg-red-500 text-white
+                                                            @elseif($statusPengiriman == 'dikirim') bg-yellow-400 text-yellow-900
+                                                            @elseif($statusPengiriman == 'selesai') bg-green-500 text-white
+                                                            @else bg-gray-300 text-gray-700 @endif">
                                             {{ ucfirst($statusPengiriman) }}
                                         </span>
                                         <br>
@@ -73,38 +73,38 @@
                                         @if($isMerah)
                                             @if(strtolower($statusPengiriman) == 'gagal')
                                                 <button onclick="showDetailPengiriman(
-                                                                            '{{ $order->status_pengiriman->nama_penerima ?? '-' }}',
-                                                                            '{{ $order->status_pengiriman->foto_penerima ?? '' }}',
-                                                                            '{{ $order->status_pengiriman->alasan ?? '-' }}',
-                                                                            '{{ $statusPengiriman }}',
-                                                                            '{{ $order->status_pengiriman->tanggal_diterima ?? ($order->status_pengiriman->tanggal_update ?? $order->updated_at) }}',
-                                                                            '{{ $order->user->alamat ?? '-' }}'
-                                                                        )"
-                                                    class="w-full px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-xs font-semibold transition-all duration-150">
+                                                                                            '{{ $order->status_pengiriman->nama_penerima ?? '-' }}',
+                                                                                            '{{ $order->status_pengiriman->foto_penerima ?? '' }}',
+                                                                                            '{{ $order->status_pengiriman->alasan ?? '-' }}',
+                                                                                            '{{ $statusPengiriman }}',
+                                                                                            '{{ $order->status_pengiriman->tanggal_diterima ?? ($order->status_pengiriman->tanggal_update ?? $order->updated_at) }}',
+                                                                                            '{{ $order->user->alamat ?? '-' }}'
+                                                                                        )"
+                                                    class="w-full px-3 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 text-xs font-semibold transition-all duration-150">
                                                     Detail Pengiriman
                                                 </button>
                                             @endif
                                         @elseif($statusPengiriman == 'dikirim' || $statusPengiriman == 'selesai')
                                             <button onclick="showDetailPengiriman(
-                                                                '{{ $order->status_pengiriman->nama_penerima ?? '-' }}',
-                                                                '{{ $order->status_pengiriman->foto_penerima ?? '' }}',
-                                                                '', // alasan gagal kosong
-                                                                '{{ $statusPengiriman }}',
-                                                                '{{ $order->status_pengiriman->tanggal_diterima ?? ($order->status_pengiriman->tanggal_update ?? $order->updated_at) }}',
-                                                                '{{ $order->user->alamat ?? '-' }}'
-                                                            )"
-                                                class="w-full px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-xs font-semibold transition-all duration-150">
+                                                                            '{{ $order->status_pengiriman->nama_penerima ?? '-' }}',
+                                                                            '{{ $order->status_pengiriman->foto_penerima ?? '' }}',
+                                                                            '',
+                                                                            '{{ $statusPengiriman }}',
+                                                                            '{{ $order->status_pengiriman->tanggal_diterima ?? ($order->status_pengiriman->tanggal_update ?? $order->updated_at) }}',
+                                                                            '{{ $order->user->alamat ?? '-' }}'
+                                                                        )"
+                                                class="w-full px-3 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 text-xs font-semibold transition-all duration-150">
                                                 Detail Pengiriman
                                             </button>
                                         @elseif($statusPengiriman == 'menunggu' || $statusPengiriman == 'Belum Dikirim')
                                             <button onclick="showKurirModal(
-                                                                    '{{ $order->id_transaksi }}',
-                                                                    '{{ $order->user->alamat ?? '-' }}',
-                                                                    '{{ $order->total_harga_formatted }}',
-                                                                    '{{ $order->status_pengiriman }}',
-                                                                    `@foreach($order->detail_transaksi as $dt){{ $dt->menu->nama }}@if(!$loop->last), @endif @endforeach`
-                                                                )"
-                                                class="w-full px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-xs font-semibold transition-all duration-150">
+                                                                                '{{ $order->id_transaksi }}',
+                                                                                '{{ $order->user->alamat ?? '-' }}',
+                                                                                '{{ $order->total_harga_formatted }}',
+                                                                                '{{ $order->status_pengiriman }}',
+                                                                                `@foreach($order->detail_transaksi as $dt){{ $dt->menu->nama }}@if(!$loop->last), @endif @endforeach`
+                                                                            )"
+                                                class="w-full px-3 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 text-xs font-semibold transition-all duration-150">
                                                 Pilih Kurir
                                             </button>
                                         @endif
@@ -300,5 +300,35 @@
                 modal.classList.add('hidden');
             }, 200);
         }
+
+        @if(session('success'))
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'success',
+                title: '{{ session('success') }}',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+                    title: 'Berhasil!',
+                text: '{{ session('success') }}',
+                confirmButtonColor: '#f59e0b'
+            });
+        @endif
+        @if(session('error'))
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'error',
+                title: '{{ session('error') }}',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+                    title: 'Gagal!',
+                text: '{{ session('error') }}',
+                confirmButtonColor: '#f59e0b'
+            });
+        @endif
+
     </script>
 @endsection

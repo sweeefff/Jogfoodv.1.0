@@ -31,4 +31,17 @@
             <a href="{{ route('admin.data') }}" class="ml-4 text-gray-600 hover:underline">Batal</a>
         </form>
     </div>
+
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'success',
+                title: '{{ session('success') }}',
+                showConfirmButton: false,
+                timer: 3000
+            })
+        </script>
+    @endif
 @endsection

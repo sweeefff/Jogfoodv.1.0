@@ -28,7 +28,7 @@
         <tr>
             <td style="background:#ffedd5;padding:32px 24px;text-align:center;">
                 <h1 style="color:#ea580c;font-size:22px;margin:0 0 8px;">Bukti Pembayaran</h1>
-                <img src="{{ asset('assets/icon/jogfood-shadow.png') }}" alt="Jogfood Logo">
+                <img src="{{ asset('assets/icon/jogfood-shadow.png') }}" alt="Jogfood Logo"
                 style="height:48px;margin:8px auto 0;display:block;">
             </td>
         </tr>

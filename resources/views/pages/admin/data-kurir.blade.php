@@ -8,7 +8,7 @@
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-bold text-gray-800">Data Kurir</h2>
                 <button type="button"
-                    class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                    class="inline-flex items-center px-4 py-2 bg-amber-700 text-white rounded-lg hover:bg-amber-800 transition"
                     onclick="openAddModal()">
                     <i class="fas fa-plus mr-2"></i>Tambah Kurir
                 </button>
@@ -37,7 +37,7 @@
                                 <td class="px-4 py-2">{{ $k->name }}</td>
                                 <td class="px-4 py-2">{{ $k->email }}</td>
                                 <td class="px-4 py-2 text-center">
-                                    <span class="inline-block px-2 py-1 text-xs rounded bg-blue-100 text-blue-700">
+                                    <span class="inline-block px-2 py-1 text-xs rounded bg-amber-100 text-blue-700">
                                         {{ ucfirst($k->role) }}
                                     </span>
                                 </td>
@@ -78,10 +78,7 @@
     </div>
 
     @include('components.kurir.add-kurir-modal')
-@endsection
 
-@section('scripts')
-    <!-- SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
@@ -116,5 +113,18 @@
                 }
             });
         }
+
+        @if (session('success'))
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'success',
+                title: @json(session('success')),
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
+        @endif
+
     </script>
 @endsection

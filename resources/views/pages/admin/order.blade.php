@@ -55,9 +55,9 @@
                     </div>
                     <div class="flex gap-2">
                         <button type="submit"
-                            class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded font-semibold text-sm shadow">Filter</button>
+                            class="bg-amber-700 hover:bg-amber-800 text-white px-4 py-2 rounded font-semibold text-sm shadow">Filter</button>
                         @if(request('tanggal_mulai') || request('tanggal_selesai') || request('status') || request('metode_pembayaran'))
-                            <a href="{{ route('admin.order') }}" class="text-blue-500 underline text-sm px-2 py-2">Reset</a>
+                            <a href="{{ route('admin.order') }}" class="text-amber-500 underline text-md px-2 py-2">Reset</a>
                         @endif
                     </div>
                 </div>
@@ -110,7 +110,7 @@
                                 </td>
                                 <td class="px-4 py-3">
                                     <button onclick="toggleDetail('{{ $order->id_transaksi }}')"
-                                        class="text-blue-600 hover:underline">Lihat Detail</button>
+                                        class="text-amber-400 hover:underline">Lihat Detail</button>
                                 </td>
                             </tr>
                             <!-- Detail row (hidden by default) -->
