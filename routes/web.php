@@ -61,13 +61,14 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
     Route::delete('/kurir/{id}', [KurirController::class, 'destroy'])->name('kurir.destroy');
 
     // Data User
-    Route::resource('/users-resource', UserController::class)->parameters(['users-resource' => 'id'])->names([
-        'index' => 'users.index',
-        'destroy' => 'users.destroy',
+    Route::resource('user', UserController::class)
+        ->only(['index', 'destroy'])
+        ->names([
+            'index' => 'users.index',
+            'destroy' => 'users.destroy',
     ]);
 
     // CRUD menu
-    Route::get('/user', [UserController::class, 'index'])->name('admin.user');
     Route::resource('/tblmenu', TblmenuController::class)->only([
         'index',
         'store',

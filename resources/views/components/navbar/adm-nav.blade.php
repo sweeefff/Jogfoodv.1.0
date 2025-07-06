@@ -79,8 +79,8 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.user') }}" class="flex items-center p-2 text-white rounded-lg group transition
-                   {{ request()->routeIs('admin.user') ? 'bg-orange-600/80 shadow' : 'hover:bg-orange-600/80' }}">
+                <a href="{{ route('users.index') }}" class="flex items-center p-2 text-white rounded-lg group transition
+                   {{ request()->routeIs('users.index') ? 'bg-orange-600/80 shadow' : 'hover:bg-orange-600/80' }}">
                     <i class="fas fa-users w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
                     <span class="ms-3">Data User</span>
                 </a>
