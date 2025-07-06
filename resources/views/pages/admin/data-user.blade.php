@@ -6,7 +6,7 @@
     <div class="min-h-screen bg-gray-50 ml-48 p-8">
         <div class="max-w-6xl mx-auto mt-20">
             <div class="bg-white rounded-lg shadow p-6">
-                <div class="mb-6">
+                <div class="mb-6 flex justify-between items-center">
                     <h1 class="text-2xl font-semibold text-gray-800">Data User</h1>
                 </div>
 
@@ -33,8 +33,7 @@
                                     <td class="px-3 py-2">{{ $user->name }}</td>
                                     <td class="px-3 py-2">{{ $user->email }}</td>
                                     <td class="px-3 py-2">
-                                        <span
-                                            class="inline-block px-2 py-0.5 text-xs font-medium bg-green-100 text-green-700 rounded">
+                                        <span class="inline-block px-2 py-0.5 text-xs font-medium bg-green-100 text-green-700 rounded">
                                             {{ ucfirst($user->role) }}
                                         </span>
                                     </td>
@@ -49,8 +48,16 @@
                                         @endif
                                     </td>
                                     <td class="px-3 py-2">
-                                        <button onclick="confirmDelete('{{ route('users.destroy', $user->id) }}')"
-                                            class="text-red-600 hover:text-red-800">
+                                    <form id="delete-user-{{ $user->id }}"
+                                        action="{{ route('users.destroy', $user->id) }}"
+                                        method="POST" class="sr-only">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
+                                        <button type="button"
+                                                onclick="confirmDeleteUser({{ $user->id }}, '{{ $user->name }}')"
+                                                class="p-2 rounded bg-red-100 hover:bg-red-200 text-red-700"
+                                                title="Hapus">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </td>
@@ -76,10 +83,10 @@
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        function confirmDelete(url) {
+        function confirmDeleteUser(id, name) {
             Swal.fire({
                 title: 'Yakin ingin menghapus user ini?',
-                text: "Data yang dihapus tidak bisa dikembalikan!",
+                text: 'User bernama "' + name + '" akan dihapus permanen!',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#e3342f',
@@ -87,26 +94,9 @@
                 confirmButtonText: 'Ya, hapus!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    const form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = url;
-
-                    const csrf = document.createElement('input');
-                    csrf.type = 'hidden';
-                    csrf.name = '_token';
-                    csrf.value = '{{ csrf_token() }}';
-                    form.appendChild(csrf);
-
-                    const method = document.createElement('input');
-                    method.type = 'hidden';
-                    method.name = '_method';
-                    method.value = 'DELETE';
-                    form.appendChild(method);
-
-                    document.body.appendChild(form);
-                    form.submit();
+                    document.getElementById('delete-user-' + id).submit();
                 }
-            })
+            });
         }
     </script>
 @endsection

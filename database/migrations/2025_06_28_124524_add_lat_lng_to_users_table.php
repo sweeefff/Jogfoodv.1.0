@@ -8,7 +8,7 @@ return new class extends Migration {
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
             $table->decimal('latitude', 10, 8)->nullable();
@@ -16,14 +16,13 @@ return new class extends Migration {
         });
     }
 
-
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->dropColumn(['latitude', 'longitude']);
         });
     }
 };
