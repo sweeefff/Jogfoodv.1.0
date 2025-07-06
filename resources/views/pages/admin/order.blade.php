@@ -46,9 +46,10 @@
                         <select name="metode_pembayaran"
                             class="border rounded px-2 py-1 text-sm bg-white min-w-[140px] w-40">
                             <option value="">Semua Metode</option>
-                            <option value="Transfer Bank" {{ request('metode_pembayaran') == 'Transfer Bank' ? 'selected' : '' }}>Transfer Bank</option>
-                            <option value="COD" {{ request('metode_pembayaran') == 'COD' ? 'selected' : '' }}>COD</option>
-                            <option value="Ewallet" {{ request('metode_pembayaran') == 'Ewallet' ? 'selected' : '' }}>Ewallet
+                            <option value="bank-transfer" {{ request('metode_pembayaran') == 'bank-transfer' ? 'selected' : '' }}>Transfer Bank</option>
+                            <option value="cod" {{ request('metode_pembayaran') == 'cod' ? 'selected' : '' }}>COD</option>
+                            <option value="e-wallet" {{ request('metode_pembayaran') == 'e-wallet' ? 'selected' : '' }}>
+                                E-Wallet
                             </option>
                         </select>
                     </div>
@@ -89,7 +90,8 @@
                     <tbody class="text-gray-700 text-sm">
                         @forelse($transaksi as $order)
                             <tr class="border-b hover:bg-amber-50 transition">
-                                <td class="px-4 py-3">{{ $loop->iteration }}</td>
+                                <td class="px-4 py-3">
+                                    {{ $loop->iteration + ($transaksi->currentPage() - 1) * $transaksi->perPage() }}</td>
                                 <td class="px-4 py-3 font-semibold">{{ $order->id_transaksi }}</td>
                                 <td class="px-4 py-3">{{ $order->user->name ?? '-' }}</td>
                                 <td class="px-4 py-3">{{ $order->user->alamat ?? '-' }}</td>
@@ -173,9 +175,13 @@
             </div>
             <div class="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
                 <div class="text-sm text-gray-500">
-                    Menampilkan <span class="font-medium">{{ $transaksi->firstItem() }}</span> sampai <span
-                        class="font-medium">{{ $transaksi->lastItem() }}</span> dari <span
-                        class="font-medium">{{ $transaksi->total() }}</span> order
+                    @if($transaksi->total() > 0)
+                        Menampilkan <span class="font-medium">{{ $transaksi->firstItem() }}</span> sampai <span
+                            class="font-medium">{{ $transaksi->lastItem() }}</span> dari <span
+                            class="font-medium">{{ $transaksi->total() }}</span> order
+                    @else
+                        Tidak ada data untuk ditampilkan
+                    @endif
                 </div>
                 <div>
                     {{ $transaksi->links() }}
@@ -193,48 +199,127 @@
             const row = document.getElementById('detail-' + id);
             if (row) row.classList.toggle('hidden');
         }
+
+        // Function to detect preset based on current filter values
+        function detectPreset() {
+            const start = document.getElementById('tanggal_mulai').value;
+            const end = document.getElementById('tanggal_selesai').value;
+            const today = new Date();
+
+            if (!start || !end) return '';
+
+            const startDate = new Date(start);
+            const endDate = new Date(end);
+            const todayStr = today.toISOString().slice(0, 10);
+
+            // Check if it's today
+            if (start === todayStr && end === todayStr) {
+                return 'today';
+            }
+
+            // Check if it's yesterday
+            const yesterday = new Date(today);
+            yesterday.setDate(today.getDate() - 1);
+            const yesterdayStr = yesterday.toISOString().slice(0, 10);
+            if (start === yesterdayStr && end === yesterdayStr) {
+                return 'yesterday';
+            }
+
+            // Check if it's last 7 days
+            const last7 = new Date(today);
+            last7.setDate(today.getDate() - 6);
+            const last7Str = last7.toISOString().slice(0, 10);
+            if (start === last7Str && end === todayStr) {
+                return 'last7';
+            }
+
+            // Check if it's last 30 days
+            const last30 = new Date(today);
+            last30.setDate(today.getDate() - 29);
+            const last30Str = last30.toISOString().slice(0, 10);
+            if (start === last30Str && end === todayStr) {
+                return 'last30';
+            }
+
+            // Check if it's last 90 days
+            const last90 = new Date(today);
+            last90.setDate(today.getDate() - 89);
+            const last90Str = last90.toISOString().slice(0, 10);
+            if (start === last90Str && end === todayStr) {
+                return 'last90';
+            }
+
+            // Check if it's last 180 days
+            const last180 = new Date(today);
+            last180.setDate(today.getDate() - 179);
+            const last180Str = last180.toISOString().slice(0, 10);
+            if (start === last180Str && end === todayStr) {
+                return 'last180';
+            }
+
+            // Check if it's last 365 days
+            const last365 = new Date(today);
+            last365.setDate(today.getDate() - 364);
+            const last365Str = last365.toISOString().slice(0, 10);
+            if (start === last365Str && end === todayStr) {
+                return 'last365';
+            }
+
+            return '';
+        }
+
+        // Set initial preset value based on current filter
+        document.addEventListener('DOMContentLoaded', function () {
+            const preset = detectPreset();
+            document.getElementById('preset-date').value = preset;
+        });
+
         // Preset handler
         document.getElementById('preset-date').addEventListener('change', function () {
             const today = new Date();
             let start = '', end = '';
+
             if (this.value === 'today') {
                 start = end = today.toISOString().slice(0, 10);
             } else if (this.value === 'yesterday') {
-                const yest = new Date(today); yest.setDate(today.getDate() - 1);
+                const yest = new Date(today);
+                yest.setDate(today.getDate() - 1);
                 start = end = yest.toISOString().slice(0, 10);
             } else if (this.value === 'last7') {
-                const last7 = new Date(today); last7.setDate(today.getDate() - 6);
+                const last7 = new Date(today);
+                last7.setDate(today.getDate() - 6);
                 start = last7.toISOString().slice(0, 10);
                 end = today.toISOString().slice(0, 10);
             } else if (this.value === 'last30') {
-                const last30 = new Date(today); last30.setDate(today.getDate() - 29);
+                const last30 = new Date(today);
+                last30.setDate(today.getDate() - 29);
                 start = last30.toISOString().slice(0, 10);
                 end = today.toISOString().slice(0, 10);
             } else if (this.value === 'last90') {
-                const last90 = new Date(today); last90.setDate(today.getDate() - 89);
+                const last90 = new Date(today);
+                last90.setDate(today.getDate() - 89);
                 start = last90.toISOString().slice(0, 10);
                 end = today.toISOString().slice(0, 10);
             } else if (this.value === 'last180') {
-                const last180 = new Date(today); last180.setDate(today.getDate() - 179);
+                const last180 = new Date(today);
+                last180.setDate(today.getDate() - 179);
                 start = last180.toISOString().slice(0, 10);
                 end = today.toISOString().slice(0, 10);
             } else if (this.value === 'last365') {
-                const last365 = new Date(today); last365.setDate(today.getDate() - 364);
+                const last365 = new Date(today);
+                last365.setDate(today.getDate() - 364);
                 start = last365.toISOString().slice(0, 10);
                 end = today.toISOString().slice(0, 10);
             } else {
-                start = end = '';
+                // Custom - don't change the current values
+                return;
             }
+
             document.getElementById('tanggal_mulai').value = start;
             document.getElementById('tanggal_selesai').value = end;
+
             if (start && end) {
                 $('#date-range').val(start + ' s/d ' + end);
-            } else {
-                // Jika reset, tampilkan hari ini
-                const todayStr = today.toISOString().slice(0, 10);
-                $('#date-range').val(todayStr + ' s/d ' + todayStr);
-                document.getElementById('tanggal_mulai').value = todayStr;
-                document.getElementById('tanggal_selesai').value = todayStr;
             }
         });
 
@@ -243,16 +328,15 @@
             let start = "{{ request('tanggal_mulai') }}";
             let end = "{{ request('tanggal_selesai') }}";
             let display = '';
+
             if (start && end) {
                 display = start + ' s/d ' + end;
             } else {
-                // Default hari ini jika belum difilter
-                const today = moment().format('YYYY-MM-DD');
-                start = end = today;
-                display = today + ' s/d ' + today;
-                $('#tanggal_mulai').val(today);
-                $('#tanggal_selesai').val(today);
+                // Default kosong jika belum ada filter
+                start = end = '';
+                display = '';
             }
+
             $('#date-range').daterangepicker({
                 autoUpdateInput: false,
                 locale: {
@@ -260,22 +344,26 @@
                     cancelLabel: 'Reset',
                     applyLabel: 'Pilih'
                 },
-                startDate: start,
-                endDate: end
+                startDate: start || moment(),
+                endDate: end || moment()
             });
+
             $('#date-range').on('apply.daterangepicker', function (ev, picker) {
                 $('#tanggal_mulai').val(picker.startDate.format('YYYY-MM-DD'));
                 $('#tanggal_selesai').val(picker.endDate.format('YYYY-MM-DD'));
                 $(this).val(picker.startDate.format('YYYY-MM-DD') + ' s/d ' + picker.endDate.format('YYYY-MM-DD'));
                 document.getElementById('preset-date').value = '';
             });
+
             $('#date-range').on('cancel.daterangepicker', function (ev, picker) {
-                // Reset ke hari ini
-                const today = moment().format('YYYY-MM-DD');
-                $('#tanggal_mulai').val(today);
-                $('#tanggal_selesai').val(today);
-                $(this).val(today + ' s/d ' + today);
+                // Reset tanggal
+                $('#tanggal_mulai').val('');
+                $('#tanggal_selesai').val('');
+                $(this).val('');
+                document.getElementById('preset-date').value = '';
             });
+
+            // Set initial display value
             if (display) {
                 $('#date-range').val(display);
             }

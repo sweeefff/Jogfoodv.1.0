@@ -86,15 +86,19 @@ Route::middleware([RoleMiddleware::class . ':admin'])->prefix('admin')->group(fu
     Route::get('/edit', [DataController::class, 'edit'])->name('admin.edit');
     Route::put('/update', [DataController::class, 'update'])->name('admin.update');
 
-    // Order
-    Route::get('/order', [OrderController::class, 'index'])->name('admin.order');
-    Route::post('/order/update-tanggal/{id}', [OrderController::class, 'updateTanggal'])->name('admin.order.update-tanggal');
-    Route::get('/order/export', [OrderController::class, 'export'])->name('admin.order.export');
+
+    // Order routes
+    Route::get('/admin/order', [OrderController::class, 'index'])->name('admin.order');
+    Route::get('/admin/order/export', [OrderController::class, 'export'])->name('admin.order.export');
+    Route::put('/admin/order/{id}/update-tanggal', [OrderController::class, 'updateTanggal'])->name('admin.order.update-tanggal');
+
+    // API route
+    Route::get('/api/revenue-data', [OrderController::class, 'getRevenueDataApi'])->name('api.revenue-data');
 
     //Penugasan Kurir
     Route::get('/pengiriman', [PengirimanController::class, 'pengiriman'])->name('admin.pengiriman');
     Route::post('/pengiriman/tugaskan/{id}', [PengirimanController::class, 'updatePengiriman'])->name('admin.pengiriman.tugaskan');
-    
+
 });
 
 // User Routes - Hanya user yang bisa akses

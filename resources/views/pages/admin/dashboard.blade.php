@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 @section('content')
     <!-- Content -->
-    <div class="p-4 sm:ml-64 pt-20 bg-amber-50 min-h-screen ">
+    <div class="p-4 sm:ml-64 pt-20 bg-amber-50 min-h-screen mt-16">
         <h3 class="text-xl font-semibold mb-4 flex items-center">
             <i class="fas fa-tachometer-alt mr-2"></i> Dashboard Admin
         </h3>
@@ -16,7 +16,7 @@
                 <h5 class="text-lg font-bold flex items-center">
                     <i class="fas fa-mortar-pestle mr-2"></i> Makanan
                 </h5>
-                <p class="mt-2">Total: <strong>{{ $totalMakanan ?? 10 }}</strong></p>
+                <p class="mt-2">Total: <strong>{{ $totalMakanan ?? 0 }}</strong></p>
             </a>
             <!-- Card Minuman -->
             <a href="{{ route('pages.admin.tblmenu', ['kategori' => 'Minuman']) }}"
@@ -24,55 +24,51 @@
                 <h5 class="text-lg font-bold flex items-center">
                     <i class="fas fa-wine-glass mr-2"></i> Minuman
                 </h5>
-                <p class="mt-2">Total: <strong>{{ $totalMinuman ?? 10 }}</strong></p>
+                <p class="mt-2">Total: <strong>{{ $totalMinuman ?? 0 }}</strong></p>
             </a>
-            </class=>
             <!-- Card Camilan -->
             <a href="{{ route('pages.admin.tblmenu', ['kategori' => 'Side dish']) }}"
                 class="bg-green-600 rounded-lg p-4 block hover:bg-green-700 transition">
                 <h5 class="text-lg font-bold flex items-center">
                     <i class="fas fa-utensils mr-2"></i> Camilan
                 </h5>
-                <p class="mt-2">Total: <strong>{{ $totalRestoran ?? 10 }}</strong></p>
+                <p class="mt-2">Total: <strong>{{ $totalRestoran ?? 0 }}</strong></p>
             </a>
-            </class=>
             <!-- Card Data User -->
             <a href="{{ route('users.index') }}" class="bg-yellow-600 rounded-lg p-4  block hover:bg-yellow-700 transition">
                 <h5 class="text-lg font-bold flex items-center">
                     <i class="fas fa-users mr-2"></i> Data User
                 </h5>
-                <p class="mt-2">Total: <strong>{{ $totalUser ?? 100 }}</strong></p>
+                <p class="mt-2">Total: <strong>{{ $totalUser ?? 0 }}</strong></p>
             </a>
-            </>
             <!-- Card Data Kurir -->
             <a href="{{ route('admin.kurir') }}" class="bg-blue-600 rounded-lg p-4 block hover:bg-blue-700 transition">
                 <h5 class="text-lg font-bold flex items-center">
-                    <i class="fas fa-users mr-2"></i> Data Kurir
+                    <i class="fas fa-motorcycle mr-2"></i> Data Kurir
                 </h5>
-                <p class="mt-2">Total: <strong>{{ $totalKurir ?? 10 }}</strong></p>
+                <p class="mt-2">Total: <strong>{{ $totalKurir ?? 0 }}</strong></p>
             </a>
             <!-- Card Data Pesanan -->
             <a href="{{ route('admin.order') }}" class="bg-red-600 rounded-lg p-4 block hover:bg-red-700 transition">
                 <h5 class="text-lg font-bold flex items-center">
-                    <i class="fas fa-users mr-2"></i> Data Pesanan
+                    <i class="fas fa-shopping-cart mr-2"></i> Data Pesanan
                 </h5>
-                <p class="mt-2">Total: <strong>{{ $totalPesanan ?? 100 }}</strong></p>
+                <p class="mt-2">Total: <strong>{{ $totalPesanan ?? 0 }}</strong></p>
             </a>
             <!-- Card Pendapatan Total -->
             <a href="{{ route('admin.order') }}" class="bg-green-600 rounded-lg p-4 block hover:bg-green-700 transition">
                 <h5 class="text-lg font-bold flex items-center">
-                    <i class="fas fa-users mr-2"></i> Pendapatan Total
+                    <i class="fas fa-money-bill-wave mr-2"></i> Pendapatan Total
                 </h5>
-                <p class="mt-2">Total: <strong>{{ $totalPesanan ?? 100 }}</strong></p>
+                <p class="mt-2">Total: <strong>Rp{{ number_format($totalPendapatan ?? 0, 0, ',', '.') }}</strong></p>
             </a>
             <!-- Card Total Pemesanan -->
             <a href="{{ route('admin.order') }}" class="bg-yellow-600 rounded-lg p-4  block hover:bg-yellow-700 transition">
                 <h5 class="text-lg font-bold flex items-center">
-                    <i class="fas fa-users mr-2"></i> Total Pemesanan
+                    <i class="fas fa-chart-line mr-2"></i> Total Pemesanan
                 </h5>
-                <p class="mt-2">Total: <strong>{{ $totalPesanan ?? 100 }}</strong></p>
+                <p class="mt-2">Total: <strong>{{ $totalPesanan ?? 0 }}</strong></p>
             </a>
-
         </div>
 
         <!-- Charts Row -->
@@ -96,44 +92,48 @@
             <div class="bg-white rounded-xl shadow-lg p-8">
                 <h2 class="text-lg font-semibold mb-6 text-blue-900">Top Produk</h2>
                 <div class="space-y-4">
-                    @foreach ($topMenus as $menu)
+                    @forelse ($topMenus as $menu)
                         <div class="flex items-center">
                             <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-500 mr-3">
                                 <i class="fa-solid fa-utensils"></i>
                             </div>
                             <div class="flex-1">
                                 <p class="font-medium">{{ $menu->nama }}</p>
-                                <p class="text-gray-500 text-sm">Rating: {{ number_format($menu->avg_rating, 1) }}
-                                    ({{ $menu->total_ulasan }} ulasan)</p>
+                                <p class="text-gray-500 text-sm">
+                                    Rating: {{ $menu->avg_rating ? number_format($menu->avg_rating, 1) : 'N/A' }}
+                                    ({{ $menu->total_ulasan }} ulasan)
+                                </p>
                             </div>
                             <span class="font-semibold">Rp{{ number_format($menu->harga, 0, ',', '.') }}</span>
                         </div>
-                    @endforeach
+                    @empty
+                        <div class="text-center text-gray-500">
+                            <i class="fas fa-exclamation-circle text-2xl mb-2"></i>
+                            <p>Belum ada produk dengan ulasan</p>
+                        </div>
+                    @endforelse
                 </div>
             </div>
         </div>
 
+        <!-- Chart.js CDN -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
             // Initialize the chart
             document.addEventListener('DOMContentLoaded', function () {
                 const ctx = document.getElementById('revenueChart').getContext('2d');
 
-                // Data for Tahun, Bulan, Hari
-                const yearLabels = ['2021', '2022', '2023', '2024', '2025'];
-                const yearData = [120000000, 150000000, 180000000, 210000000, 250000000];
-                const monthLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-                const monthData = [12000000, 15000000, 18000000, 21000000, 25000000, 23000000, 20000000, 22000000, 21000000, 24000000, 26000000, 27000000];
-                const dayLabels = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
-                const dayData = [1000000, 1200000, 900000, 1100000, 1500000, 2000000, 1800000];
+                // Data dari controller
+                const chartData = @json($chartData);
 
                 // Create the chart
                 const revenueChart = new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: yearLabels,
+                        labels: chartData.yearly.labels,
                         datasets: [{
                             label: 'Pendapatan (Rp)',
-                            data: yearData,
+                            data: chartData.yearly.data,
                             backgroundColor: 'rgba(59, 130, 246, 0.1)',
                             borderColor: 'rgba(59, 130, 246, 1)',
                             borderWidth: 2,
@@ -154,17 +154,25 @@
                             tooltip: {
                                 callbacks: {
                                     label: function (context) {
-                                        return 'Rp' + context.raw.toLocaleString('id-ID');
+                                        const value = context.raw ?? 0;
+                                        return 'Rp' + value.toLocaleString('id-ID', {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2
+                                        });
                                     }
                                 }
                             }
+
                         },
                         scales: {
                             y: {
                                 beginAtZero: true,
                                 ticks: {
                                     callback: function (value) {
-                                        return 'Rp' + (value / 1000000).toLocaleString('id-ID') + ' jt';
+                                        return 'Rp' + value.toLocaleString('id-ID', {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2
+                                        });
                                     }
                                 },
                                 grid: {
@@ -186,42 +194,33 @@
                 const monthBtn = document.getElementById('monthBtn');
                 const dayBtn = document.getElementById('dayBtn');
 
-                yearBtn.addEventListener('click', function () {
-                    yearBtn.classList.remove('bg-white', 'border', 'border-gray-300');
-                    yearBtn.classList.add('bg-blue-500', 'text-white');
-                    monthBtn.classList.remove('bg-blue-500', 'text-white');
-                    monthBtn.classList.add('bg-white', 'border', 'border-gray-300');
-                    dayBtn.classList.remove('bg-blue-500', 'text-white');
-                    dayBtn.classList.add('bg-white', 'border', 'border-gray-300');
+                function updateButtonStyles(activeBtn) {
+                    [yearBtn, monthBtn, dayBtn].forEach(btn => {
+                        btn.classList.remove('bg-blue-500', 'text-white');
+                        btn.classList.add('bg-white', 'border', 'border-gray-300');
+                    });
+                    activeBtn.classList.remove('bg-white', 'border', 'border-gray-300');
+                    activeBtn.classList.add('bg-blue-500', 'text-white');
+                }
 
-                    revenueChart.data.labels = yearLabels;
-                    revenueChart.data.datasets[0].data = yearData;
+                yearBtn.addEventListener('click', function () {
+                    updateButtonStyles(yearBtn);
+                    revenueChart.data.labels = chartData.yearly.labels;
+                    revenueChart.data.datasets[0].data = chartData.yearly.data;
                     revenueChart.update();
                 });
 
                 monthBtn.addEventListener('click', function () {
-                    monthBtn.classList.remove('bg-white', 'border', 'border-gray-300');
-                    monthBtn.classList.add('bg-blue-500', 'text-white');
-                    yearBtn.classList.remove('bg-blue-500', 'text-white');
-                    yearBtn.classList.add('bg-white', 'border', 'border-gray-300');
-                    dayBtn.classList.remove('bg-blue-500', 'text-white');
-                    dayBtn.classList.add('bg-white', 'border', 'border-gray-300');
-
-                    revenueChart.data.labels = monthLabels;
-                    revenueChart.data.datasets[0].data = monthData;
+                    updateButtonStyles(monthBtn);
+                    revenueChart.data.labels = chartData.monthly.labels;
+                    revenueChart.data.datasets[0].data = chartData.monthly.data;
                     revenueChart.update();
                 });
 
                 dayBtn.addEventListener('click', function () {
-                    dayBtn.classList.remove('bg-white', 'border', 'border-gray-300');
-                    dayBtn.classList.add('bg-blue-500', 'text-white');
-                    yearBtn.classList.remove('bg-blue-500', 'text-white');
-                    yearBtn.classList.add('bg-white', 'border', 'border-gray-300');
-                    monthBtn.classList.remove('bg-blue-500', 'text-white');
-                    monthBtn.classList.add('bg-white', 'border', 'border-gray-300');
-
-                    revenueChart.data.labels = dayLabels;
-                    revenueChart.data.datasets[0].data = dayData;
+                    updateButtonStyles(dayBtn);
+                    revenueChart.data.labels = chartData.daily.labels;
+                    revenueChart.data.datasets[0].data = chartData.daily.data;
                     revenueChart.update();
                 });
             });
