@@ -1,66 +1,184 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# JogFoodv1.0
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A web-based application that recommends traditional Jogjakarta dishes and enables users to order them from anywhere.
 
-## About Laravel
+## 🚀 Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+-   **🍲 Dish Recommendations** — Explore a rich menu of traditional Jogjakarta cuisine
+-   **📍 Remote Ordering** — Place food orders remotely.
+-   **🔍 Search & Filters** — Easily find dishes by name, ratings, prices, category.
+-   **⭐ Reviews & Ratings** — See user feedback and leave your own ratings.
+-   **📈 Admin Dashboard** — For managing dishes, orders, deliveries, and report.
+-   **🚚 Delivery Service** — For update delivery orders.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 💻 Tech Stack
 
-## Learning Laravel
+-   **Frontend:** HTML (Blade) + CSS (Tailwindcss)
+-   **Backend:** Laravel (PHP)
+-   **Database:** MySQL
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## 📦 Getting Started
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Prerequisites
 
-## Laravel Sponsors
+-   PHP >= 8.x
+-   Composer
+-   MySQL
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+### Installation
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+1.  **Clone the repo**
 
-## Contributing
+    ```bash
+    git clone https://github.com/sweeefff/Jogfoodv.1.0.git
+    cd Jogfoodv.1.0
+    ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+2.  **Install dependencies**
 
-## Code of Conduct
+    ```bash
+    composer require anhskohbo/no-captcha \
+                 barryvdh/laravel-dompdf \
+                 dompdf/dompdf \
+                 laravel/framework \
+                 laravel/sanctum \
+                 laravel/socialite \
+                 laravel/tinker \
+                 maatwebsite/excel \
+    ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+3.  **Configure environment**
+    Create a `.env` file using `.env.example` as a template:
 
-## Security Vulnerabilities
+    ```bash
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=(your_database)
+    DB_USERNAME=root
+    DB_PASSWORD=
+    ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+4.  **Migrate Databases**
 
-## License
+    ```bash
+    php artisan migrate
+    php artisan db:seed
+    ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+5.  **Run dev server**
+    ```bash
+    php artisan serve
+    ```
+    The app should be running at `http://localhost:8000`.
+
+---
+
+## 📁 Directory Structure
+
+```
+/
+├── app/                            # Core application logic (MVC)
+│   ├── Console/                    # Artisan command classes
+│   ├── Http/
+│   │   ├── Controllers/            # Request handling logic (Controller classes)
+│   │   └── Middleware/             # Filters for HTTP requests (auth, etc.)
+│   ├── Models/                     # Eloquent models (database interaction)
+│   ├── Providers/                  # Laravel service providers
+│   └── Services/                   # Optional custom service classes (helpers, etc.)
+
+├── bootstrap/                      # Laravel bootstrap and autoload files
+├── config/                         # All Laravel configuration files
+
+├── database/
+│   ├── factories/                  # Model factories for testing/seeding
+│   ├── migrations/                 # Database schema migrations
+│   └── seeders/                    # Seed data population files
+
+├── public/
+│   ├── assets/                     # Frontend static assets (images, JS, CSS)
+│   ├── storage/                    # Symlinked storage (uploaded files)
+│   ├── favicon.ico                 # Site icon
+│   └── index.php                  # Entry point for all web requests
+
+├── resources/
+│   └── views/                      # Blade templates (frontend UI)
+│       ├── components/            # Reusable UI components
+│       │   ├── card/              # e.g., for dish/item display
+│       │   ├── kurir/             # e.g., delivery status widgets
+│       │   └── navbar/            # Navigation bar component
+│       ├── emails/                # Email templates
+│       ├── layouts/               # Master page layouts
+│       └── pages/                 # Page views grouped by roles
+│           ├── admin/             # Admin dashboard pages
+│           ├── auth/              # Login/register, etc.
+│           ├── kurir/             # Courier/delivery dashboard
+│           ├── pdf/               # Exported PDF templates
+│           ├── user/              # User-specific views (order history, etc.)
+│           ├── about.blade.php    # About page
+│           ├── detail.blade.php   # Product detail page
+│           ├── home.blade.php     # Homepage
+│           └── menu.blade.php     # Menu listing
+
+├── routes/                         # Web and API route definitions
+├── storage/                        # Compiled views, logs, uploads, etc.
+│   ├── app/                        # User uploads
+│   ├── framework/                  # Cache and sessions
+│   └── logs/                       # Application logs
+
+├── tests/                          # Automated tests (Feature, Unit)
+└── vendor/                         # Composer dependencies
+
+```
+
+---
+
+## ✅ Usage
+
+1. Visit the homepage to browse recommended dishes.
+2. Use the search bar or apply filters by name.
+3. Click a dish to view details like images, descriptions, and reviews.
+4. Add it to your cart and proceed to checkout (login/registration required).
+5. At admin section, login (admin credentials) to manage dishes, view orders, and manage deliveries.
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Just:
+
+1. Fork this repo.
+2. Create a feature branch: `git checkout -b feature/my-feature`
+3. Commit your changes: `git commit -m 'Add new feature'`
+4. Push to the branch: `git push origin feature/my-feature`
+5. Submit a pull request.
+
+Please stick to code style and include tests where applicable.
+
+---
+
+## 👏 Thanks to
+
+For Contribution throughout this project since beginning
+
+[![Github Pages](https://img.shields.io/badge/Ridho%20Putrawan%20-%203312411050-121013?style=for-the-badge&logo=github&logoColor=white)](https://github.com/sweeefff)
+
+[![Github Pages](https://img.shields.io/badge/Ruth%20Yohana%20Manurung%20-%203312411032-121013?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ruthyoh)
+
+[![Github Pages](https://img.shields.io/badge/Josepine%20Stevie%20Hia%20-%203312411044-121013?style=for-the-badge&logo=github&logoColor=white)](https://github.com/JosepineStevieHia)
+
+[![Github Pages](https://img.shields.io/badge/M%20Rizky%20Raapi%20Ramadhan-%203312411060-121013?style=for-the-badge&logo=github&logoColor=white)](https://github.com/rizkyraapi)
+
+---
+
+## 📬 Contact
+
+-   Author: PBL-IF240
+-   Email: ridho.putrawan.5@gmail.com
+-   Project Link: https://github.com/sweeefff/Jogfoodv.1.0
