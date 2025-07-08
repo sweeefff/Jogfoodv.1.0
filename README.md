@@ -1,4 +1,12 @@
-# JogFoodv1.0
+<p align="center">
+  <img src="public/assets/icon/jogfood.png" width="400" alt="Jogfood Logo">
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Laravel-FF2D20?style=flat&logo=laravel&logoColor=white" alt="Laravel">
+  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white" alt="TailwindCSS">
+  <img src="https://img.shields.io/badge/MySQL-005C84?style=flat&logo=mysql&logoColor=white" alt="MySQL">
+</p>
 
 A web-based application that recommends traditional Jogjakarta dishes and enables users to order them from anywhere.
 
@@ -25,9 +33,9 @@ A web-based application that recommends traditional Jogjakarta dishes and enable
 
 ### Prerequisites
 
--   PHP >= 8.x
--   Composer
--   MySQL
+-   ![PHP](https://img.shields.io/badge/PHP%20v8.x-777BB4?style=flat&logo=php&logoColor=white)
+-   ![Composer](https://img.shields.io/badge/Composer-885630?style=flat&logo=Composer&logoColor=white)
+-   ![MySQL](https://img.shields.io/badge/MySQL-005C84?style=flat&logo=mysql&logoColor=white)
 
 ---
 
@@ -146,6 +154,7 @@ A web-based application that recommends traditional Jogjakarta dishes and enable
 3. Click a dish to view details like images, descriptions, and reviews.
 4. Add it to your cart and proceed to checkout (login/registration required).
 5. At admin section, login (admin credentials) to manage dishes, view orders, and manage deliveries.
+6. At courier section, login (courier credentials) to manage delivery orders.
 
 ---
 
@@ -167,13 +176,13 @@ Please stick to code style and include tests where applicable.
 
 For Contribution throughout this project since beginning
 
-[![Github Pages](https://img.shields.io/badge/Ridho%20Putrawan%20-%203312411050-121013?style=for-the-badge&logo=github&logoColor=white)](https://github.com/sweeefff)
+[![Github Pages](https://img.shields.io/badge/Ridho%20Putrawan%20-%203312411032-100000?style=flat&logo=github&logoColor=white)](https://github.com/sweeefff)
 
-[![Github Pages](https://img.shields.io/badge/Ruth%20Yohana%20Manurung%20-%203312411032-121013?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ruthyoh)
+[![Github Pages](https://img.shields.io/badge/Ruth%20Yohana%20Manurung-%203312411032-100000?style=flat&logo=github&logoColor=white)](https://github.com/ruthyoh)
 
-[![Github Pages](https://img.shields.io/badge/Josepine%20Stevie%20Hia%20-%203312411044-121013?style=for-the-badge&logo=github&logoColor=white)](https://github.com/JosepineStevieHia)
+[![Github Pages](https://img.shields.io/badge/Josepine%20Stevie%20Hia-%203312411032-100000?style=flat&logo=github&logoColor=white)](https://github.com/JosepineStevieHia)
 
-[![Github Pages](https://img.shields.io/badge/M%20Rizky%20Raapi%20Ramadhan-%203312411060-121013?style=for-the-badge&logo=github&logoColor=white)](https://github.com/rizkyraapi)
+[![Github Pages](https://img.shields.io/badge/M%20Rizky%20Raapi%20Ramadhan-%203312411060-100000?style=flat&logo=github&logoColor=white)](https://github.com/rizkyraapi)
 
 ---
 
