@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/assets/icon/jogfood.png" width="400" alt="Jogfood Logo">
+  <img src="public/assets/icon/jogfood-shadow.png" width="400" alt="Jogfood Logo">
 </p>
 
 <p align="center">
