@@ -4,17 +4,17 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('admin_activities', function (Blueprint $table) {
-            $table->id();
-            $table->string('admin_name');
-            $table->string('activity'); // Menambahkan, Menghapus, Mengedit Kuliner
+        Schema::create('keranjang', function (Blueprint $table) {
+            $table->id('id_keranjang');
+            $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
+            $table->unsignedInteger('id_menu');
+            $table->integer('jumlah');
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('admin_activities');
+        Schema::dropIfExists('keranjang');
     }
 };
