@@ -69,38 +69,38 @@
 <div id="sidebar-backdrop" class="fixed inset-0 z-30 bg-gray-900 bg-opacity-50 hidden"></div>
 
 <script>
-    // Sidebar toggle for mobile
+    // Mobile sidebar toggle functionality
     const sidebarToggle = document.getElementById('sidebar-toggle');
     const sidebar = document.getElementById('logo-sidebar');
     const backdrop = document.getElementById('sidebar-backdrop');
 
-    sidebarToggle.addEventListener('click', function () {
+    function toggleSidebar() {
         sidebar.classList.toggle('-translate-x-full');
         backdrop.classList.toggle('hidden');
-    });
-    backdrop.addEventListener('click', function () {
+    }
+
+    function closeSidebar() {
         sidebar.classList.add('-translate-x-full');
         backdrop.classList.add('hidden');
-    });
-    // Optional: close sidebar on link click (mobile)
-    sidebar.querySelectorAll('a, button').forEach(link => {
+    }
+
+    sidebarToggle.addEventListener('click', toggleSidebar);
+    backdrop.addEventListener('click', closeSidebar);
+
+    // Close sidebar when clicking on a link (mobile only)
+    const sidebarLinks = sidebar.querySelectorAll('a, button');
+    sidebarLinks.forEach(link => {
         link.addEventListener('click', () => {
-            if (window.innerWidth < 1024) { // lg breakpoint
-                sidebar.classList.add('-translate-x-full');
-                backdrop.classList.add('hidden');
+            if (window.innerWidth < 640) { // sm breakpoint
+                closeSidebar();
             }
         });
     });
-    // Responsive fix on resize
-    window.addEventListener('resize', () => {
-        if (window.innerWidth >= 1024) {
-            sidebar.classList.remove('-translate-x-full');
-            backdrop.classList.add('hidden');
-        }
-    });
-</script>
 
-<!-- Responsive content wrapper -->
-<div class="lg:ml-56 pt-24 px-2 sm:px-4">
-    @yield('content')
-</div>
+ // Handle window resize
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 640) { // sm breakpoint
+            closeSidebar();
+        }
+});
+</script>
