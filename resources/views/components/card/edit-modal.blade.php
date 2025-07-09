@@ -2,9 +2,7 @@
 <div id="edit-modal" tabindex="-1" aria-hidden="true"
     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full md:h-auto md:max-h-[calc(100vh-2rem)]">
     <div
-        class="relative p-4 w-full max-w-md md:max-w-[550px] md:min-w-[400px] md:h-auto max-h-full bg-white m-4 md:m-8">
-        <!-- Modal content -->
-        <div class="relative bg-white rounded-lg shadow-sm">
+        class="relative p-4 w-full max-w-md md:max-w-[550px] md:min-w-[400px] md:h-auto max-h-full bg-white m-4 md:m-8 rounded-lg shadow-sm">
             <!-- Modal header -->
             <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-200">
                 <h3 class="text-lg font-semibold text-amber-600">
@@ -131,7 +129,7 @@
         const currentImage = document.getElementById('current_image');
         const currentImageContainer = document.getElementById('current_image_container');
         if (data.gambar_menu && data.gambar_menu !== "null" && data.gambar_menu !== "") {
-            currentImage.src = 'assets/img/menu/' + data.gambar_menu;
+            currentImage.src = '/assets/img/menu/' + data.gambar_menu;
             currentImageContainer.classList.remove('hidden');
         } else {
             currentImageContainer.classList.add('hidden');
