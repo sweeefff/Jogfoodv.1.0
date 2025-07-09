@@ -1,35 +1,34 @@
 <!-- Navigation -->
-<nav class="fixed top-0 z-50 w-full bg-amber-600 border-b border-amber-200 dark:bg-amber-800 dark:border-amber-800">
-    <div class="px-3 py-3 lg:px-5 lg:pl-3">
-        <div class="flex items-center justify-between">
-            <div class="flex items-center justify-start rtl:justify-end">
-                <!-- Mobile menu button -->
-                <button id="sidebar-toggle" type="button"
-                    class="inline-flex items-center p-2 text-white rounded-lg sm:hidden hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-300">
-                    <span class="sr-only">Open sidebar</span>
-                    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
-                        <path clip-rule="evenodd" fill-rule="evenodd"
-                            d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
-                        </path>
-                    </svg>
-                </button>
-
-                <!-- Logo and title -->
-                <a href="{{ route('kurir.dashboard') }}" class="flex items-center ms-2 md:me-24">
-                    <img src="{{ asset('assets/icon/jogfood.png') }}" class="h-8 me-3" alt="Jogfood" />
-                    <span
-                        class="self-center text-lg font-semibold sm:text-xl lg:text-2xl whitespace-nowrap text-white hidden xs:block">
-                        Selamat Datang, Kurir
-                    </span>
-                </a>
-            </div>
-
-            <!-- Right side - Notification -->
-            <div class="flex items-center">
-                <button type="button"
-                    class="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-amber-100 hover:bg-amber-200 focus:outline-none">
-                    <i class="fas fa-bell text-amber-600 text-sm sm:text-base"></i>
-                </button>
+<nav class="fixed top-0 z-50 w-full bg-gradient-to-r from-orange-300 via-orange-400 to-orange-600 shadow-lg border-b border-orange-200 transition-all duration-300">
+    <div class="px-4 py-3 flex items-center justify-between">
+        <div class="flex items-center">
+            <!-- Mobile menu button -->
+            <button id="sidebar-toggle" type="button"
+                class="inline-flex items-center p-2 text-orange-600 bg-white rounded-lg sm:hidden hover:bg-orange-100 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all duration-200 shadow">
+                <span class="sr-only">Open sidebar</span>
+                <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                    <path clip-rule="evenodd" fill-rule="evenodd"
+                        d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
+                    </path>
+                </svg>
+            </button>
+            <!-- Logo and title -->
+            <a href="{{ route('kurir.dashboard') }}" class="flex items-center ms-3">
+                <img src="{{ asset('assets/icon/jogfood.png') }}" class="h-10 w-10 me-3 rounded-full shadow border-2 border-white" alt="Jogfood" />
+                <span class="self-center text-xl font-bold whitespace-nowrap text-orange-700 hidden xs:block drop-shadow tracking-wide">
+                    Selamat Datang, Kurir
+                </span>
+            </a>
+        </div>
+        <!-- Right side - Notification & Avatar -->
+        <div class="flex items-center gap-3">
+            <button type="button"
+                class="flex items-center justify-center w-10 h-10 rounded-full bg-white hover:bg-orange-100 focus:outline-none shadow border border-orange-200">
+                <i class="fas fa-bell text-orange-600 text-lg"></i>
+            </button>
+            <!-- Avatar Kurir -->
+            <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center shadow border-2 border-white">
+                <i class="fas fa-user text-orange-700 text-xl"></i>
             </div>
         </div>
     </div>
@@ -37,45 +36,35 @@
 
 <!-- Sidebar -->
 <aside id="logo-sidebar"
-    class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-amber-600 border-r border-amber-200 sm:translate-x-0 dark:bg-amber-800 dark:border-amber-700">
-    <div class="h-full px-3 pb-4 overflow-y-auto bg-amber-600">
-
-        <!-- Navigation menu -->
-        <ul class="space-y-2 font-medium">
-            <li>
-                <a href="{{ route('kurir.dashboard') }}"
-                    class="flex items-center p-2 text-white rounded-lg bg-amber-700 group">
-                    <i class="fas fa-truck w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
-                    <span class="ms-3">Dashboard</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('kurir.order') }}"
-                    class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
-                    <i
-                        class="fas fa-shipping-fast w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
-                    <span class="ms-3">Daftar Pengiriman</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('kurir.data') }}"
-                    class="flex items-center p-2 text-white rounded-lg hover:bg-amber-700 group">
-                    <i class="fas fa-user w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
-                    <span class="ms-3">Profil Kurir</span>
-                </a>
-            </li>
-            <li>
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit"
-                        class="flex items-center w-full p-2 text-white rounded-lg hover:bg-amber-700 group">
-                        <i
-                            class="fas fa-right-from-bracket w-5 h-5 text-white transition duration-75 group-hover:text-white"></i>
-                        <span class="ms-3">Sign Out</span>
-                    </button>
-                </form>
-            </li>
-        </ul>
+    class="fixed top-0 left-0 z-40 w-56 h-screen pt-20 bg-gradient-to-b from-orange-400 via-orange-500 to-orange-200 shadow-lg flex flex-col items-center transition-all">
+    <div class="w-full flex flex-col gap-4 px-3">
+        <a href="{{ route('kurir.dashboard') }}"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl shadow transition-all font-semibold
+                {{ request()->routeIs('kurir.dashboard') ? 'bg-white text-orange-600' : 'bg-transparent text-white hover:bg-orange-300/40' }}">
+            <i class="fas fa-th-large text-lg {{ request()->routeIs('kurir.dashboard') ? 'text-orange-600' : 'text-white' }}"></i>
+            <span>Dashboard</span>
+        </a>
+        <a href="{{ route('kurir.order') }}"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl shadow transition-all font-semibold
+                {{ request()->routeIs('kurir.order') ? 'bg-white text-orange-600' : 'bg-transparent text-white hover:bg-orange-300/40' }}">
+            <i class="fas fa-shipping-fast text-lg {{ request()->routeIs('kurir.order') ? 'text-orange-600' : 'text-white' }}"></i>
+            <span>Daftar Pengiriman</span>
+        </a>
+        <a href="{{ route('kurir.data') }}"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl shadow transition-all font-semibold
+                {{ request()->routeIs('kurir.data') ? 'bg-white text-orange-600' : 'bg-transparent text-white hover:bg-orange-300/40' }}">
+            <i class="fas fa-user text-lg {{ request()->routeIs('kurir.data') ? 'text-orange-600' : 'text-white' }}"></i>
+            <span>Profil Kurir</span>
+        </a>
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit"
+                class="flex items-center gap-3 w-full px-4 py-3 rounded-xl shadow transition-all font-semibold
+                    {{ request()->routeIs('logout') ? 'bg-white text-orange-600' : 'bg-transparent text-white hover:bg-orange-300/40' }}">
+                <i class="fas fa-right-from-bracket text-lg {{ request()->routeIs('logout') ? 'text-orange-600' : 'text-white' }}"></i>
+                <span>Sign Out</span>
+            </button>
+        </form>
     </div>
 </aside>
 

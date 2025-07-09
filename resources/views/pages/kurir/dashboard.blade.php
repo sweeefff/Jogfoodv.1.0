@@ -3,8 +3,8 @@
 @section('title', 'Dashboard Kurir')
 @section('content')
     <!-- Content -->
-    <div class="p-4 sm:ml-64 pt-20 bg-amber-50 min-h-screen">
-        <h3 class="text-xl font-semibold mb-4 flex items-center">
+<div class="min-h-screen bg-gradient-to-br from-blue-50 via-amber-50 to-white sm:ml-64 pt-20">        
+    <h3 class="text-xl font-semibold mb-4 flex items-center">
             <i class="fas fa-truck mr-2"></i> Dashboard Kurir
         </h3>
 
