@@ -53,14 +53,15 @@ class ProfileController extends Controller
         $data = $request->only(['name', 'email', 'no_hp', 'alamat']);
 
         if ($request->hasFile('foto')) {
-
-            if ($user->foto && file_exists(public_path('assets/img/profile/' . $user->foto))) {
-                unlink(public_path('assets/img/profile/' . $user->foto));
+            // Delete old photo if exists
+            if ($user->foto) {
+                Storage::disk('public')->delete('user/' . $user->foto);
             }
+
             $file = $request->file('foto');
             $filename = uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('assets/img/profile'), $filename);
-            $data['foto'] = $filename;
+            Storage::disk('public')->putFileAs('user', $file, $filename);
+            $user->foto = $filename;
         }
 
         $user->update($data);
@@ -96,3 +97,4 @@ class ProfileController extends Controller
         return view('pages.user.profile', compact('user'));
     }
 }
+

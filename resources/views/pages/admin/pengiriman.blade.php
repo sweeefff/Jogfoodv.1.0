@@ -59,11 +59,11 @@
                                             $isMerah = in_array(strtolower($statusPengiriman), ['gagal', 'batal', 'dibatalkan']);
                                         @endphp
                                         <span class="badge
-                                                            @if($isMerah)
-                                                                bg-red-500 text-white
-                                                            @elseif($statusPengiriman == 'dikirim') bg-yellow-400 text-yellow-900
-                                                            @elseif($statusPengiriman == 'selesai') bg-green-500 text-white
-                                                            @else bg-gray-300 text-gray-700 @endif">
+                                                                    @if($isMerah)
+                                                                        bg-red-500 text-white
+                                                                    @elseif($statusPengiriman == 'dikirim') bg-yellow-400 text-yellow-900
+                                                                    @elseif($statusPengiriman == 'selesai') bg-green-500 text-white
+                                                                    @else bg-gray-300 text-gray-700 @endif">
                                             {{ ucfirst($statusPengiriman) }}
                                         </span>
                                         <br>
@@ -73,37 +73,37 @@
                                         @if($isMerah)
                                             @if(strtolower($statusPengiriman) == 'gagal')
                                                 <button onclick="showDetailPengiriman(
-                                                                                            '{{ $order->status_pengiriman->nama_penerima ?? '-' }}',
-                                                                                            '{{ $order->status_pengiriman->foto_penerima ?? '' }}',
-                                                                                            '{{ $order->status_pengiriman->alasan ?? '-' }}',
-                                                                                            '{{ $statusPengiriman }}',
-                                                                                            '{{ $order->status_pengiriman->tanggal_diterima ?? ($order->status_pengiriman->tanggal_update ?? $order->updated_at) }}',
-                                                                                            '{{ $order->user->alamat ?? '-' }}'
-                                                                                        )"
+                                                                                                            '{{ $order->status_pengiriman->nama_penerima ?? '-' }}',
+                                                                                                            '{{ $order->status_pengiriman->foto_penerima ?? '' }}',
+                                                                                                            '{{ $order->status_pengiriman->alasan ?? '-' }}',
+                                                                                                            '{{ $statusPengiriman }}',
+                                                                                                            '{{ $order->status_pengiriman->tanggal_diterima ?? ($order->status_pengiriman->tanggal_update ?? $order->updated_at) }}',
+                                                                                                            '{{ $order->user->alamat ?? '-' }}'
+                                                                                                        )"
                                                     class="w-full px-3 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 text-xs font-semibold transition-all duration-150">
                                                     Detail Pengiriman
                                                 </button>
                                             @endif
                                         @elseif($statusPengiriman == 'dikirim' || $statusPengiriman == 'selesai')
                                             <button onclick="showDetailPengiriman(
-                                                                            '{{ $order->status_pengiriman->nama_penerima ?? '-' }}',
-                                                                            '{{ $order->status_pengiriman->foto_penerima ?? '' }}',
-                                                                            '',
-                                                                            '{{ $statusPengiriman }}',
-                                                                            '{{ $order->status_pengiriman->tanggal_diterima ?? ($order->status_pengiriman->tanggal_update ?? $order->updated_at) }}',
-                                                                            '{{ $order->user->alamat ?? '-' }}'
-                                                                        )"
+                                                                                        '{{ $order->status_pengiriman->nama_penerima ?? '-' }}',
+                                                                                        '{{ $order->status_pengiriman->foto_penerima ?? '' }}',
+                                                                                        '',
+                                                                                        '{{ $statusPengiriman }}',
+                                                                                        '{{ $order->status_pengiriman->tanggal_diterima ?? ($order->status_pengiriman->tanggal_update ?? $order->updated_at) }}',
+                                                                                        '{{ $order->user->alamat ?? '-' }}'
+                                                                                    )"
                                                 class="w-full px-3 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 text-xs font-semibold transition-all duration-150">
                                                 Detail Pengiriman
                                             </button>
                                         @elseif($statusPengiriman == 'menunggu' || $statusPengiriman == 'Belum Dikirim')
                                             <button onclick="showKurirModal(
-                                                                                '{{ $order->id_transaksi }}',
-                                                                                '{{ $order->user->alamat ?? '-' }}',
-                                                                                '{{ $order->total_harga_formatted }}',
-                                                                                '{{ $order->status_pengiriman }}',
-                                                                                `@foreach($order->detail_transaksi as $dt){{ $dt->menu->nama }}@if(!$loop->last), @endif @endforeach`
-                                                                            )"
+                                                                                            '{{ $order->id_transaksi }}',
+                                                                                            '{{ $order->user->alamat ?? '-' }}',
+                                                                                            '{{ $order->total_harga_formatted }}',
+                                                                                            '{{ $order->status_pengiriman }}',
+                                                                                            `@foreach($order->detail_transaksi as $dt){{ $dt->menu->nama }}@if(!$loop->last), @endif @endforeach`
+                                                                                        )"
                                                 class="w-full px-3 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 text-xs font-semibold transition-all duration-150">
                                                 Pilih Kurir
                                             </button>
@@ -213,23 +213,52 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
     <script>
-        function showKurirModal(idTransaksi, alamat, subtotal, statusPengiriman, menu) {
-            const modal = document.getElementById('kurirModal');
-            const box = document.getElementById('kurirModalBox');
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                box.classList.remove('scale-95', 'opacity-0');
-                box.classList.add('scale-100', 'opacity-100');
-            }, 10);
-            document.getElementById('modal_id_transaksi').value = idTransaksi;
-            document.getElementById('modal_order_id').textContent = idTransaksi;
-            document.getElementById('modal_menu').textContent = menu;
-            document.getElementById('modal_alamat').textContent = alamat;
-            document.getElementById('modal_subtotal').textContent = subtotal;
-            document.getElementById('formPilihKurir').action = "{{ url('/admin/pengiriman/tugaskan') }}/" + idTransaksi;
-        }
+        @if(session('success'))
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session('success') }}',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                confirmButtonColor: '#f59e0b'
+            });
+        @endif
+        @if(session('error'))
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'error',
+                title: 'Gagal!',
+                text: '{{ session('error') }}',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                confirmButtonColor: '#f59e0b'
+            });
+        @endif
+    </script>
+    <script>
+            function showKurirModal(idTransaksi, alamat, subtotal, statusPengiriman, menu) {
+                const modal = document.getElementById('kurirModal');
+                const box = document.getElementById('kurirModalBox');
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    box.classList.remove('scale-95', 'opacity-0');
+                    box.classList.add('scale-100', 'opacity-100');
+                }, 10);
+                document.getElementById('modal_id_transaksi').value = idTransaksi;
+                document.getElementById('modal_order_id').textContent = idTransaksi;
+                document.getElementById('modal_menu').textContent = menu;
+                document.getElementById('modal_alamat').textContent = alamat;
+                document.getElementById('modal_subtotal').textContent = subtotal;
+                document.getElementById('formPilihKurir').action = "{{ url('/admin/pengiriman/tugaskan') }}/" + idTransaksi;
+            }
         function closeKurirModal() {
             const modal = document.getElementById('kurirModal');
             const box = document.getElementById('kurirModalBox');
@@ -300,35 +329,5 @@
                 modal.classList.add('hidden');
             }, 200);
         }
-
-        @if(session('success'))
-            Swal.fire({
-                toast: true,
-                position: 'top-end',
-                icon: 'success',
-                title: '{{ session('success') }}',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true
-                    title: 'Berhasil!',
-                text: '{{ session('success') }}',
-                confirmButtonColor: '#f59e0b'
-            });
-        @endif
-        @if(session('error'))
-            Swal.fire({
-                toast: true,
-                position: 'top-end',
-                icon: 'error',
-                title: '{{ session('error') }}',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true
-                    title: 'Gagal!',
-                text: '{{ session('error') }}',
-                confirmButtonColor: '#f59e0b'
-            });
-        @endif
-
     </script>
 @endsection

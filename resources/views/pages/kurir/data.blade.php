@@ -8,7 +8,7 @@
             <div
                 class="flex flex-col xs:flex-row items-start xs:items-center space-y-3 xs:space-y-0 xs:space-x-4 w-full sm:w-auto">
                 <img class="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-4 border-amber-300 object-cover shadow mx-auto xs:mx-0"
-                    src="{{ asset('assets/img/profile/' . ($kurir->foto ?? 'default.jpg')) }}" alt="Kurir">
+                    src="{{ $kurir->foto ? Storage::url($kurir->foto) : asset('assets/img/profile/default.avif') }}" alt="Kurir">
                 <div class="text-center xs:text-left w-full xs:w-auto">
                     <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 mb-1">
                         {{ $kurir->name ?? 'Kurir Jogfood' }}
@@ -34,7 +34,7 @@
             <div
                 class="bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 lg:p-8 flex flex-col items-center w-full xl:w-1/3 order-1 xl:order-none">
                 <img class="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 rounded-full object-cover border-4 border-amber-200 mb-4 shadow"
-                    src="{{ asset('assets/img/profile/' . ($kurir->foto ?? 'default.jpg')) }}" alt="Kurir">
+                    src="{{ $kurir->foto ? Storage::url($kurir->foto) : asset('assets/img/profile/default.avif') }}" alt="Kurir">
                 <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-800 mb-1 text-center">
                     {{ $kurir->name ?? 'Kurir Jogfood' }}
                 </h3>

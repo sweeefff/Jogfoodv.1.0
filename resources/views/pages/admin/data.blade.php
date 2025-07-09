@@ -7,7 +7,8 @@
             class="flex flex-col md:flex-row items-center justify-between h-auto md:h-24 px-4 md:px-10 py-6 border-b border-gray-200 bg-white shadow-sm rounded-b-xl gap-4">
             <div class="flex items-center space-x-4 md:space-x-5 w-full md:w-auto">
                 <img class="w-20 h-20 rounded-full border-4 border-amber-300 object-cover shadow"
-                    src="{{ asset('assets/img/profile/' . ($admin->foto ?? 'default.jpg')) }}" alt="Admin">
+                    src="{{ $admin->foto ? Storage::url('admin/' . $admin->foto) : asset('storage/admin/default.avif') }}"
+                    alt="Admin">
                 <div>
                     <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-1">{{ $admin->name ?? 'Admin Jogfood' }}</h2>
                     <span class="text-base text-gray-500">Username: {{ $admin->username ?? 'admin' }}</span>
@@ -30,7 +31,8 @@
             <!-- Profile Card -->
             <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 flex flex-col items-center w-full lg:w-1/3 mb-6 lg:mb-0">
                 <img class="w-28 h-28 md:w-32 md:h-32 rounded-full object-cover border-4 border-amber-200 mb-4 shadow"
-                    src="{{ asset('assets/img/profile/' . ($admin->foto ?? 'default.jpg')) }}" alt="Admin">
+                    src="{{ $admin->foto ? Storage::url('admin/' . $admin->foto) : asset('assets/img/profile/default.avif') }}"
+                    alt="Admin">
                 <h3 class="text-xl md:text-2xl font-semibold text-gray-800 mb-1">{{ $admin->name ?? 'Admin Jogfood' }}</h3>
                 <span class="text-sm text-gray-500 mb-4">{{ $admin->email ?? 'admin@jogfood.com' }}</span>
                 <div class="w-full space-y-3 mt-2">

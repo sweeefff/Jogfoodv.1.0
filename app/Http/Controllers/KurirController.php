@@ -41,6 +41,7 @@ class KurirController extends Controller
         $data['role'] = 'kurir';
         $data['password'] = bcrypt($request->password);
 
+        $path = null;
         if ($request->hasFile('foto')) {
             $path = $request->file('foto')->store('foto_kurir', 'public');
         }
@@ -96,6 +97,7 @@ class KurirController extends Controller
 
         return view('pages.kurir.dashboard', compact('totalPengiriman', 'totalSukses', 'totalGagal', 'riwayat'));
     }
+
     public function kurirData()
     {
         $kurir = User::find(session('user_id', 'kurir'));
@@ -113,6 +115,7 @@ class KurirController extends Controller
         }
         return view('pages.kurir.edit', compact('kurir'));
     }
+
     public function kurirOrder()
     {
         $userId = session('user_id');
@@ -149,7 +152,7 @@ class KurirController extends Controller
             'alasan' => 'nullable|string|max:255',
             'nama_penerima' => 'nullable|string|max:255',
             'status_pembayaran' => 'nullable|in:pending,lunas',
-            'foto_penerima' => 'nullable|image|mimes:jpeg,png,jpg|max:5120', // 5MB tanpa titik
+            'foto_penerima' => 'nullable|image|mimes:jpeg,png,jpg|max:5120', // 5MB
         ]);
 
         $status = StatusPengiriman::where('id_transaksi', $id)
@@ -170,15 +173,20 @@ class KurirController extends Controller
             $updateData['alasan'] = $request->alasan;
         }
 
-
+        // PERBAIKAN: Ubah nama field dari 'foto' ke 'foto_penerima'
         if ($request->hasFile('foto_penerima')) {
+            // Hapus foto lama jika ada
+            if ($status->foto_penerima && Storage::disk('public')->exists($status->foto_penerima)) {
+                Storage::disk('public')->delete($status->foto_penerima);
+            }
+
             $fotoPath = $request->file('foto_penerima')->store('foto_penerima', 'public');
-            $updateData['foto'] = $fotoPath;
+            $updateData['foto_penerima'] = $fotoPath; // Ubah dari 'foto' ke 'foto_penerima'
         }
 
         $status->update($updateData);
 
-
+        // Kirim email notifikasi
         if ($status->transaksi && $status->transaksi->user) {
             $user = $status->transaksi->user;
             $transaksi = $status->transaksi;
@@ -190,7 +198,7 @@ class KurirController extends Controller
             ));
         }
 
-
+        // Update status pembayaran untuk COD
         if (
             $request->status_pengiriman === 'selesai' &&
             $request->has('status_pembayaran') &&
@@ -206,7 +214,6 @@ class KurirController extends Controller
         $message = $request->status_pengiriman === 'selesai'
             ? 'Pesanan berhasil ditandai selesai!'
             : 'Status pesanan berhasil diperbarui!';
-
 
         return redirect()->route('kurir.order')->with('success', $message);
     }
@@ -253,6 +260,4 @@ class KurirController extends Controller
 
         return redirect()->route('kurir.data')->with('success', 'Profil berhasil diperbarui.');
     }
-
-
 }

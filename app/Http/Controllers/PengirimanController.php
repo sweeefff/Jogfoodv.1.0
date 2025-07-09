@@ -64,7 +64,7 @@ class PengirimanController extends Controller
             }
         }
 
-        return redirect()->route('admin.pengiriman')->with('success', 'Kurir berhasil ditugaskan!');
+        return redirect()->route('admin.pengiriman')->with('success', 'Kurir telah berhasil ditugaskan!');
     }
 
 }

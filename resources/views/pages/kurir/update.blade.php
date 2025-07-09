@@ -110,9 +110,19 @@
                     </div>
                     <div id="photoSection" class="{{ in_array($status->status_pengiriman, ['selesai','gagal']) || !$status->status_pengiriman ? '' : 'hidden' }}">
                         <div class="text-gray-600">Foto Penerima/Penyerahan</div>
+                        
+                        {{-- PERBAIKAN: Menampilkan foto yang ada --}}
                         @if($status->foto_penerima)
-                            <img src="{{ asset('storage/'.$status->foto_penerima) }}" alt="Foto Penerima" class="mt-2 h-24 rounded border">
+                            <div class="mt-2 mb-2">
+                                <img src="{{ asset('storage/' . $status->foto_penerima) }}" 
+                                     alt="Foto Penerima" 
+                                     class="h-24 w-24 object-cover rounded border shadow-sm"
+                                     onerror="this.src='{{ asset('images/no-image.png') }}'; this.alt='Foto tidak ditemukan';">
+                                <p class="text-xs text-gray-500 mt-1">Foto sudah diupload</p>
+                            </div>
                         @endif
+                        
+                        {{-- Input untuk upload foto baru --}}
                         @if(!in_array($status->status_pengiriman, ['selesai','gagal']))
                             <input type="file" name="foto_penerima" id="fotoInput" accept="image/*" class="w-full border rounded px-2 py-1 mt-2">
                             <small class="text-gray-500 text-xs">Format: JPG, PNG, max 5MB</small>

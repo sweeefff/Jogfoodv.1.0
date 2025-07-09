@@ -23,7 +23,7 @@
 
                 <div class="flex flex-col items-center mb-4">
                     @if($user->foto)
-                        <img src="{{ asset('assets/img/profile/' . $user->foto) }}" alt="{{ $user->foto }}"
+                        <img src="{{ Storage::url('user/' . $user->foto) }}" alt="{{ $user->foto }}"
                             class="w-24 h-24 rounded-full object-cover mb-2">
                     @else
                         <div class="w-24 h-24 rounded-full bg-amber-300 flex items-center justify-center mb-2">

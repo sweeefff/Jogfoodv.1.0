@@ -122,8 +122,8 @@
 					<span class="sr-only">Open user menu</span>
 
 					<img class="w-9 h-9 rounded-full border-2 border-white"
-						src="{{ asset('assets/img/profile/' . (session('foto') ? session('foto') : 'default.avif')) }}"
-						alt="User Profile">
+						src="{{ session('foto') ? Storage::url('user/' . session('foto')) : asset('assets/img/profile/default.avif') }}"
+						alt="User profile">
 				</button>
 				<div class="hidden absolute top-10 right-0 my-4 text-base list-none bg-amber-50 divide-y divide-gray-100 rounded-lg shadow w-56"
 					id="user-dropdown">
@@ -182,7 +182,8 @@
 					<div class="flex items-center px-5">
 						<div class="flex-shrink-0">
 							<img class="h-10 w-10 rounded-full"
-								src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="User profile">
+								src="{{ session('foto') ? Storage::url('user/' . session('foto')) : asset('assets/img/profile/default.avif') }}"
+								alt="User profile">
 						</div>
 						<div class="ml-3">
 							<div class="text-base font-medium text-white">{{ session('username', '-') }}</div>
