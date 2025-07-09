@@ -168,11 +168,11 @@ Please stick to code style and include tests where applicable.
 
 For Contribution throughout this project since beginning
 
-[![Github Pages](https://img.shields.io/badge/Ridho%20Putrawan%20-%203312411032-100000?style=flat&logo=github&logoColor=white)](https://github.com/sweeefff)
+[![Github Pages](https://img.shields.io/badge/Ridho%20Putrawan%20-%203312411050-100000?style=flat&logo=github&logoColor=white)](https://github.com/sweeefff)
 
 [![Github Pages](https://img.shields.io/badge/Ruth%20Yohana%20Manurung-%203312411032-100000?style=flat&logo=github&logoColor=white)](https://github.com/ruthyoh)
 
-[![Github Pages](https://img.shields.io/badge/Josepine%20Stevie%20Hia-%203312411032-100000?style=flat&logo=github&logoColor=white)](https://github.com/JosepineStevieHia)
+[![Github Pages](https://img.shields.io/badge/Josepine%20Stevie%20Hia-%203312411044-100000?style=flat&logo=github&logoColor=white)](https://github.com/JosepineStevieHia)
 
 [![Github Pages](https://img.shields.io/badge/M%20Rizky%20Raapi%20Ramadhan-%203312411060-100000?style=flat&logo=github&logoColor=white)](https://github.com/rizkyraapi)
 
