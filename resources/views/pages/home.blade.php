@@ -52,7 +52,7 @@
                     </div>
                     <input type="text" name="search"
                         class="block w-full pl-10 pr-3 py-4 border border-gray-300 rounded-lg bg-gray-50 focus:ring-amber-500 focus:border-amber-500"
-                        placeholder="Cari makanan, restoran, atau masakan...">
+                        placeholder="Cari makanan, Minuman atau Cemilan...">
                     <button type="submit"
                         class="absolute right-2.5 bottom-2.5 bg-amber-600 
                 hover:bg-amber-300 focus:ring-4 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-4 py-2 text-white bg-amber-600">

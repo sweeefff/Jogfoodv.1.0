@@ -46,6 +46,6 @@
         @method('DELETE')
         <button type="submit"
             class="remove-btn bg-amber-500 hover:bg-amber-600 text-white text-sm px-3 py-1 rounded-lg transition"
-            onclick="return confirm('Apakah Anda yakin ingin menghapus item ini?')">Hapus</button>
+            >Hapus</button>
     </form>
 </div>

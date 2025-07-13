@@ -102,7 +102,7 @@
         @forelse($ratings as $rating)
         <div class="flex items-start mb-6 bg-amber-50 rounded-lg p-4 shadow-sm">
         <img
-        src="{{ $rating->user->foto ? asset('assets/img/profile/' . $rating->user->foto) : asset('assets/img/profile/default.png') }}"
+        src="{{ $rating->user->foto ? Storage::url('user/' . $rating->user->foto) : asset('assets/img/profile/default.avif') }}"
         class="w-12 h-12 rounded-full object-cover border-2 border-amber-300 mr-4" alt="profile">
         <div>
         <div class="flex items-center mb-1">
@@ -129,10 +129,8 @@
     </div>
   </div>
 
-@endsection
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
     let jumlah = 1;
     const jumlahSpan = document.querySelector('.w-16 span');
     const inputJumlah = document.getElementById('input-jumlah');
@@ -158,5 +156,32 @@
       document.getElementById('beli-sekarang-jumlah').value = document.getElementById('input-jumlah').value;
       document.getElementById('beli-sekarang-form').submit();
     });
-  });
-</script>
+    });
+  </script>
+  @if (session('success'))
+    <script>
+    Swal.fire({
+    toast: true,
+    position: 'top-end',
+    icon: 'success',
+    title: '{{ session('success') }}',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true
+    });
+    </script>
+    @endif
+    @if (session('error'))
+    <script>
+    Swal.fire({
+      toast: true,
+      position: 'top-end',
+      icon: 'error',
+      title: '{{ session('error') }}',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true
+    });
+    </script>
+    @endif
+  @endsection
