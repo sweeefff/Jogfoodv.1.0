@@ -58,12 +58,13 @@
                                                 : 'Belum Ditugaskan';
                                             $isMerah = in_array(strtolower($statusPengiriman), ['gagal', 'batal', 'dibatalkan']);
                                         @endphp
-                                        <span class="badge
-                                                                    @if($isMerah)
-                                                                        bg-red-500 text-white
-                                                                    @elseif($statusPengiriman == 'dikirim') bg-yellow-400 text-yellow-900
-                                                                    @elseif($statusPengiriman == 'selesai') bg-green-500 text-white
-                                                                    @else bg-gray-300 text-gray-700 @endif">
+                                        <span
+                                            class="badge
+                                                                                                                        @if($isMerah)
+                                                                                                                            bg-red-500 text-white
+                                                                                                                        @elseif($statusPengiriman == 'dikirim') bg-yellow-400 text-yellow-900
+                                                                                                                        @elseif($statusPengiriman == 'selesai') bg-green-500 text-white
+                                                                                                                        @else bg-gray-300 text-gray-700 @endif">
                                             {{ ucfirst($statusPengiriman) }}
                                         </span>
                                         <br>
@@ -72,38 +73,41 @@
                                     <td class="px-4 py-3 text-center">
                                         @if($isMerah)
                                             @if(strtolower($statusPengiriman) == 'gagal')
-                                                <button onclick="showDetailPengiriman(
-                                                                                                            '{{ $order->status_pengiriman->nama_penerima ?? '-' }}',
-                                                                                                            '{{ $order->status_pengiriman->foto_penerima ?? '' }}',
-                                                                                                            '{{ $order->status_pengiriman->alasan ?? '-' }}',
-                                                                                                            '{{ $statusPengiriman }}',
-                                                                                                            '{{ $order->status_pengiriman->tanggal_diterima ?? ($order->status_pengiriman->tanggal_update ?? $order->updated_at) }}',
-                                                                                                            '{{ $order->user->alamat ?? '-' }}'
-                                                                                                        )"
+                                                <button
+                                                    onclick="showDetailPengiriman(
+                                                                                                                                                                                                '{{ $order->status_pengiriman->nama_penerima ?? '-' }}',
+                                                                                                                                                                                                '{{ $order->status_pengiriman->foto_penerima ?? '' }}',
+                                                                                                                                                                                                '{{ $order->status_pengiriman->alasan ?? '-' }}',
+                                                                                                                                                                                                '{{ $statusPengiriman }}',
+                                                                                                                                                                                                '{{ $order->status_pengiriman->tanggal_diterima ?? ($order->status_pengiriman->tanggal_update ?? $order->updated_at) }}',
+                                                                                                                                                                                                '{{ $order->user->alamat ?? '-' }}'
+                                                                                                                                                                                            )"
                                                     class="w-full px-3 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 text-xs font-semibold transition-all duration-150">
                                                     Detail Pengiriman
                                                 </button>
                                             @endif
                                         @elseif($statusPengiriman == 'dikirim' || $statusPengiriman == 'selesai')
-                                            <button onclick="showDetailPengiriman(
-                                                                                        '{{ $order->status_pengiriman->nama_penerima ?? '-' }}',
-                                                                                        '{{ $order->status_pengiriman->foto_penerima ?? '' }}',
-                                                                                        '',
-                                                                                        '{{ $statusPengiriman }}',
-                                                                                        '{{ $order->status_pengiriman->tanggal_diterima ?? ($order->status_pengiriman->tanggal_update ?? $order->updated_at) }}',
-                                                                                        '{{ $order->user->alamat ?? '-' }}'
-                                                                                    )"
+                                            <button
+                                                onclick="showDetailPengiriman(
+                                                                                                                                                            '{{ $order->status_pengiriman->nama_penerima ?? '-' }}',
+                                                                                                                                                            '{{ $order->status_pengiriman->foto_penerima ?? '' }}',
+                                                                                                                                                            '',
+                                                                                                                                                            '{{ $statusPengiriman }}',
+                                                                                                                                                            '{{ $order->status_pengiriman->tanggal_diterima ?? ($order->status_pengiriman->tanggal_update ?? $order->updated_at) }}',
+                                                                                                                                                            '{{ $order->user->alamat ?? '-' }}'
+                                                                                                                                                        )"
                                                 class="w-full px-3 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 text-xs font-semibold transition-all duration-150">
                                                 Detail Pengiriman
                                             </button>
                                         @elseif($statusPengiriman == 'menunggu' || $statusPengiriman == 'Belum Dikirim')
-                                            <button onclick="showKurirModal(
-                                                                                            '{{ $order->id_transaksi }}',
-                                                                                            '{{ $order->user->alamat ?? '-' }}',
-                                                                                            '{{ $order->total_harga_formatted }}',
-                                                                                            '{{ $order->status_pengiriman }}',
-                                                                                            `@foreach($order->detail_transaksi as $dt){{ $dt->menu->nama }}@if(!$loop->last), @endif @endforeach`
-                                                                                        )"
+                                            <button
+                                                onclick="showKurirModal(
+                                                                                                                                                                '{{ $order->id_transaksi }}',
+                                                                                                                                                                '{{ $order->user->alamat ?? '-' }}',
+                                                                                                                                                                '{{ $order->total_harga_formatted }}',
+                                                                                                                                                                '{{ $order->status_pengiriman }}',
+                                                                                                                                                                `@foreach($order->detail_transaksi as $dt){{ $dt->menu->nama }}@if(!$loop->last), @endif @endforeach`
+                                                                                                                                                            )"
                                                 class="w-full px-3 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 text-xs font-semibold transition-all duration-150">
                                                 Pilih Kurir
                                             </button>
@@ -277,46 +281,78 @@
                 box.classList.add('scale-100', 'opacity-100');
             }, 10);
 
-            // Reset all
+            // Reset all sections
             document.getElementById('detail_nama_section').style.display = 'none';
             document.getElementById('detail_alamat_section').style.display = 'none';
             document.getElementById('detail_tanggal_section').style.display = 'none';
             document.getElementById('detail_foto_section').style.display = 'none';
             document.getElementById('detail_alasan_section').style.display = 'none';
 
-            // Status
+            // Set status styling
             let statusClass = 'text-gray-500';
             if (statusPengiriman.toLowerCase() === 'selesai') statusClass = 'text-green-600 font-bold';
             else if (statusPengiriman.toLowerCase() === 'dikirim') statusClass = 'text-yellow-600 font-bold';
             else if (['gagal', 'batal', 'dibatalkan'].includes(statusPengiriman.toLowerCase())) statusClass = 'text-red-600 font-bold';
+
             document.getElementById('detail_status_pengiriman').className = 'font-semibold ' + statusClass;
             document.getElementById('detail_status_pengiriman').textContent = statusPengiriman;
 
             // Show/hide fields based on status
             if (statusPengiriman.toLowerCase() === 'selesai') {
+                // Show all fields for completed delivery
                 document.getElementById('detail_nama_section').style.display = '';
                 document.getElementById('detail_alamat_section').style.display = '';
                 document.getElementById('detail_tanggal_section').style.display = '';
                 document.getElementById('detail_foto_section').style.display = '';
-                document.getElementById('detail_nama_penerima').textContent = namaPenerima;
+
+                // Set values
+                document.getElementById('detail_nama_penerima').textContent = namaPenerima || '-';
                 document.getElementById('detail_alamat_pengiriman').textContent = alamatPengiriman || '-';
-                document.getElementById('detail_tanggal_diterima').textContent = tanggalPengiriman ? moment(tanggalPengiriman).format('DD MMM YYYY, HH:mm') : '-';
-                if (fotoPenerima) {
-                    document.getElementById('detail_foto_penerima').innerHTML = `<img src="${fotoPenerima}" alt="Foto Penerima" class="w-32 h-32 object-cover rounded-lg border">`;
+
+                // Fix tanggal diterima - remove the undefined variable check
+                if (tanggalPengiriman && tanggalPengiriman !== '-') {
+                    // Format tanggal jika ada moment.js, jika tidak tampilkan apa adanya
+                    if (typeof moment !== 'undefined') {
+                        document.getElementById('detail_tanggal_diterima').textContent = moment(tanggalPengiriman).format('DD MMM YYYY, HH:mm');
+                    } else {
+                        // Fallback jika tidak ada moment.js
+                        const date = new Date(tanggalPengiriman);
+                        document.getElementById('detail_tanggal_diterima').textContent = date.toLocaleDateString('id-ID', {
+                            day: '2-digit',
+                            month: 'short',
+                            year: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+                    }
+                } else {
+                    document.getElementById('detail_tanggal_diterima').textContent = '-';
+                }
+
+                // Fix foto penerima - Laravel 12 menggunakan /storage/ path
+                if (fotoPenerima && fotoPenerima !== '') {
+                    // Path untuk Laravel 12 (sama seperti versi sebelumnya)
+                    const fotoPath = fotoPenerima.startsWith('/storage/') ? fotoPenerima : `/storage/${fotoPenerima}`;
+                    document.getElementById('detail_foto_penerima').innerHTML = `<img src="${fotoPath}" alt="Foto Penerima" class="w-32 h-32 object-cover rounded-lg border" onerror="this.style.display='none'; this.parentNode.innerHTML='<span class=\\"text-gray-400\\">`;
                 } else {
                     document.getElementById('detail_foto_penerima').innerHTML = '<span class="text-gray-400">Tidak ada foto</span>';
                 }
+
             } else if (statusPengiriman.toLowerCase() === 'gagal') {
+                // Show relevant fields for failed delivery
                 document.getElementById('detail_nama_section').style.display = '';
                 document.getElementById('detail_foto_section').style.display = '';
                 document.getElementById('detail_alasan_section').style.display = '';
-                document.getElementById('detail_nama_penerima').textContent = namaPenerima;
-                if (fotoPenerima) {
-                    document.getElementById('detail_foto_penerima').innerHTML = `<img src="${fotoPenerima}" alt="Foto Penerima" class="w-32 h-32 object-cover rounded-lg border">`;
+
+                document.getElementById('detail_nama_penerima').textContent = namaPenerima || '-';
+                document.getElementById('detail_alasan_gagal').textContent = alasanGagal || '-';
+
+                if (fotoPenerima && fotoPenerima !== '') {
+                    const fotoPath = fotoPenerima.startsWith('/storage/') ? fotoPenerima : `/storage/${fotoPenerima}`;
+                    document.getElementById('detail_foto_penerima').innerHTML = `<img src="${fotoPath}" alt="Foto Penerima" class="w-32 h-32 object-cover rounded-lg border" onerror="this.style.display='none'; this.parentNode.innerHTML='<span class=\\"text-gray-400\\">`;
                 } else {
                     document.getElementById('detail_foto_penerima').innerHTML = '<span class="text-gray-400">Tidak ada foto</span>';
                 }
-                document.getElementById('detail_alasan_gagal').textContent = alasanGagal || '-';
             }
             // Jika status dikirim, hanya tampilkan status (bagian lain tetap hidden)
         }
