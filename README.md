@@ -189,12 +189,12 @@ For Contribution throughout this project since beginning
 ## 📄 Document
 
 <h1>ATS<h1>
-    <a href="./Berkas-PBL/Laporan%20ATS%20PBL-IF240.pdf"><img src="https://img.shields.io/badge/Laporan%20ATS-D83B01?style=for-the-badge&logo=microsoft-office&logoColor=red" alt="Lihat Laporan ATS"/></a>
+    <a href="./Berkas-PBL/Laporan%20ATS%20PBL-IF240.pdf"><img src="https://img.shields.io/badge/Laporan_ATS-2B579A?style=for-the-badge&logo=microsoft-word&logoColor=white" alt="Lihat Laporan ATS"/></a>
     <a href="./Berkas-PBL/PBL-IF240-JOGFOOD-ATS.pptx"><img src="https://img.shields.io/badge/FILE%20PRESENTASI%20ATS-B7472A?style=for-the-badge&logo=microsoft-powerpoint&logoColor=white" alt="Lihat File Presentasi ATS"/></a>
     <a href="https://youtu.be/ReQ4AjbXtuQ"><img src="https://img.shields.io/badge/Presentasi%20ATS-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white" alt="Video Presentasi ATS"/></a>
 
 <h1>AAS<h1>
-    <a href="./Berkas-PBL/Laporan_AAS_PBL-IF240.pdf"><img src="https://img.shields.io/badge/Laporan%20AAS-D83B01?style=for-the-badge&logo=microsoft-office&logoColor=red" alt="Lihat Laporan AAS"/></a>
+    <a href="./Berkas-PBL/Laporan_AAS_PBL-IF240.pdf"><img src="https://img.shields.io/badge/Laporan_AAS-2B579A?style=for-the-badge&logo=microsoft-word&logoColor=white" alt="Lihat Laporan AAS"/></a>
     <a href="./Berkas-PBL/PBL-IF240-Jogfood_AAS.pptx"><img src="https://img.shields.io/badge/FILE%20PRESENTASI%20ATS-B7472A?style=for-the-badge&logo=microsoft-powerpoint&logoColor=white" alt="Lihat File Presentasi ATS"/></a>
     <a href="./Berkas-PBL/Manual-Book_Jogfood.pdf"><img src="https://img.shields.io/badge/Manual%20Book%20Jogfood-D83B01?style=for-the-badge&logo=microsoft-office&logoColor=red" alt="Lihat manual Book"/></a>
 <h2>VIDEO AAS<H2>
