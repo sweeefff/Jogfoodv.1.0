@@ -38,7 +38,7 @@
                                 style="margin: 0 auto 20px;">
                                 <tr>
                                     <td>
-                                        <img src="{{ asset('assets/icon/jogfood-shadow.png') }}" alt="Jogfood Logo">
+                                        <img src="{{ asset('assets/icon/jogfood-shadow.png') }}"
                                         alt="Jogfood Logo">
                                         style="width: 300px; height: auto;">
                                     </td>
