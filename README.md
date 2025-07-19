@@ -189,15 +189,16 @@ For Contribution throughout this project since beginning
 ## 📄 Document
 
 <h1>ATS<h1>
-    <a href="./Berkas-PBL/Laporan%20ATS%20PBL-IF240.pdf"><img src="https://img.shields.io/badge/Laporan_ATS-2B579A?style=for-the-badge&logo=microsoft-word&logoColor=white" alt="Lihat Laporan ATS"/></a>
-    <a href="./Berkas-PBL/PBL-IF240-JOGFOOD-ATS.pptx"><img src="https://img.shields.io/badge/FILE%20PRESENTASI%20ATS-B7472A?style=for-the-badge&logo=microsoft-powerpoint&logoColor=white" alt="Lihat File Presentasi ATS"/></a>
-    <a href="https://youtu.be/ReQ4AjbXtuQ"><img src="https://img.shields.io/badge/Presentasi%20ATS-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white" alt="Video Presentasi ATS"/></a>
+    <a href="https://docs.google.com/viewer?url=https://github.com/sweeefff/Jogfoodv.1.0/raw/main/Berkas-PBL/Laporan%2520ATS%2520PBL-IF240.pdf&embedded=true" target="_blank"><img src="https://img.shields.io/badge/Laporan_ATS-2B579A?style=for-the-badge&logo=microsoft-word&logoColor=white" alt="Lihat Laporan ATS"/></a>
+    <a href="https://view.officeapps.live.com/op/view.aspx?src=https://github.com/sweeefff/Jogfoodv.1.0/raw/main/Berkas-PBL/PBL-IF240-JOGFOOD-ATS.pptx" target="_blank"><img src="https://img.shields.io/badge/FILE%20PRESENTASI%20ATS-B7472A?style=for-the-badge&logo=microsoft-powerpoint&logoColor=white" alt="Lihat File Presentasi ATS"/></a>
+    <a href="https://youtu.be/ReQ4AjbXtuQ" target="_blank" rel="noopener"><img src="https://img.shields.io/badge/Presentasi%20ATS-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white" alt="Video Presentasi ATS"/></a>
 
 <h1>AAS<h1>
-    <a href="./Berkas-PBL/Laporan_AAS_PBL-IF240.pdf"><img src="https://img.shields.io/badge/Laporan_AAS-2B579A?style=for-the-badge&logo=microsoft-word&logoColor=white" alt="Lihat Laporan AAS"/></a>
-    <a href="./Berkas-PBL/PBL-IF240-Jogfood_AAS.pptx"><img src="https://img.shields.io/badge/FILE%20PRESENTASI%20ATS-B7472A?style=for-the-badge&logo=microsoft-powerpoint&logoColor=white" alt="Lihat File Presentasi ATS"/></a>
-    <a href="./Berkas-PBL/Manual-Book_Jogfood.pdf"><img src="https://img.shields.io/badge/Manual%20Book%20Jogfood-D83B01?style=for-the-badge&logo=microsoft-office&logoColor=red" alt="Lihat manual Book"/></a>
+    <a href="https://docs.google.com/viewer?url=https://github.com/sweeefff/Jogfoodv.1.0/raw/main/Berkas-PBL/Laporan_AAS_PBL-IF240.pdf&embedded=true" target="_blank"><img src="https://img.shields.io/badge/Laporan_AAS-2B579A?style=for-the-badge&logo=microsoft-word&logoColor=white" alt="Lihat Laporan AAS"/></a>
+    <a href="https://view.officeapps.live.com/op/view.aspx?src=https://github.com/sweeefff/Jogfoodv.1.0/raw/main/Berkas-PBL/PBL-IF240-Jogfood_AAS.pptx" target="_blank"><img src="https://img.shields.io/badge/FILE%20PRESENTASI%20AAS-B7472A?style=for-the-badge&logo=microsoft-powerpoint&logoColor=white" alt="Lihat File Presentasi AAS"/></a>
+    <a href="https://docs.google.com/viewer?url=https://github.com/sweeefff/Jogfoodv.1.0/raw/main/Berkas-PBL/Manual-Book_Jogfood.pdf&embedded=true" target="_blank"><img src="https://img.shields.io/badge/Manual_Book_Jogfood-2B579A?style=for-the-badge&logo=microsoft-word&logoColor=white" alt="Lihat Manual Book"/></a>
+
 <h2>VIDEO AAS<H2>
-    <a href="https://youtu.be/PnQH2L-6uIk"><img src="https://img.shields.io/badge/Video%20Presentasi%20AAS-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white" alt="Video Presentasi AAS"/></a>
-    <a href="https://youtu.be/cKkbmppQXy0"><img src="https://img.shields.io/badge/Demo%20Detail%20Jogfood-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white" alt="Video Demo Detail Jogfood"/></a>
-    <a href="https://youtu.be/g9GiQqVf-Io"><img src="https://img.shields.io/badge/Video%20Promosi%20Jogfood-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white" alt="Video Promosi Jogfood"/></a>
+    <a href="https://youtu.be/PnQH2L-6uIk" target="_blank" rel="noopener"><img src="https://img.shields.io/badge/Video%20Presentasi%20AAS-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white" alt="Video Presentasi AAS"/></a>
+    <a href="https://youtu.be/cKkbmppQXy0" target="_blank" rel="noopener"><img src="https://img.shields.io/badge/Demo%20Detail%20Jogfood-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white" alt="Video Demo Detail Jogfood"/></a>
+    <a href="https://youtu.be/g9GiQqVf-Io" target="_blank" rel="noopener"><img src="https://img.shields.io/badge/Video%20Promosi%20Jogfood-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white" alt="Video Promosi Jogfood"/></a>
