@@ -206,9 +206,12 @@ class KurirController extends Controller
             $status->transaksi->pembayaran &&
             $status->transaksi->pembayaran->metode_pembayaran === 'cod'
         ) {
-            $pembayaran = $status->transaksi->pembayaran;
-            $pembayaran->status_pembayaran = $request->status_pembayaran;
-            $pembayaran->save();
+            $transaksi = $status->transaksi;
+            $transaksi->status_transaksi = $request->status_pembayaran; // contoh: 'lunas'
+            $transaksi->save();
+
+            $status->status_pembayaran = $request->status_bayar;
+            $status->save();
         }
 
         $message = $request->status_pengiriman === 'selesai'

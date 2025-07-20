@@ -175,7 +175,7 @@ class MetodeController extends Controller
 
                 session(['last_order_id' => $orderId]);
                 return Response::json([
-                    'redirect' => route('metode.success')
+                    'redirect' => route('metode.success', ['order_id' => $orderId])
                 ]);
             }
 

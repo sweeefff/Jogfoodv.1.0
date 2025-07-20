@@ -66,6 +66,21 @@
                     @endif
                 </div>
 
+                <!-- COD Payment Status Alert (if applicable) -->
+                @php
+                    $isCOD = $status->transaksi && $status->transaksi->pembayaran && $status->transaksi->pembayaran->metode_pembayaran === 'cod';
+                    $isLunas = $status->transaksi && $status->transaksi->pembayaran && $status->transaksi->pembayaran->status_pembayaran === 'lunas';
+                @endphp
+
+                @if($isCOD && !$isLunas && !in_array($status->status_pengiriman, ['selesai', 'gagal']))
+                    <div class="mb-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                        <div class="flex items-center">
+                            <i class="fas fa-exclamation-triangle text-yellow-500 mr-2"></i>
+                            <span class="text-yellow-800 font-medium">Perhatian: Pembayaran COD belum lunas. Harap konfirmasi pembayaran sebelum menyelesaikan pengiriman.</span>
+                        </div>
+                    </div>
+                @endif
+
                 <!-- Delivery Information Form -->
                 <h4 class="font-semibold text-gray-700 mb-2">Detail Pengiriman</h4>
                 <h4 class="font-semibold text-gray-700 mb-2">Detail Pesanan</h4>
@@ -114,9 +129,9 @@
                             @if($status->foto_penerima)
                                 <div class="mt-2 mb-2">
                                     <img src="{{ asset('storage/' . $status->foto_penerima) }}" 
-                                         alt="Foto Penerima" 
-                                         class="h-24 w-24 object-cover rounded border shadow-sm"
-                                         onerror="this.src='{{ asset('images/no-image.png') }}'; this.alt='Foto tidak ditemukan';">
+                                        alt="Foto Penerima" 
+                                        class="h-24 w-24 object-cover rounded border shadow-sm"
+                                        onerror="this.src='{{ asset('images/no-image.png') }}'; this.alt='Foto tidak ditemukan';">
                                     <p class="text-xs text-gray-500 mt-1">Foto sudah diupload</p>
                                 </div>
                             @endif
@@ -128,20 +143,16 @@
                             @endif
                         </div>
 
-                        @php
-                            $isCOD = $status->transaksi && $status->transaksi->pembayaran && $status->transaksi->pembayaran->metode_pembayaran === 'cod';
-                            $isLunas = $status->transaksi && $status->transaksi->pembayaran && $status->transaksi->pembayaran->status_pembayaran === 'lunas';
-                        @endphp
-
-                        @if($isCOD && !$isLunas && $status->status_pengiriman !== 'selesai' && $status->status_pengiriman !== 'gagal')
+                        @if($isCOD && !in_array($status->status_pengiriman, ['selesai', 'gagal']))
                             <div id="paymentStatusSection">
                                 <div class="text-gray-600">Status Pembayaran COD</div>
-                                <select name="status_pembayaran" class="w-full border rounded px-2 py-1">
+                                <select name="status_pembayaran" id="statusPembayaran" class="w-full border rounded px-2 py-1" onchange="handlePaymentStatusChange()">
                                     <option value="pending" {{ $status->transaksi->pembayaran->status_pembayaran == 'pending' ? 'selected' : '' }}>
                                         Belum Lunas</option>
                                     <option value="lunas" {{ $status->transaksi->pembayaran->status_pembayaran == 'lunas' ? 'selected' : '' }}>
                                         Lunas</option>
                                 </select>
+                                <input type="hidden" name="status_bayar" id="statusBayar" value="{{ $isLunas ? 'dibayar' : 'belum_dibayar' }}">
                             </div>
                         @endif
                     </div>
@@ -200,7 +211,6 @@
             </script>
         @endif
 
-
         @if(session('error'))
             <script>
                 Swal.fire({
@@ -230,19 +240,18 @@
                 });
             }
 
-            function handlePaymentMethodChange() {
-                const codSection = document.getElementById('codSection');
-                const cashSection = document.getElementById('cashSection');
-                const paymentMethod = '{{ $status->transaksi && $status->transaksi->pembayaran ? $status->transaksi->pembayaran->metode_pembayaran : '' }}';
-
-                if (paymentMethod === 'cod') {
-                    codSection.classList.remove('hidden');
-                    cashSection.classList.remove('hidden');
-                    showAlert('info', 'COD Selected', 'Cash on Delivery option is selected.');
-                } else {
-                    codSection.classList.add('hidden');
-                    cashSection.classList.add('hidden');
-                    showAlert('info', 'Other Payment', 'Non-COD payment method selected.');
+            function handlePaymentStatusChange() {
+                const statusBayarInput = document.getElementById('statusBayar');
+                const statusPembayaran = document.getElementById('statusPembayaran');
+                
+                if (statusBayarInput && statusPembayaran) {
+                    if (statusPembayaran.value === 'lunas') {
+                        statusBayarInput.value = 'dibayar';
+                        showAlert('success', 'Status Pembayaran', 'COD sudah ditandai sebagai lunas.');
+                    } else {
+                        statusBayarInput.value = 'belum_dibayar';
+                        showAlert('warning', 'Status Pembayaran', 'COD belum lunas. Pastikan pelanggan sudah membayar sebelum menyelesaikan pengiriman.');
+                    }
                 }
             }
 
@@ -292,78 +301,89 @@
 
             // Validate file upload
             document.addEventListener('DOMContentLoaded', function () {
-        handleStatusChange();
+                handleStatusChange();
 
-        const deliveryForm = document.getElementById('deliveryForm');
-        const fotoInput = document.getElementById('fotoInput');
-        const statusSelect = document.getElementById('statusPengiriman');
-        const namePenerima = document.getElementById('namePenerima');
-        const alasanInput = document.getElementById('alasan');
-        const submitBtn = document.getElementById('submitBtn');
+                const deliveryForm = document.getElementById('deliveryForm');
+                const fotoInput = document.getElementById('fotoInput');
+                const statusSelect = document.getElementById('statusPengiriman');
+                const namePenerima = document.getElementById('namePenerima');
+                const alasanInput = document.getElementById('alasan');
+                const submitBtn = document.getElementById('submitBtn');
 
-        if (fotoInput) {
-            fotoInput.addEventListener('change', function (e) {
-                const file = e.target.files[0];
-                if (file) {
-                    if (file.size > 5 * 1024 * 1024) {
-                        showAlert('error', 'File Terlalu Besar', 'Ukuran file maksimal 5MB');
-                        e.target.value = '';
-                        return;
-                    }
+                if (fotoInput) {
+                    fotoInput.addEventListener('change', function (e) {
+                        const file = e.target.files[0];
+                        if (file) {
+                            if (file.size > 5 * 1024 * 1024) {
+                                showAlert('error', 'File Terlalu Besar', 'Ukuran file maksimal 5MB');
+                                e.target.value = '';
+                                return;
+                            }
 
-                    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-                    if (!allowedTypes.includes(file.type)) {
-                        showAlert('error', 'Format File Salah', 'Hanya file JPG, JPEG, dan PNG yang diizinkan');
-                        e.target.value = '';
-                        return;
-                    }
+                            const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+                            if (!allowedTypes.includes(file.type)) {
+                                showAlert('error', 'Format File Salah', 'Hanya file JPG, JPEG, dan PNG yang diizinkan');
+                                e.target.value = '';
+                                return;
+                            }
 
-                    showAlert('success', 'File Valid', 'Foto berhasil dipilih: ' + file.name);
+                            showAlert('success', 'File Valid', 'Foto berhasil dipilih: ' + file.name);
+                        }
+                    });
+                }
+
+                if (deliveryForm) {
+                    deliveryForm.addEventListener('submit', function (e) {
+                        const status = statusSelect.value.trim();
+                        let hasError = false;
+
+                        // PERBAIKAN: Validasi COD untuk status selesai
+                        const isCOD = {{ $isCOD ? 'true' : 'false' }};
+                        if (isCOD && status === 'selesai') {
+                            const statusPembayaran = document.getElementById('statusPembayaran');
+                            if (statusPembayaran && statusPembayaran.value === 'pending') {
+                                e.preventDefault();
+                                showAlert('error', 'COD Belum Lunas', 'Pembayaran COD harus dalam status "Lunas" sebelum pengiriman dapat diselesaikan. Silakan konfirmasi pembayaran dari pelanggan terlebih dahulu.');
+                                hasError = true;
+                                return;
+                            }
+                        }
+
+                        // Validasi status "selesai"
+                        if (status === 'selesai') {
+                            if (!namePenerima || !namePenerima.value.trim()) {
+                                showAlert('error', 'Data Tidak Lengkap', 'Nama penerima harus diisi untuk status selesai');
+                                hasError = true;
+                            }
+
+                            const hasExistingImage = !!document.querySelector('img[alt="Foto Penerima"]');
+                            const hasNewUpload = fotoInput && fotoInput.files.length > 0;
+                            if (!hasExistingImage && !hasNewUpload) {
+                                showAlert('error', 'Foto Diperlukan', 'Foto penyerahan harus diupload untuk status selesai');
+                                hasError = true;
+                            }
+                        }
+
+                        // Validasi status "gagal"
+                        if (status === 'gagal') {
+                            if (!alasanInput || !alasanInput.value.trim()) {
+                                showAlert('error', 'Alasan Diperlukan', 'Alasan kegagalan harus diisi untuk status gagal');
+                                hasError = true;
+                            }
+                        }
+
+                        if (hasError) {
+                            e.preventDefault(); // Hentikan submit jika ada error
+                            return;
+                        }
+
+                        // Nonaktifkan tombol submit agar tidak dobel klik
+                        if (submitBtn) {
+                            submitBtn.disabled = true;
+                            submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>Memproses...`;
+                        }
+                    });
                 }
             });
-        }
-
-        if (deliveryForm) {
-            deliveryForm.addEventListener('submit', function (e) {
-                const status = statusSelect.value.trim();
-                let hasError = false;
-
-                // Validasi status "selesai"
-                if (status === 'selesai') {
-                    if (!namePenerima || !namePenerima.value.trim()) {
-                        showAlert('error', 'Data Tidak Lengkap', 'Nama penerima harus diisi untuk status selesai');
-                        hasError = true;
-                    }
-
-                    const hasExistingImage = !!document.querySelector('img[alt="Foto Penerima"]');
-                    const hasNewUpload = fotoInput && fotoInput.files.length > 0;
-                    if (!hasExistingImage && !hasNewUpload) {
-                        showAlert('error', 'Foto Diperlukan', 'Foto penyerahan harus diupload untuk status selesai');
-                        hasError = true;
-                    }
-                }
-
-                // Validasi status "gagal"
-                if (status === 'gagal') {
-                    if (!alasanInput || !alasanInput.value.trim()) {
-                        showAlert('error', 'Alasan Diperlukan', 'Alasan kegagalan harus diisi untuk status gagal');
-                        hasError = true;
-                    }
-                }
-
-                if (hasError) {
-                    e.preventDefault(); // Hentikan submit jika ada error
-                    return;
-                }
-
-                // Nonaktifkan tombol submit agar tidak dobel klik
-                if (submitBtn) {
-                    submitBtn.disabled = true;
-                    submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>Memproses...`;
-                }
-            });
-        }
-    });
-
         </script>
 @endsection

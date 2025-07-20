@@ -75,7 +75,7 @@
                     <div class="space-y-4 mt-2">
                         <div class="flex items-start">
                             <input id="bank-transfer" type="radio" name="payment-method" value="bank-transfer"
-                                class="w-4 h-4 mt-1 text-amber-600 border-gray-300 focus:ring-amber-500">
+                                class="w-4 h-4 mt-1 text-amber-600 border-amber-300 bg-amber-100 focus:ring-amber-500">
                             <label for="bank-transfer" class="ml-2 w-full">
                                 <span class="font-medium">Bank Transfer</span>
                                 <div class="flex items-center mt-2 space-x-4">
@@ -96,14 +96,14 @@
                         </div>
                         <div class="flex items-center">
                             <input id="e-wallet" type="radio" name="payment-method" value="e-wallet"
-                                class="w-4 h-4 text-amber-600 border-gray-300 focus:ring-amber-500">
+                                class="w-4 h-4 text-amber-600 border-amber-400 bg-amber-100 focus:ring-amber-500">
                             <label for="e-wallet" class="ml-2 font-medium">
                                 E-Wallet
                             </label>
                         </div>
                         <div class="flex items-center">
                             <input id="cod" type="radio" name="payment-method" value="cod"
-                                class="w-4 h-4 text-amber-600 border-gray-300 focus:ring-amber-500">
+                                class="w-4 h-4 text-amber-600 border-amber-800 bg-amber-100 focus:ring-amber-500">
                             <label for="cod" class="ml-2 font-medium">
                                 COD
                             </label>
@@ -165,9 +165,21 @@
     .then(res => res.json())
     .then(data => {
         if (data.redirect) {
+    if (document.querySelector('input[name="payment-method"]:checked').value === 'cod') {
+        Swal.fire({
+            icon: 'success',
+            title: 'Transaksi Berhasil',
+            text: 'Pengiriman sedang diproses.',
+            confirmButtonColor: '#f59e0b'
+        }).then(() => {
             window.location.href = data.redirect;
-            return;
-        }
+        });
+    } else {
+        window.location.href = data.redirect;
+    }
+        return;
+    }
+
             if (data.error) {
                 Swal.fire({
                     icon: 'error',
